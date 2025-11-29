@@ -1,20 +1,12 @@
-import { useNavigate } from "react-router";
-
-interface MenuCard {
-  title: string;
-  description: string;
-  icon: string;
-  path: string;
-  color: string;
-}
+import type { MenuCard } from "@/common/ui";
+import { MenuCardItem } from "@/common/ui";
 
 export const HomePage = () => {
-  const navigate = useNavigate();
 
   const menuCards: MenuCard[] = [
     {
-      title: "업체 관리",
-      description: "업체, 사업장, 시설 정보를 통합 관리합니다",
+      title: "의뢰업체 관리",
+      description: "의뢰업체, 사업장, 시설 정보를 통합 관리합니다",
       icon: "📋",
       path: "/client",
       color: "from-green-500 to-green-600",
@@ -50,29 +42,7 @@ export const HomePage = () => {
       {/* 카드 그리드 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto container">
         {menuCards.map((card) => (
-          <div
-            key={card.path}
-            onClick={() => navigate(card.path)}
-            className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-sand-200/50 overflow-hidden group"
-          >
-            <div className={`h-2 bg-gradient-to-r ${card.color}`} />
-            <div className="p-6">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                {card.icon}
-              </div>
-              <h3 className="text-xl font-bold text-brown-900 mb-2">
-                {card.title}
-              </h3>
-              <p className="text-brown-600 text-sm leading-relaxed">
-                {card.description}
-              </p>
-            </div>
-            <div className="px-6 pb-6">
-              <div className="text-brown-500 text-sm font-medium group-hover:text-brown-700 transition-colors">
-                바로가기 →
-              </div>
-            </div>
-          </div>
+          <MenuCardItem key={card.path} {...card} />
         ))}
       </div>
 
