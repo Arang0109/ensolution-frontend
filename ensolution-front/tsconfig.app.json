@@ -22,7 +22,23 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@api/*": ["./src/common/api/*"],
+      "@model/*": ["./src/common/model/*"],
+      "@routes/*": ["./src/common/routes/*"],
+      "@utils/*": ["./src/common/utils/*"],
+      "@home/*": ["./src/features/home/*"],
+      "@auth/*": ["./src/features/auth/*"],
+      "@company/*": ["./src/features/company/*"],
+      "@workplace/*": ["./src/features/workplace/*"],
+      "@stack/*": ["./src/features/stack/*"]
+    }
   },
   "include": ["src"]
 }
