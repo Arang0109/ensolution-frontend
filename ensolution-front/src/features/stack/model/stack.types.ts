@@ -1,6 +1,6 @@
 import type { Grade, Shape, Orientation } from '@model/common.types';
 
-export interface Stack {
+export interface StackResponse {
   id: number;
   workplaceId: number;
   name: string;
@@ -73,6 +73,6 @@ export interface Target {
 }
 
 export interface StackDetailResponse {
-  stack: Stack;
+  stack: StackResponse;
   preventions: Prevention[];
 }

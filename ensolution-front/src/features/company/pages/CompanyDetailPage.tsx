@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useCompanyDetail } from '@company/hooks/useCompanyDetail';
 
@@ -12,6 +12,7 @@ export const CompanyDetailPage = () => {
     TYPE_2: "2종",
     TYPE_3: "3종",
     TYPE_4: "4종",
+    TYPE_5: "5종",
   };
 
   useEffect(() => {
@@ -131,6 +132,7 @@ export const CompanyDetailPage = () => {
                 {company.workplaces.map((workplace) => (
                   <div
                     key={workplace.id}
+                    onClick={() => navigate(`/workplace/${workplace.id}`)}
                     className="border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-blue-300 transition-all cursor-pointer"
                   >
                     <div className="flex justify-between items-start mb-2">

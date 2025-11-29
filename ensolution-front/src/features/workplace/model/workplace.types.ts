@@ -1,5 +1,5 @@
 import type { Grade } from '@model/common.types';
-import type { Stack } from '@stack/model/stack.types';
+import type { StackResponse } from '@stack/model/stack.types';
 
 export interface WorkplaceResponse {
   id: number;
@@ -35,5 +35,5 @@ export interface WorkplaceUpdateRequest {
 
 export interface WorkplaceDetailResponse {
   workplace: WorkplaceResponse;
-  stacks: Stack[];
+  stacks: StackResponse[];
 }
