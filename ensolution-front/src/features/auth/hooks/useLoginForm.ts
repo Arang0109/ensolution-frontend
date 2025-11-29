@@ -4,9 +4,11 @@ import { loginApi } from "@auth/api/authApi";
 import axios, { AxiosError } from "axios";
 import type { LoginRequest } from "@auth/model";
 import type { ApiResponseMessage } from "@/common/model";
+import { useToast } from "@/common/hooks";
 
 export function useLoginForm() {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [form, setForm] = useState<LoginRequest>({
     username: "",
     password: "",
@@ -29,10 +31,12 @@ export function useLoginForm() {
       if (res.status) {
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("username", res.data.username);
+        showToast("로그인되었습니다.", "success");
         navigate("/home", { replace: true });
         return { success: true };
       }
 
+      showToast(res.message || "로그인에 실패했습니다.", "error");
       return { success: false, message: res.message };
     } catch (error: unknown) {
       let message = "로그인 실패";
@@ -42,6 +46,7 @@ export function useLoginForm() {
         message = apiError.response?.data?.message || message;
       }
 
+      showToast(message, "error");
       return { success: false, message };
     } finally {
       setIsLoading(false);

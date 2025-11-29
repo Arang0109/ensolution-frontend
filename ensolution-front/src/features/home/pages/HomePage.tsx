@@ -1,8 +1,108 @@
+import { useNavigate } from "react-router";
+
+interface MenuCard {
+  title: string;
+  description: string;
+  icon: string;
+  path: string;
+  color: string;
+}
+
 export const HomePage = () => {
+  const navigate = useNavigate();
+
+  const menuCards: MenuCard[] = [
+    {
+      title: "업체 관리",
+      description: "업체, 사업장, 시설 정보를 통합 관리합니다",
+      icon: "📋",
+      path: "/client",
+      color: "from-green-500 to-green-600",
+    },
+    {
+      title: "장비 관리",
+      description: "회사 내 장비를 통합 관리합니다",
+      icon: "🛠️",
+      path: "/equip",
+      color: "from-yellow-500 to-red-600",
+    },
+    {
+      title: "내정보",
+      description: "프로필 정보를 확인하고 수정합니다.",
+      icon: "👤",
+      path: "/me",
+      color: "from-blue-500 to-blue-600",
+    },
+  ];
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Home</h2>
-      <p>Welcome to ENsolution!</p>
+    <div className="space-y-8">
+      {/* 헤더 섹션 */}
+      <div className="text-center py-8">
+        <h1 className="text-4xl font-bold text-brown-900 mb-4">
+          ENsolution 관리 시스템
+        </h1>
+        <p className="text-brown-600 text-lg">
+          효율적인 업무 관리를 위한 통합 솔루션
+        </p>
+      </div>
+
+      {/* 카드 그리드 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto container">
+        {menuCards.map((card) => (
+          <div
+            key={card.path}
+            onClick={() => navigate(card.path)}
+            className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-sand-200/50 overflow-hidden group"
+          >
+            <div className={`h-2 bg-gradient-to-r ${card.color}`} />
+            <div className="p-6">
+              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                {card.icon}
+              </div>
+              <h3 className="text-xl font-bold text-brown-900 mb-2">
+                {card.title}
+              </h3>
+              <p className="text-brown-600 text-sm leading-relaxed">
+                {card.description}
+              </p>
+            </div>
+            <div className="px-6 pb-6">
+              <div className="text-brown-500 text-sm font-medium group-hover:text-brown-700 transition-colors">
+                바로가기 →
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* 추가 정보 섹션 */}
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 border border-sand-200/50 mt-8">
+        <h2 className="text-2xl font-bold text-brown-900 mb-4">빠른 안내</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="space-y-2">
+            <div className="text-3xl">📊</div>
+            <h3 className="font-semibold text-brown-800">실시간 모니터링</h3>
+            <p className="text-sm text-brown-600">
+              시설 상태를 실시간으로 확인하고 관리하세요
+            </p>
+          </div>
+          <div className="space-y-2">
+            <div className="text-3xl">📈</div>
+            <h3 className="font-semibold text-brown-800">효율적 관리</h3>
+            <p className="text-sm text-brown-600">
+              업체와 시설 정보를 한 곳에서 통합 관리
+            </p>
+          </div>
+          <div className="space-y-2">
+            <div className="text-3xl">🔒</div>
+            <h3 className="font-semibold text-brown-800">안전한 시스템</h3>
+            <p className="text-sm text-brown-600">
+              보안이 강화된 안전한 관리 환경 제공
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
