@@ -14,6 +14,29 @@ export interface Users {
   updatedAt: Date;
 }
 
+export interface UserResponse {
+  username: string;
+  teamId: number;
+  grade: string;
+  department: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  birthDate: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface UserUpdateRequest {
+  teamId: number;
+  grade: string;
+  department: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  birthDate: string;
+}
+
 export interface LoginRequest {
   username: string;
   password: string;
@@ -22,4 +45,9 @@ export interface LoginRequest {
 export interface LoginResponse {
   accessToken: string;
   username: string;
+}
+
+export interface Team {
+  id: number;
+  teamName: string;
 }

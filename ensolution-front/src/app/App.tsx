@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { ProtectedRoute, MainLayout } from '@routes/index';
-import { LoginPage } from '@auth/pages/index';
+import { LoginPage, UserProfilePage } from '@auth/pages/index';
 import { HomePage } from '@home/pages/index';
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
@@ -20,6 +20,7 @@ function App() {
           }
         >
           <Route path="/home" element={<HomePage />} />
+          <Route path="/me" element={<UserProfilePage />} />
           <Route path="/companies" element={<CompanyListPage />} />
           <Route path="/companies/:companyId" element={<CompanyDetailPage />} />
           <Route path="/workplaces" element={<WorkplaceListPage />} />
