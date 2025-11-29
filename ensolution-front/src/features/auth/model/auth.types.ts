@@ -21,5 +21,5 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   accessToken: string;
-  user: Omit<Users, 'password'>;
+  username: string;
 }
