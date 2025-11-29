@@ -1,6 +1,6 @@
-import type { Workplace } from '@workplace/model/workplace.types';
+import type {  WorkplaceResponse } from '@workplace/model/workplace.types';
 
-export interface Company {
+export interface CompanyResponse {
   id: number;
   name: string;
   address: string;
@@ -28,6 +28,6 @@ export interface CompanyUpdateRequest {
 }
 
 export interface CompanyDetailResponse {
-  company: Company;
-  workplaces: Workplace[];
+  company: CompanyResponse;
+  workplaces: WorkplaceResponse[];
 }

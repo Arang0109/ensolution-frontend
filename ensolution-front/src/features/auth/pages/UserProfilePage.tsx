@@ -1,4 +1,4 @@
-import { useUserProfileForm } from "@auth/hooks/index";
+import { useUserProfileForm } from "@/features/auth/hooks/index";
 import Select from "react-select";
 import { useState } from "react";
 

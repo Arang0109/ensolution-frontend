@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { ProtectedRoute, MainLayout } from '@routes/index';
 import { LoginPage, UserProfilePage } from '@auth/pages/index';
-import { HomePage } from '@home/pages/index';
+import { HomePage, ClientPage } from '@home/pages/index';
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
@@ -22,6 +22,7 @@ function App() {
             }
           >
             <Route path="/home" element={<HomePage />} />
+            <Route path="/client" element={<ClientPage />} />
             <Route path="/me" element={<UserProfilePage />} />
             <Route path="/company" element={<CompanyListPage />} />
             <Route path="/company/:companyId" element={<CompanyDetailPage />} />
