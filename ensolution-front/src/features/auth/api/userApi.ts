@@ -3,7 +3,7 @@ import type { ApiResponseMessage } from "@/common/model";
 import type { UserResponse, UserUpdateRequest, Team } from "@auth/model";
 
 export const getProfile = async (): Promise<ApiResponseMessage<UserResponse>> => {
-  const res = await axiosPrivate.get("/users/me")
+  const res = await axiosPrivate.get("/users/me");
   return res.data;
 }
 

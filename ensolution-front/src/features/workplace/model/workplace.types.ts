@@ -1,7 +1,7 @@
 import type { Grade } from '@model/common.types';
 import type { Stack } from '@stack/model/stack.types';
 
-export interface Workplace {
+export interface WorkplaceResponse {
   id: number;
   companyId: number;
   name: string;
@@ -34,6 +34,6 @@ export interface WorkplaceUpdateRequest {
 }
 
 export interface WorkplaceDetailResponse {
-  workplace: Workplace;
+  workplace: WorkplaceResponse;
   stacks: Stack[];
 }
