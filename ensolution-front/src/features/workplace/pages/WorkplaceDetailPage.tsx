@@ -77,10 +77,10 @@ export const WorkplaceDetailPage = () => {
           <h1 className="text-3xl font-bold text-gray-800">{workplace.name}</h1>
         </div>
         <div className="flex gap-2">
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+          <button className="px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md">
             수정
           </button>
-          <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+          <button className="px-4 py-2 bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white rounded-lg hover:from-terracotta-600 hover:to-terracotta-700 transition-colors shadow-md">
             삭제
           </button>
         </div>
@@ -90,8 +90,8 @@ export const WorkplaceDetailPage = () => {
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Workplace Info Card */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">기본 정보</h2>
+          <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
+            <h2 className="text-xl font-semibold mb-4 text-brown-900">기본 정보</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -132,10 +132,10 @@ export const WorkplaceDetailPage = () => {
           </div>
 
           {/* Stacks Section */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-800">측정 대상 시설 목록</h2>
-              <button className="px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors">
+              <h2 className="text-xl font-semibold text-brown-900">측정 대상 시설 목록</h2>
+              <button className="px-3 py-1.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white text-sm rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md">
                 시설 추가
               </button>
             </div>
@@ -147,7 +147,7 @@ export const WorkplaceDetailPage = () => {
                 placeholder="시설명 또는 Sems 번호로 검색..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
               />
             </div>
 
@@ -162,7 +162,8 @@ export const WorkplaceDetailPage = () => {
                 {filteredStacks.map((stack) => (
                   <div
                     key={stack.id}
-                    className="border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-blue-300 transition-all cursor-pointer"
+                    onClick={() => navigate(`/stack/${workplace.id}`)}
+                    className="border border-sand-200 rounded-lg p-4 hover:shadow-md hover:border-brown-400 transition-all cursor-pointer"
                   >
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold text-gray-800">{stack.name}</h3>
@@ -172,13 +173,7 @@ export const WorkplaceDetailPage = () => {
                     </div>
                     <div className="flex gap-4 text-xs text-gray-500">
                       <span>Sems 번호: {stack.semsNumber}</span>
-                      <span className={`px-2 py-0.5 rounded ${
-                        stack.grade === 'TYPE_1' ? 'bg-green-100 text-green-800' :
-                        stack.grade === 'TYPE_2' ? 'bg-blue-100 text-blue-800' :
-                        stack.grade === 'TYPE_3' ? 'bg-yellow-100 text-yellow-800' :
-                        stack.grade === 'TYPE_4' ? 'bg-orange-100 text-orange-800' :
-                        'bg-red-100 text-red-800'
-                      }`}>
+                      <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-800">
                         배출시설 규모: {gradeLabel[stack.grade] ?? stack.grade}
                       </span>
                     </div>
@@ -196,26 +191,26 @@ export const WorkplaceDetailPage = () => {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">통계</h2>
+          <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
+            <h2 className="text-lg font-semibold mb-4 text-brown-900">통계</h2>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">측정 시설 수</span>
-                <span className="text-lg font-bold text-blue-600">{stacks.length}</span>
+                <span className="text-sm text-brown-600">측정 시설 수</span>
+                <span className="text-lg font-bold text-brown-700">{stacks.length}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">총 측정 건수</span>
-                <span className="text-lg font-bold text-green-600">-</span>
+                <span className="text-sm text-brown-600">총 측정 건수</span>
+                <span className="text-lg font-bold text-brown-700">-</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">진행 중인 측정</span>
-                <span className="text-lg font-bold text-orange-600">-</span>
+                <span className="text-sm text-brown-600">진행 중인 측정</span>
+                <span className="text-lg font-bold text-terracotta-600">-</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">최근 수정</h2>
+          <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
+            <h2 className="text-lg font-semibold mb-4 text-brown-900">최근 수정</h2>
             <p className="text-sm text-gray-600">
               {new Date(workplace.modifiedAt).toLocaleString('ko-KR')}
             </p>
