@@ -41,7 +41,7 @@ export interface StackUpdateRequest {
   remark: string;
 }
 
-export interface Prevention {
+export interface PreventionResponse {
   id: number;
   stackId: number;
   name: string;
@@ -50,7 +50,7 @@ export interface Prevention {
   modifiedAt: Date;
 }
 
-export interface Facility {
+export interface FacilityResponse {
   id: number;
   preventionId: number;
   name: string;
@@ -63,7 +63,7 @@ export interface Facility {
   modifiedAt: Date;
 }
 
-export interface Target {
+export interface TargetResponse {
   id: number;
   preventionId: number;
   targetSubstance: string;
@@ -74,5 +74,5 @@ export interface Target {
 
 export interface StackDetailResponse {
   stack: StackResponse;
-  preventions: Prevention[];
+  preventions: PreventionResponse[];
 }

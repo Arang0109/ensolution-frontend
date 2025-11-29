@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 export interface MenuCard {
   title: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
   path: string;
   color: string;
 }

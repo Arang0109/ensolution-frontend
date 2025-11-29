@@ -1,5 +1,9 @@
 import type { MenuCard } from "@/common/ui";
 import { MenuCardItem } from "@/common/ui";
+import { HiOfficeBuilding } from "react-icons/hi";
+import { MdBuild } from "react-icons/md";
+import { FaUserCircle } from "react-icons/fa";
+import { MdDashboard, MdTrendingUp, MdSecurity } from "react-icons/md";
 
 export const HomePage = () => {
 
@@ -7,23 +11,23 @@ export const HomePage = () => {
     {
       title: "의뢰업체 관리",
       description: "의뢰업체, 사업장, 시설 정보를 통합 관리합니다",
-      icon: "📋",
+      icon: <HiOfficeBuilding style={{color: '#b89375'}} />,
       path: "/client",
-      color: "from-green-500 to-green-600",
+      color: "from-brown-500 to-brown-600",
     },
     {
       title: "장비 관리",
       description: "회사 내 장비를 통합 관리합니다",
-      icon: "🛠️",
+      icon: <MdBuild style={{color: '#b89375'}} />,
       path: "/equip",
-      color: "from-yellow-500 to-red-600",
+      color: "from-brown-500 to-brown-600",
     },
     {
       title: "내정보",
       description: "프로필 정보를 확인하고 수정합니다.",
-      icon: "👤",
+      icon: <FaUserCircle style={{color: '#b89375'}} />,
       path: "/me",
-      color: "from-blue-500 to-blue-600",
+      color: "from-brown-500 to-brown-600",
     },
   ];
 
@@ -51,21 +55,27 @@ export const HomePage = () => {
         <h2 className="text-2xl font-bold text-brown-900 mb-4">빠른 안내</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <div className="text-3xl">📊</div>
+            <div className="text-3xl text-brown-600">
+              <MdDashboard />
+            </div>
             <h3 className="font-semibold text-brown-800">실시간 모니터링</h3>
             <p className="text-sm text-brown-600">
               시설 상태를 실시간으로 확인하고 관리하세요
             </p>
           </div>
           <div className="space-y-2">
-            <div className="text-3xl">📈</div>
+            <div className="text-3xl text-brown-600">
+              <MdTrendingUp />
+            </div>
             <h3 className="font-semibold text-brown-800">효율적 관리</h3>
             <p className="text-sm text-brown-600">
               업체와 시설 정보를 한 곳에서 통합 관리
             </p>
           </div>
           <div className="space-y-2">
-            <div className="text-3xl">🔒</div>
+            <div className="text-3xl text-brown-600">
+              <MdSecurity />
+            </div>
             <h3 className="font-semibold text-brown-800">안전한 시스템</h3>
             <p className="text-sm text-brown-600">
               보안이 강화된 안전한 관리 환경 제공
