@@ -1,4 +1,6 @@
 import { formatBizNumber } from "@/common/utils/formatters";
+import { GRADE_LABELS } from '@/common/constants';
+import type { Grade } from '@model/common.types';
 
 interface WorkplaceItemProps {
   workplace: {
@@ -7,14 +9,13 @@ interface WorkplaceItemProps {
     address: string;
     bizNumber: string;
     businessCategory: string;
-    grade: string;
+    grade: Grade;
     remark?: string | null;
   };
-  gradeLabel: Record<string, string>;
   onClick: () => void;
 }
 
-export const WorkplaceItem = ({ workplace, gradeLabel, onClick }: WorkplaceItemProps) => {
+export const WorkplaceItem = ({ workplace, onClick }: WorkplaceItemProps) => {
   return (
     <div
       onClick={onClick}
@@ -45,7 +46,7 @@ export const WorkplaceItem = ({ workplace, gradeLabel, onClick }: WorkplaceItemP
               : "bg-terracotta-200 text-terracotta-900"
           }`}
         >
-          사업장 규모 : {gradeLabel[workplace.grade] ?? workplace.grade}
+          사업장 규모 : {GRADE_LABELS[workplace.grade] ?? workplace.grade}
         </span>
       </div>
 

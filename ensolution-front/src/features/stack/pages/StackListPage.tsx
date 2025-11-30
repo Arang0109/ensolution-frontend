@@ -1,40 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useStacks } from '@stack/hooks';
+import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@/common/constants';
+import { useSearch } from '@/common/hooks';
 
 export const StackListPage = () => {
   const navigate = useNavigate();
   const { stacks, loading } = useStacks();
   const [showAddModal, setShowAddModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const gradeLabel: Record<string, string> = {
-    TYPE_1: "1종",
-    TYPE_2: "2종",
-    TYPE_3: "3종",
-    TYPE_4: "4종",
-    TYPE_5: "5종",
-  };
-
-  const shapeLabel: Record<string, string> = {
-    CIRCULAL: "원형",
-    RECTANGULAR: "사각형",
-    OTHER: "기타",
-  };
-
-  const orientationLabel: Record<string, string> = {
-    VERTICAL: "수직",
-    HORIZONTAL: "수평",
-  };
+  const { searchTerm, setSearchTerm, filtered: filteredStacks } = useSearch(
+    stacks,
+    ['name', 'semsNumber']
+  );
 
   const handleStackClick = (stackId: number) => {
     navigate(`/stack/${stackId}`);
   };
-
-  const filteredStacks = stacks.filter((stack) =>
-    stack.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    stack.semsNumber.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   if (loading) {
     return (
@@ -49,15 +31,6 @@ export const StackListPage = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">측정시설</h1>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors flex items-center gap-2 shadow-md"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-          </svg>
-          시설 추가
-        </button>
       </div>
 
       {/* Search Input */}
@@ -111,7 +84,7 @@ export const StackListPage = () => {
                   <span>
                     배출시설 규모: {' '}
                     <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-800">
-                      {gradeLabel[stack.grade] ?? stack.grade}
+                      {GRADE_LABELS[stack.grade] ?? stack.grade}
                     </span>
                   </span>
                 </div>
@@ -123,8 +96,8 @@ export const StackListPage = () => {
                 </div>
 
                 <div className="flex gap-4 text-xs">
-                  <span>형상: {shapeLabel[stack.shape] ?? stack.shape}</span>
-                  <span>방향: {orientationLabel[stack.orientation] ?? stack.orientation}</span>
+                  <span>형상: {SHAPE_LABELS[stack.shape] ?? stack.shape}</span>
+                  <span>방향: {ORIENTATION_LABELS[stack.orientation] ?? stack.orientation}</span>
                 </div>
 
                 {stack.remark && (

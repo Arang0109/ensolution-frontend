@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { WorkplaceItem } from "./WorkplaceItem";
+import type { Grade } from '@model/common.types';
 
 interface WorkplaceListCardProps {
   workplaces: Array<{
@@ -8,14 +9,13 @@ interface WorkplaceListCardProps {
     address: string;
     bizNumber: string;
     businessCategory: string;
-    grade: string;
+    grade: Grade;
     remark?: string | null;
   }>;
   onAdd?: () => void;
-  gradeLabel: Record<string, string>;
 }
 
-export const WorkplaceListCard = ({ workplaces, onAdd, gradeLabel }: WorkplaceListCardProps) => {
+export const WorkplaceListCard = ({ workplaces, onAdd }: WorkplaceListCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -40,7 +40,6 @@ export const WorkplaceListCard = ({ workplaces, onAdd, gradeLabel }: WorkplaceLi
             <WorkplaceItem
               key={workplace.id}
               workplace={workplace}
-              gradeLabel={gradeLabel}
               onClick={() => navigate(`/workplace/${workplace.id}`)}
             />
           ))}

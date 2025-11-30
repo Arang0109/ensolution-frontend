@@ -29,3 +29,12 @@ export interface FacilityUpdateRequest {
   fuelType: string;
   remark: string;
 }
+
+export interface FacilityForm {
+  name: string;
+  fuelUsage: string;
+  itemOutput: string;
+  fuelInput: string;
+  fuelType: string;
+  remark: string;
+}

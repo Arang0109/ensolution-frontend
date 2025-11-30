@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import { useToast } from '@/common/hooks';
-import type { WorkplaceRegisterRequest, WorkplaceUpdateRequest } from '@workplace/model';
-import { registerWorkplace, patchWorkplace, deleteWorkplace } from '@workplace/api/workplaceApi';
+import type { StackRegisterRequest, StackUpdateRequest } from '@stack/model';
+import { registerStack, patchStack, deleteStack } from '@stack/api/stackApi';
 
-export const useWorkplaceActions = () => {
+export const useStackActions = () => {
   const { showToast } = useToast();
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleCreate = async (data: WorkplaceRegisterRequest) => {
+  const handleCreate = async (data: StackRegisterRequest) => {
     setIsCreating(true);
 
     try {
-      const res = await registerWorkplace(data);
+      const res = await registerStack(data);
       if (res.status) {
-        showToast('사업장이 등록되었습니다.', 'success');
+        showToast('배출구가 등록되었습니다.', 'success');
       } else {
-        showToast(res.message || '사업장 등록에 실패했습니다.', 'error');
+        showToast(res.message || '배출구 등록에 실패했습니다.', 'error');
       }
       return { success: res.status, message: res.message };
     } catch {
-      const errorMsg = '사업장 등록 중 오류가 발생했습니다.';
+      const errorMsg = '배출구 등록 중 오류가 발생했습니다.';
       showToast(errorMsg, 'error');
       return { success: false, message: errorMsg };
     } finally {
@@ -29,19 +29,19 @@ export const useWorkplaceActions = () => {
     }
   };
 
-  const handleUpdate = async (workplaceId: number, data: WorkplaceUpdateRequest) => {
+  const handleUpdate = async (stackId: number, data: StackUpdateRequest) => {
     setIsUpdating(true);
 
     try {
-      const res = await patchWorkplace(workplaceId, data);
+      const res = await patchStack(stackId, data);
       if (res.status) {
-        showToast('사업장이 수정되었습니다.', 'success');
+        showToast('배출구가 수정되었습니다.', 'success');
       } else {
-        showToast(res.message || '사업장 수정에 실패했습니다.', 'error');
+        showToast(res.message || '배출구 수정에 실패했습니다.', 'error');
       }
       return { success: res.status, message: res.message };
     } catch {
-      const errorMsg = '사업장 수정 중 오류가 발생했습니다.';
+      const errorMsg = '배출구 수정 중 오류가 발생했습니다.';
       showToast(errorMsg, 'error');
       return { success: false, message: errorMsg };
     } finally {
@@ -49,19 +49,19 @@ export const useWorkplaceActions = () => {
     }
   };
 
-  const handleDelete = async (workplaceId: number) => {
+  const handleDelete = async (stackId: number) => {
     setIsDeleting(true);
 
     try {
-      const res = await deleteWorkplace(workplaceId);
+      const res = await deleteStack(stackId);
       if (res.status) {
-        showToast('사업장이 삭제되었습니다.', 'success');
+        showToast('배출구가 삭제되었습니다.', 'success');
       } else {
-        showToast(res.message || '사업장 삭제에 실패했습니다.', 'error');
+        showToast(res.message || '배출구 삭제에 실패했습니다.', 'error');
       }
       return { success: res.status, message: res.message };
     } catch {
-      const errorMsg = '사업장 삭제 중 오류가 발생했습니다.';
+      const errorMsg = '배출구 삭제 중 오류가 발생했습니다.';
       showToast(errorMsg, 'error');
       return { success: false, message: errorMsg };
     } finally {

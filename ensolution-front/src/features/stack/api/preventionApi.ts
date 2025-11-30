@@ -6,7 +6,7 @@ import type {
 
 export const registerPrevention = async (
   data: PreventionRegisterRequest
-): Promise<ApiResponseMessage<void>> => {
+): Promise<ApiResponseMessage<PreventionResponse>> => {
   const res = await axiosPrivate.post("/preventions", data);
   return res.data;
 }

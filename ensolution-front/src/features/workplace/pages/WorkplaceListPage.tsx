@@ -1,13 +1,7 @@
 import { useWorkplaces } from "@workplace/hooks/useWorkplaces";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-const gradeLabel: Record<string, string> = {
-  TYPE_1: "1종",
-  TYPE_2: "2종",
-  TYPE_3: "3종",
-  TYPE_4: "4종",
-};
+import { GRADE_LABELS } from '@/common/constants';
 
 export const WorkplaceListPage = () => {
   const navigate = useNavigate();
@@ -84,7 +78,7 @@ export const WorkplaceListPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-800">
-                    사업장 규모: {gradeLabel[w.grade] ?? w.grade}</span>
+                    사업장 규모: {GRADE_LABELS[w.grade] ?? w.grade}</span>
                 </div>
 
                 {w.remark && (

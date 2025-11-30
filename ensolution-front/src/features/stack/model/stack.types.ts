@@ -8,8 +8,8 @@ export interface StackResponse {
   semsNumber: string;
   grade: Grade;
   height: string;
-  horizontalLength: number;
-  verticalLength: number;
+  horizontalLength: string;
+  verticalLength: string;
   shape: Shape;
   orientation: Orientation;
   remark: string;
@@ -23,8 +23,8 @@ export interface StackRegisterRequest {
   semsNumber: string;
   grade: Grade;
   height: string;
-  horizontalLength: number;
-  verticalLength: number;
+  horizontalLength: string;
+  verticalLength: string;
   shape: Shape;
   orientation: Orientation;
   remark: string;
@@ -35,8 +35,8 @@ export interface StackUpdateRequest {
   semsNumber: string;
   grade: Grade;
   height: string;
-  horizontalLength: number;
-  verticalLength: number;
+  horizontalLength: string;
+  verticalLength: string;
   shape: Shape;
   orientation: Orientation;
   remark: string;

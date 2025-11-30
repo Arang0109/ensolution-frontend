@@ -38,14 +38,6 @@ export const CompanyDetailPage = () => {
     remark: '',
   });
 
-  const gradeLabel: Record<string, string> = {
-    TYPE_1: "1종",
-    TYPE_2: "2종",
-    TYPE_3: "3종",
-    TYPE_4: "4종",
-    TYPE_5: "5종",
-  };
-
   useEffect(() => {
     if (companyId) {
       fetchCompany(Number(companyId));
@@ -158,7 +150,6 @@ export const CompanyDetailPage = () => {
           <WorkplaceListCard
             workplaces={company.workplaces}
             onAdd={() => setIsModalOpen(true)}
-            gradeLabel={gradeLabel}
           />
         </div>
 

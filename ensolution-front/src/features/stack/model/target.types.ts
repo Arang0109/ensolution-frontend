@@ -17,3 +17,8 @@ export interface TargetUpdateRequest {
   targetSubstance: string;
   removalEfficiency: number;
 }
+
+export interface TargetForm {
+  targetSubstance: string;
+  removalEfficiency: number;
+}
