@@ -67,7 +67,7 @@ export const WorkplaceDetailPage = () => {
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button
-            onClick={() => navigate('/workplaces')}
+            onClick={() => navigate('/workplace')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

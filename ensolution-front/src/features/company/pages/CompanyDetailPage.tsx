@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 // 📌 Hooks
 import { useCompanyDetail, useCompanyActions } from '@company/hooks';
+import { useWorkplaceActions } from '@workplace/hooks';
 
 // 📌 Types
 import type { CompanyUpdateRequest } from '@company/model';
@@ -17,13 +18,18 @@ import { DetailPageHeader, FullPageLoader, EmptyState } from '@/common/component
 // 📌 Company Domain Components
 import { CompanySidebar, WorkplaceListCard, CompanyInfoCard } from '@company/components';
 
+// 📌 Workplace Domain Components
+import { AddWorkplaceModal } from '@workplace/components';
+
 export const CompanyDetailPage = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
   const { company, fetchCompany, loading } = useCompanyDetail();
   const { isDeleting, isUpdating, handleDelete, handleUpdate } = useCompanyActions();
+  const { handleCreate } = useWorkplaceActions();
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editForm, setEditForm] = useState<CompanyUpdateRequest>({
     name: '',
     address: '',
@@ -151,7 +157,7 @@ export const CompanyDetailPage = () => {
           {/* Workplaces Section */}
           <WorkplaceListCard
             workplaces={company.workplaces}
-            onAdd={() => navigate(`/workplace/add?companyId=${company.company.id}`)}
+            onAdd={() => setIsModalOpen(true)}
             gradeLabel={gradeLabel}
           />
         </div>
@@ -162,6 +168,15 @@ export const CompanyDetailPage = () => {
           modifiedAt={new Date(company.company.modifiedAt).toLocaleString('ko-KR')}
         />
       </div>
+
+      {/* Add Workplace Modal */}
+      <AddWorkplaceModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        companyId={Number(companyId)}
+        onSuccess={() => fetchCompany(Number(companyId))}
+        onSubmit={handleCreate}
+      />
     </div>
   );
 };
