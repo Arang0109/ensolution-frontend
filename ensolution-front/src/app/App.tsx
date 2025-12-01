@@ -5,6 +5,7 @@ import { HomePage, ClientPage } from '@home/pages/index';
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
+import { PollutantPage } from '@pollutant/pages/index';
 import { ToastProvider } from '@/common/contexts';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
             <Route path="/stack" element={<StackListPage />} />
             <Route path="/stack/:stackId" element={<StackDetailPage />} />
+            <Route path="/pollutant" element={<PollutantPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

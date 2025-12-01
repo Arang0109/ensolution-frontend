@@ -19,6 +19,7 @@ export default defineConfig({
       '@company': path.resolve(__dirname, './src/features/company'),
       '@workplace': path.resolve(__dirname, './src/features/workplace'),
       '@stack': path.resolve(__dirname, './src/features/stack'),
+      '@pollutant': path.resolve(__dirname, './src/features/pollutant'),
     },
   },
   server: {

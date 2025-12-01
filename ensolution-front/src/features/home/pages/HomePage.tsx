@@ -16,10 +16,10 @@ export const HomePage = () => {
       color: "from-brown-500 to-brown-600",
     },
     {
-      title: "장비 관리",
-      description: "회사 내 장비를 통합 관리합니다",
+      title: "측정물질 관리",
+      description: "공정시험법 상 측정물질을 통합 관리합니다",
       icon: <MdBuild style={{color: '#b89375'}} />,
-      path: "/equip",
+      path: "/pollutant",
       color: "from-brown-500 to-brown-600",
     },
     {

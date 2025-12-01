@@ -44,11 +44,6 @@ interface ReadOnlyPairProps {
   multiLine?: boolean;
 }
 
-interface StaticFieldProps {
-  label: string;
-  value: string;
-}
-
 export const WorkplaceInfoCard: React.FC<WorkplaceInfoCardProps> = ({
   workplace,
   isEditMode,
@@ -198,12 +193,5 @@ const ReadOnlyPair: React.FC<ReadOnlyPairProps> = ({ label, value, multiLine = f
     >
       {value}
     </p>
-  </div>
-);
-
-const StaticField: React.FC<StaticFieldProps> = ({ label, value }) => (
-  <div>
-    <label className="text-sm font-medium text-gray-500">{label}</label>
-    <p className="text-base text-gray-800 mt-1">{value}</p>
   </div>
 );

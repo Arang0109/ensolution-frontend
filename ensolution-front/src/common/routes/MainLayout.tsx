@@ -50,9 +50,10 @@ export const MainLayout = () => {
                 <Dropdown
                   label="관리"
                   items={[
-                    { label: '의뢰업체관리', path: '/company' },
-                    { label: '사업장관리', path: '/workplace' },
-                    { label: '시설관리', path: '/stack' },
+                    { label: '측정대행 의뢰업체', path: '/company' },
+                    { label: '측정대상 사업장', path: '/workplace' },
+                    { label: '측정시설', path: '/stack' },
+                    { label: '측정물질', path: '/pollutant' },
                   ]}
                 />
               </nav>
