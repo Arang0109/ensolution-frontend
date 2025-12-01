@@ -77,7 +77,7 @@ export const UserProfilePage = () => {
             </div>
 
             {/* 수정 가능한 필드 - 그리드 레이아웃 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-brown-700 mb-1">
                   이름

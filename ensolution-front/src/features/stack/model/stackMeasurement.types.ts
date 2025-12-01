@@ -1,11 +1,12 @@
 import type { Cycle } from "@/common/model";
+import type { PollutantResponse } from "@pollutant/model/pollutant.types";
 
 export interface StackMeasurementResponse {
   id: number;
   stackId: number;
-  pollutantId: number;
+  pollutant: PollutantResponse;
   cycle: Cycle;
-  allowance: number;
+  allowance: number | null;
   createdAt: Date;
   modifiedAt: Date;
 }
@@ -14,10 +15,10 @@ export interface StackMeasurementCreateRequest {
   stackId: number;
   pollutantId: number;
   cycle: Cycle;
-  allowance: number;
+  allowance: number | null;
 }
 
 export interface StackMeasurementUpdateRequest {
   cycle: Cycle;
-  allowance: number;
+  allowance: number | null;
 }

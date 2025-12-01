@@ -4,8 +4,9 @@ import { useStackDetail, useStackActions } from '@stack/hooks';
 import {
   PreventionAddModal,
   PreventionEditModal,
-  StackInfoCard,
+  MeasurementAddModal,
   StackPreventionListCard,
+  StackMeasurementListCard,
   StackSidebar,
 } from '@stack/components';
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@/common/components';
@@ -50,6 +51,7 @@ export const StackDetailPage = () => {
   const [editForm, setEditForm] = useState<StackUpdateRequest>(getInitialEditForm());
 
   const [showPreventionAddModal, setShowPreventionAddModal] = useState(false);
+  const [showMeasurementAddModal, setShowMeasurementAddModal] = useState(false);
   const [selectedPrevention, setSelectedPrevention] = useState<PreventionDetailResponse | null>(null);
 
   useEffect(() => {
@@ -59,15 +61,16 @@ export const StackDetailPage = () => {
   }, [stackId, fetchStack]);
 
   // Calculate counts using useMemo for performance
-  const { preventionCount, facilityCount, targetCount } = useMemo(() => {
+  const { preventionCount, facilityCount, targetCount, measurementCount } = useMemo(() => {
     if (!stack) {
-      return { preventionCount: 0, facilityCount: 0, targetCount: 0 };
+      return { preventionCount: 0, facilityCount: 0, targetCount: 0, measurementCount: 0 };
     }
 
     return {
       preventionCount: stack.preventions.length,
       facilityCount: stack.preventions.reduce((sum, p) => sum + p.facilities.length, 0),
       targetCount: stack.preventions.reduce((sum, p) => sum + p.targets.length, 0),
+      measurementCount: stack.stackMeasurements.length,
     };
   }, [stack]);
 
@@ -135,6 +138,16 @@ export const StackDetailPage = () => {
     setSelectedPrevention(null);
   };
 
+  const handleAddMeasurement = () => {
+    setShowMeasurementAddModal(true);
+  };
+
+  const handleMeasurementAddSuccess = () => {
+    if (stackId) {
+      fetchStack(Number(stackId));
+    }
+  };
+
   if (loading) {
     return <FullPageLoader />;
   }
@@ -163,14 +176,13 @@ export const StackDetailPage = () => {
         backUrl="/stack"
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
-          <StackInfoCard
-            stack={stack.stack}
-            isEditMode={isEditMode}
-            editForm={editForm}
-            onChange={handleEditChange}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Main Content - Measurements Prominent */}
+        <div className="lg:col-span-3 space-y-6">
+          <StackMeasurementListCard
+            measurements={stack.stackMeasurements}
+            onAddMeasurement={handleAddMeasurement}
+            onEditSuccess={() => fetchStack(Number(stackId))}
           />
 
           <StackPreventionListCard
@@ -180,14 +192,19 @@ export const StackDetailPage = () => {
           />
         </div>
 
-        {/* Sidebar */}
-        <StackSidebar
-          preventionCount={preventionCount}
-          facilityCount={facilityCount}
-          targetCount={targetCount}
-          modifiedAt={stack.stack.modifiedAt}
-          workplaceId={stack.stack.workplaceId}
-        />
+        {/* Sidebar - Stack Info + Stats */}
+        <div className="lg:col-span-1">
+          <StackSidebar
+            stack={stack.stack}
+            preventionCount={preventionCount}
+            facilityCount={facilityCount}
+            targetCount={targetCount}
+            measurementCount={measurementCount}
+            isEditMode={isEditMode}
+            editForm={editForm}
+            onChange={handleEditChange}
+          />
+        </div>
       </div>
 
       {/* Prevention Add Modal */}
@@ -205,6 +222,15 @@ export const StackDetailPage = () => {
           preventionDetail={selectedPrevention}
           onClose={handlePreventionEditClose}
           onSuccess={handlePreventionEditSuccess}
+        />
+      )}
+
+      {/* Measurement Add Modal */}
+      {showMeasurementAddModal && stackId && (
+        <MeasurementAddModal
+          stackId={Number(stackId)}
+          onClose={() => setShowMeasurementAddModal(false)}
+          onSuccess={handleMeasurementAddSuccess}
         />
       )}
     </>
