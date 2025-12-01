@@ -1,4 +1,5 @@
 import type { Grade, Shape, Orientation } from '@model/common.types';
+import type { PreventionResponse, PreventionDetailResponse } from '@stack/model';
 
 export interface StackResponse {
   id: number;
@@ -7,8 +8,8 @@ export interface StackResponse {
   semsNumber: string;
   grade: Grade;
   height: string;
-  horizontalLength: number;
-  verticalLength: number;
+  horizontalLength: string;
+  verticalLength: string;
   shape: Shape;
   orientation: Orientation;
   remark: string;
@@ -22,8 +23,8 @@ export interface StackRegisterRequest {
   semsNumber: string;
   grade: Grade;
   height: string;
-  horizontalLength: number;
-  verticalLength: number;
+  horizontalLength: string;
+  verticalLength: string;
   shape: Shape;
   orientation: Orientation;
   remark: string;
@@ -34,45 +35,19 @@ export interface StackUpdateRequest {
   semsNumber: string;
   grade: Grade;
   height: string;
-  horizontalLength: number;
-  verticalLength: number;
+  horizontalLength: string;
+  verticalLength: string;
   shape: Shape;
   orientation: Orientation;
   remark: string;
 }
 
-export interface PreventionResponse {
-  id: number;
-  stackId: number;
-  name: string;
-  remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
-}
-
-export interface FacilityResponse {
-  id: number;
-  preventionId: number;
-  name: string;
-  fuelUsage: string;
-  itemOutput: string;
-  fuelInput: string;
-  fuelType: string;
-  remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
-}
-
-export interface TargetResponse {
-  id: number;
-  preventionId: number;
-  targetSubstance: string;
-  removalEfficiency: number;
-  createdAt: Date;
-  modifiedAt: Date;
-}
-
 export interface StackDetailResponse {
   stack: StackResponse;
   preventions: PreventionResponse[];
+}
+
+export interface StackDetailWithPreventionsResponse {
+  stack: StackResponse;
+  preventions: PreventionDetailResponse[];
 }

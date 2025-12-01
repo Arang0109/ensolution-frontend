@@ -37,7 +37,8 @@
       "@auth/*": ["./src/features/auth/*"],
       "@company/*": ["./src/features/company/*"],
       "@workplace/*": ["./src/features/workplace/*"],
-      "@stack/*": ["./src/features/stack/*"]
+      "@stack/*": ["./src/features/stack/*"],
+      "@pollutant/*": ["./src/features/pollutant/*"]
     }
   },
   "include": ["src"]
