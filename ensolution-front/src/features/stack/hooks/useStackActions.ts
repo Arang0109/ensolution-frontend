@@ -15,13 +15,13 @@ export const useStackActions = () => {
     try {
       const res = await registerStack(data);
       if (res.status) {
-        showToast('배출구가 등록되었습니다.', 'success');
+        showToast('측정시설이 등록되었습니다.', 'success');
       } else {
-        showToast(res.message || '배출구 등록에 실패했습니다.', 'error');
+        showToast(res.message || '측정시설 등록에 실패했습니다.', 'error');
       }
       return { success: res.status, message: res.message };
     } catch {
-      const errorMsg = '배출구 등록 중 오류가 발생했습니다.';
+      const errorMsg = '측정시설 등록 중 오류가 발생했습니다.';
       showToast(errorMsg, 'error');
       return { success: false, message: errorMsg };
     } finally {
@@ -35,13 +35,13 @@ export const useStackActions = () => {
     try {
       const res = await patchStack(stackId, data);
       if (res.status) {
-        showToast('배출구가 수정되었습니다.', 'success');
+        showToast('측정시설이 수정되었습니다.', 'success');
       } else {
-        showToast(res.message || '배출구 수정에 실패했습니다.', 'error');
+        showToast(res.message || '측정시설 수정에 실패했습니다.', 'error');
       }
       return { success: res.status, message: res.message };
     } catch {
-      const errorMsg = '배출구 수정 중 오류가 발생했습니다.';
+      const errorMsg = '측정시설 수정 중 오류가 발생했습니다.';
       showToast(errorMsg, 'error');
       return { success: false, message: errorMsg };
     } finally {
@@ -55,13 +55,13 @@ export const useStackActions = () => {
     try {
       const res = await deleteStack(stackId);
       if (res.status) {
-        showToast('배출구가 삭제되었습니다.', 'success');
+        showToast('측정시설이 삭제되었습니다.', 'success');
       } else {
-        showToast(res.message || '배출구 삭제에 실패했습니다.', 'error');
+        showToast(res.message || '측정시설 삭제에 실패했습니다.', 'error');
       }
       return { success: res.status, message: res.message };
     } catch {
-      const errorMsg = '배출구 삭제 중 오류가 발생했습니다.';
+      const errorMsg = '측정시설 삭제 중 오류가 발생했습니다.';
       showToast(errorMsg, 'error');
       return { success: false, message: errorMsg };
     } finally {

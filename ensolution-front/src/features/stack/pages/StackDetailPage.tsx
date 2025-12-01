@@ -142,7 +142,7 @@ export const StackDetailPage = () => {
   if (!stack) {
     return (
       <EmptyState
-        title="시설 정보를 찾을 수 없습니다."
+        title="측정시설 정보를 찾을 수 없습니다."
         actionLabel="목록으로 돌아가기"
         onAction={() => navigate('/stack')}
       />
