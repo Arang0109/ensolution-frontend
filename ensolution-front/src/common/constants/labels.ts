@@ -1,4 +1,4 @@
-import type { Grade, Shape, Orientation } from '@model/common.types';
+import type { Grade, Shape, Orientation, Cycle } from '@model/common.types';
 
 /**
  * 배출시설 등급 라벨
@@ -26,4 +26,16 @@ export const SHAPE_LABELS: Record<Shape, string> = {
 export const ORIENTATION_LABELS: Record<Orientation, string> = {
   VERTICAL: '수직',
   HORIZONTAL: '수평',
+} as const;
+
+/**
+ * 측정 주기 라벨
+ */
+export const CYCLE_LABELS: Record<Cycle, string> = {
+  MONTHLY_1: '월 1회',
+  MONTHLY_2: '월 2회',
+  BIMONTHLY: '2개월 1회',
+  QUARTERLY: '분기 1회',
+  SEMI_ANNUAL: '반기 1회',
+  ANNUAL: '연간 1회',
 } as const;

@@ -1,5 +1,5 @@
 import type { Grade, Shape, Orientation } from '@model/common.types';
-import type { PreventionResponse, PreventionDetailResponse } from '@stack/model';
+import type { PreventionResponse, PreventionDetailResponse, StackMeasurementResponse } from '@stack/model';
 
 export interface StackResponse {
   id: number;
@@ -45,9 +45,11 @@ export interface StackUpdateRequest {
 export interface StackDetailResponse {
   stack: StackResponse;
   preventions: PreventionResponse[];
+  stackMeasurements: StackMeasurementResponse[];
 }
 
 export interface StackDetailWithPreventionsResponse {
   stack: StackResponse;
   preventions: PreventionDetailResponse[];
+  stackMeasurements: StackMeasurementResponse[];
 }

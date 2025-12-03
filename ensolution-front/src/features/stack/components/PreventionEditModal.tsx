@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { patchPrevention, deletePrevention } from '@stack/api/preventionApi';
-import { patchFacility, deleteFacility, registerFacility } from '@stack/api/facilityApi';
-import { patchTarget, deleteTarget, registerTarget } from '@stack/api/targetApi';
+import { patchFacility, deleteFacility, registerFacility } from '@/features/stack/api/facilityApi';
+import { patchTarget, deleteTarget, registerTarget } from '@/features/stack/api/targetApi';
 import type {
   PreventionDetailResponse,
   PreventionUpdateRequest,
@@ -244,7 +244,7 @@ export const PreventionEditModal = ({
       ...targets,
       {
         targetSubstance: '',
-        removalEfficiency: 0,
+        removalEfficiency: null,
         isNew: true,
       },
     ]);
@@ -565,23 +565,24 @@ export const PreventionEditModal = ({
 
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            제거효율 (%) <span className="text-red-500">*</span>
+                            제거효율 (%)
                           </label>
                           <input
                             type="number"
                             min="0"
                             max="100"
                             step="0.1"
-                            value={target.removalEfficiency}
+                            value={target.removalEfficiency ?? ""}
                             onChange={(e) => {
                               const newTargets = [...targets];
                               newTargets[index] = {
                                 ...target,
-                                removalEfficiency: Number(e.target.value),
+                                removalEfficiency: e.target.value === "" ? null : Number(e.target.value),
                               };
                               setTargets(newTargets);
                             }}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-terracotta-500 focus:border-transparent text-sm"
+                            placeholder="제거효율 (선택사항)"
                           />
                         </div>
 
@@ -590,8 +591,7 @@ export const PreventionEditModal = ({
                           disabled={
                             isSubmitting ||
                             !target.targetSubstance.trim() ||
-                            target.removalEfficiency < 0 ||
-                            target.removalEfficiency > 100
+                            (target.removalEfficiency != null && (target.removalEfficiency < 0 || target.removalEfficiency > 100))
                           }
                           className="w-full px-4 py-2 bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white rounded-lg hover:from-terracotta-600 hover:to-terracotta-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
                         >

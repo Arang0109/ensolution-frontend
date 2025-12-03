@@ -12,6 +12,8 @@ export const useStackDetail = () => {
     try {
       const { status, data } = await getStack(stackId);
 
+      console.log("getStack() API : ", data);
+
       if (status && data) {
         // 각 방지시설의 상세 정보(배출시설, 제거대상물질 포함)를 가져옴
         const preventionsWithDetails: PreventionDetailResponse[] = await Promise.all(
@@ -29,7 +31,8 @@ export const useStackDetail = () => {
 
         setStack({
           stack: data.stack,
-          preventions: preventionsWithDetails
+          preventions: preventionsWithDetails,
+          stackMeasurements: data.stackMeasurements || []
         });
       } else {
         setStack(null);

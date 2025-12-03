@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import { ProtectedRoute, MainLayout } from '@routes/index';
 import { LoginPage, UserProfilePage } from '@auth/pages/index';
 import { HomePage, ClientPage } from '@home/pages/index';
+import { TeamListPage, VehicleListPage, TeamDetailPage } from '@agency/pages/index';
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
@@ -22,16 +23,27 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/client" element={<ClientPage />} />
+            <Route path="/dashboard" element={<HomePage />} />
             <Route path="/me" element={<UserProfilePage />} />
-            <Route path="/company" element={<CompanyListPage />} />
-            <Route path="/company/:companyId" element={<CompanyDetailPage />} />
-            <Route path="/workplace" element={<WorkplaceListPage />} />
-            <Route path="/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
-            <Route path="/stack" element={<StackListPage />} />
-            <Route path="/stack/:stackId" element={<StackDetailPage />} />
-            <Route path="/pollutant" element={<PollutantPage />} />
+
+            {/* 측정대행 의뢰업체 */}
+            <Route path="/client/company" element={<CompanyListPage />} />
+            <Route path="/client/company/:companyId" element={<CompanyDetailPage />} />
+            <Route path="/client/workplace" element={<WorkplaceListPage />} />
+            <Route path="/client/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
+            <Route path="/client/stack" element={<StackListPage />} />
+            <Route path="/client/stack/:stackId" element={<StackDetailPage />} />
+
+            {/* 측정대행업체 */}
+            <Route path="/agency/team" element={<TeamListPage />} />
+            <Route path="/agency/team/:teamId" element={<TeamDetailPage />} />
+            <Route path="/agency/vehicle" element={<VehicleListPage />} />
+
+            {/* 실험실 */}
+            <Route path="/lab/pollutant" element={<PollutantPage />} />
+
+            {/* 레거시 리다이렉트 (선택사항) */}
+            <Route path="/client" element={<ClientPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -29,7 +29,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
   const [targets, setTargets] = useState<TargetForm[]>([
     {
       targetSubstance: "",
-      removalEfficiency: 0,
+      removalEfficiency: null,
     },
   ]);
 
@@ -67,7 +67,9 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
       const updated = [...prev];
       updated[index] = {
         ...updated[index],
-        [name]: name === "removalEfficiency" ? Number(value) : value,
+        [name]: name === "removalEfficiency"
+          ? (value === "" ? null : Number(value))
+          : value,
       };
       return updated;
     });
@@ -96,7 +98,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
       ...prev,
       {
         targetSubstance: "",
-        removalEfficiency: 0,
+        removalEfficiency: null,
       },
     ]);
   };
@@ -427,10 +429,10 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                       <input
                         type="number"
                         name="removalEfficiency"
-                        value={target.removalEfficiency}
+                        value={target.removalEfficiency ?? ""}
                         onChange={(e) => handleTargetChange(index, e)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
-                        placeholder="제거효율"
+                        placeholder="제거효율 (선택사항)"
                         min="0"
                         max="100"
                         disabled={isSubmitting}

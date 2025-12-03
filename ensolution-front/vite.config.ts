@@ -16,6 +16,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, './src/common/utils'),
       '@home': path.resolve(__dirname, './src/features/home'),
       '@auth': path.resolve(__dirname, './src/features/auth'),
+      '@agency': path.resolve(__dirname, './src/features/agency'),
       '@company': path.resolve(__dirname, './src/features/company'),
       '@workplace': path.resolve(__dirname, './src/features/workplace'),
       '@stack': path.resolve(__dirname, './src/features/stack'),
