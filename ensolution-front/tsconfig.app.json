@@ -35,6 +35,7 @@
       "@utils/*": ["./src/common/utils/*"],
       "@home/*": ["./src/features/home/*"],
       "@auth/*": ["./src/features/auth/*"],
+      "@agency/*": ["./src/features/agency/*"],
       "@company/*": ["./src/features/company/*"],
       "@workplace/*": ["./src/features/workplace/*"],
       "@stack/*": ["./src/features/stack/*"],

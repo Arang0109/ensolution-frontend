@@ -7,15 +7,15 @@ import { MdDashboard, MdTrendingUp, MdSecurity } from "react-icons/md";
 export const ClientPage = () => {
   const menuCards: MenuCard[] = [
     {
-      title: "측정대행 의뢰업체 관리",
-      description: "의뢰업체, 사업장, 시설 정보를 통합 관리합니다",
+      title: "측정시설 검색",
+      description: "측정시설 정보를 검색합니다.",
       icon: <HiOfficeBuilding style={{color: '#b89375'}} />,
-      path: "/company",
+      path: "/client/stack",
       color: "from-brown-500 to-brown-600",
     },
     {
-      title: "측정대상 사업장 관리",
-      description: "회사 내 장비를 통합 관리합니다",
+      title: "측정팀 관리",
+      description: "측정팀 및 차량을 관리합니다.",
       icon: <HiOfficeBuilding style={{color: '#b89375'}} />,
       path: "/workplace",
       color: "from-brown-500 to-brown-600",
@@ -42,7 +42,7 @@ export const ClientPage = () => {
       </div>
 
       {/* 카드 그리드 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto container">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mx-auto container">
         {menuCards.map((card) => (
           <MenuCardItem key={card.path} {...card} />
         ))}
