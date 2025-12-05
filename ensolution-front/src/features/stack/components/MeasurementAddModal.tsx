@@ -33,6 +33,7 @@ export const MeasurementAddModal = ({
   // Search functionality
   const [searchTerms, setSearchTerms] = useState<Record<string, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState<Record<string, boolean>>({});
+  const [focusedIndex, setFocusedIndex] = useState<Record<string, number>>({});
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // Load pollutants on mount
@@ -69,6 +70,21 @@ export const MeasurementAddModal = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Auto-scroll to focused item in dropdown
+  useEffect(() => {
+    Object.entries(focusedIndex).forEach(([measurementId, idx]) => {
+      if (isDropdownOpen[measurementId]) {
+        const dropdown = dropdownRefs.current[measurementId];
+        if (dropdown) {
+          const focusedElement = dropdown.querySelector(`button:nth-child(${idx + 1})`);
+          if (focusedElement) {
+            focusedElement.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          }
+        }
+      }
+    });
+  }, [focusedIndex, isDropdownOpen]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -172,12 +188,58 @@ export const MeasurementAddModal = ({
   const handleSearchChange = (measurementId: string, value: string) => {
     setSearchTerms({ ...searchTerms, [measurementId]: value });
     setIsDropdownOpen({ ...isDropdownOpen, [measurementId]: true });
+    setFocusedIndex({ ...focusedIndex, [measurementId]: 0 });
   };
 
   const selectPollutant = (measurementId: string, pollutantId: number) => {
     updateMeasurement(measurementId, "pollutantId", pollutantId);
     setSearchTerms({ ...searchTerms, [measurementId]: "" });
     setIsDropdownOpen({ ...isDropdownOpen, [measurementId]: false });
+    setFocusedIndex({ ...focusedIndex, [measurementId]: 0 });
+  };
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    measurementId: string
+  ) => {
+    const filteredPollutants = getFilteredPollutants(measurementId);
+    const currentIndex = focusedIndex[measurementId] || 0;
+
+    // Enter 키는 항상 preventDefault (드롭다운이 열려있든 닫혀있든)
+    if (e.key === "Enter") {
+      e.preventDefault();
+      // 드롭다운이 열려있고 결과가 있을 때만 선택
+      if (isDropdownOpen[measurementId] && filteredPollutants.length > 0 && filteredPollutants[currentIndex]) {
+        selectPollutant(measurementId, filteredPollutants[currentIndex].id);
+      }
+      return;
+    }
+
+    // 드롭다운이 닫혀있거나 결과가 없으면 다른 키 무시
+    if (!isDropdownOpen[measurementId] || filteredPollutants.length === 0) {
+      return;
+    }
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setFocusedIndex({
+          ...focusedIndex,
+          [measurementId]: Math.min(currentIndex + 1, filteredPollutants.length - 1),
+        });
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        setFocusedIndex({
+          ...focusedIndex,
+          [measurementId]: Math.max(currentIndex - 1, 0),
+        });
+        break;
+      case "Escape":
+        e.preventDefault();
+        setIsDropdownOpen({ ...isDropdownOpen, [measurementId]: false });
+        break;
+    }
   };
 
   const cycleOptions: Cycle[] = [
@@ -271,6 +333,7 @@ export const MeasurementAddModal = ({
                             handleSearchChange(measurement.id, e.target.value);
                           }}
                           onFocus={() => setIsDropdownOpen({ ...isDropdownOpen, [measurement.id]: true })}
+                          onKeyDown={(e) => handleKeyDown(e, measurement.id)}
                           placeholder="측정물질 검색..."
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
                           disabled={isSubmitting}
@@ -309,12 +372,16 @@ export const MeasurementAddModal = ({
                           {getFilteredPollutants(measurement.id).length === 0 ? (
                             <div className="px-3 py-2 text-gray-500 text-sm">검색 결과가 없습니다.</div>
                           ) : (
-                            getFilteredPollutants(measurement.id).map(pollutant => (
+                            getFilteredPollutants(measurement.id).map((pollutant, idx) => (
                               <button
                                 key={pollutant.id}
                                 type="button"
                                 onClick={() => selectPollutant(measurement.id, pollutant.id)}
-                                className="w-full text-left px-3 py-2 hover:bg-gray-100 transition-colors text-sm"
+                                className={`w-full text-left px-3 py-2 hover:bg-gray-100 transition-colors text-sm ${
+                                  idx === (focusedIndex[measurement.id] || 0)
+                                    ? "bg-brown-100"
+                                    : ""
+                                }`}
                                 disabled={isSubmitting}
                               >
                                 {pollutant.nameKr}
