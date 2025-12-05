@@ -15,7 +15,7 @@ export const StackListPage = () => {
   );
 
   const handleStackClick = (stackId: number) => {
-    navigate(`/stack/${stackId}`);
+    navigate(`/client/stack/${stackId}`);
   };
 
   if (loading) {

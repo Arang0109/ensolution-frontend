@@ -32,7 +32,7 @@ export function useLoginForm() {
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("username", res.data.username);
         showToast("로그인되었습니다.", "success");
-        navigate("/home", { replace: true });
+        navigate("/dashboard", { replace: true });
         return { success: true };
       }
 

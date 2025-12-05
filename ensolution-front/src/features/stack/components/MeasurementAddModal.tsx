@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { registerStackMeasurement } from "@stack/api/stackMeasurementApi";
 import { getPollutants } from "@pollutant/api/pollutantApi";
 import type { PollutantResponse } from "@pollutant/model/pollutant.types";
@@ -11,6 +11,13 @@ interface MeasurementAddModalProps {
   onSuccess: () => void;
 }
 
+interface MeasurementItem {
+  id: string;
+  pollutantId: number | null;
+  cycle: Cycle;
+  allowance: string;
+}
+
 export const MeasurementAddModal = ({
   stackId,
   onClose,
@@ -18,10 +25,15 @@ export const MeasurementAddModal = ({
 }: MeasurementAddModalProps) => {
   const [pollutants, setPollutants] = useState<PollutantResponse[]>([]);
   const [loadingPollutants, setLoadingPollutants] = useState(true);
-  const [selectedPollutantId, setSelectedPollutantId] = useState<number | null>(null);
-  const [cycle, setCycle] = useState<Cycle>("MONTHLY_1");
-  const [allowance, setAllowance] = useState<string>("");
+  const [measurements, setMeasurements] = useState<MeasurementItem[]>([
+    { id: crypto.randomUUID(), pollutantId: null, cycle: "MONTHLY_1", allowance: "" }
+  ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Search functionality
+  const [searchTerms, setSearchTerms] = useState<Record<string, string>>({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState<Record<string, boolean>>({});
+  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // Load pollutants on mount
   useEffect(() => {
@@ -42,32 +54,64 @@ export const MeasurementAddModal = ({
     fetchPollutants();
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const isOutside = Object.values(dropdownRefs.current).every(
+        (ref) => ref && !ref.contains(target)
+      );
+      if (isOutside) {
+        setIsDropdownOpen({});
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!selectedPollutantId) {
-      alert("측정물질을 선택해주세요.");
+    // Validate that at least one measurement is filled
+    const validMeasurements = measurements.filter(m => m.pollutantId !== null);
+
+    if (validMeasurements.length === 0) {
+      alert("최소 1개 이상의 측정물질을 선택해주세요.");
+      return;
+    }
+
+    // Check for duplicate pollutants
+    const pollutantIds = validMeasurements.map(m => m.pollutantId);
+    const uniqueIds = new Set(pollutantIds);
+    if (pollutantIds.length !== uniqueIds.size) {
+      alert("중복된 측정물질이 있습니다.");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const requestData = {
-        stackId,
-        pollutantId: selectedPollutantId,
-        cycle,
-        allowance: allowance === "" ? null : Number(allowance),
-      };
+      // Register all measurements in parallel
+      const promises = validMeasurements.map(measurement =>
+        registerStackMeasurement({
+          stackId,
+          pollutantId: measurement.pollutantId!,
+          cycle: measurement.cycle,
+          allowance: measurement.allowance === "" ? null : Number(measurement.allowance),
+        })
+      );
 
-      const response = await registerStackMeasurement(requestData);
+      const results = await Promise.all(promises);
 
-      if (!response.status) {
-        alert(response.message ?? "측정물질 등록 실패");
+      const failedResults = results.filter(r => !r.status);
+      if (failedResults.length > 0) {
+        alert(`${failedResults.length}개의 측정물질 등록에 실패했습니다.`);
         setIsSubmitting(false);
         return;
       }
 
+      alert(`${validMeasurements.length}개의 측정물질이 등록되었습니다.`);
       onSuccess();
       onClose();
     } catch (error) {
@@ -76,6 +120,64 @@ export const MeasurementAddModal = ({
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const addMeasurement = () => {
+    setMeasurements([
+      ...measurements,
+      { id: crypto.randomUUID(), pollutantId: null, cycle: "MONTHLY_1", allowance: "" }
+    ]);
+  };
+
+  const removeMeasurement = (id: string) => {
+    if (measurements.length === 1) {
+      alert("최소 1개의 측정물질 항목이 필요합니다.");
+      return;
+    }
+    setMeasurements(measurements.filter(m => m.id !== id));
+
+    // Clean up search state
+    const newSearchTerms = { ...searchTerms };
+    delete newSearchTerms[id];
+    setSearchTerms(newSearchTerms);
+
+    const newDropdownOpen = { ...isDropdownOpen };
+    delete newDropdownOpen[id];
+    setIsDropdownOpen(newDropdownOpen);
+  };
+
+  const updateMeasurement = (id: string, field: keyof MeasurementItem, value: string | number | Cycle | null) => {
+    setMeasurements(measurements.map(m =>
+      m.id === id ? { ...m, [field]: value } : m
+    ));
+  };
+
+  const getFilteredPollutants = (measurementId: string) => {
+    const searchTerm = searchTerms[measurementId] || "";
+    if (!searchTerm) return pollutants;
+
+    return pollutants.filter(p =>
+      p.nameKr.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.nameEn && p.nameEn.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  };
+
+  const getSelectedPollutantName = (pollutantId: number | null) => {
+    if (!pollutantId) return "";
+    const pollutant = pollutants.find(p => p.id === pollutantId);
+    if (!pollutant) return "";
+    return `${pollutant.nameKr}${pollutant.nameEn ? ` (${pollutant.nameEn})` : ""}`;
+  };
+
+  const handleSearchChange = (measurementId: string, value: string) => {
+    setSearchTerms({ ...searchTerms, [measurementId]: value });
+    setIsDropdownOpen({ ...isDropdownOpen, [measurementId]: true });
+  };
+
+  const selectPollutant = (measurementId: string, pollutantId: number) => {
+    updateMeasurement(measurementId, "pollutantId", pollutantId);
+    setSearchTerms({ ...searchTerms, [measurementId]: "" });
+    setIsDropdownOpen({ ...isDropdownOpen, [measurementId]: false });
   };
 
   const cycleOptions: Cycle[] = [
@@ -89,7 +191,7 @@ export const MeasurementAddModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
-      <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 my-8 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 my-8 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">측정물질 추가</h2>
           <button
@@ -114,81 +216,168 @@ export const MeasurementAddModal = ({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* 측정물질 선택 */}
-          <div>
-            <label
-              htmlFor="pollutant"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              측정물질 <span className="text-red-500">*</span>
-            </label>
-            {loadingPollutants ? (
-              <div className="text-gray-500">측정물질 목록을 불러오는 중...</div>
-            ) : (
-              <select
-                id="pollutant"
-                value={selectedPollutantId ?? ""}
-                onChange={(e) => setSelectedPollutantId(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
-                required
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {loadingPollutants ? (
+            <div className="text-gray-500 text-center py-8">측정물질 목록을 불러오는 중...</div>
+          ) : (
+            <>
+              {measurements.map((measurement, index) => (
+                <div key={measurement.id} className="border border-gray-200 rounded-lg p-4 space-y-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="font-semibold text-gray-700">측정물질 #{index + 1}</h3>
+                    {measurements.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeMeasurement(measurement.id)}
+                        className="text-red-500 hover:text-red-700 transition-colors"
+                        disabled={isSubmitting}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* 측정물질 선택 (검색 가능) */}
+                    <div className="relative" ref={el => { dropdownRefs.current[measurement.id] = el; }}>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        측정물질 <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={
+                            measurement.pollutantId
+                              ? getSelectedPollutantName(measurement.pollutantId)
+                              : searchTerms[measurement.id] || ""
+                          }
+                          onChange={(e) => {
+                            if (measurement.pollutantId) {
+                              updateMeasurement(measurement.id, "pollutantId", null);
+                            }
+                            handleSearchChange(measurement.id, e.target.value);
+                          }}
+                          onFocus={() => setIsDropdownOpen({ ...isDropdownOpen, [measurement.id]: true })}
+                          placeholder="측정물질 검색..."
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                          disabled={isSubmitting}
+                        />
+                        {measurement.pollutantId && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              updateMeasurement(measurement.id, "pollutantId", null);
+                              setSearchTerms({ ...searchTerms, [measurement.id]: "" });
+                            }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            disabled={isSubmitting}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Dropdown */}
+                      {isDropdownOpen[measurement.id] && !measurement.pollutantId && (
+                        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                          {getFilteredPollutants(measurement.id).length === 0 ? (
+                            <div className="px-3 py-2 text-gray-500 text-sm">검색 결과가 없습니다.</div>
+                          ) : (
+                            getFilteredPollutants(measurement.id).map(pollutant => (
+                              <button
+                                key={pollutant.id}
+                                type="button"
+                                onClick={() => selectPollutant(measurement.id, pollutant.id)}
+                                className="w-full text-left px-3 py-2 hover:bg-gray-100 transition-colors text-sm"
+                                disabled={isSubmitting}
+                              >
+                                {pollutant.nameKr}
+                                {pollutant.nameEn && (
+                                  <span className="text-gray-500 ml-1">({pollutant.nameEn})</span>
+                                )}
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 측정 주기 선택 */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        측정 주기 <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        value={measurement.cycle}
+                        onChange={(e) => updateMeasurement(measurement.id, "cycle", e.target.value as Cycle)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                        disabled={isSubmitting}
+                      >
+                        {cycleOptions.map((cycleOption) => (
+                          <option key={cycleOption} value={cycleOption}>
+                            {CYCLE_LABELS[cycleOption]}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* 허용기준 입력 */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        허용기준
+                      </label>
+                      <input
+                        type="number"
+                        value={measurement.allowance}
+                        onChange={(e) => updateMeasurement(measurement.id, "allowance", e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                        placeholder="허용기준 (선택)"
+                        min="0"
+                        step="0.01"
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* 측정물질 추가 버튼 */}
+              <button
+                type="button"
+                onClick={addMeasurement}
+                className="w-full px-4 py-2 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-brown-500 hover:text-brown-500 transition-colors"
                 disabled={isSubmitting}
               >
-                <option value="">측정물질을 선택하세요</option>
-                {pollutants.map((pollutant) => (
-                  <option key={pollutant.id} value={pollutant.id}>
-                    {pollutant.nameKr}
-                    {pollutant.nameEn ? ` (${pollutant.nameEn})` : ""}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-
-          {/* 측정 주기 선택 */}
-          <div>
-            <label
-              htmlFor="cycle"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              측정 주기 <span className="text-red-500">*</span>
-            </label>
-            <select
-              id="cycle"
-              value={cycle}
-              onChange={(e) => setCycle(e.target.value as Cycle)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
-              required
-              disabled={isSubmitting}
-            >
-              {cycleOptions.map((cycleOption) => (
-                <option key={cycleOption} value={cycleOption}>
-                  {CYCLE_LABELS[cycleOption]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* 허용기준 입력 */}
-          <div>
-            <label
-              htmlFor="allowance"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              허용기준
-            </label>
-            <input
-              type="number"
-              id="allowance"
-              value={allowance}
-              onChange={(e) => setAllowance(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
-              placeholder="허용기준을 입력하세요 (선택사항)"
-              min="0"
-              step="0.01"
-              disabled={isSubmitting}
-            />
-          </div>
+                + 측정물질 추가
+              </button>
+            </>
+          )}
 
           {/* 버튼 */}
           <div className="flex gap-3 pt-4">
@@ -205,7 +394,7 @@ export const MeasurementAddModal = ({
               className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting || loadingPollutants}
             >
-              {isSubmitting ? "등록 중..." : "등록"}
+              {isSubmitting ? "등록 중..." : `등록 (${measurements.filter(m => m.pollutantId).length}개)`}
             </button>
           </div>
         </form>
