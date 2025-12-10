@@ -39,7 +39,8 @@
       "@company/*": ["./src/features/company/*"],
       "@workplace/*": ["./src/features/workplace/*"],
       "@stack/*": ["./src/features/stack/*"],
-      "@pollutant/*": ["./src/features/pollutant/*"]
+      "@pollutant/*": ["./src/features/pollutant/*"],
+      "@schedule/*": ["./src/features/schedule/*"],
     }
   },
   "include": ["src"]

@@ -1,6 +1,7 @@
 import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage } from "@/common/model";
-import type { StackResponse, StackDetailResponse, StackRegisterRequest, StackUpdateRequest } from "@stack/model";
+import type { ApiResponseMessage, ScheduleStatus } from "@/common/model";
+import type { ScheduleResponse } from "@schedule/model";
+import type { StackResponse, StackDetailResponse, StackRegisterRequest, StackUpdateRequest, StackMeasurementResponse } from "@stack/model";
 
 export const registerStack = async (
   data: StackRegisterRequest
@@ -18,6 +19,24 @@ export const getStack = async (
   stackId: number
 ): Promise<ApiResponseMessage<StackDetailResponse>> => {
   const res = await axiosPrivate.get(`/stacks/${stackId}`);
+  return res.data;
+}
+
+export const getSchedulesByStack = async (
+  stackId: number,
+  statusList: ScheduleStatus[]
+): Promise<ApiResponseMessage<ScheduleResponse[]>> => {
+  const params = new URLSearchParams();
+  statusList.forEach(status => params.append("status", status));
+
+  const res = await axiosPrivate.get(`stacks/${stackId}/schedules?${params.toString()}`);
+  return res.data;
+}
+
+export const getStackMeasurementsByStack = async (
+  stackId: number
+): Promise<ApiResponseMessage<StackMeasurementResponse[]>> => {
+  const res = await axiosPrivate.get(`/stacks/${stackId}/stackMeasurements`);
   return res.data;
 }
 

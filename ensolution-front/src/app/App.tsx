@@ -8,6 +8,7 @@ import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
 import { PollutantPage } from '@pollutant/pages/index';
 import { ToastProvider } from '@/common/contexts';
+import { ScheduleListPage, ScheduleDetailPage } from "@schedule/pages";
 
 function App() {
   return (
@@ -44,6 +45,10 @@ function App() {
 
             {/* 레거시 리다이렉트 (선택사항) */}
             <Route path="/client" element={<ClientPage />} />
+
+            {/* 측정일정 */}
+            <Route path="/schedule" element={<ScheduleListPage />} />
+            <Route path="/schedule/:scheduleId" element={<ScheduleDetailPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

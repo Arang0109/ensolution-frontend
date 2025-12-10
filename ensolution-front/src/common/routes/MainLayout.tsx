@@ -63,6 +63,12 @@ export const MainLayout = () => {
                     { label: '측정물질', path: '/lab/pollutant' },
                   ]}
                 />
+                <Dropdown
+                  label="일정"
+                  items={[
+                    { label: '측정일정', path: '/schedule' },
+                  ]}
+                />
                 <Link
                   to="/me"
                   className="text-brown-700 hover:text-brown-900 font-medium transition no-underline"
