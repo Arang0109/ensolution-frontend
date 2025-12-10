@@ -1,4 +1,4 @@
-import type { Grade, Shape, Orientation, Cycle } from '@model/common.types';
+import type { Grade, Shape, Orientation, Cycle, Team } from '@model/common.types';
 
 /**
  * 배출시설 등급 라벨
@@ -38,4 +38,14 @@ export const CYCLE_LABELS: Record<Cycle, string> = {
   QUARTERLY: '분기 1회',
   SEMI_ANNUAL: '반기 1회',
   ANNUAL: '연간 1회',
+} as const;
+
+/**
+ * 측정팀
+ */
+export const TEAM_LABEL: Record<Team, string> = {
+  1: '1팀',
+  2: '2팀',
+  3: '3팀',
+  4: '4팀',
 } as const;

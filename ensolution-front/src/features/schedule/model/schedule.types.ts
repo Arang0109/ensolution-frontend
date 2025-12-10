@@ -1,3 +1,6 @@
+import type { CompanyResponse } from "@/features/company/model";
+import type { StackDetailResponse } from "@/features/stack/model";
+import type { WorkplaceResponse } from "@/features/workplace/model";
 import type { ScheduleStatus } from "@model/common.types";
 
 export interface ScheduleResponse {
@@ -8,6 +11,13 @@ export interface ScheduleResponse {
   measurementType: string;
   status: ScheduleStatus;
   createdAt: Date;
+}
+
+export interface ScheduleDetailResponse {
+  schedule: ScheduleResponse,
+  stack: StackDetailResponse,
+  workplace: WorkplaceResponse,
+  company: CompanyResponse
 }
 
 export interface ScheduleTableView {

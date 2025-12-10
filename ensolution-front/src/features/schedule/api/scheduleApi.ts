@@ -1,6 +1,6 @@
 import { axiosPrivate } from "@/common/api";
 import type { ApiResponseMessage } from "@/common/model";
-import type { ScheduleResponse, ScheduleRegisterRequest, ScheduleStatusUpdateRequest, ScheduleUpdateRequest, ScheduleTableView } from "@schedule/model";
+import type { ScheduleResponse, ScheduleRegisterRequest, ScheduleStatusUpdateRequest, ScheduleUpdateRequest, ScheduleTableView, ScheduleDetailResponse } from "@schedule/model";
 
 export const registerSchedule = async (
   data: ScheduleRegisterRequest
@@ -12,6 +12,13 @@ export const registerSchedule = async (
 export const getSchedules = async (): Promise<ApiResponseMessage<ScheduleTableView[]>> => {
   const res = await axiosPrivate.get("/schedules");
   console.log(res.data);
+  return res.data;
+}
+
+export const getSchedule = async (
+  scheduleId: number
+): Promise<ApiResponseMessage<ScheduleDetailResponse>> => {
+  const res = await axiosPrivate.get(`/schedules/${scheduleId}`);
   return res.data;
 }
 

@@ -1,27 +1,24 @@
 import { useState, useEffect } from "react";
-import type { ScheduleResponse } from "@schedule/model";
-import { getSchedules } from "@schedule/api/scheduleApi";
+import type { ScheduleDetailResponse } from "@schedule/model";
+import { getSchedule } from "@schedule/api/scheduleApi";
 
 export const useScheduleDetail = (scheduleId: number) => {
-  const [schedule, setSchedule] = useState<ScheduleResponse | null>(null);
+  const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetailResponse | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchSchedule = async () => {
       setLoading(true);
       try {
-        // Note: Since there's no getSchedule(id) API, we fetch all and filter
-        // You may want to add a getSchedule(id) API endpoint later
-        const res = await getSchedules();
+        const res = await getSchedule(scheduleId);
         if (res.status && res.data) {
-          const found = res.data.find(s => s.id === scheduleId);
-          setSchedule(found || null);
+          setScheduleDetail(res.data);
         } else {
-          setSchedule(null);
+          setScheduleDetail(null);
         }
       } catch (error) {
         console.error("Failed to load schedule:", error);
-        setSchedule(null);
+        setScheduleDetail(null);
       } finally {
         setLoading(false);
       }
@@ -32,5 +29,5 @@ export const useScheduleDetail = (scheduleId: number) => {
     }
   }, [scheduleId]);
 
-  return { schedule, loading };
+  return { scheduleDetail, loading };
 };

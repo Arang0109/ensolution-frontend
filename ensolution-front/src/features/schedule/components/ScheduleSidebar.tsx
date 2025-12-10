@@ -1,4 +1,4 @@
-import type { ScheduleResponse } from "@schedule/model";
+import type { ScheduleDetailResponse } from "@schedule/model";
 
 const STATUS_LABELS: Record<string, string> = {
   MEASURING: "측정 중",
@@ -8,10 +8,12 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 interface ScheduleSidebarProps {
-  schedule: ScheduleResponse;
+  scheduleDetail: ScheduleDetailResponse;
 }
 
-export const ScheduleSidebar = ({ schedule }: ScheduleSidebarProps) => {
+export const ScheduleSidebar = ({ scheduleDetail }: ScheduleSidebarProps) => {
+  const { schedule, stack } = scheduleDetail;
+
   return (
     <div className="space-y-6">
       {/* Status Card */}
@@ -27,12 +29,31 @@ export const ScheduleSidebar = ({ schedule }: ScheduleSidebarProps) => {
         </div>
       </div>
 
+      {/* Stack Info Card */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">배출구 정보</h3>
+        <div className="space-y-3 text-sm">
+          <div>
+            <p className="text-gray-600">배출구명</p>
+            <p className="font-medium text-gray-800">{stack.stack.name}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">SEMS 번호</p>
+            <p className="font-medium text-gray-800">{stack.stack.semsNumber || "-"}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">배출구 모양</p>
+            <p className="font-medium text-gray-800">{stack.stack.shape || "-"}</p>
+          </div>
+        </div>
+      </div>
+
       {/* Info Card */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-lg font-semibold mb-4 text-gray-800">추가 정보</h3>
         <div className="space-y-3 text-sm">
           <div>
-            <p className="text-gray-600">ID</p>
+            <p className="text-gray-600">일정 ID</p>
             <p className="font-medium text-gray-800">{schedule.id}</p>
           </div>
           <div>

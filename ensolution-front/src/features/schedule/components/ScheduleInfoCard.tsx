@@ -1,4 +1,4 @@
-import type { ScheduleResponse, ScheduleUpdateRequest } from "@schedule/model";
+import type { ScheduleDetailResponse, ScheduleUpdateRequest } from "@schedule/model";
 
 const STATUS_LABELS: Record<string, string> = {
   MEASURING: "측정 중",
@@ -8,27 +8,46 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 interface ScheduleInfoCardProps {
-  schedule: ScheduleResponse;
+  scheduleDetail: ScheduleDetailResponse;
   isEditMode?: boolean;
   editForm?: ScheduleUpdateRequest;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 export const ScheduleInfoCard = ({
-  schedule,
+  scheduleDetail,
   isEditMode = false,
   editForm,
   onChange,
 }: ScheduleInfoCardProps) => {
+  const { schedule, stack, workplace, company } = scheduleDetail;
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">일정 정보</h2>
 
       <div className="space-y-4">
+        {/* Company and Workplace Info */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
-              배출구 ID
+              업체명
+            </label>
+            <p className="text-gray-800 font-medium">{company.name}</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              사업장
+            </label>
+            <p className="text-gray-800 font-medium">{workplace.name}</p>
+          </div>
+        </div>
+
+        {/* Stack and Team Info */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              배출구
             </label>
             {isEditMode && editForm && onChange ? (
               <input
@@ -39,7 +58,7 @@ export const ScheduleInfoCard = ({
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
               />
             ) : (
-              <p className="text-gray-800 font-medium">{schedule.stackId}</p>
+              <p className="text-gray-800 font-medium">{stack.stack.name}</p>
             )}
           </div>
 

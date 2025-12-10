@@ -1,25 +1,18 @@
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../utils/formatters';
 
 interface DetailPageHeaderProps {
+  measureDate: Date;
   title: string;
-  isEditMode: boolean;
-  isUpdating: boolean;
   isDeleting: boolean;
-  onEdit: () => void;
-  onCancel: () => void;
-  onSave: () => void;
   onDelete: () => void;
   backUrl?: string;
 }
 
 export const DetailPageHeader = ({
+  measureDate,
   title,
-  isEditMode,
-  isUpdating,
   isDeleting,
-  onEdit,
-  onCancel,
-  onSave,
   onDelete,
   backUrl = "/",
 }: DetailPageHeaderProps) => {
@@ -36,46 +29,25 @@ export const DetailPageHeader = ({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-medium text-gray-500">
+            {formatDate(measureDate)}
+          </span>
+
+          <h1 className="text-2xl font-bold text-gray-900 leading-tight">
+            {title}
+          </h1>
+        </div>
       </div>
 
       <div className="flex gap-2">
-        {isEditMode ? (
-          <>
-            <button
-              onClick={onSave}
-              disabled={isUpdating}
-              className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isUpdating ? '저장 중...' : '저장'}
-            </button>
-
-            <button
-              onClick={onCancel}
-              disabled={isUpdating}
-              className="px-4 py-2 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              취소
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={onEdit}
-              className="px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md"
-            >
-              수정
-            </button>
-
-            <button
-              onClick={onDelete}
-              disabled={isDeleting}
-              className="px-4 py-2 bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white rounded-lg hover:from-terracotta-600 hover:to-terracotta-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isDeleting ? '삭제 중...' : '삭제'}
-            </button>
-          </>
-        )}
+        <button
+          onClick={onDelete}
+          disabled={isDeleting}
+          className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isDeleting ? '삭제 중...' : '삭제'}
+        </button>
       </div>
     </div>
   );
