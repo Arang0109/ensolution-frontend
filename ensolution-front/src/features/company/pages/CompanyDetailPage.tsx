@@ -10,7 +10,7 @@ import { useWorkplaceActions } from '@workplace/hooks';
 import type { CompanyUpdateRequest } from '@company/model';
 
 // 📌 Utils
-import { formatBizNumber, stripBizNumber } from '@/common/utils/formatters';
+import { formatBizNumber } from '@/common/utils/formatters';
 
 // 📌 Shared UI Components
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@/common/components';
@@ -25,10 +25,9 @@ export const CompanyDetailPage = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
   const { company, fetchCompany, loading } = useCompanyDetail();
-  const { isDeleting, isUpdating, handleDelete, handleUpdate } = useCompanyActions();
+  const { isDeleting, handleDelete } = useCompanyActions();
   const { handleCreate } = useWorkplaceActions();
 
-  const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editForm, setEditForm] = useState<CompanyUpdateRequest>({
     name: '',
@@ -55,25 +54,6 @@ export const CompanyDetailPage = () => {
     setEditForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleEditSubmit = async () => {
-    if (!companyId) return;
-
-    const payload = {
-      ...editForm,
-      bizNumber: stripBizNumber(editForm.bizNumber),
-    };
-
-    const result = await handleUpdate(Number(companyId), payload);
-
-    if (result.success) {
-      alert(result.message);
-      setIsEditMode(false);
-      await fetchCompany(Number(companyId));
-    } else {
-      alert(result.message);
-    }
-  };
-
   const handleDeleteClick = async () => {
     if (!companyId) return;
 
@@ -85,23 +65,6 @@ export const CompanyDetailPage = () => {
     } else {
       alert(result.message);
     }
-  };
-
-  const handleStartEdit = () => {
-    if (company) {
-      setEditForm({
-        name: company.company.name,
-        address: company.company.address,
-        ceoName: company.company.ceoName,
-        bizNumber: formatBizNumber(company.company.bizNumber),
-        remark: company.company.remark,
-      });
-    }
-    setIsEditMode(true);
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditMode(false);
   };
 
   if (loading) {
@@ -123,14 +86,9 @@ export const CompanyDetailPage = () => {
       {/* Header */}
       <DetailPageHeader
         title={company.company.name}
-        isEditMode={isEditMode}
-        isUpdating={isUpdating}
         isDeleting={isDeleting}
-        onEdit={handleStartEdit}
-        onCancel={handleCancelEdit}
-        onSave={handleEditSubmit}
         onDelete={handleDeleteClick}
-        backUrl="/company"
+        backUrl="/client/company"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -141,7 +99,7 @@ export const CompanyDetailPage = () => {
               ...company.company,
               createdAt: company.company.createdAt.toString()
             }}
-            isEditMode={isEditMode}
+            isEditMode={isDeleting}
             editForm={editForm}
             onChange={handleEditChange}
           />

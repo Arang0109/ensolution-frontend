@@ -1,23 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { AddButton } from '@/common/ui';
 import { useCompanies } from '@company/hooks/useCompanies';
 import { CompanyAddModal } from '@company/components/CompanyAddModal';
-
-import { formatBizNumber } from '@/common/utils/formatters';
+import { CompanyCardItem } from '@company/ui/CompanyCardItem';
 
 export const CompanyListPage = () => {
-  const navigate = useNavigate();
   const { companies, loading, refetch } = useCompanies();
   const [showAddModal, setShowAddModal] = useState(false);
-
-  const handleCompanyClick = (companyId: number) => {
-    navigate(`/company/${companyId}`);
-  };
-
-  const handleAddSuccess = () => {
-    refetch();
-  };
-
+  
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -31,15 +21,7 @@ export const CompanyListPage = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">측정대행 의뢰업체</h1>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors flex items-center gap-2 shadow-md"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-          </svg>
-          업체 추가
-        </button>
+        <AddButton label="업체추가" onClick={() => setShowAddModal(true)} />
       </div>
 
       {/* Company List */}
@@ -51,49 +33,7 @@ export const CompanyListPage = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {companies.map((company) => (
-            <div
-              key={company.id}
-              onClick={() => handleCompanyClick(company.id)}
-              className="bg-white border border-sand-200 rounded-lg p-5 hover:shadow-lg hover:border-brown-400 transition-all cursor-pointer"
-            >
-              <div className="flex justify-between items-start mb-3">
-                <h3 className="text-xl font-semibold text-gray-800">{company.name}</h3>
-              </div>
-
-              <div className="space-y-2 text-sm text-gray-600">
-                <div className="flex items-start gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span className="line-clamp-1">{company.address}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span>대표: {company.ceoName}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span>사업자번호: {formatBizNumber(company.bizNumber ?? "")}</span>
-                </div>
-
-                {company.remark && (
-                  <div className="mt-3 pt-3 border-t border-gray-100">
-                    <p className="text-gray-500 text-xs line-clamp-2">{company.remark}</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-4 text-xs text-gray-400">
-                등록일: {new Date(company.createdAt).toLocaleDateString('ko-KR')}
-              </div>
-            </div>
+            <CompanyCardItem key={company.id} company={company}/>
           ))}
         </div>
       )}
@@ -102,7 +42,7 @@ export const CompanyListPage = () => {
       {showAddModal && (
         <CompanyAddModal
           onClose={() => setShowAddModal(false)}
-          onSuccess={handleAddSuccess}
+          onSuccess={() => refetch()}
         />
       )}
     </div>
