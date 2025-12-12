@@ -1,12 +1,7 @@
-import { createContext, useState, useCallback, type ReactNode } from 'react';
+import { useState, useCallback, type ReactNode } from 'react';
 import { ToastContainer } from '@/common/ui/Toast';
 import type { Toast, ToastType } from '@/common/ui/Toast';
-
-interface ToastContextType {
-  showToast: (message: string, type?: ToastType) => void;
-}
-
-export const ToastContext = createContext<ToastContextType | undefined>(undefined);
+import { ToastContext } from '../contexts';
 
 interface ToastProviderProps {
   children: ReactNode;
@@ -15,12 +10,13 @@ interface ToastProviderProps {
 export const ToastProvider = ({ children }: ToastProviderProps) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const showToast = useCallback((message: string, type: ToastType = 'info') => {
-    const id = `${Date.now()}-${Math.random()}`;
-    const newToast: Toast = { id, message, type };
-
-    setToasts((prev) => [...prev, newToast]);
-  }, []);
+  const showToast = useCallback(
+    (message: string, type: ToastType = 'info') => {
+      const id = `${Date.now()}-${Math.random()}`;
+      setToasts((prev) => [...prev, { id, message, type }]);
+    },
+    []
+  );
 
   const closeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));

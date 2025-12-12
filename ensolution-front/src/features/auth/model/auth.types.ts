@@ -11,7 +11,7 @@ export interface Users {
   birthDate: string;
   status: string;
   createdAt: Date;
-  updatedAt: Date;
+  modifiedAt: Date;
 }
 
 export interface UserResponse {
@@ -24,7 +24,7 @@ export interface UserResponse {
   phoneNumber: string;
   birthDate: string;
   createdAt: Date;
-  updatedAt: Date;
+  modifiedAt: Date;
 }
 
 export interface UserUpdateRequest {

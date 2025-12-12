@@ -64,7 +64,7 @@ export const useUserProfileForm = () => {
   /** 팀 ID 변경 핸들러 */
   const onTeamChange = (value: number) => {
     setForm((prev) =>
-      prev ? { ...prev, teamId: Number(value) } : prev
+      prev ? { ...prev, teamId: value } : prev
     );
   };
 

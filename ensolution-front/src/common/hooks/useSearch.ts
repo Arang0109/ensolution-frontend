@@ -15,7 +15,7 @@ import { useState, useMemo } from 'react';
  * );
  * ```
  */
-export const useSearch = <T extends Record<string, any>>(
+export const useSearch = <T extends Record<string, unknown>>(
   items: T[],
   searchFields: (keyof T)[]
 ) => {

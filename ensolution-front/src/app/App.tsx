@@ -7,7 +7,7 @@ import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
 import { PollutantPage } from '@pollutant/pages/index';
-import { ToastProvider } from '@/common/contexts';
+import { ToastProvider } from '@/common/components';
 import { ScheduleListPage, ScheduleDetailPage } from "@schedule/pages";
 
 function App() {
