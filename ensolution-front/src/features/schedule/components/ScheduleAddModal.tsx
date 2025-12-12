@@ -1,4 +1,5 @@
 import { useScheduleForm } from "@schedule/hooks";
+import { SearchableSelect } from "./SearchableSelect";
 
 interface ScheduleAddModalProps {
   onClose: () => void;
@@ -6,7 +7,19 @@ interface ScheduleAddModalProps {
 }
 
 export const ScheduleAddModal = ({ onClose, onSuccess }: ScheduleAddModalProps) => {
-  const { form, setForm, isSubmitting, onChange, onSubmit } = useScheduleForm();
+  const {
+    form,
+    isSubmitting,
+    onChange,
+    onSubmit,
+    filteredWorkplaces,
+    filteredTeams,
+    filteredStacks,
+    selectedWorkplaceId,
+    handleWorkplaceChange,
+    loading,
+    loadingStacks,
+  } = useScheduleForm();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const result = await onSubmit(e);
@@ -36,37 +49,54 @@ export const ScheduleAddModal = ({ onClose, onSuccess }: ScheduleAddModalProps) 
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="stackId" className="block text-sm font-medium text-gray-700 mb-1">
-              배출구 ID <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              id="stackId"
-              name="stackId"
-              value={form.stackId || ""}
-              onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
-              placeholder="배출구 ID를 입력하세요"
-              disabled={isSubmitting}
-            />
-          </div>
+          <SearchableSelect
+            id="workplace"
+            label="사업장"
+            placeholder="사업장을 선택하세요"
+            value={selectedWorkplaceId}
+            options={filteredWorkplaces}
+            getOptionLabel={(workplace) => workplace.name}
+            getOptionValue={(workplace) => workplace.id}
+            onChange={handleWorkplaceChange}
+            disabled={isSubmitting || loading}
+            loading={loading}
+            emptyMessage="사업장이 없습니다"
+            required
+          />
 
-          <div>
-            <label htmlFor="teamId" className="block text-sm font-medium text-gray-700 mb-1">
-              팀 ID <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              id="teamId"
-              name="teamId"
-              value={form.teamId || ""}
-              onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
-              placeholder="팀 ID를 입력하세요"
-              disabled={isSubmitting}
-            />
-          </div>
+          <SearchableSelect
+            id="stackId"
+            label="배출구"
+            placeholder={
+              !selectedWorkplaceId
+                ? "먼저 사업장을 선택하세요"
+                : "배출구를 선택하세요"
+            }
+            value={form.stackId}
+            options={filteredStacks}
+            getOptionLabel={(stack) => `${stack.name} (${stack.semsNumber})`}
+            getOptionValue={(stack) => stack.id}
+            onChange={(value) => onChange({ target: { name: "stackId", value: String(value) } } as any)}
+            disabled={isSubmitting || !selectedWorkplaceId || loadingStacks}
+            loading={loadingStacks}
+            emptyMessage="배출구가 없습니다"
+            required
+          />
+
+          <SearchableSelect
+            id="teamId"
+            label="측정팀"
+            placeholder="측정팀을 선택하세요"
+            value={form.teamId}
+            options={filteredTeams}
+            getOptionLabel={(team) => team.name}
+            getOptionValue={(team) => team.id}
+            onChange={(value) => onChange({ target: { name: "teamId", value: String(value) } } as any)}
+            disabled={isSubmitting || loading}
+            loading={loading}
+            emptyMessage="측정팀이 없습니다"
+            required
+          />
 
           <div>
             <label htmlFor="measureDate" className="block text-sm font-medium text-gray-700 mb-1">
