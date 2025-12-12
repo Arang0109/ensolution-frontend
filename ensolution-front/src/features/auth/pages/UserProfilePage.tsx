@@ -1,9 +1,12 @@
 import { useUserProfileForm } from "@/features/auth/hooks/index";
+import { FullPageLoader, FullPageError } from "@/common/components";
 import Select from "react-select";
 import { useState } from "react";
+import { useTeams } from "@agency/hooks";
 
 export const UserProfilePage = () => {
-  const { form, loading, isSubmitting, onChange, onSubmit, onTeamChange, refetch } = useUserProfileForm();
+  const { form, loading: profileLoading, isSubmitting, onChange, onSubmit, onTeamChange, refetch } = useUserProfileForm();
+  const { teams, loading: teamsLoading } = useTeams();
   const [showPasswordChange, setShowPasswordChange] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -16,32 +19,12 @@ export const UserProfilePage = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-brown-600">로딩 중...</div>
-      </div>
-    );
-  }
+  if (profileLoading || teamsLoading) { return <FullPageLoader />; }
+  if (!form) { return <FullPageError message="프로필 정보를 불러올 수 없습니다." />; }
 
-  if (!form) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-brown-600">프로필 정보를 불러올 수 없습니다.</div>
-      </div>
-    );
-  }
-
-  const teamMap: Record<number, string> = {
-    1: "1팀",
-    2: "2팀",
-    3: "3팀",
-    4: "4팀",
-  };
-
-  const teamOptions = Object.entries(teamMap).map(([key, label]) => ({
-    value: Number(key),
-    label,
+  const teamOptions = teams.map(({id, name}) => ({
+    value: id,
+    label: name
   }));
 
   // 선택된 값 찾기
