@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { formatDate } from '../utils/formatters';
 
 interface DetailPageHeaderProps {
-  measureDate: Date;
   title: string;
   isDeleting: boolean;
   onDelete: () => void;
@@ -10,7 +8,6 @@ interface DetailPageHeaderProps {
 }
 
 export const DetailPageHeader = ({
-  measureDate,
   title,
   isDeleting,
   onDelete,
@@ -30,10 +27,6 @@ export const DetailPageHeader = ({
           </svg>
         </button>
         <div className="flex flex-col gap-1">
-          <span className="text-sm font-medium text-gray-500">
-            {formatDate(measureDate)}
-          </span>
-
           <h1 className="text-2xl font-bold text-gray-900 leading-tight">
             {title}
           </h1>
