@@ -15,7 +15,7 @@ export const TeamMemberListCard = ({ users }: TeamMemberListCardProps) => {
         <div className="space-y-2">
           {users.map((user) => (
             <div
-              key={user.id}
+              key={user.username}
               className="flex items-center justify-between p-4 border rounded hover:bg-gray-50"
             >
               <div>
@@ -23,7 +23,7 @@ export const TeamMemberListCard = ({ users }: TeamMemberListCardProps) => {
                 <p className="text-sm text-gray-600">{user.email}</p>
               </div>
               <div className="text-sm text-gray-500">
-                {user.role}
+                {user.department}
               </div>
             </div>
           ))}

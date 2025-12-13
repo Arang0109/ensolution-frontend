@@ -1,7 +1,9 @@
 import { useState, useCallback, type ReactNode } from 'react';
-import { ToastContainer } from '@/common/ui/Toast';
-import type { Toast, ToastType } from '@/common/ui/Toast';
-import { ToastContext } from '../contexts';
+
+import { ToastContainer } from '@common/ui/Toast';
+import { ToastContext } from '@common/contexts';
+
+import type { Toast, ToastType } from '@common/ui/Toast';
 
 interface ToastProviderProps {
   children: ReactNode;

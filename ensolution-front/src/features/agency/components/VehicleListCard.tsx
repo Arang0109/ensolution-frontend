@@ -1,5 +1,5 @@
 import type { VehicleResponse } from "@agency/model/agency.types";
-import { VehicleCard } from "./VehicleCard";
+import { VehicleCard } from "@agency/components/VehicleCard";
 
 interface VehicleListCardProps {
   vehicles: VehicleResponse[];

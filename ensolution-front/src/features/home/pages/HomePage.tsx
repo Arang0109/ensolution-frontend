@@ -1,5 +1,5 @@
-import type { MenuCard } from "@/common/ui";
-import { MenuCardItem } from "@/common/ui";
+import { MenuCardItem, type MenuCard } from "@common/ui";
+
 import { HiOfficeBuilding } from "react-icons/hi";
 import { MdBuild } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";

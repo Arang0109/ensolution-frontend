@@ -1,4 +1,4 @@
-import type { Grade, Shape, Orientation, Cycle, Team } from '@model/common.types';
+import type { Grade, Shape, Orientation, Cycle, Team } from '@common/model/common.types';
 
 /**
  * 배출시설 등급 라벨

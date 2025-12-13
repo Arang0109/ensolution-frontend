@@ -1,5 +1,5 @@
-import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage } from "@/common/model";
+import { axiosPrivate } from "@common/api";
+import type { ApiResponseMessage } from "@common/model";
 import type { UserResponse, UserUpdateRequest, Team } from "@auth/model";
 
 export const getProfile = async (): Promise<ApiResponseMessage<UserResponse>> => {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import { getProfile, patchProfile } from "@auth/api/userApi";
 import type { UserResponse, UserUpdateRequest } from "@auth/model";
 

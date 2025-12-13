@@ -1,7 +1,8 @@
-import type { UserResponse } from "@auth/model";
 import Select from "react-select";
 import { useState } from "react";
-import type { TeamResponse } from "@/features/agency/model";
+
+import type { UserResponse } from "@auth/model";
+import type { TeamResponse } from "@agency/model";
 
 interface ProfileFormProps {
   form: UserResponse;

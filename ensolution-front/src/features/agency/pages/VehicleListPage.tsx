@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useVehicles } from "@agency/hooks/useVehicles";
-import { useVehicleActions } from "@agency/hooks/useVehicleActions";
+
+import { useVehicles, useVehicleActions } from "@agency/hooks";
 import { VehicleListCard } from "@agency/components/VehicleListCard";
 
 export const VehicleListPage = () => {

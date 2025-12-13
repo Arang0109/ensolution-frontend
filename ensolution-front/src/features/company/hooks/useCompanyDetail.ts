@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
-import type { CompanyDetailResponse } from "@company/model";
+
 import { getCompany } from "@company/api/companyApi";
+
+import type { CompanyDetailResponse } from "@company/model";
 
 export const useCompanyDetail = () => {
   const [company, setCompany] = useState<CompanyDetailResponse | null>(null);

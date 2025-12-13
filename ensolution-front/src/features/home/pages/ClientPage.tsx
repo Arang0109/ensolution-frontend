@@ -1,7 +1,7 @@
-import type { MenuCard } from "@/common/ui";
+import { MenuCardItem, type MenuCard } from "@/common/ui";
+
 import { GiChimney } from "react-icons/gi";
 import { HiOfficeBuilding } from "react-icons/hi";
-import { MenuCardItem } from "@/common/ui";
 import { MdDashboard, MdTrendingUp, MdSecurity } from "react-icons/md";
 
 export const ClientPage = () => {

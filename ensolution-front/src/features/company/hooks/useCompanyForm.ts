@@ -1,7 +1,9 @@
 import { useState } from "react";
-import type { CompanyRegisterRequest } from "@company/model";
+
 import { registerCompany } from "@company/api/companyApi";
-import { formatBizNumber, stripBizNumber } from "@/common/utils/formatters";
+
+import type { CompanyRegisterRequest } from "@company/model";
+import { formatBizNumber, stripBizNumber } from "@common/utils/formatters";
 
 export const useCompanyForm = () => {
   const [form, setForm] = useState<CompanyRegisterRequest>({

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import type {
   PollutantResponse,
   PollutantRegisterRequest,
@@ -28,9 +29,9 @@ export const PollutantFormModal = ({
     nameKr: "",
     nameEn: "",
     method: "",
-    samplingTime: 0,
     equipmentName: "",
     testMethodName: "",
+    samplingTime: 0,
     samplingVolume: "",
   });
 

@@ -1,5 +1,6 @@
-import { formatBizNumber } from "@/common/utils/formatters";
 import React from "react";
+
+import { formatBizNumber } from "@common/utils/formatters";
 
 interface CompanyInfoCardProps {
   company: {
