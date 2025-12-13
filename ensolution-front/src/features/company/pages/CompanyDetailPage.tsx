@@ -10,10 +10,10 @@ import { useWorkplaceActions } from '@workplace/hooks';
 import type { CompanyUpdateRequest } from '@company/model';
 
 // 📌 Utils
-import { formatBizNumber } from '@/common/utils/formatters';
+import { formatBizNumber } from '@common/utils/formatters';
 
 // 📌 Shared UI Components
-import { DetailPageHeader, FullPageLoader, EmptyState } from '@/common/components';
+import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 
 // 📌 Company Domain Components
 import { CompanySidebar, WorkplaceListCard, CompanyInfoCard } from '@company/components';

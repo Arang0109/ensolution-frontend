@@ -1,4 +1,4 @@
-import { formatDate } from '@/common/utils/formatters';
+import { formatDate } from '@common/utils/formatters';
 import type { PreventionDetailResponse } from '@stack/model';
 
 interface StackPreventionListCardProps {

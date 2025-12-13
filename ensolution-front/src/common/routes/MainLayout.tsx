@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router';
+
 import { logoutApi } from '@auth/api/authApi';
-import { useToast } from '@/common/hooks';
-import { Dropdown } from '@/common/ui';
+import { useToast } from '@common/hooks';
+import { Dropdown } from '@common/ui';
 
 export const MainLayout = () => {
   const navigate = useNavigate();

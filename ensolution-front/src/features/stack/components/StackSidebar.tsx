@@ -1,8 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { formatDateTime, formatDate } from '@/common/utils/formatters';
-import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@/common/constants';
-import type { Grade, Shape, Orientation } from '@model/common.types';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { formatDateTime, formatDate } from '@common/utils/formatters';
+import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@common/constants';
+import type { Grade, Shape, Orientation } from '@common/model/common.types';
 
 interface StackSidebarProps {
   stack: {

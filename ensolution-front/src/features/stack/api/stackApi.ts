@@ -1,5 +1,5 @@
-import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage, ScheduleStatus } from "@/common/model";
+import { axiosPrivate } from "@common/api";
+import type { ApiResponseMessage, ScheduleStatus } from "@common/model";
 import type { ScheduleResponse } from "@schedule/model";
 import type { StackResponse, StackDetailResponse, StackRegisterRequest, StackUpdateRequest, StackMeasurementResponse } from "@stack/model";
 

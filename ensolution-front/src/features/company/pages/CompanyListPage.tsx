@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { AddButton } from '@/common/ui';
+
+import { AddButton } from '@common/ui';
 import { useCompanies } from '@company/hooks/useCompanies';
 import { CompanyAddModal } from '@company/components/CompanyAddModal';
 import { CompanyCardItem } from '@company/ui/CompanyCardItem';

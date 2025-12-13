@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import type { WorkplaceResponse } from "@workplace/model";
 import { getWorkplaces } from "@workplace/api/workplaceApi";
 

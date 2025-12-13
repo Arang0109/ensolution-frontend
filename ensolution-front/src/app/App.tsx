@@ -1,13 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
-import { ProtectedRoute, MainLayout } from '@routes/index';
+
+import { ToastProvider } from '@common/components';
+import { ProtectedRoute, MainLayout } from '@common/routes/index';
+
 import { LoginPage, UserProfilePage } from '@auth/pages/index';
+
 import { HomePage, ClientPage } from '@home/pages/index';
+
 import { TeamListPage, VehicleListPage, TeamDetailPage } from '@agency/pages/index';
+
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
+
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
 import { PollutantPage } from '@pollutant/pages/index';
-import { ToastProvider } from '@/common/components';
+
 import { ScheduleListPage, ScheduleDetailPage } from "@schedule/pages";
 
 function App() {

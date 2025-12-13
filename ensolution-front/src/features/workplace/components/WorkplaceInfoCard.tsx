@@ -1,7 +1,8 @@
-import { GRADE_LABELS } from '@/common/constants';
-import { formatBizNumber, formatDate } from '@/common/utils/formatters';
-import type { Grade } from '@model/common.types';
 import React from 'react';
+
+import { GRADE_LABELS } from '@common/constants';
+import { formatBizNumber, formatDate } from '@common/utils/formatters';
+import type { Grade } from '@common/model/common.types';
 
 interface WorkplaceInfoCardProps {
   workplace: {

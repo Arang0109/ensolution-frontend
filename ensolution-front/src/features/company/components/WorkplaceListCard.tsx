@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { WorkplaceItem } from "./WorkplaceItem";
-import type { Grade } from '@model/common.types';
+
+import { WorkplaceItem } from "@company/components/WorkplaceItem";
+import type { Grade } from '@common/model/common.types';
 
 interface WorkplaceListCardProps {
   workplaces: Array<{

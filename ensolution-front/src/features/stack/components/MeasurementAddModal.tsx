@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+
 import { registerStackMeasurement } from "@stack/api/stackMeasurementApi";
 import { getPollutants } from "@pollutant/api/pollutantApi";
 import type { PollutantResponse } from "@pollutant/model/pollutant.types";
-import type { Cycle } from "@/common/model";
-import { CYCLE_LABELS } from "@/common/constants/labels";
+import type { Cycle } from "@common/model";
+
+import { CYCLE_LABELS } from "@common/constants/labels";
 
 interface MeasurementAddModalProps {
   stackId: number;

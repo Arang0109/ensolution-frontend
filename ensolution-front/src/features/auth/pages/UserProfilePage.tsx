@@ -1,7 +1,9 @@
-import { useUserProfileForm } from "@/features/auth/hooks/index";
-import { FullPageLoader, FullPageError } from "@/common/components";
+import { FullPageLoader, FullPageError } from "@common/components";
+
+import { useUserProfileForm } from "@auth/hooks";
+import { useTeams,  } from "@agency/hooks";
+
 import { ProfileForm } from "@auth/ui";
-import { useTeams } from "@agency/hooks";
 
 export const UserProfilePage = () => {
   const { form, loading: profileLoading, isSubmitting, onChange, onSubmit, onTeamChange, refetch } = useUserProfileForm();

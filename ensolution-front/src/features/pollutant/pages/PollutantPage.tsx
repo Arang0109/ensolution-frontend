@@ -1,8 +1,10 @@
 import { useState } from "react";
+
+import { FullPageLoader } from "@common/components";
+
 import { usePollutants, usePollutantActions } from "@pollutant/hooks";
 import { PollutantTable, PollutantFormModal } from "@pollutant/components";
-import { FullPageLoader } from "@/common/components";
-import type { PollutantResponse } from "@pollutant/model/pollutant.types";
+import type { PollutantRegisterRequest, PollutantResponse, PollutantUpdateRequest } from "@pollutant/model/pollutant.types";
 
 export const PollutantPage = () => {
   const { pollutants, loading, refetch } = usePollutants();
@@ -32,7 +34,7 @@ export const PollutantPage = () => {
     }
   };
 
-  const handleModalSubmit = async (data: any) => {
+  const handleModalSubmit = async (data: PollutantUpdateRequest | PollutantRegisterRequest) => {
     let success = false;
 
     if (editingPollutant) {
@@ -85,6 +87,7 @@ export const PollutantPage = () => {
       />
 
       <PollutantFormModal
+        key={editingPollutant?.id ?? "create"}
         pollutant={editingPollutant}
         isOpen={isModalOpen}
         isSubmitting={isSubmitting}

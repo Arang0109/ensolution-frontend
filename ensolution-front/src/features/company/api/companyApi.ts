@@ -1,5 +1,6 @@
-import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage } from "@/common/model";
+import { axiosPrivate } from "@common/api";
+
+import type { ApiResponseMessage } from "@common/model";
 import type { CompanyResponse, CompanyDetailResponse, CompanyRegisterRequest, CompanyUpdateRequest } from "@company/model";
 
 export const registerCompany = async (

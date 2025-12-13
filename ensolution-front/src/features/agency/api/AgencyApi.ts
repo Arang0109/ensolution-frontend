@@ -1,5 +1,6 @@
-import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage } from "@/common/model";
+import { axiosPrivate } from "@common/api";
+
+import type { ApiResponseMessage } from "@common/model";
 import type {
   VehicleResponse, VehicleRegisterRequest, VehicleUpdateRequest,
   TeamResponse, TeamDetailResponse, TeamRegisterRequest, TeamUpdateRequest

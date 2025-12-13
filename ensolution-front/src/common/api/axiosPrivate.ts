@@ -1,5 +1,5 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
-import { axiosPublic } from './axiosPublic';
+import { axiosPublic } from '@common/api/axiosPublic';
 
 const baseURL = import.meta.env.DEV ? 'http://localhost:8080/api' : '/api';
 

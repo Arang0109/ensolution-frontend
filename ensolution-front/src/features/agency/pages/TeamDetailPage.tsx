@@ -1,10 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useTeamDetail } from "@agency/hooks/useTeamDetail";
-import { useTeamActions } from "@agency/hooks/useTeamActions";
-import { TeamInfoCard } from "@agency/components/TeamInfoCard";
-import { TeamMemberListCard } from "@agency/components/TeamMemberListCard";
-import { TeamVehicleListCard } from "@agency/components/TeamVehicleListCard";
-import { TeamSidebar } from "@agency/components/TeamSidebar";
+
+import { useTeamDetail, useTeamActions } from "@agency/hooks";
+import { TeamInfoCard, TeamMemberListCard, TeamVehicleListCard, TeamSidebar } from "@agency/components";
 
 export const TeamDetailPage = () => {
   const { teamId } = useParams<{ teamId: string }>();

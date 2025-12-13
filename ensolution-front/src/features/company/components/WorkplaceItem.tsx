@@ -1,6 +1,6 @@
-import { formatBizNumber } from "@/common/utils/formatters";
-import { GRADE_LABELS } from '@/common/constants';
-import type { Grade } from '@model/common.types';
+import { formatBizNumber } from "@common/utils/formatters";
+import { GRADE_LABELS } from '@common/constants';
+import type { Grade } from '@common/model/common.types';
 
 interface WorkplaceItemProps {
   workplace: {

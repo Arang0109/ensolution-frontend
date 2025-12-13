@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { StackMeasurementResponse } from '@stack/model';
-import type { Cycle } from '@/common/model';
-import { CYCLE_LABELS } from '@/common/constants/labels';
-import { MeasurementEditModal } from './MeasurementEditModal';
+import type { Cycle } from '@common/model';
+import { CYCLE_LABELS } from '@common/constants/labels';
+import { MeasurementEditModal } from '@stack/components/MeasurementEditModal';
 
 interface StackMeasurementListCardProps {
   measurements: StackMeasurementResponse[];

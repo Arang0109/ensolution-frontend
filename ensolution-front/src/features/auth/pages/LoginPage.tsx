@@ -1,5 +1,5 @@
 import { LoginForm, SignupHint, SocialLoginButton } from "@auth/ui";
-import { useLoginForm } from "@/features/auth/hooks/useLoginForm";
+import { useLoginForm } from "@auth/hooks/useLoginForm";
 
 export const LoginPage = () => {
 

@@ -94,15 +94,28 @@ export const useScheduleForm = () => {
     }
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const setFieldValue = <K extends keyof ScheduleRegisterRequest>(
+    key: K,
+    value: ScheduleRegisterRequest[K]
+  ) => {
+    setForm(prev => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
 
-    if (name === "measureDate") {
-      setForm(prev => ({ ...prev, [name]: new Date(value) }));
-    } else if (name === "stackId" || name === "teamId") {
-      setForm(prev => ({ ...prev, [name]: Number(value) }));
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const key = name as keyof ScheduleRegisterRequest;
+
+    if (key === "measureDate") {
+      setFieldValue(key, new Date(value));
+    } else if (key === "stackId" || key === "teamId") {
+      setFieldValue(key, Number(value));
     } else {
-      setForm(prev => ({ ...prev, [name]: value }));
+      setFieldValue(key, value);
     }
   };
 
@@ -137,6 +150,7 @@ export const useScheduleForm = () => {
     isSubmitting,
     onChange,
     onSubmit,
+    setFieldValue,
     // Select data
     workplaces,
     teams,

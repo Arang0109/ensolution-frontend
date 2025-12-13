@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import type { CompanyResponse } from "@company/model";
+
 import { getCompanies } from "@company/api/companyApi";
+
+import type { CompanyResponse } from "@company/model";
 
 export const useCompanies = () => {
   const [companies, setCompanies] = useState<CompanyResponse[]>([]);

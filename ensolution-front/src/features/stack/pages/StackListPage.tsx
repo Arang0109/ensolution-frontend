@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+
 import { useStacks } from '@stack/hooks';
-import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@/common/constants';
-import { useSearch } from '@/common/hooks';
+import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@common/constants';
+import { useSearch } from '@common/hooks';
 
 export const StackListPage = () => {
   const navigate = useNavigate();

@@ -29,10 +29,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
-      "@api/*": ["./src/common/api/*"],
-      "@model/*": ["./src/common/model/*"],
-      "@routes/*": ["./src/common/routes/*"],
-      "@utils/*": ["./src/common/utils/*"],
+      "@common/*": ["./src/common/*"],
       "@home/*": ["./src/features/home/*"],
       "@auth/*": ["./src/features/auth/*"],
       "@agency/*": ["./src/features/agency/*"],

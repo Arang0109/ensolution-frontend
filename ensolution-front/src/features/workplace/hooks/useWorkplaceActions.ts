@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useToast } from '@/common/hooks';
+
+import { useToast } from '@common/hooks';
 import type { WorkplaceRegisterRequest, WorkplaceUpdateRequest } from '@workplace/model';
 import { registerWorkplace, patchWorkplace, deleteWorkplace } from '@workplace/api/workplaceApi';
 

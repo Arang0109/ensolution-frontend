@@ -10,10 +10,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@app': path.resolve(__dirname, './src/app'),
-      '@api': path.resolve(__dirname, './src/common/api'),
-      '@model': path.resolve(__dirname, './src/common/model'),
-      '@routes': path.resolve(__dirname, './src/common/routes'),
-      '@utils': path.resolve(__dirname, './src/common/utils'),
+      '@common': path.resolve(__dirname, './src/common'),
       '@home': path.resolve(__dirname, './src/features/home'),
       '@auth': path.resolve(__dirname, './src/features/auth'),
       '@agency': path.resolve(__dirname, './src/features/agency'),

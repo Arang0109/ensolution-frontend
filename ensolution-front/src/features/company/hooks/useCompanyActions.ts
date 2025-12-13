@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
+
 import { deleteCompany, patchCompany } from "@company/api/companyApi";
+
 import type { CompanyUpdateRequest } from "@company/model";
 
 export const useCompanyActions = () => {
