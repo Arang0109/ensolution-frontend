@@ -1,5 +1,6 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
 import { useStackDetail, useStackActions } from '@stack/hooks';
 import {
   PreventionAddModal,
@@ -9,7 +10,7 @@ import {
   StackMeasurementListCard,
   StackSidebar,
 } from '@stack/components';
-import { DetailPageHeader, FullPageLoader, EmptyState } from '@/common/components';
+import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 import type { PreventionDetailResponse, StackUpdateRequest } from '@stack/model';
 
 export const StackDetailPage = () => {

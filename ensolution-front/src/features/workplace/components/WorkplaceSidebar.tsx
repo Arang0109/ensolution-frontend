@@ -1,4 +1,4 @@
-import { formatDateTime } from '@/common/utils/formatters';
+import { formatDateTime } from '@common/utils/formatters';
 
 interface WorkplaceSidebarProps {
   stackCount: number;

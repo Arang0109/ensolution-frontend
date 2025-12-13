@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { patchStackMeasurement } from "@stack/api/stackMeasurementApi";
 import type { StackMeasurementResponse } from "@stack/model";
-import type { Cycle } from "@/common/model";
-import { CYCLE_LABELS } from "@/common/constants/labels";
+import type { Cycle } from "@common/model";
+import { CYCLE_LABELS } from "@common/constants/labels";
 
 interface MeasurementEditModalProps {
   measurement: StackMeasurementResponse;

@@ -1,6 +1,7 @@
 import { axiosPrivate } from "@common/api";
 import type { ApiResponseMessage } from "@common/model";
-import type { UserResponse, UserUpdateRequest, Team } from "@auth/model";
+import type { UserResponse, UserUpdateRequest } from "@auth/model";
+import type { TeamResponse } from "@/features/agency/model";
 
 export const getProfile = async (): Promise<ApiResponseMessage<UserResponse>> => {
   const res = await axiosPrivate.get("/users/me");
@@ -17,7 +18,7 @@ export const deleteProfile = async (): Promise<ApiResponseMessage<void>> => {
   return res.data;
 }
 
-export const getTeams = async (): Promise<ApiResponseMessage<Team[]>> => {
+export const getTeams = async (): Promise<ApiResponseMessage<TeamResponse[]>> => {
   const res = await axiosPrivate.get("/teams");
   return res.data;
 }

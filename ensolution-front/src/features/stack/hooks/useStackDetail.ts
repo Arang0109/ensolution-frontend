@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+
 import type { StackDetailWithPreventionsResponse, PreventionDetailResponse } from "@stack/model";
 import { getStack } from "@stack/api/stackApi";
 import { getPrevention } from "@stack/api/preventionApi";

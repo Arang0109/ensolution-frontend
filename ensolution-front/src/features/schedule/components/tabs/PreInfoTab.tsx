@@ -1,11 +1,15 @@
 import { useState } from "react";
-import type { ScheduleDetailResponse } from "@schedule/model";
-import type { StackUpdateRequest } from "@/features/stack/model";
-import { patchStack } from "@/features/stack/api/stackApi";
+
+import { patchStack } from "@stack/api/stackApi";
 import { patchSchedule } from "@schedule/api/scheduleApi";
-import { formatBizNumber } from "@/common/utils/formatters";
-import { TEAM_LABEL, GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from "@/common/constants/labels";
-import type { Shape, Orientation, Grade } from "@/common/model/common.types";
+
+import type { ScheduleDetailResponse } from "@schedule/model";
+import type { StackUpdateRequest } from "@stack/model";
+
+import type { Shape, Orientation, Grade } from "@common/model/common.types";
+
+import { formatBizNumber } from "@common/utils/formatters";
+import { TEAM_LABEL, GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from "@common/constants/labels";
 
 const STATUS_LABELS: Record<string, string> = {
   MEASURING: "측정 중",

@@ -1,5 +1,5 @@
-import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage } from "@/common/model";
+import { axiosPrivate } from "@common/api";
+import type { ApiResponseMessage } from "@common/model";
 import type { 
   PreventionResponse, PreventionDetailResponse, PreventionRegisterRequest, PreventionUpdateRequest
 } from "@stack/model";

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { GRADE_LABELS } from '@/common/constants';
-import type { Grade } from '@model/common.types';
+import { GRADE_LABELS } from '@common/constants';
+import type { Grade } from '@common/model/common.types';
 
 interface StackItem {
   id: number;

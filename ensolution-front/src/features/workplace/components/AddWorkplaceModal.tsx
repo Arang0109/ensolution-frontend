@@ -2,11 +2,11 @@
 import { useState } from 'react';
 
 // 📌 Types
-import type { Grade } from '@/common/model';
+import type { Grade } from '@common/model';
 import type { WorkplaceRegisterRequest } from '@workplace/model';
 
 // 📌 Utils
-import { formatBizNumber, stripBizNumber } from '@/common/utils/formatters';
+import { formatBizNumber, stripBizNumber } from '@common/utils/formatters';
 
 interface AddWorkplaceModalProps {
   isOpen: boolean;

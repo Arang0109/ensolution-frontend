@@ -1,9 +1,7 @@
-import type { Grade, Shape, Orientation, Cycle, Team } from '@common/model/common.types';
-
 /**
  * 배출시설 등급 라벨
  */
-export const GRADE_LABELS: Record<Grade, string> = {
+export const GRADE_LABELS: Record<string, string> = {
   TYPE_1: '1종',
   TYPE_2: '2종',
   TYPE_3: '3종',
@@ -14,7 +12,7 @@ export const GRADE_LABELS: Record<Grade, string> = {
 /**
  * 배출구 형태 라벨
  */
-export const SHAPE_LABELS: Record<Shape, string> = {
+export const SHAPE_LABELS: Record<string, string> = {
   CIRCULAR: '원형',
   RECTANGULAR: '사각형',
   OTHER: '기타',
@@ -23,7 +21,7 @@ export const SHAPE_LABELS: Record<Shape, string> = {
 /**
  * 배출구 방향 라벨
  */
-export const ORIENTATION_LABELS: Record<Orientation, string> = {
+export const ORIENTATION_LABELS: Record<string, string> = {
   VERTICAL: '수직',
   HORIZONTAL: '수평',
 } as const;
@@ -31,7 +29,7 @@ export const ORIENTATION_LABELS: Record<Orientation, string> = {
 /**
  * 측정 주기 라벨
  */
-export const CYCLE_LABELS: Record<Cycle, string> = {
+export const CYCLE_LABELS: Record<string, string> = {
   MONTHLY_1: '월 1회',
   MONTHLY_2: '월 2회',
   BIMONTHLY: '2개월 1회',
@@ -43,7 +41,7 @@ export const CYCLE_LABELS: Record<Cycle, string> = {
 /**
  * 측정팀
  */
-export const TEAM_LABEL: Record<Team, string> = {
+export const TEAM_LABEL: Record<number, string> = {
   1: '1팀',
   2: '2팀',
   3: '3팀',

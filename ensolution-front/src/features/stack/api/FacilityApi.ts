@@ -1,5 +1,5 @@
-import { axiosPrivate } from "@/common/api";
-import type { ApiResponseMessage } from "@/common/model";
+import { axiosPrivate } from "@common/api";
+import type { ApiResponseMessage } from "@common/model";
 import type { 
   FacilityRegisterRequest, FacilityUpdateRequest, FacilityResponse
 } from "@stack/model";

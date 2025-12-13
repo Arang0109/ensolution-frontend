@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { patchPrevention, deletePrevention } from '@stack/api/preventionApi';
-import { patchFacility, deleteFacility, registerFacility } from '@/features/stack/api/facilityApi';
-import { patchTarget, deleteTarget, registerTarget } from '@/features/stack/api/targetApi';
+import { patchFacility, deleteFacility, registerFacility } from '@stack/api/facilityApi';
+import { patchTarget, deleteTarget, registerTarget } from '@stack/api/targetApi';
 import type {
   PreventionDetailResponse,
   PreventionUpdateRequest,

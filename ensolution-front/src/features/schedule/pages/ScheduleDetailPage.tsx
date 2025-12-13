@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
 import { useScheduleDetail, useScheduleActions } from "@schedule/hooks";
-import { DetailPageHeader, FullPageLoader, EmptyState, Tabs } from "@/common/components";
+import { DetailPageHeader, FullPageLoader, EmptyState, Tabs } from "@common/components";
 import { PreInfoTab, MeasurementDataTab, LabDataTab } from "@schedule/components/tabs";
 
 export const ScheduleDetailPage = () => {
@@ -54,9 +55,9 @@ export const ScheduleDetailPage = () => {
       case "preinfo":
         return <PreInfoTab scheduleDetail={scheduleDetail} />;
       case "measurement":
-        return <MeasurementDataTab scheduleDetail={scheduleDetail} />;
+        return <MeasurementDataTab />;
       case "lab":
-        return <LabDataTab scheduleDetail={scheduleDetail} />;
+        return <LabDataTab />;
       default:
         return null;
     }
@@ -66,7 +67,6 @@ export const ScheduleDetailPage = () => {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <DetailPageHeader
-        measureDate={scheduleDetail.schedule.measureDate}
         title={`${scheduleDetail.workplace.name} - ${scheduleDetail.stack.stack.name}`}
         isDeleting={isDeleting}
         onDelete={handleDeleteClick}

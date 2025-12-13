@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { useWorkplaceDetail, useWorkplaceActions } from '@workplace/hooks';
-import { useSearch } from '@/common/hooks';
-import { DetailPageHeader, FullPageLoader, EmptyState } from '@/common/components';
-import { formatBizNumber, stripBizNumber } from '@/common/utils/formatters';
+import { useSearch } from '@common/hooks';
+import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
+import { formatBizNumber, stripBizNumber } from '@common/utils/formatters';
 import type { WorkplaceUpdateRequest } from '@workplace/model';
 import {
   WorkplaceInfoCard,

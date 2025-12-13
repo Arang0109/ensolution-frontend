@@ -1,10 +1,4 @@
-import type { ScheduleDetailResponse } from "@schedule/model";
-
-interface LabDataTabProps {
-  scheduleDetail: ScheduleDetailResponse;
-}
-
-export const LabDataTab = ({ scheduleDetail }: LabDataTabProps) => {
+export const LabDataTab = () => {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">

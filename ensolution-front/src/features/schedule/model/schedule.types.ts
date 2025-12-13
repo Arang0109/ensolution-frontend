@@ -1,7 +1,7 @@
-import type { CompanyResponse } from "@/features/company/model";
-import type { StackDetailResponse } from "@/features/stack/model";
-import type { WorkplaceResponse } from "@/features/workplace/model";
-import type { ScheduleStatus } from "@model/common.types";
+import type { CompanyResponse } from "@company/model";
+import type { StackDetailResponse } from "@stack/model";
+import type { WorkplaceResponse } from "@workplace/model";
+import type { ScheduleStatus } from "@common/model/common.types";
 
 export interface ScheduleResponse {
   id: number;

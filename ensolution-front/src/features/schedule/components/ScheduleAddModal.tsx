@@ -1,5 +1,5 @@
 import { useScheduleForm } from "@schedule/hooks";
-import { SearchableSelect } from "./SearchableSelect";
+import { SearchableSelect } from "@schedule/components/SearchableSelect";
 
 interface ScheduleAddModalProps {
   onClose: () => void;
@@ -12,6 +12,7 @@ export const ScheduleAddModal = ({ onClose, onSuccess }: ScheduleAddModalProps) 
     isSubmitting,
     onChange,
     onSubmit,
+    setFieldValue,
     filteredWorkplaces,
     filteredTeams,
     filteredStacks,
@@ -76,7 +77,7 @@ export const ScheduleAddModal = ({ onClose, onSuccess }: ScheduleAddModalProps) 
             options={filteredStacks}
             getOptionLabel={(stack) => `${stack.name} (${stack.semsNumber})`}
             getOptionValue={(stack) => stack.id}
-            onChange={(value) => onChange({ target: { name: "stackId", value: String(value) } } as any)}
+            onChange={(value) => setFieldValue("stackId", value)}
             disabled={isSubmitting || !selectedWorkplaceId || loadingStacks}
             loading={loadingStacks}
             emptyMessage="배출구가 없습니다"
@@ -91,7 +92,7 @@ export const ScheduleAddModal = ({ onClose, onSuccess }: ScheduleAddModalProps) 
             options={filteredTeams}
             getOptionLabel={(team) => team.name}
             getOptionValue={(team) => team.id}
-            onChange={(value) => onChange({ target: { name: "teamId", value: String(value) } } as any)}
+            onChange={(value) => setFieldValue("teamId", value)}
             disabled={isSubmitting || loading}
             loading={loading}
             emptyMessage="측정팀이 없습니다"

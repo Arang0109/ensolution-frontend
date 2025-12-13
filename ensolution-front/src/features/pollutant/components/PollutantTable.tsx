@@ -1,4 +1,7 @@
 import { useState, useMemo } from "react";
+
+import type { PollutantResponse } from "@pollutant/model/pollutant.types";
+
 import {
   useReactTable,
   getCoreRowModel,
@@ -9,8 +12,8 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from "@tanstack/react-table";
+
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
-import type { PollutantResponse } from "@pollutant/model/pollutant.types";
 
 interface PollutantTableProps {
   pollutants: PollutantResponse[];

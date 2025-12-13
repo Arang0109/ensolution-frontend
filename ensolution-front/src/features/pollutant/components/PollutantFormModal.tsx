@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import type {
   PollutantResponse,
@@ -23,46 +23,25 @@ export const PollutantFormModal = ({
   onClose,
   onSubmit,
 }: PollutantFormModalProps) => {
-  const [formData, setFormData] = useState<
-    PollutantRegisterRequest | PollutantUpdateRequest
-  >({
-    nameKr: "",
-    nameEn: "",
-    method: "",
-    equipmentName: "",
-    testMethodName: "",
-    samplingTime: 0,
-    samplingVolume: "",
+  // 초기값을 함수로 추출하여 재사용
+  const getInitialFormData = (): PollutantRegisterRequest | PollutantUpdateRequest => ({
+    nameKr: pollutant?.nameKr ?? "",
+    nameEn: pollutant?.nameEn ?? "",
+    method: pollutant?.method ?? "",
+    equipmentName: pollutant?.equipmentName ?? "",
+    testMethodName: pollutant?.testMethodName ?? "",
+    samplingTime: pollutant?.samplingTime ?? 0,
+    samplingVolume: pollutant?.samplingVolume ?? "",
   });
-
-  useEffect(() => {
-    if (pollutant) {
-      setFormData({
-        nameKr: pollutant.nameKr,
-        nameEn: pollutant.nameEn,
-        method: pollutant.method,
-        equipmentName: pollutant.equipmentName,
-        testMethodName: pollutant.testMethodName,
-        samplingTime: pollutant.samplingTime,
-        samplingVolume: pollutant.samplingVolume,
-      });
-    } else {
-      setFormData({
-        nameKr: "",
-        nameEn: "",
-        method: "",
-        equipmentName: "",
-        testMethodName: "",
-        samplingTime: 0,
-        samplingVolume: "",
-      });
-    }
-  }, [pollutant, isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit(formData);
   };
+
+  const [formData, setFormData] = useState<
+    PollutantRegisterRequest | PollutantUpdateRequest
+  >(getInitialFormData);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
