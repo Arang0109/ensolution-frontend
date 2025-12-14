@@ -7,8 +7,8 @@ export interface CompanyResponse {
   ceoName: string;
   bizNumber: string;
   remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface CompanyRegisterRequest {

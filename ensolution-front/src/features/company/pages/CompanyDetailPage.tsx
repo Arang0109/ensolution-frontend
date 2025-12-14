@@ -22,13 +22,17 @@ import { CompanySidebar, WorkplaceListCard, CompanyInfoCard } from '@company/com
 import { AddWorkplaceModal } from '@workplace/components';
 
 export const CompanyDetailPage = () => {
-  const { companyId } = useParams();
   const navigate = useNavigate();
+  const backUrl = () => {navigate('/client/company')};
+
+  const { companyId } = useParams();
+  const [isEditMode, setIsEditMode] = useState(false);
+
   const { company, fetchCompany, loading } = useCompanyDetail();
-  const { isDeleting, handleDelete } = useCompanyActions();
+  const { isDeleting, handleDelete, handleUpdate } = useCompanyActions();
   const { handleCreate } = useWorkplaceActions();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [editForm, setEditForm] = useState<CompanyUpdateRequest>({
     name: '',
     address: '',
@@ -54,6 +58,20 @@ export const CompanyDetailPage = () => {
     setEditForm(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleUpdateClick = async () => {
+    if (!company) return;
+
+    setEditForm({
+      name: company.company.name,
+      address: company.company.address,
+      ceoName: company.company.ceoName,
+      bizNumber: company.company.bizNumber,
+      remark: company.company.remark ?? '',
+    });
+
+    setIsEditMode(true);
+  }
+
   const handleDeleteClick = async () => {
     if (!companyId) return;
 
@@ -61,10 +79,24 @@ export const CompanyDetailPage = () => {
 
     if (result.success) {
       alert(result.message);
-      navigate('/company');
+      backUrl();
     } else {
       alert(result.message);
     }
+  };
+
+  const handleSaveEdit = async () => {
+    if (!companyId) return;
+
+    const result = await handleUpdate(Number(companyId), editForm);
+    alert(result.message);
+
+    setIsEditMode(false);
+    fetchCompany(Number(companyId));
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditMode(false);
   };
 
   if (loading) {
@@ -76,7 +108,7 @@ export const CompanyDetailPage = () => {
       <EmptyState
         title="업체 정보를 찾을 수 없습니다."
         actionLabel="목록으로 돌아가기"
-        onAction={() => navigate('/company')}
+        onAction={backUrl}
       />
     );
   }
@@ -86,9 +118,13 @@ export const CompanyDetailPage = () => {
       {/* Header */}
       <DetailPageHeader
         title={company.company.name}
+        isEditMode={isEditMode}
         isDeleting={isDeleting}
         onDelete={handleDeleteClick}
-        backUrl="/client/company"
+        onUpdate={handleUpdateClick}
+        onSave={handleSaveEdit}
+        onCancel={handleCancelEdit}
+        backUrl={backUrl}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -97,9 +133,9 @@ export const CompanyDetailPage = () => {
           <CompanyInfoCard
             company={{
               ...company.company,
-              createdAt: company.company.createdAt.toString()
+              createdAt: company.company.createdAt
             }}
-            isEditMode={isDeleting}
+            isEditMode={isEditMode}
             editForm={editForm}
             onChange={handleEditChange}
           />
@@ -107,7 +143,9 @@ export const CompanyDetailPage = () => {
           {/* Workplaces Section */}
           <WorkplaceListCard
             workplaces={company.workplaces}
-            onAdd={() => setIsModalOpen(true)}
+            isEditMode={isEditMode}
+            onClick={() => setShowAddModal(true)}
+            onItemClick={(id) => navigate(`/client/workplace/${id}`)}
           />
         </div>
 
@@ -120,8 +158,8 @@ export const CompanyDetailPage = () => {
 
       {/* Add Workplace Modal */}
       <AddWorkplaceModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
         companyId={Number(companyId)}
         onSuccess={() => fetchCompany(Number(companyId))}
         onSubmit={handleCreate}

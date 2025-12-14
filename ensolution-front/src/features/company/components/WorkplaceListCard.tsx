@@ -1,34 +1,29 @@
-import { useNavigate } from "react-router-dom";
-
 import { WorkplaceItem } from "@company/components/WorkplaceItem";
-import type { Grade } from '@common/model/common.types';
+import type { WorkplaceResponse } from "@workplace/model";
+
+import { Button } from "@common/ui";
 
 interface WorkplaceListCardProps {
-  workplaces: Array<{
-    id: number;
-    name: string;
-    address: string;
-    bizNumber: string;
-    businessCategory: string;
-    grade: Grade;
-    remark?: string | null;
-  }>;
-  onAdd?: () => void;
+  workplaces: WorkplaceResponse[];
+  isEditMode: boolean
+  onClick: () => void;
+  onItemClick: (id: number) => void;
 }
 
-export const WorkplaceListCard = ({ workplaces, onAdd }: WorkplaceListCardProps) => {
-  const navigate = useNavigate();
+export const WorkplaceListCard = ({ workplaces, isEditMode, onClick, onItemClick }: WorkplaceListCardProps) => {
 
   return (
     <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-brown-900">사업장 목록</h2>
-        <button
-          onClick={onAdd}
-          className="px-3 py-1.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white text-sm rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md"
-        >
-          사업장 추가
-        </button>
+        {isEditMode ? (
+          <></>
+        ) : (<>
+          <Button
+            label="사업장 추가"
+            onClick={onClick}
+          />
+        </>)}
       </div>
 
       {workplaces.length === 0 ? (
@@ -41,7 +36,7 @@ export const WorkplaceListCard = ({ workplaces, onAdd }: WorkplaceListCardProps)
             <WorkplaceItem
               key={workplace.id}
               workplace={workplace}
-              onClick={() => navigate(`/workplace/${workplace.id}`)}
+              onClick={() => onItemClick(workplace.id)}
             />
           ))}
         </div>
