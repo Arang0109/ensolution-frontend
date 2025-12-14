@@ -49,7 +49,7 @@ export const CompanyInfoCard = ({
           <div className="space-y-6">
             {/* 기본 정보 섹션 */}
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <InfoInput label="업체명 *" name="name" value={editForm.name} onChange={onChange} />
                 <InfoInput label="대표자명 *" name="ceoName" value={editForm.ceoName} onChange={onChange} />
                 <InfoInput label="사업자번호 *" name="bizNumber" value={editForm.bizNumber} onChange={onChange}
@@ -79,18 +79,18 @@ export const CompanyInfoCard = ({
           <div className="space-y-6">
             {/* 기본 정보 섹션 */}
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-4">
                 <ReadOnlyPair label="업체명" value={company.name} />
                 <ReadOnlyPair label="대표자명" value={company.ceoName} />
                 <ReadOnlyPair label="사업자번호" value={formatBizNumber(company.bizNumber)} />
+                <ReadOnlyPair label="등록일" value={formatDate(company.createdAt)} />
               </div>
             </div>
 
             {/* 위치 및 등록 정보 섹션 */}
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-4">
                 <ReadOnlyPair label="주소" value={company.address} />
-                <ReadOnlyPair label="등록일" value={formatDate(company.createdAt)} />
               </div>
             </div>
 

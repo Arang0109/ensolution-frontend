@@ -13,9 +13,12 @@ interface WorkplaceListCardProps {
 export const WorkplaceListCard = ({ workplaces, isEditMode, onClick, onItemClick }: WorkplaceListCardProps) => {
 
   return (
-    <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-brown-900">사업장 목록</h2>
+    <div className="bg-white border border-sand-200 rounded-lg shadow-md">
+      <div className="flex justify-between items-center bg-gradient-to-r from-brown-50 to-sand-50 px-6 py-4 border-b border-sand-200">
+        <h2 className="text-xl font-semibold text-brown-900 flex items-center gap-2">
+          <span className="w-1 h-6 bg-brown-600 rounded-full"></span>
+          사업장 목록
+        </h2>
         {isEditMode ? (
           <></>
         ) : (<>
@@ -31,7 +34,7 @@ export const WorkplaceListCard = ({ workplaces, isEditMode, onClick, onItemClick
           <p className="text-gray-500">등록된 사업장이 없습니다.</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 m-6">
           {workplaces.map(workplace => (
             <WorkplaceItem
               key={workplace.id}

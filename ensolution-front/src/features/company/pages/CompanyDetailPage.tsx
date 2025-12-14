@@ -16,7 +16,7 @@ import { formatBizNumber } from '@common/utils/formatters';
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 
 // 📌 Company Domain Components
-import { CompanySidebar, WorkplaceListCard, CompanyInfoCard } from '@company/components';
+import { WorkplaceListCard, CompanyInfoCard } from '@company/components';
 
 // 📌 Workplace Domain Components
 import { AddWorkplaceModal } from '@workplace/components';
@@ -127,7 +127,7 @@ export const CompanyDetailPage = () => {
         backUrl={backUrl}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {/* Company Profile Card */}
         <div className="lg:col-span-2 space-y-6">
           <CompanyInfoCard
@@ -148,12 +148,6 @@ export const CompanyDetailPage = () => {
             onItemClick={(id) => navigate(`/client/workplace/${id}`)}
           />
         </div>
-
-        {/* Sidebar */}
-        <CompanySidebar
-          workplaceNum={company.workplaces.length}
-          modifiedAt={new Date(company.company.modifiedAt).toLocaleString('ko-KR')}
-        />
       </div>
 
       {/* Add Workplace Modal */}
