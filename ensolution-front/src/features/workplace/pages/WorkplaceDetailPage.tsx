@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useWorkplaceDetail, useWorkplaceActions } from '@workplace/hooks';
-import { useSearch } from '@common/hooks';
+import { useSearch, useToast } from '@common/hooks';
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 import { formatBizNumber, stripBizNumber } from '@common/utils/formatters';
 import type { WorkplaceUpdateRequest } from '@workplace/model';
 import {
   WorkplaceInfoCard,
-  WorkplaceStackListCard,
-  WorkplaceSidebar,
+  WorkplaceStackListCard
 } from '@workplace/components';
 import { StackAddModal } from '@stack/components';
 
 export const WorkplaceDetailPage = () => {
+  const navigate = useNavigate();
+  const backUrl = () => {navigate('/client/workplace')}
+
+  const { showToast } = useToast();
+
   const { workplaceId } = useParams();
-  const { workplace, fetchWorkplace, loading } = useWorkplaceDetail();
-  const { handleUpdate, handleDelete, isUpdating, isDeleting } = useWorkplaceActions();
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const { workplace, fetchWorkplace, loading } = useWorkplaceDetail();
+  const { handleUpdate, handleDelete, isDeleting } = useWorkplaceActions();
+
   const [editForm, setEditForm] = useState<WorkplaceUpdateRequest>({
     name: '',
     address: '',
@@ -40,19 +46,6 @@ export const WorkplaceDetailPage = () => {
     }
   }, [workplaceId, fetchWorkplace]);
 
-  useEffect(() => {
-    if (workplace) {
-      setEditForm({
-        name: workplace.workplace.name,
-        address: workplace.workplace.address,
-        bizNumber: formatBizNumber(workplace.workplace.bizNumber),
-        businessCategory: workplace.workplace.businessCategory,
-        grade: workplace.workplace.grade,
-        remark: workplace.workplace.remark || '',
-      });
-    }
-  }, [workplace]);
-
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
@@ -64,40 +57,19 @@ export const WorkplaceDetailPage = () => {
     setEditForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleEdit = () => {
+  const handleUpdateClick = async () => {
+    if (!workplace) return;
+
+    setEditForm({
+      name: workplace.workplace.name,
+      address: workplace.workplace.address,
+      bizNumber: formatBizNumber(workplace.workplace.bizNumber),
+      businessCategory: workplace.workplace.businessCategory,
+      grade: workplace.workplace.grade,
+      remark: workplace.workplace.remark || '',
+    });
+
     setIsEditMode(true);
-  };
-
-  const handleCancel = () => {
-    setIsEditMode(false);
-    if (workplace) {
-      setEditForm({
-        name: workplace.workplace.name,
-        address: workplace.workplace.address,
-        bizNumber: formatBizNumber(workplace.workplace.bizNumber),
-        businessCategory: workplace.workplace.businessCategory,
-        grade: workplace.workplace.grade,
-        remark: workplace.workplace.remark || '',
-      });
-    }
-  };
-
-  const handleSave = async () => {
-    if (!workplaceId) return;
-
-    const updateData: WorkplaceUpdateRequest = {
-      ...editForm,
-      bizNumber: stripBizNumber(editForm.bizNumber),
-    };
-
-    const result = await handleUpdate(Number(workplaceId), updateData);
-
-    if (result.success) {
-      setIsEditMode(false);
-      fetchWorkplace(Number(workplaceId));
-    } else {
-      alert(result.message);
-    }
   };
 
   const handleDeleteClick = async () => {
@@ -111,6 +83,25 @@ export const WorkplaceDetailPage = () => {
         alert(result.message);
       }
     }
+  };
+
+  const handleSaveEdit = async () => {
+    if (!workplaceId) return;
+
+    const updateData: WorkplaceUpdateRequest = {
+      ...editForm,
+      bizNumber: stripBizNumber(editForm.bizNumber),
+    };
+
+    const result = await handleUpdate(Number(workplaceId), updateData);
+    showToast(result.message);
+
+    setIsEditMode(false);
+      fetchWorkplace(Number(workplaceId));
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditMode(false);
   };
 
   const handleAddStack = () => {
@@ -128,7 +119,13 @@ export const WorkplaceDetailPage = () => {
   }
 
   if (!workplace) {
-    return <EmptyState title="사업장 정보를 불러올 수 없습니다." />;
+    return (
+      <EmptyState
+        title="사업장 정보를 불러올 수 없습니다."
+        actionLabel="목록으로 돌아가기"
+        onAction={backUrl}
+      />
+    );
   }
 
   return (
@@ -136,16 +133,15 @@ export const WorkplaceDetailPage = () => {
       <DetailPageHeader
         title={workplace.workplace.name}
         isEditMode={isEditMode}
-        isUpdating={isUpdating}
         isDeleting={isDeleting}
-        onEdit={handleEdit}
-        onCancel={handleCancel}
-        onSave={handleSave}
         onDelete={handleDeleteClick}
-        backUrl="/workplace"
+        onUpdate={handleUpdateClick}
+        onSave={handleSaveEdit}
+        onCancel={handleCancelEdit}
+        backUrl={backUrl}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           <WorkplaceInfoCard
@@ -162,12 +158,6 @@ export const WorkplaceDetailPage = () => {
             onAddStack={handleAddStack}
           />
         </div>
-
-        {/* Sidebar */}
-        <WorkplaceSidebar
-          stackCount={workplace.stacks.length}
-          modifiedAt={workplace.workplace.modifiedAt}
-        />
       </div>
 
       {/* Stack Add Modal */}

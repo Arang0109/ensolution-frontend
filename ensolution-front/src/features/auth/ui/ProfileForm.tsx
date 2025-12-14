@@ -193,14 +193,14 @@ export const ProfileForm = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-gradient-to-r from-brown-500 to-terracotta-600 text-white py-3 rounded-lg font-medium hover:from-brown-600 hover:to-terracotta-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 bg-brown-600 text-white py-2 rounded-lg font-medium hover:bg-brown-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "저장 중..." : "프로필 저장"}
           </button>
           <button
             type="button"
             onClick={() => setShowPasswordChange(!showPasswordChange)}
-            className="px-6 py-3 border-2 border-brown-500 text-brown-700 rounded-lg font-medium hover:bg-brown-50 transition-all"
+            className="px-6 py-2 border-2 border-brown-500 text-brown-700 rounded-lg font-medium hover:bg-brown-50 transition-all"
           >
             비밀번호 변경
           </button>
