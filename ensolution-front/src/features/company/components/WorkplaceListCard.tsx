@@ -21,10 +21,7 @@ export const WorkplaceListCard = ({ workplaces, isEditMode, onClick }: Workplace
         {isEditMode ? (
           <></>
         ) : (<>
-          <Button
-            label="사업장 추가"
-            onClick={onClick}
-          />
+          <Button label="사업장 추가" onClick={onClick} />
         </>)}
       </div>
 

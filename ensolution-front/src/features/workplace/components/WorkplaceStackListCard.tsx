@@ -1,40 +1,32 @@
-import { useNavigate } from 'react-router-dom';
-import { GRADE_LABELS } from '@common/constants';
-import type { Grade } from '@common/model/common.types';
+import { StackItem } from '@workplace/components';
+import type { StackResponse } from '@stack/model';
 
-interface StackItem {
-  id: number;
-  name: string;
-  semsNumber: string;
-  grade: Grade;
-  remark?: string | null;
-}
+import { Button } from "@common/ui";
 
 interface WorkplaceStackListCardProps {
-  stacks: StackItem[];
+  stacks: StackResponse[];
+  isEditMode: boolean;
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  onAddStack?: () => void;
+  onClick: () => void;
 }
 
 export const WorkplaceStackListCard = ({
   stacks,
+  isEditMode,
   searchTerm,
   onSearchChange,
-  onAddStack,
+  onClick,
 }: WorkplaceStackListCardProps) => {
-  const navigate = useNavigate();
-
   return (
     <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-brown-900">측정 대상 시설 목록</h2>
-        <button
-          onClick={onAddStack}
-          className="px-3 py-1.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white text-sm rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md"
-        >
-          시설 추가
-        </button>
+        {isEditMode ? (
+          <></>
+        ) : (<>
+          <Button label='시설 추가' onClick={onClick} />
+        </>)}
       </div>
 
       {/* Search Input */}
@@ -56,31 +48,11 @@ export const WorkplaceStackListCard = ({
         </div>
       ) : (
         <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {stacks.map((stack) => (
-            <div
-              key={stack.id}
-              onClick={() => navigate(`/stack/${stack.id}`)}
-              className="border border-sand-200 rounded-lg p-4 hover:shadow-md hover:border-brown-400 transition-all cursor-pointer"
-            >
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-gray-800">{stack.name}</h3>
-                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                  ID: {stack.id}
-                </span>
-              </div>
-              <div className="flex gap-4 text-xs text-gray-500">
-                <span>Sems 번호: {stack.semsNumber}</span>
-                <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-800">
-                  배출시설 규모: {GRADE_LABELS[stack.grade] ?? stack.grade}
-                </span>
-              </div>
-              {stack.remark && (
-                <p className="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-100">
-                  {stack.remark}
-                </p>
-              )}
-            </div>
+            <StackItem key={stack.id} stack={stack} />
           ))}
+          </div>
         </div>
       )}
     </div>

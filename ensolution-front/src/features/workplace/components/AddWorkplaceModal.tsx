@@ -1,5 +1,6 @@
 // 📌 React & Hooks
 import { useState } from 'react';
+import { useToast } from "@common/hooks";
 
 // 📌 Types
 import type { Grade } from '@common/model';
@@ -33,6 +34,7 @@ export const AddWorkplaceModal = ({
   onSuccess,
   onSubmit,
 }: AddWorkplaceModalProps) => {
+  const { showToast } = useToast();
   const [form, setForm] = useState<WorkplaceRegisterRequest>(() => getInitialForm(companyId));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -72,12 +74,12 @@ export const AddWorkplaceModal = ({
     setIsSubmitting(false);
 
     if (result.success) {
-      alert(result.message);
+      showToast('사업장이 등록되었습니다.','success');
       resetForm();
       onSuccess();
       onClose();
     } else {
-      alert(result.message);
+      showToast('사업장 등록에 실패했습니다.','error');
     }
   };
 

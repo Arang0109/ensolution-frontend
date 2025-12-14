@@ -134,10 +134,7 @@ export const CompanyDetailPage = () => {
         {/* Company Profile Card */}
         <div className="lg:col-span-2 space-y-6">
           <CompanyInfoCard
-            company={{
-              ...company.company,
-              createdAt: company.company.createdAt
-            }}
+            company={company.company}
             isEditMode={isEditMode}
             editForm={editForm}
             onChange={handleEditChange}

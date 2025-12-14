@@ -48,13 +48,11 @@ export const CompanyInfoCard = ({
         {isEditMode ? (
           <div className="space-y-6">
             {/* 기본 정보 섹션 */}
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <InfoInput label="업체명 *" name="name" value={editForm.name} onChange={onChange} />
-                <InfoInput label="대표자명 *" name="ceoName" value={editForm.ceoName} onChange={onChange} />
-                <InfoInput label="사업자번호 *" name="bizNumber" value={editForm.bizNumber} onChange={onChange}
-                  placeholder="000-00-00000" maxLength={12} />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <InfoInput label="업체명 *" name="name" value={editForm.name} onChange={onChange} />
+              <InfoInput label="대표자명 *" name="ceoName" value={editForm.ceoName} onChange={onChange} />
+              <InfoInput label="사업자번호 *" name="bizNumber" value={editForm.bizNumber} onChange={onChange}
+                placeholder="000-00-00000" maxLength={12} />
             </div>
 
             {/* 주소 섹션 */}

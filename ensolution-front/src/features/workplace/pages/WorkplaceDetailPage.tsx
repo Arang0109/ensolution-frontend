@@ -38,7 +38,7 @@ export const WorkplaceDetailPage = () => {
     ['name', 'semsNumber']
   );
 
-  const [showStackAddModal, setShowStackAddModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     if (workplaceId) {
@@ -104,10 +104,6 @@ export const WorkplaceDetailPage = () => {
     setIsEditMode(false);
   };
 
-  const handleAddStack = () => {
-    setShowStackAddModal(true);
-  };
-
   const handleStackAddSuccess = () => {
     if (workplaceId) {
       fetchWorkplace(Number(workplaceId));
@@ -153,18 +149,19 @@ export const WorkplaceDetailPage = () => {
 
           <WorkplaceStackListCard
             stacks={filteredStacks}
+            isEditMode={isEditMode}
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
-            onAddStack={handleAddStack}
+            onClick={() => setShowAddModal(true)}
           />
         </div>
       </div>
 
       {/* Stack Add Modal */}
-      {showStackAddModal && workplaceId && (
+      {showAddModal && workplaceId && (
         <StackAddModal
           workplaceId={Number(workplaceId)}
-          onClose={() => setShowStackAddModal(false)}
+          onClose={() => setShowAddModal(false)}
           onSuccess={handleStackAddSuccess}
         />
       )}
