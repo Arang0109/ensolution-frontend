@@ -7,10 +7,9 @@ interface WorkplaceListCardProps {
   workplaces: WorkplaceResponse[];
   isEditMode: boolean
   onClick: () => void;
-  onItemClick: (id: number) => void;
 }
 
-export const WorkplaceListCard = ({ workplaces, isEditMode, onClick, onItemClick }: WorkplaceListCardProps) => {
+export const WorkplaceListCard = ({ workplaces, isEditMode, onClick }: WorkplaceListCardProps) => {
 
   return (
     <div className="bg-white border border-sand-200 rounded-lg shadow-md">
@@ -39,7 +38,6 @@ export const WorkplaceListCard = ({ workplaces, isEditMode, onClick, onItemClick
             <WorkplaceItem
               key={workplace.id}
               workplace={workplace}
-              onClick={() => onItemClick(workplace.id)}
             />
           ))}
         </div>

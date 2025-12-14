@@ -1,5 +1,7 @@
 import { useCompanyForm } from '@company/hooks';
 
+import { useToast } from "@common/hooks";
+
 interface CompanyAddModalProps {
   onClose: () => void;
   onSuccess: () => void;
@@ -8,14 +10,20 @@ interface CompanyAddModalProps {
 export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) => {
   const { form, isSubmitting, onChange, onSubmit } = useCompanyForm();
 
+  const { showToast } = useToast();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const result = await onSubmit(e);
 
     if (result?.success) {
+      showToast('업체가 등록되었습니다.', 'success');
       onSuccess();
       onClose();
     } else {
-      alert(result?.message ?? "등록 실패");
+      showToast(
+        result?.message ?? '업체 등록 중 오류가 발생했습니다.',
+        'error'
+      );
     }
   };
 

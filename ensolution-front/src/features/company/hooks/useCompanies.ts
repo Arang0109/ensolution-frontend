@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
+import { useToast } from "@common/hooks";
 import { getCompanies } from "@company/api/companyApi";
 
 import type { CompanyResponse } from "@company/model";
@@ -7,27 +8,25 @@ import type { CompanyResponse } from "@company/model";
 export const useCompanies = () => {
   const [companies, setCompanies] = useState<CompanyResponse[]>([]);
   const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
 
-  const fetchCompanies = async () => {
+  const fetchCompanies = useCallback(async () => {
     setLoading(true);
     try {
       const res = await getCompanies();
-      if (res.status && res.data) {
-        setCompanies(res.data)
-      } else {
-        setCompanies([]);
-      } 
+      setCompanies(res.status && res.data ? res.data : []);
     } catch (error) {
-      console.error("Failed to load companies:", error);
+      console.error(error);
+      showToast('업체 목록을 불러오지 못했습니다.', 'error');
       setCompanies([]);
     } finally {
       setLoading(false);
     }
-  }
+  }, [showToast]);
 
   useEffect(() => {
     fetchCompanies();
-  }, []);
+  }, [fetchCompanies]);
 
   return {
     companies,

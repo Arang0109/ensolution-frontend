@@ -13,6 +13,7 @@ import type { CompanyUpdateRequest } from '@company/model';
 import { formatBizNumber } from '@common/utils/formatters';
 
 // 📌 Shared UI Components
+import { useToast } from "@common/hooks"
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 
 // 📌 Company Domain Components
@@ -24,6 +25,8 @@ import { AddWorkplaceModal } from '@workplace/components';
 export const CompanyDetailPage = () => {
   const navigate = useNavigate();
   const backUrl = () => {navigate('/client/company')};
+
+  const { showToast } = useToast();
 
   const { companyId } = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
@@ -78,10 +81,10 @@ export const CompanyDetailPage = () => {
     const result = await handleDelete(Number(companyId));
 
     if (result.success) {
-      alert(result.message);
+      showToast("삭제에 성공했습니다.", "success");
       backUrl();
     } else {
-      alert(result.message);
+      showToast("삭제에 실패했습니다.", "error");
     }
   };
 
@@ -89,7 +92,7 @@ export const CompanyDetailPage = () => {
     if (!companyId) return;
 
     const result = await handleUpdate(Number(companyId), editForm);
-    alert(result.message);
+    showToast(result.message);
 
     setIsEditMode(false);
     fetchCompany(Number(companyId));
@@ -145,7 +148,6 @@ export const CompanyDetailPage = () => {
             workplaces={company.workplaces}
             isEditMode={isEditMode}
             onClick={() => setShowAddModal(true)}
-            onItemClick={(id) => navigate(`/client/workplace/${id}`)}
           />
         </div>
       </div>
