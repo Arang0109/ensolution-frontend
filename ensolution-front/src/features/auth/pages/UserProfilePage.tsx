@@ -1,7 +1,7 @@
 import { FullPageLoader, FullPageError } from "@common/components";
 
 import { useUserProfileForm } from "@auth/hooks";
-import { useTeams,  } from "@agency/hooks";
+import { useTeams } from "@agency/hooks";
 
 import { ProfileForm } from "@auth/ui";
 

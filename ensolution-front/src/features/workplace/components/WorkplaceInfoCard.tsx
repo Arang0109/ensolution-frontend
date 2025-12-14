@@ -2,37 +2,18 @@ import React from 'react';
 
 import { GRADE_LABELS } from '@common/constants';
 import { formatBizNumber, formatDate } from '@common/utils/formatters';
-import type { Grade } from '@common/model/common.types';
+import type { WorkplaceResponse, WorkplaceUpdateRequest } from '@workplace/model';
 
 interface WorkplaceInfoCardProps {
-  workplace: {
-    name: string;
-    bizNumber: string;
-    businessCategory: string;
-    grade: Grade;
-    address: string;
-    remark?: string | null;
-    createdAt: Date;
-  };
+  workplace: WorkplaceResponse;
   isEditMode: boolean;
-  editForm: {
-    name: string;
-    bizNumber: string;
-    businessCategory: string;
-    grade: Grade;
-    address: string;
-    remark: string;
-  };
+  editForm: WorkplaceUpdateRequest;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 }
 
-interface InfoInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
+interface InfoInputProps extends React.InputHTMLAttributes<HTMLInputElement> { label: string; }
 
-interface InfoTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
-}
+interface InfoTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> { label: string; }
 
 interface InfoSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
@@ -45,99 +26,68 @@ interface ReadOnlyPairProps {
   multiLine?: boolean;
 }
 
-export const WorkplaceInfoCard: React.FC<WorkplaceInfoCardProps> = ({
+export const WorkplaceInfoCard = ({
   workplace,
   isEditMode,
   editForm,
   onChange,
-}) => {
+}: WorkplaceInfoCardProps) => {
   const gradeOptions = Object.entries(GRADE_LABELS).map(([value, label]) => ({
     value,
     label,
   }));
 
   return (
-    <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
-      <h2 className="text-xl font-semibold mb-4 text-brown-900">기본 정보</h2>
+    <div className="bg-white border border-sand-200 rounded-lg shadow-md overflow-hidden">
+      <div className="bg-gradient-to-r from-brown-50 to-sand-50 px-6 py-4 border-b border-sand-200">
+        <h2 className="text-xl font-semibold text-brown-900 flex items-center gap-2">
+          <span className="w-1 h-6 bg-brown-600 rounded-full"></span>
+          업체 정보
+        </h2>
+      </div>
 
-      <div className="space-y-4">
+      <div className="p-6">
         {isEditMode ? (
-          <>
-            {/* 사업장명 / 사업자번호 */}
+          <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InfoInput
-                label="사업장명 *"
-                name="name"
-                value={editForm.name}
-                onChange={onChange}
-              />
-              <InfoInput
-                label="사업자번호 *"
-                name="bizNumber"
-                value={editForm.bizNumber}
-                onChange={onChange}
-                placeholder="000-00-00000"
-                maxLength={12}
-              />
+              <InfoInput label="사업장명 *" name="name" value={editForm.name} onChange={onChange} />
+              <InfoInput label="주소 *" name="address" value={editForm.address} onChange={onChange} />
             </div>
-
-            {/* 업종 / 사업장 규모 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InfoInput
-                label="업종 *"
-                name="businessCategory"
-                value={editForm.businessCategory}
-                onChange={onChange}
-              />
-              <InfoSelect
-                label="사업장 규모 *"
-                name="grade"
-                value={editForm.grade}
-                onChange={onChange}
-                options={gradeOptions}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <InfoInput label="사업자번호 *" name="bizNumber" value={editForm.bizNumber} onChange={onChange} placeholder="000-00-00000" maxLength={12} />
+              <InfoInput label="업종 *" name="businessCategory" value={editForm.businessCategory} onChange={onChange} />
+              <InfoSelect label="사업장 규모 *" name="grade" value={editForm.grade} onChange={onChange} options={gradeOptions} />
             </div>
-
-            {/* 주소 */}
-            <InfoInput
-              label="주소 *"
-              name="address"
-              value={editForm.address}
-              onChange={onChange}
-            />
 
             {/* 비고 */}
-            <InfoTextarea
-              label="비고"
-              name="remark"
-              value={editForm.remark}
-              onChange={onChange}
-            />
-          </>
+            <InfoTextarea label="비고" name="remark" value={editForm.remark} onChange={onChange} />
+          </div>
         ) : (
-          <>
-            {/* 사업장명 / 사업자번호 */}
-            <ReadOnlyPair label="사업장명" value={workplace.name} />
-            <ReadOnlyPair label="사업자번호" value={formatBizNumber(workplace.bizNumber)} />
+          <div className="space-y-6">
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
+                <ReadOnlyPair label="사업장명" value={workplace.name} />
+                <ReadOnlyPair label="주소" value={workplace.address} />
+                <ReadOnlyPair label="등록일" value={formatDate(workplace.createdAt)} />
+              </div>
+            </div>
 
-            {/* 업종 / 사업장 규모 */}
-            <ReadOnlyPair label="업종" value={workplace.businessCategory} />
-            <ReadOnlyPair
-              label="사업장 규모"
-              value={GRADE_LABELS[workplace.grade] ?? workplace.grade}
-            />
-
-            {/* 주소 */}
-            <ReadOnlyPair label="주소" value={workplace.address} />
-
-            {/* 등록일 */}
-            <ReadOnlyPair label="등록일" value={formatDate(workplace.createdAt)} />
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
+                <ReadOnlyPair label="사업자번호" value={formatBizNumber(workplace.bizNumber)} />
+                <ReadOnlyPair label="업종" value={workplace.businessCategory} />
+                <ReadOnlyPair
+                  label="사업장 규모"
+                  value={GRADE_LABELS[workplace.grade] ?? workplace.grade}
+                />
+              </div>
+            </div>
 
             {/* 비고 */}
             {workplace.remark && (
               <ReadOnlyPair label="비고" value={workplace.remark} multiLine />
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
@@ -145,7 +95,7 @@ export const WorkplaceInfoCard: React.FC<WorkplaceInfoCardProps> = ({
 };
 
 // 🔹 타입 적용된 서브 컴포넌트들
-const InfoInput: React.FC<InfoInputProps> = ({ label, ...props }) => (
+const InfoInput = ({ label, ...props }: InfoInputProps) => (
   <div>
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <input
@@ -156,7 +106,7 @@ const InfoInput: React.FC<InfoInputProps> = ({ label, ...props }) => (
   </div>
 );
 
-const InfoTextarea: React.FC<InfoTextareaProps> = ({ label, ...props }) => (
+const InfoTextarea = ({ label, ...props }: InfoTextareaProps) => (
   <div>
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <textarea
@@ -167,7 +117,7 @@ const InfoTextarea: React.FC<InfoTextareaProps> = ({ label, ...props }) => (
   </div>
 );
 
-const InfoSelect: React.FC<InfoSelectProps> = ({ label, options, ...props }) => (
+const InfoSelect = ({ label, options, ...props }: InfoSelectProps) => (
   <div>
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <select
@@ -184,7 +134,7 @@ const InfoSelect: React.FC<InfoSelectProps> = ({ label, options, ...props }) => 
   </div>
 );
 
-const ReadOnlyPair: React.FC<ReadOnlyPairProps> = ({ label, value, multiLine = false }) => (
+const ReadOnlyPair = ({ label, value, multiLine = false }: ReadOnlyPairProps) => (
   <div>
     <label className="text-sm font-medium text-gray-500">{label}</label>
     <p

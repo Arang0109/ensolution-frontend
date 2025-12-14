@@ -1,25 +1,31 @@
-import { useNavigate } from 'react-router-dom';
+import { Button } from "@common/ui";
 
 interface DetailPageHeaderProps {
   title: string;
+  isEditMode: boolean;
   isDeleting: boolean;
   onDelete: () => void;
-  backUrl?: string;
+  onUpdate: () => void;
+  onSave: () => void;
+  onCancel: () => void; 
+  backUrl: () => void;
 }
 
 export const DetailPageHeader = ({
   title,
+  isEditMode,
   isDeleting,
   onDelete,
-  backUrl = "/",
+  onUpdate,
+  onSave,
+  onCancel,
+  backUrl,
 }: DetailPageHeaderProps) => {
-  const navigate = useNavigate();
-
   return (
     <div className="mb-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <button
-          onClick={() => navigate(backUrl)}
+          onClick={backUrl}
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -34,13 +40,31 @@ export const DetailPageHeader = ({
       </div>
 
       <div className="flex gap-2">
-        <button
-          onClick={onDelete}
-          disabled={isDeleting}
-          className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isDeleting ? '삭제 중...' : '삭제'}
-        </button>
+        {isEditMode ? (
+          <>
+            <Button
+              label="취소"
+              variant="secondary"
+              onClick={onCancel}
+            />
+            <Button
+              label="저장"
+              onClick={onSave}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              label="수정"
+              onClick={onUpdate}
+            />
+            <Button
+              label="삭제"
+              onClick={onDelete}
+              disabled={isDeleting}
+            />
+          </>
+        )}
       </div>
     </div>
   );
