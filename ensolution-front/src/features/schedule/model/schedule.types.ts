@@ -39,6 +39,11 @@ export interface ScheduleRegisterRequest {
   teamId: number;
   measureDate: Date;
   measurementType: string;
+  measurementIds: number[];
+}
+
+export interface SchedulePollutant {
+  stackMeasurementId: number;
 }
 
 export interface ScheduleUpdateRequest {

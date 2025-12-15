@@ -68,9 +68,13 @@ export const ScheduleDetailPage = () => {
       {/* Header */}
       <DetailPageHeader
         title={`${scheduleDetail.workplace.name} - ${scheduleDetail.stack.stack.name}`}
+        isEditMode={false}
         isDeleting={isDeleting}
         onDelete={handleDeleteClick}
-        backUrl="/schedule"
+        onUpdate={() => {}}
+        onSave={() => {}}
+        onCancel={() => {}}
+        backUrl={() => navigate("/schedule")}
       />
 
       {/* Tabs */}

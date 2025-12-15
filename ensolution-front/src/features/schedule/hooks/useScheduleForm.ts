@@ -5,7 +5,7 @@ import { getTeams } from "@agency/api/AgencyApi";
 import type { ScheduleRegisterRequest } from "@schedule/model";
 import type { WorkplaceResponse } from "@workplace/model";
 import type { TeamResponse } from "@agency/model/agency.types";
-import type { StackResponse } from "@stack/model";
+import type { StackResponse, StackMeasurementResponse } from "@stack/model";
 
 export const useScheduleForm = () => {
   const [form, setForm] = useState<ScheduleRegisterRequest>({
@@ -13,6 +13,7 @@ export const useScheduleForm = () => {
     teamId: 0,
     measureDate: new Date(),
     measurementType: "",
+    measurementIds: [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -21,8 +22,10 @@ export const useScheduleForm = () => {
   const [teams, setTeams] = useState<TeamResponse[]>([]);
   const [selectedWorkplaceId, setSelectedWorkplaceId] = useState<number>(0);
   const [availableStacks, setAvailableStacks] = useState<StackResponse[]>([]);
+  const [availableMeasurements, setAvailableMeasurements] = useState<StackMeasurementResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingStacks, setLoadingStacks] = useState(false);
+  const [loadingMeasurements, setLoadingMeasurements] = useState(false);
 
   // Search states
   const [workplaceSearchTerm, setWorkplaceSearchTerm] = useState("");
@@ -73,8 +76,9 @@ export const useScheduleForm = () => {
   // Fetch stacks when workplace is selected
   const handleWorkplaceChange = async (workplaceId: number) => {
     setSelectedWorkplaceId(workplaceId);
-    setForm(prev => ({ ...prev, stackId: 0 })); // Reset stack selection
+    setForm(prev => ({ ...prev, stackId: 0, measurementIds: [] })); // Reset stack and measurements selection
     setAvailableStacks([]); // Clear stacks
+    setAvailableMeasurements([]); // Clear measurements
     setStackSearchTerm(""); // Clear stack search
 
     if (workplaceId) {
@@ -93,6 +97,32 @@ export const useScheduleForm = () => {
       }
     }
   };
+
+  // Fetch stack measurements when stack is selected
+  useEffect(() => {
+    const fetchStackMeasurements = async () => {
+      if (!form.stackId) {
+        setAvailableMeasurements([]);
+        return;
+      }
+
+      try {
+        setLoadingMeasurements(true);
+        const { getStack } = await import("@stack/api/stackApi");
+        const res = await getStack(form.stackId);
+
+        if (res.status && res.data) {
+          setAvailableMeasurements(res.data.stackMeasurements);
+        }
+      } catch (error) {
+        console.error("측정항목 로딩 중 오류:", error);
+      } finally {
+        setLoadingMeasurements(false);
+      }
+    };
+
+    fetchStackMeasurements();
+  }, [form.stackId]);
 
   const setFieldValue = <K extends keyof ScheduleRegisterRequest>(
     key: K,
@@ -126,19 +156,35 @@ export const useScheduleForm = () => {
       return { success: false, message: "모든 필수 항목을 입력해주세요." };
     }
 
+    if (form.measurementIds.length === 0) {
+      return { success: false, message: "측정항목을 선택해주세요." };
+    }
+
     setIsSubmitting(true);
     try {
       const res = await registerSchedule(form);
-      setForm({
-        stackId: 0,
-        teamId: 0,
-        measureDate: new Date(),
-        measurementType: "",
-      });
-      setSelectedWorkplaceId(0);
+
+      if (res.status) {
+        // 성공 시 폼 초기화
+        setForm({
+          stackId: 0,
+          teamId: 0,
+          measureDate: new Date(),
+          measurementType: "",
+          measurementIds: [],
+        });
+        setSelectedWorkplaceId(0);
+        setAvailableStacks([]);
+        setAvailableMeasurements([]);
+      }
+
       return { success: res.status, message: res.message };
     } catch (error) {
-      return { success: false, message: error + "등록 중 오류가 발생했습니다." };
+      console.error("측정일정 등록 실패:", error);
+      return {
+        success: false,
+        message: "등록 중 오류가 발생했습니다. 다시 시도해주세요."
+      };
     } finally {
       setIsSubmitting(false);
     }
@@ -155,10 +201,12 @@ export const useScheduleForm = () => {
     workplaces,
     teams,
     availableStacks,
+    availableMeasurements,
     selectedWorkplaceId,
     handleWorkplaceChange,
     loading,
     loadingStacks,
+    loadingMeasurements,
     // Search
     workplaceSearchTerm,
     setWorkplaceSearchTerm,
