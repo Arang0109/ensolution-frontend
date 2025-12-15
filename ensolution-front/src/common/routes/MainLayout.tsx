@@ -56,6 +56,7 @@ export const MainLayout = () => {
                   items={[
                     { label: '측정팀', path: '/agency/team' },
                     { label: '차량', path: '/agency/vehicle' },
+                    { label: '장비', path: '/agency/equipment' },
                   ]}
                 />
                 <Dropdown

@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import { useToast } from '@common/hooks';
 import { useStackDetail, useStackActions } from '@stack/hooks';
 import {
   PreventionAddModal,
@@ -14,13 +15,17 @@ import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components
 import type { PreventionDetailResponse, StackUpdateRequest } from '@stack/model';
 
 export const StackDetailPage = () => {
-  const { stackId } = useParams();
   const navigate = useNavigate();
-  const { stack, fetchStack, loading } = useStackDetail();
-  const { handleUpdate, handleDelete, isUpdating, isDeleting } = useStackActions();
+  const backUrl = () => {navigate('/client/stack')}
+
+  const { showToast } = useToast();
+  
+  const { stackId } = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // Get initial form data from stack
+  const { stack, fetchStack, loading } = useStackDetail();
+  const { handleUpdate, handleDelete, isDeleting } = useStackActions();
+
   const getInitialEditForm = (): StackUpdateRequest => {
     if (!stack) {
       return {
@@ -61,7 +66,6 @@ export const StackDetailPage = () => {
     }
   }, [stackId, fetchStack]);
 
-  // Calculate counts using useMemo for performance
   const { preventionCount, facilityCount, targetCount, measurementCount } = useMemo(() => {
     if (!stack) {
       return { preventionCount: 0, facilityCount: 0, targetCount: 0, measurementCount: 0 };
@@ -80,27 +84,10 @@ export const StackDetailPage = () => {
     setEditForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleEdit = () => {
+  const handleUpdateClick = () => {
     // Refresh form data when entering edit mode
     setEditForm(getInitialEditForm());
     setIsEditMode(true);
-  };
-
-  const handleCancel = () => {
-    // Reset form data when canceling
-    setEditForm(getInitialEditForm());
-    setIsEditMode(false);
-  };
-
-  const handleSave = async () => {
-    if (!stackId) return;
-
-    const result = await handleUpdate(Number(stackId), editForm);
-
-    if (result.success) {
-      setIsEditMode(false);
-      fetchStack(Number(stackId));
-    }
   };
 
   const handleDeleteClick = async () => {
@@ -109,9 +96,27 @@ export const StackDetailPage = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       const result = await handleDelete(Number(stackId));
       if (result.success) {
-        navigate('/stack');
+        backUrl();
+      } else {
+        showToast(result.message, "error");
       }
     }
+  };
+
+  const handleSaveEdit = async () => {
+    if (!stackId) return;
+
+    const result = await handleUpdate(Number(stackId), editForm);
+    showToast(result.message);
+
+    setIsEditMode(false);
+    fetchStack(Number(stackId));
+  };
+
+  const handleCancelEdit = () => {
+    // Reset form data when canceling
+    setEditForm(getInitialEditForm());
+    setIsEditMode(false);
   };
 
   const handleAddPrevention = () => {
@@ -158,7 +163,7 @@ export const StackDetailPage = () => {
       <EmptyState
         title="측정시설 정보를 찾을 수 없습니다."
         actionLabel="목록으로 돌아가기"
-        onAction={() => navigate('/stack')}
+        onAction={backUrl}
       />
     );
   }
@@ -168,13 +173,12 @@ export const StackDetailPage = () => {
       <DetailPageHeader
         title={stack.stack.name}
         isEditMode={isEditMode}
-        isUpdating={isUpdating}
         isDeleting={isDeleting}
-        onEdit={handleEdit}
-        onCancel={handleCancel}
-        onSave={handleSave}
         onDelete={handleDeleteClick}
-        backUrl="/stack"
+        onUpdate={handleUpdateClick}
+        onCancel={handleCancelEdit}
+        onSave={handleSaveEdit}
+        backUrl={backUrl}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
