@@ -1,36 +1,42 @@
-import { useState, useEffect } from "react";
+import axios from "axios";
+import { useState, useEffect, useMemo } from "react";
 import { registerSchedule } from "@schedule/api/scheduleApi";
 import { getWorkplaces } from "@workplace/api/workplaceApi";
 import { getTeams } from "@agency/api/AgencyApi";
+import { useScheduleFormStore } from "@schedule/store/scheduleFormStore";
 import type { ScheduleRegisterRequest } from "@schedule/model";
-import type { WorkplaceResponse } from "@workplace/model";
-import type { TeamResponse } from "@agency/model/agency.types";
-import type { StackResponse, StackMeasurementResponse } from "@stack/model";
 
 export const useScheduleForm = () => {
-  const [form, setForm] = useState<ScheduleRegisterRequest>({
-    stackId: 0,
-    teamId: 0,
-    measureDate: new Date(),
-    measurementType: "",
-    measurementIds: [],
-  });
+  const {
+    form,
+    workplaces,
+    teams,
+    availableStacks,
+    availableMeasurements,
+    selectedStack,
+    loading,
+    loadingStacks,
+    loadingMeasurements,
+    workplaceSearchTerm,
+    stackSearchTerm,
+    teamSearchTerm,
+    setFieldValue,
+    setWorkplaces,
+    setTeams,
+    setAvailableStacks,
+    setAvailableMeasurements,
+    setSelectedStack,
+    setLoading,
+    setLoadingStacks,
+    setLoadingMeasurements,
+    setWorkplaceSearchTerm,
+    setStackSearchTerm,
+    setTeamSearchTerm,
+    resetForm,
+    clearStackData,
+  } = useScheduleFormStore();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Data for select components
-  const [workplaces, setWorkplaces] = useState<WorkplaceResponse[]>([]);
-  const [teams, setTeams] = useState<TeamResponse[]>([]);
-  const [selectedWorkplaceId, setSelectedWorkplaceId] = useState<number>(0);
-  const [availableStacks, setAvailableStacks] = useState<StackResponse[]>([]);
-  const [availableMeasurements, setAvailableMeasurements] = useState<StackMeasurementResponse[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingStacks, setLoadingStacks] = useState(false);
-  const [loadingMeasurements, setLoadingMeasurements] = useState(false);
-
-  // Search states
-  const [workplaceSearchTerm, setWorkplaceSearchTerm] = useState("");
-  const [stackSearchTerm, setStackSearchTerm] = useState("");
-  const [teamSearchTerm, setTeamSearchTerm] = useState("");
 
   // Fetch workplaces and teams on mount
   useEffect(() => {
@@ -57,29 +63,37 @@ export const useScheduleForm = () => {
     };
 
     fetchData();
-  }, []);
+  }, [setLoading, setWorkplaces, setTeams]);
 
   // Filtered data based on search
-  const filteredWorkplaces = workplaces.filter((workplace) =>
-    workplace.name.toLowerCase().includes(workplaceSearchTerm.toLowerCase())
+  const filteredWorkplaces = useMemo(() =>
+    workplaces.filter((workplace) =>
+      workplace.name.toLowerCase().includes(workplaceSearchTerm.toLowerCase())
+    ),
+    [workplaces, workplaceSearchTerm]
   );
 
-  const filteredStacks = availableStacks.filter((stack) =>
-    stack.name.toLowerCase().includes(stackSearchTerm.toLowerCase()) ||
-    stack.semsNumber.toLowerCase().includes(stackSearchTerm.toLowerCase())
+  const filteredStacks = useMemo(() =>
+    availableStacks.filter((stack) =>
+      stack.name.toLowerCase().includes(stackSearchTerm.toLowerCase()) ||
+      stack.semsNumber.toLowerCase().includes(stackSearchTerm.toLowerCase())
+    ),
+    [availableStacks, stackSearchTerm]
   );
 
-  const filteredTeams = teams.filter((team) =>
-    team.name.toLowerCase().includes(teamSearchTerm.toLowerCase())
+  const filteredTeams = useMemo(() =>
+    teams.filter((team) =>
+      team.name.toLowerCase().includes(teamSearchTerm.toLowerCase())
+    ),
+    [teams, teamSearchTerm]
   );
 
   // Fetch stacks when workplace is selected
   const handleWorkplaceChange = async (workplaceId: number) => {
-    setSelectedWorkplaceId(workplaceId);
-    setForm(prev => ({ ...prev, stackId: 0, measurementIds: [] })); // Reset stack and measurements selection
-    setAvailableStacks([]); // Clear stacks
-    setAvailableMeasurements([]); // Clear measurements
-    setStackSearchTerm(""); // Clear stack search
+    setFieldValue('workplaceId', workplaceId);
+    setFieldValue('stackId', 0);
+    setFieldValue('measurementIds', []);
+    clearStackData();
 
     if (workplaceId) {
       try {
@@ -103,6 +117,7 @@ export const useScheduleForm = () => {
     const fetchStackMeasurements = async () => {
       if (!form.stackId) {
         setAvailableMeasurements([]);
+        setSelectedStack(null);
         return;
       }
 
@@ -113,6 +128,7 @@ export const useScheduleForm = () => {
 
         if (res.status && res.data) {
           setAvailableMeasurements(res.data.stackMeasurements);
+          setSelectedStack(res.data.stack);
         }
       } catch (error) {
         console.error("측정항목 로딩 중 오류:", error);
@@ -122,17 +138,7 @@ export const useScheduleForm = () => {
     };
 
     fetchStackMeasurements();
-  }, [form.stackId]);
-
-  const setFieldValue = <K extends keyof ScheduleRegisterRequest>(
-    key: K,
-    value: ScheduleRegisterRequest[K]
-  ) => {
-    setForm(prev => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  }, [form.stackId, setAvailableMeasurements, setSelectedStack, setLoadingMeasurements]);
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -142,17 +148,19 @@ export const useScheduleForm = () => {
 
     if (key === "measureDate") {
       setFieldValue(key, new Date(value));
-    } else if (key === "stackId" || key === "teamId") {
+    } else if (key === "stackId" || key === "teamId" || key === "workplaceId") {
       setFieldValue(key, Number(value));
-    } else {
-      setFieldValue(key, value);
+    } else if (key === "measurementType") {
+      setFieldValue(key, value as "자가측정용" | "환경영향평가" | "인허가용" | "참고용");
+    } else if (key === "measurementField") {
+      setFieldValue(key, "대기");
     }
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!form.stackId || !form.teamId || !form.measurementType) {
+    if (!form.workplaceId || !form.stackId || !form.teamId) {
       return { success: false, message: "모든 필수 항목을 입력해주세요." };
     }
 
@@ -166,21 +174,23 @@ export const useScheduleForm = () => {
 
       if (res.status) {
         // 성공 시 폼 초기화
-        setForm({
-          stackId: 0,
-          teamId: 0,
-          measureDate: new Date(),
-          measurementType: "",
-          measurementIds: [],
-        });
-        setSelectedWorkplaceId(0);
-        setAvailableStacks([]);
-        setAvailableMeasurements([]);
+        resetForm();
       }
 
       return { success: res.status, message: res.message };
     } catch (error) {
       console.error("측정일정 등록 실패:", error);
+
+      if (axios.isAxiosError(error)) {
+        const serverMessage =
+          error.response?.data?.message;
+
+        return {
+          success: false,
+          message: serverMessage ?? "등록 중 오류가 발생했습니다. 다시 시도해주세요.",
+        };
+      }
+
       return {
         success: false,
         message: "등록 중 오류가 발생했습니다. 다시 시도해주세요."
@@ -192,7 +202,6 @@ export const useScheduleForm = () => {
 
   return {
     form,
-    setForm,
     isSubmitting,
     onChange,
     onSubmit,
@@ -202,7 +211,7 @@ export const useScheduleForm = () => {
     teams,
     availableStacks,
     availableMeasurements,
-    selectedWorkplaceId,
+    selectedStack,
     handleWorkplaceChange,
     loading,
     loadingStacks,

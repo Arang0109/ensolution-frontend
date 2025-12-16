@@ -5,9 +5,9 @@ interface DetailPageHeaderProps {
   isEditMode: boolean;
   isDeleting: boolean;
   onDelete: () => void;
-  onUpdate: () => void;
-  onSave: () => void;
-  onCancel: () => void; 
+  onUpdate?: () => void;
+  onSave?: () => void;
+  onCancel?: () => void; 
   backUrl: () => void;
 }
 

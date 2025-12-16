@@ -29,6 +29,7 @@ export const MeasurementMultiSelect = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -70,6 +71,18 @@ export const MeasurementMultiSelect = ({
   };
 
   const selectedMeasurements = getSelectedMeasurements();
+
+  // Handle backspace key to remove last selected item when search is empty
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Prevent backspace from navigating back in browser
+    if (e.key === "Backspace" && searchTerm === "" && selectedMeasurements.length > 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Remove the last selected measurement
+      const lastMeasurement = selectedMeasurements[selectedMeasurements.length - 1];
+      toggleMeasurement(lastMeasurement.id);
+    }
+  };
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -116,10 +129,12 @@ export const MeasurementMultiSelect = ({
           {/* Search input */}
           <div className="p-2 border-b border-gray-200">
             <input
+              ref={searchInputRef}
               type="text"
               placeholder="측정항목 검색..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
               onClick={(e) => e.stopPropagation()}
             />

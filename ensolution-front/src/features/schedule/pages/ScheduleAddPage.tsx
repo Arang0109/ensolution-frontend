@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
+
 import { useScheduleForm } from "@schedule/hooks";
 import { ScheduleForm } from "@schedule/ui/ScheduleForm";
 
+import { useToast } from "@common/hooks";
+
 export const ScheduleAddPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const {
     form,
     isSubmitting,
@@ -13,7 +17,7 @@ export const ScheduleAddPage = () => {
     filteredWorkplaces,
     filteredTeams,
     filteredStacks,
-    selectedWorkplaceId,
+    selectedStack,
     handleWorkplaceChange,
     loading,
     loadingStacks,
@@ -25,16 +29,16 @@ export const ScheduleAddPage = () => {
     const result = await onSubmit(e);
 
     if (result?.success) {
-      alert(result.message || "측정일정이 등록되었습니다.");
-      navigate("/schedules");
+      showToast(result.message || "측정일정이 등록되었습니다.");
+      navigate("/schedule");
     } else {
-      alert(result?.message ?? "등록 실패");
+      showToast(result?.message ?? "등록 실패", "error");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-3xl mx-auto px-4">
+      <div className="mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -69,7 +73,7 @@ export const ScheduleAddPage = () => {
             filteredWorkplaces={filteredWorkplaces}
             filteredTeams={filteredTeams}
             filteredStacks={filteredStacks}
-            selectedWorkplaceId={selectedWorkplaceId}
+            selectedStack={selectedStack}
             handleWorkplaceChange={handleWorkplaceChange}
             loading={loading}
             loadingStacks={loadingStacks}

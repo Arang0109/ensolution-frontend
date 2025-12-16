@@ -22,7 +22,6 @@ export const registerMeasurements = async (
 
 export const getSchedules = async (): Promise<ApiResponseMessage<ScheduleTableView[]>> => {
   const res = await axiosPrivate.get("/schedules");
-  console.log(res.data);
   return res.data;
 }
 
