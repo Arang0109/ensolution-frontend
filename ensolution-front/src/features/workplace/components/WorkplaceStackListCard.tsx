@@ -5,28 +5,28 @@ import { Button } from "@common/ui";
 
 interface WorkplaceStackListCardProps {
   stacks: StackResponse[];
-  isEditMode: boolean;
+  isEditMode?: boolean;
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const WorkplaceStackListCard = ({
   stacks,
-  isEditMode,
+  isEditMode=false,
   searchTerm,
   onSearchChange,
   onClick,
 }: WorkplaceStackListCardProps) => {
+  const showAddButton = !isEditMode && typeof onClick === "function";
+
   return (
     <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-brown-900">측정 대상 시설 목록</h2>
-        {isEditMode ? (
-          <></>
-        ) : (<>
-          <Button label='시설 추가' onClick={onClick} />
-        </>)}
+        {showAddButton && (
+          <Button label="사업장 추가" onClick={onClick} />
+        )}
       </div>
 
       {/* Search Input */}

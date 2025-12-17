@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { FullPageLoader } from "@common/components";
+import { Button } from "@common/ui";
 
 import { usePollutants, usePollutantActions } from "@pollutant/hooks";
 import { PollutantTable, PollutantFormModal } from "@pollutant/components";
@@ -71,12 +72,10 @@ export const PollutantPage = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-800">측정물질 관리</h1>
-        <button
+        <Button 
+          label="측정물질 추가"
           onClick={handleAddClick}
-          className="px-6 py-2.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md"
-        >
-          + 측정물질 추가
-        </button>
+        />
       </div>
 
       <PollutantTable

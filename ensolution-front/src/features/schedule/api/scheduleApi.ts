@@ -3,7 +3,7 @@ import type { ApiResponseMessage } from "@common/model";
 
 import type {
   ScheduleResponse, ScheduleRegisterRequest, ScheduleStatusUpdateRequest,
-  ScheduleUpdateRequest, ScheduleTableView, ScheduleDetailResponse } from "@schedule/model";
+  ScheduleUpdateRequest, ScheduleTableView, ScheduleDetailResponse, SchedulePollutant } from "@schedule/model";
 
 export const registerSchedule = async (
   data: ScheduleRegisterRequest
@@ -12,9 +12,16 @@ export const registerSchedule = async (
   return res.data;
 }
 
+export const registerMeasurements = async (
+  scheduleId: number,
+  data: SchedulePollutant[]
+): Promise<ApiResponseMessage<void>> => {
+  const res = await axiosPrivate.post(`/schedules/${scheduleId}/measurements`, data);
+  return res.data;
+}
+
 export const getSchedules = async (): Promise<ApiResponseMessage<ScheduleTableView[]>> => {
   const res = await axiosPrivate.get("/schedules");
-  console.log(res.data);
   return res.data;
 }
 

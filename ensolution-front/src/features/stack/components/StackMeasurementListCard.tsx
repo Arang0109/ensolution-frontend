@@ -3,6 +3,7 @@ import type { StackMeasurementResponse } from '@stack/model';
 import type { Cycle } from '@common/model';
 import { CYCLE_LABELS } from '@common/constants/labels';
 import { MeasurementEditModal } from '@stack/components/MeasurementEditModal';
+import { Button } from '@common/ui';
 
 interface StackMeasurementListCardProps {
   measurements: StackMeasurementResponse[];
@@ -99,26 +100,10 @@ export const StackMeasurementListCard = ({
             총 {measurements.length}개
           </span>
         </div>
-        <button
+        <Button 
+          label='측정물질 추가'
           onClick={onAddMeasurement}
-          className="px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors flex items-center gap-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          측정물질 추가
-        </button>
+        />
       </div>
 
       <div className="space-y-6">
@@ -166,19 +151,19 @@ export const StackMeasurementListCard = ({
                     <div>
                       <p className="font-bold text-brown-900 text-sm leading-tight">
                         {measurement.pollutant.nameKr}
+                        {measurement.pollutant.nameEn && (
+                          <span> [ {measurement.pollutant.nameEn} ]</span>
+                        )}
                       </p>
-                      {measurement.pollutant.nameEn && (
-                        <p className="text-xs text-gray-600">
-                          {measurement.pollutant.nameEn}
-                        </p>
-                      )}
                     </div>
 
                     {/* Allowance */}
                     <div className="pt-2 border-t border-sand-300">
                       <p className="text-xs text-gray-600">허용기준</p>
                       <p className="font-semibold text-terracotta-700">
-                        {measurement.allowance != null ? measurement.allowance : "-"}
+                        {measurement.allowance != null
+                          ? `${measurement.allowance} ${measurement.pollutant.phase === 'PARTICULATE' ? 'mg/Sm³' : 'ppm'}`
+                          : "-"}
                       </p>
                     </div>
                   </div>

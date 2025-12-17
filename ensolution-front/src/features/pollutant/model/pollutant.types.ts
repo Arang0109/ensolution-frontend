@@ -3,6 +3,7 @@ export interface PollutantResponse {
   nameKr: string;
   nameEn: string;
   method: string;
+  phase: string;
   equipmentName: string;
   testMethodName: string;
   samplingTime: number;
@@ -13,6 +14,7 @@ export interface PollutantRegisterRequest {
   nameKr: string;
   nameEn: string;
   method: string;
+  phase: string;
   equipmentName: string;
   testMethodName: string;
   samplingTime: number;
@@ -23,6 +25,7 @@ export interface PollutantUpdateRequest {
   nameKr: string;
   nameEn: string;
   method: string;
+  phase: string;
   equipmentName: string;
   testMethodName: string;
   samplingTime: number;

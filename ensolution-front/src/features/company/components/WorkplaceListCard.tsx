@@ -6,10 +6,12 @@ import { Button } from "@common/ui";
 interface WorkplaceListCardProps {
   workplaces: WorkplaceResponse[];
   isEditMode: boolean
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-export const WorkplaceListCard = ({ workplaces, isEditMode, onClick }: WorkplaceListCardProps) => {
+export const WorkplaceListCard = ({ workplaces, isEditMode=false, onClick }: WorkplaceListCardProps) => {
+
+  const showAddButton = !isEditMode && typeof onClick === "function";
 
   return (
     <div className="bg-white border border-sand-200 rounded-lg shadow-md">
@@ -18,11 +20,9 @@ export const WorkplaceListCard = ({ workplaces, isEditMode, onClick }: Workplace
           <span className="w-1 h-6 bg-brown-600 rounded-full"></span>
           사업장 목록
         </h2>
-        {isEditMode ? (
-          <></>
-        ) : (<>
+        {showAddButton && (
           <Button label="사업장 추가" onClick={onClick} />
-        </>)}
+        )}
       </div>
 
       {workplaces.length === 0 ? (

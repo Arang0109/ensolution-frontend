@@ -15,7 +15,7 @@ import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
 import { PollutantPage } from '@pollutant/pages/index';
 
-import { ScheduleListPage, ScheduleDetailPage } from "@schedule/pages";
+import { ScheduleListPage, ScheduleDetailPage, ScheduleAddPage } from "@schedule/pages";
 
 function App() {
   return (
@@ -55,6 +55,7 @@ function App() {
 
             {/* 측정일정 */}
             <Route path="/schedule" element={<ScheduleListPage />} />
+            <Route path="/schedule/add" element={<ScheduleAddPage />} />
             <Route path="/schedule/:scheduleId" element={<ScheduleDetailPage />} />
           </Route>
         </Routes>

@@ -20,6 +20,7 @@ export const WorkplaceDetailPage = () => {
 
   const { workplaceId } = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const { workplace, fetchWorkplace, loading } = useWorkplaceDetail();
   const { handleUpdate, handleDelete, isDeleting } = useWorkplaceActions();
@@ -37,8 +38,6 @@ export const WorkplaceDetailPage = () => {
     workplace?.stacks || [],
     ['name', 'semsNumber']
   );
-
-  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     if (workplaceId) {
@@ -78,9 +77,9 @@ export const WorkplaceDetailPage = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       const result = await handleDelete(Number(workplaceId));
       if (result.success) {
-        window.location.href = '/workplace';
+        backUrl();
       } else {
-        alert(result.message);
+        showToast(result.message, "error");
       }
     }
   };
@@ -97,7 +96,7 @@ export const WorkplaceDetailPage = () => {
     showToast(result.message);
 
     setIsEditMode(false);
-      fetchWorkplace(Number(workplaceId));
+    fetchWorkplace(Number(workplaceId));
   };
 
   const handleCancelEdit = () => {

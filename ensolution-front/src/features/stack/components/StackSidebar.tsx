@@ -265,9 +265,7 @@ export const StackSidebar = ({
               <div>
                 <label className="text-sm font-medium text-gray-500">배출시설 규모</label>
                 <p className="text-base text-gray-800 mt-1">
-                  <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-800">
-                    {GRADE_LABELS[stack.grade] ?? stack.grade}
-                  </span>
+                  <span>{GRADE_LABELS[stack.grade] ?? stack.grade}</span>
                 </p>
               </div>
 
@@ -312,7 +310,7 @@ export const StackSidebar = ({
       <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
         <h2 className="text-lg font-semibold mb-4 text-brown-900">사업장 정보</h2>
         <button
-          onClick={() => navigate(`/workplace/${stack.workplaceId}`)}
+          onClick={() => navigate(`/client/workplace/${stack.workplaceId}`)}
           className="w-full px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors text-sm shadow-md"
         >
           사업장 상세 보기
