@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { TripleMeasurement, MeasurementData } from '@schedule/model';
+import type { TripleMeasurement, MeasurementData, MeasurementPointData } from '@schedule/model';
 
 type GasField =
   | 'oxygenConcentration'
@@ -7,6 +7,8 @@ type GasField =
   | 'carbonMonoxideConcentration';
 
 type TripleIndex = 'value1' | 'value2' | 'value3';
+
+type MeasurementPointField = keyof MeasurementPointData;
 
 interface MeasurementDataState {
   data: MeasurementData;
@@ -23,13 +25,21 @@ interface MeasurementDataState {
       | 'oxygenConcentration'
       | 'carbonDioxideConcentration'
       | 'carbonMonoxideConcentration'
+      | 'measurementPoints'
     >,
     value: number | null
-  ) => void;  setTripleValue: (
+  ) => void;
+  setTripleValue: (
     field: GasField,
     index: TripleIndex,
     value: number | null
   ) => void;
+  setMeasurementPoint: (
+    pointIndex: number,
+    field: MeasurementPointField,
+    value: number | null
+  ) => void;
+  setMeasurementPointCount: (count: number) => void;
   resetData: () => void;
 }
 
@@ -46,6 +56,12 @@ const createInitialTriple = (): TripleMeasurement => ({
   value3: null,
 });
 
+const createInitialMeasurementPoint = (): MeasurementPointData => ({
+  exhaustGasTemperature: null,
+  dynamicPressure: null,
+  staticPressure: null,
+});
+
 const createInitialData = (): MeasurementData => ({
   startTime: '',
   endTime: '',
@@ -56,12 +72,11 @@ const createInitialData = (): MeasurementData => ({
   windDirection: '',
   windSpeed: null,
 
-  exhaustGasTemperature: null,
   oxygenConcentration: createInitialTriple(),
   carbonDioxideConcentration: createInitialTriple(),
   carbonMonoxideConcentration: createInitialTriple(),
-  dynamicPressure: null,
-  staticPressure: null,
+
+  measurementPoints: [createInitialMeasurementPoint()],
 });
 
 export const useMeasurementDataStore = create<MeasurementDataState>((set) => ({
@@ -106,6 +121,47 @@ export const useMeasurementDataStore = create<MeasurementDataState>((set) => ({
         },
       },
     })),
+
+  setMeasurementPoint: (pointIndex, field, value) =>
+    set((state) => {
+      const newPoints = [...state.data.measurementPoints];
+      if (pointIndex >= 0 && pointIndex < newPoints.length) {
+        newPoints[pointIndex] = {
+          ...newPoints[pointIndex],
+          [field]: value,
+        };
+      }
+      return {
+        data: {
+          ...state.data,
+          measurementPoints: newPoints,
+        },
+      };
+    }),
+
+  setMeasurementPointCount: (count) =>
+    set((state) => {
+      const currentLength = state.data.measurementPoints.length;
+      let newPoints = [...state.data.measurementPoints];
+
+      if (count > currentLength) {
+        // 측정점 추가
+        const pointsToAdd = count - currentLength;
+        for (let i = 0; i < pointsToAdd; i++) {
+          newPoints.push(createInitialMeasurementPoint());
+        }
+      } else if (count < currentLength) {
+        // 측정점 제거
+        newPoints = newPoints.slice(0, count);
+      }
+
+      return {
+        data: {
+          ...state.data,
+          measurementPoints: newPoints,
+        },
+      };
+    }),
 
   resetData: () => set({ data: createInitialData() }),
 }));

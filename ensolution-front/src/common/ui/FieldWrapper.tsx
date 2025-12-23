@@ -4,7 +4,7 @@ interface FieldWrapperProps {
 }
 
 export const FieldWrapper = ({ label, children }: FieldWrapperProps) => (
-  <div className="bg-gray-50 p-3 rounded-lg">
+  <div className="p-3 rounded-lg">
     {label && (
       <label className="block text-xs font-medium text-gray-600 mb-1">
         {label}

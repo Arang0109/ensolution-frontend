@@ -11,22 +11,25 @@ import {
 } from "@common/ui";
 
 export const MeasurementDataTab = () => {
-  const { 
-    data, 
+  const {
+    data,
     setTime,
     setNumberField,
     setWeather,
     setWindDirection,
     setTripleValue,
+    setMeasurementPoint,
+    setMeasurementPointCount,
     resetData
   } = useMeasurementDataStore();
 
-  const { handleChange, handleTripleChange } = useMeasurementHandler(
+  const { handleChange, handleTripleChange, handleMeasurementPointChange } = useMeasurementHandler(
     setTime,
     setNumberField,
     setWeather,
     setWindDirection,
-    setTripleValue
+    setTripleValue,
+    setMeasurementPoint
   );
 
   const WIND_DIRECTION_OPTIONS = [
@@ -64,7 +67,7 @@ export const MeasurementDataTab = () => {
                 <TimeField name="endTime" value={data.endTime} onChange={handleChange} />
               </FieldWrapper>
               <div className="grid grid-cols-2 gap-3">
-                <FieldWrapper label="대기압 (mmH₂O)">
+                <FieldWrapper label="대기압 (Hpa)">
                   <NumberField name="atmosphericPressure" value={data.atmosphericPressure ?? ''} onChange={handleChange} />
                 </FieldWrapper>
                 <FieldWrapper label="날씨">
@@ -106,7 +109,7 @@ export const MeasurementDataTab = () => {
                   <tr className="bg-gray-100">
                     <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">측정 시간</th>
                     <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700" colSpan={2}>시작시간 / 종료시간</th>
-                    <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">대기압<br/>(mmH₂O)</th>
+                    <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">대기압<br/>(Hpa)</th>
                     <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">날씨</th>
                     <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">기온<br/>(°C)</th>
                     <th className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">습도<br/>(%)</th>
@@ -160,22 +163,9 @@ export const MeasurementDataTab = () => {
           {/* 배출구 가스 데이터 */}
           <div className="pt-6 border-t border-gray-200">
             <h3 className="text-lg font-medium mb-3 text-gray-700">배출구 측정 데이터</h3>
-            <div className="space-y-4">
-              {/* 동압, 정압 */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <FieldWrapper label="배출가스 온도 (°C)">
-                  <NumberField name="exhaustGasTemperature" value={data.exhaustGasTemperature ?? ''} onChange={handleChange} />
-                </FieldWrapper>
-                <FieldWrapper label="동압 (mmH₂O)">
-                  <NumberField name="dynamicPressure" value={data.dynamicPressure ?? ''} onChange={handleChange} />
-                </FieldWrapper>
-                <FieldWrapper label="정압 (mmH₂O)">
-                  <NumberField name="staticPressure" value={data.staticPressure ?? ''} onChange={handleChange} />
-                </FieldWrapper>
-              </div>
 
               {/* 가스 농도 측정 - 반응형 */}
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="p-4 rounded-lg">
                 <h4 className="text-sm font-semibold text-gray-700 mb-3">가스 농도 측정 (%)</h4>
 
                 {/* 모바일: 카드 형식 */}
@@ -305,7 +295,7 @@ export const MeasurementDataTab = () => {
                     </thead>
                     <tbody>
                       {/* 산소 농도 */}
-                      <tr className="bg-blue-50">
+                      <tr className="bg-gray-50">
                         <td className="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">
                           산소 농도 (O₂)
                         </td>
@@ -339,7 +329,7 @@ export const MeasurementDataTab = () => {
                       </tr>
 
                       {/* 이산화탄소 농도 */}
-                      <tr className="bg-green-50">
+                      <tr className="bg-gray-50">
                         <td className="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">
                           이산화탄소 농도 (CO₂)
                         </td>
@@ -373,7 +363,7 @@ export const MeasurementDataTab = () => {
                       </tr>
 
                       {/* 일산화탄소 농도 */}
-                      <tr className="bg-orange-50">
+                      <tr className="bg-gray-50">
                         <td className="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">
                           일산화탄소 농도 (CO)
                         </td>
@@ -409,7 +399,135 @@ export const MeasurementDataTab = () => {
                   </table>
                 </div>
               </div>
-            </div>
+
+              {/* 측정점별 데이터 */}
+              <div className="p-4 rounded-lg">
+                {/* 측정점 개수 선택 */}
+                <div className="flex items-center gap-4 mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <label className="text-sm font-semibold text-gray-700">측정점 개수:</label>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((count) => (
+                      <button
+                        key={count}
+                        onClick={() => setMeasurementPointCount(count)}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                          data.measurementPoints.length === count
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                        }`}
+                      >
+                        {count}개
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 모바일: 카드 형식 */}
+                <div className="md:hidden space-y-4">
+                  {data.measurementPoints.map((point, index) => (
+                    <div key={index} className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                      <h5 className="text-sm font-semibold text-gray-700 mb-2">측정점 {index + 1}</h5>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <label className="text-xs text-gray-600 w-32">배출가스 온도:</label>
+                          <NumberField
+                            name={`exhaustGasTemperature-${index}`}
+                            value={point.exhaustGasTemperature ?? ''}
+                            onChange={(e) => handleMeasurementPointChange(index, 'exhaustGasTemperature', e.target.value)}
+                            placeholder="150"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <label className="text-xs text-gray-600 w-32">동압:</label>
+                          <NumberField
+                            name={`dynamicPressure-${index}`}
+                            value={point.dynamicPressure ?? ''}
+                            onChange={(e) => handleMeasurementPointChange(index, 'dynamicPressure', e.target.value)}
+                            placeholder="10.5"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <label className="text-xs text-gray-600 w-32">정압:</label>
+                          <NumberField
+                            name={`staticPressure-${index}`}
+                            value={point.staticPressure ?? ''}
+                            onChange={(e) => handleMeasurementPointChange(index, 'staticPressure', e.target.value)}
+                            placeholder="-5.2"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 데스크톱: 테이블 형식 */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-white">
+                        <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">측정 항목</th>
+                        {data.measurementPoints.map((_, index) => (
+                          <th key={index} className="border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-700">
+                            측정점 {index + 1}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* 배출가스 온도 */}
+                      <tr className="bg-gray-50">
+                        <td className="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">
+                          배출가스 온도 (°C)
+                        </td>
+                        {data.measurementPoints.map((point, index) => (
+                          <td key={index} className="border border-gray-300 px-2 py-2">
+                            <NumberField
+                              name={`exhaustGasTemperature-${index}`}
+                              value={point.exhaustGasTemperature ?? ''}
+                              onChange={(e) => handleMeasurementPointChange(index, 'exhaustGasTemperature', e.target.value)}
+                              placeholder="150"
+                            />
+                          </td>
+                        ))}
+                      </tr>
+
+                      {/* 동압 */}
+                      <tr className="bg-gray-50">
+                        <td className="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">
+                          동압 (mmH₂O)
+                        </td>
+                        {data.measurementPoints.map((point, index) => (
+                          <td key={index} className="border border-gray-300 px-2 py-2">
+                            <NumberField
+                              name={`dynamicPressure-${index}`}
+                              value={point.dynamicPressure ?? ''}
+                              onChange={(e) => handleMeasurementPointChange(index, 'dynamicPressure', e.target.value)}
+                              placeholder="10.5"
+                            />
+                          </td>
+                        ))}
+                      </tr>
+
+                      {/* 정압 */}
+                      <tr className="bg-gray-50">
+                        <td className="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">
+                          정압 (mmH₂O)
+                        </td>
+                        {data.measurementPoints.map((point, index) => (
+                          <td key={index} className="border border-gray-300 px-2 py-2">
+                            <NumberField
+                              name={`staticPressure-${index}`}
+                              value={point.staticPressure ?? ''}
+                              onChange={(e) => handleMeasurementPointChange(index, 'staticPressure', e.target.value)}
+                              placeholder="-5.2"
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
           </div>
 
           {/* 저장 버튼 */}

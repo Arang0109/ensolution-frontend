@@ -1,5 +1,5 @@
 // hooks/useMeasurementHandlers.ts
-import type { MeasurementData } from "@schedule/model/measurementData.types";
+import type { MeasurementData, MeasurementPointData } from "@schedule/model/measurementData.types";
 
 type SetTime = (key: 'startTime' | 'endTime', value: string) => void;
 type SetWeather = (value: MeasurementData['weather']) => void;
@@ -14,12 +14,18 @@ type SetNumberField = (
     | 'oxygenConcentration'
     | 'carbonDioxideConcentration'
     | 'carbonMonoxideConcentration'
+    | 'measurementPoints'
   >,
   value: number | null
 ) => void;
 type SetTripleValue = (
   field: 'oxygenConcentration' | 'carbonDioxideConcentration' | 'carbonMonoxideConcentration',
   index: 'value1' | 'value2' | 'value3',
+  value: number | null
+) => void;
+type SetMeasurementPoint = (
+  pointIndex: number,
+  field: keyof MeasurementPointData,
   value: number | null
 ) => void;
 
@@ -35,7 +41,8 @@ export const useMeasurementHandler = (
   setNumberField: SetNumberField,
   setWeather: SetWeather,
   setWindDirection: SetWindDirection,
-  setTripleValue: SetTripleValue
+  setTripleValue: SetTripleValue,
+  setMeasurementPoint: SetMeasurementPoint
 ) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -72,5 +79,13 @@ export const useMeasurementHandler = (
     setTripleValue(field, index, value === '' ? null : Number(value));
   };
 
-  return { handleChange, handleTripleChange };
+  const handleMeasurementPointChange = (
+    pointIndex: number,
+    field: keyof MeasurementPointData,
+    value: string
+  ) => {
+    setMeasurementPoint(pointIndex, field, value === '' ? null : Number(value));
+  };
+
+  return { handleChange, handleTripleChange, handleMeasurementPointChange };
 };
