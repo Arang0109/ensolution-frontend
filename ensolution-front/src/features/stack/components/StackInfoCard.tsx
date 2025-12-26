@@ -56,7 +56,7 @@ const InfoInput: React.FC<InfoInputProps> = ({ label, ...props }) => (
     <label className="text-sm font-medium text-gray-500">{label}</label>
     <input
       {...props}
-      className="mt-1 w-full px-3 py-2 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+      className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
     />
   </div>
 );
@@ -66,7 +66,7 @@ const InfoTextarea: React.FC<InfoTextareaProps> = ({ label, ...props }) => (
     <label className="text-sm font-medium text-gray-500">{label}</label>
     <textarea
       {...props}
-      className="mt-1 w-full px-3 py-2 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+      className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
       rows={3}
     />
   </div>
@@ -77,7 +77,7 @@ const InfoSelect: React.FC<InfoSelectProps> = ({ label, options, ...props }) => 
     <label className="text-sm font-medium text-gray-500">{label}</label>
     <select
       {...props}
-      className="mt-1 w-full px-3 py-2 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+      className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
@@ -145,8 +145,8 @@ export const StackInfoCard: React.FC<StackInfoCardProps> = ({
   };
 
   return (
-    <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
-      <h2 className="text-xl font-semibold mb-4 text-brown-900">기본 정보</h2>
+    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
+      <h2 className="text-xl font-semibold mb-4 text-neutral-900">기본 정보</h2>
 
       <div className="space-y-4">
         {isEditMode ? (
@@ -267,7 +267,7 @@ export const StackInfoCard: React.FC<StackInfoCardProps> = ({
               <div>
                 <label className="text-sm font-medium text-gray-500">배출시설 규모</label>
                 <p className="text-base text-gray-800 mt-1">
-                  <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-800">
+                  <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-800">
                     {GRADE_LABELS[stack.grade] ?? stack.grade}
                   </span>
                 </p>

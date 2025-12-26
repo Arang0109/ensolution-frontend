@@ -47,12 +47,12 @@ export const StackMeasurementListCard = ({
 
   if (measurements.length === 0) {
     return (
-      <div className="bg-white border border-sand-200 rounded-lg shadow-md p-6">
+      <div className="bg-white border border-slate-200 rounded-lg shadow-md p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-brown-900">측정물질 정보</h2>
+          <h2 className="text-2xl font-bold text-neutral-900">측정물질 정보</h2>
           <button
             onClick={onAddMeasurement}
-            className="px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors flex items-center gap-2"
+            className="px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors flex items-center gap-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,11 +92,11 @@ export const StackMeasurementListCard = ({
   }
 
   return (
-    <div className="bg-white border border-sand-200 rounded-lg shadow-md p-6">
+    <div className="bg-white border border-slate-200 rounded-lg shadow-md p-6">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl font-bold text-brown-900">측정물질 정보</h2>
-          <span className="px-3 py-1 rounded-full bg-terracotta-100 text-terracotta-700 font-semibold text-sm">
+          <h2 className="text-2xl font-bold text-neutral-900">측정물질 정보</h2>
+          <span className="px-3 py-1 rounded-full bg-primary-100 text-primary-700 font-semibold text-sm">
             총 {measurements.length}개
           </span>
         </div>
@@ -108,12 +108,12 @@ export const StackMeasurementListCard = ({
 
       <div className="space-y-6">
         {measurementsByCycle.map(({ cycle, measurements: cycleMeasurements }) => (
-          <div key={cycle} className="border-l-4 border-brown-400 pl-4">
+          <div key={cycle} className="border-l-4 border-neutral-400 pl-4">
             <div className="flex items-center gap-2 mb-3">
-              <h3 className="text-lg font-bold text-brown-800">
+              <h3 className="text-lg font-bold text-neutral-800">
                 {CYCLE_LABELS[cycle]}
               </h3>
-              <span className="px-2 py-0.5 rounded bg-brown-100 text-brown-700 text-xs font-medium">
+              <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 text-xs font-medium">
                 {cycleMeasurements.length}개
               </span>
             </div>
@@ -122,12 +122,12 @@ export const StackMeasurementListCard = ({
               {cycleMeasurements.map((measurement) => (
                 <div
                   key={measurement.id}
-                  className="bg-gradient-to-br from-sand-50 to-sand-100 border border-sand-300 rounded-lg p-3 hover:shadow-md transition-all hover:border-brown-400 relative group"
+                  className="bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-300 rounded-lg p-3 hover:shadow-md transition-all hover:border-neutral-400 relative group"
                 >
                   {/* Edit button */}
                   <button
                     onClick={() => setEditingMeasurement(measurement)}
-                    className="absolute top-2 right-2 p-1 bg-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-brown-100 text-brown-600"
+                    className="absolute top-2 right-2 p-1 bg-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-neutral-100 text-neutral-600"
                     title="수정"
                   >
                     <svg
@@ -149,7 +149,7 @@ export const StackMeasurementListCard = ({
                   <div className="space-y-2">
                     {/* Pollutant name */}
                     <div>
-                      <p className="font-bold text-brown-900 text-sm leading-tight">
+                      <p className="font-bold text-neutral-900 text-sm leading-tight">
                         {measurement.pollutant.nameKr}
                         {measurement.pollutant.nameEn && (
                           <span> [ {measurement.pollutant.nameEn} ]</span>
@@ -158,9 +158,9 @@ export const StackMeasurementListCard = ({
                     </div>
 
                     {/* Allowance */}
-                    <div className="pt-2 border-t border-sand-300">
+                    <div className="pt-2 border-t border-slate-300">
                       <p className="text-xs text-gray-600">허용기준</p>
-                      <p className="font-semibold text-terracotta-700">
+                      <p className="font-semibold text-primary-700">
                         {measurement.allowance != null
                           ? `${measurement.allowance} ${measurement.pollutant.phase === 'PARTICULATE' ? 'mg/Sm³' : 'ppm'}`
                           : "-"}

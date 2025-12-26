@@ -23,13 +23,13 @@ export const UserProfilePage = () => {
   if (!form) { return <FullPageError message="프로필 정보를 불러올 수 없습니다." />; }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sand-50 via-brown-50 to-sand-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100 p-4">
       <div className="max-w-5xl mx-auto py-8">
-        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-sand-200/50 p-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 p-8">
           {/* 헤더 */}
           <header className="mb-8">
-            <h1 className="text-2xl font-bold text-brown-900">내 프로필</h1>
-            <p className="mt-1 text-sm text-brown-600/80">회원 정보를 확인하고 수정할 수 있습니다.</p>
+            <h1 className="text-2xl font-bold text-neutral-900">내 프로필</h1>
+            <p className="mt-1 text-sm text-neutral-600/80">회원 정보를 확인하고 수정할 수 있습니다.</p>
           </header>
 
           {/* 프로필 폼 */}
@@ -43,11 +43,11 @@ export const UserProfilePage = () => {
           />
 
           {/* 가입일 정보 */}
-          <div className="mt-6 pt-6 border-t border-sand-200">
-            <p className="text-xs text-brown-500/70">
+          <div className="mt-6 pt-6 border-t border-slate-200">
+            <p className="text-xs text-neutral-500/70">
               가입일: {new Date(form.createdAt).toLocaleDateString("ko-KR")}
             </p>
-            <p className="text-xs text-brown-500/70 mt-1">
+            <p className="text-xs text-neutral-500/70 mt-1">
               최종 수정일: {new Date(form.modifiedAt).toLocaleDateString("ko-KR")}
             </p>
           </div>

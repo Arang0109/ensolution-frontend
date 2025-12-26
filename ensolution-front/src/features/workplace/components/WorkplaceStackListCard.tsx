@@ -21,9 +21,9 @@ export const WorkplaceStackListCard = ({
   const showAddButton = !isEditMode && typeof onClick === "function";
 
   return (
-    <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
+    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-brown-900">측정 대상 시설 목록</h2>
+        <h2 className="text-xl font-semibold text-neutral-900">측정 대상 시설 목록</h2>
         {showAddButton && (
           <Button label="사업장 추가" onClick={onClick} />
         )}
@@ -36,7 +36,7 @@ export const WorkplaceStackListCard = ({
           placeholder="시설명 또는 Sems 번호로 검색..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full px-4 py-2 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+          className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
         />
       </div>
 

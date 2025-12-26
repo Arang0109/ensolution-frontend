@@ -42,16 +42,16 @@ export const ProfileForm = ({
     <>
       <form onSubmit={onSubmit} className="space-y-6">
         {/* 읽기 전용 필드 */}
-        <div className="space-y-4 pb-6 border-b border-sand-200">
+        <div className="space-y-4 pb-6 border-b border-slate-200">
           <div>
-            <label className="block text-sm font-medium text-brown-700 mb-1">
+            <label className="block text-sm font-medium text-neutral-700 mb-1">
               아이디
             </label>
             <input
               type="text"
               value={form.username}
               disabled
-              className="w-full px-4 py-2 bg-sand-50 border border-sand-200 rounded-lg text-brown-900 cursor-not-allowed"
+              className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-neutral-900 cursor-not-allowed"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ export const ProfileForm = ({
         {/* 수정 가능한 필드 - 그리드 레이아웃 */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
               이름
             </label>
             <input
@@ -69,12 +69,12 @@ export const ProfileForm = ({
               value={form.name}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
               이메일
             </label>
             <input
@@ -84,12 +84,12 @@ export const ProfileForm = ({
               value={form.email}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label htmlFor="phoneNumber" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="phoneNumber" className="block text-sm font-medium text-neutral-700 mb-1">
               전화번호
             </label>
             <input
@@ -99,12 +99,12 @@ export const ProfileForm = ({
               value={form.phoneNumber}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label htmlFor="birthDate" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="birthDate" className="block text-sm font-medium text-neutral-700 mb-1">
               생년월일
             </label>
             <input
@@ -114,12 +114,12 @@ export const ProfileForm = ({
               value={form.birthDate}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label htmlFor="department" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="department" className="block text-sm font-medium text-neutral-700 mb-1">
               부서
             </label>
             <input
@@ -129,12 +129,12 @@ export const ProfileForm = ({
               value={form.department}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label htmlFor="grade" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="grade" className="block text-sm font-medium text-neutral-700 mb-1">
               직급
             </label>
             <input
@@ -144,12 +144,12 @@ export const ProfileForm = ({
               value={form.grade}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div className="md:col-span-2">
-            <label htmlFor="teamId" className="block text-sm font-medium text-brown-700 mb-1">
+            <label htmlFor="teamId" className="block text-sm font-medium text-neutral-700 mb-1">
               팀
             </label>
             <Select<TeamOption>
@@ -193,14 +193,14 @@ export const ProfileForm = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-brown-600 text-white py-2 rounded-lg font-medium hover:bg-brown-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 bg-neutral-600 text-white py-2 rounded-lg font-medium hover:bg-neutral-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "저장 중..." : "프로필 저장"}
           </button>
           <button
             type="button"
             onClick={() => setShowPasswordChange(!showPasswordChange)}
-            className="px-6 py-2 border-2 border-brown-500 text-brown-700 rounded-lg font-medium hover:bg-brown-50 transition-all"
+            className="px-6 py-2 border-2 border-neutral-500 text-neutral-700 rounded-lg font-medium hover:bg-neutral-50 transition-all"
           >
             비밀번호 변경
           </button>
@@ -209,47 +209,47 @@ export const ProfileForm = ({
 
       {/* 비밀번호 변경 섹션 */}
       {showPasswordChange && (
-        <div className="mt-6 pt-6 border-t border-sand-200">
-          <h3 className="text-lg font-semibold text-brown-900 mb-4">비밀번호 변경</h3>
+        <div className="mt-6 pt-6 border-t border-slate-200">
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">비밀번호 변경</h3>
           <form className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
-                <label htmlFor="currentPassword" className="block text-sm font-medium text-brown-700 mb-1">
+                <label htmlFor="currentPassword" className="block text-sm font-medium text-neutral-700 mb-1">
                   현재 비밀번호
                 </label>
                 <input
                   id="currentPassword"
                   name="currentPassword"
                   type="password"
-                  className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
               <div>
-                <label htmlFor="newPassword" className="block text-sm font-medium text-brown-700 mb-1">
+                <label htmlFor="newPassword" className="block text-sm font-medium text-neutral-700 mb-1">
                   새 비밀번호
                 </label>
                 <input
                   id="newPassword"
                   name="newPassword"
                   type="password"
-                  className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-brown-700 mb-1">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700 mb-1">
                   비밀번호 확인
                 </label>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  className="w-full px-4 py-2 border border-sand-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
             </div>
             <button
               type="submit"
-              className="w-full bg-brown-600 text-white py-2 rounded-lg font-medium hover:bg-brown-700 transition-all"
+              className="w-full bg-neutral-600 text-white py-2 rounded-lg font-medium hover:bg-neutral-700 transition-all"
             >
               비밀번호 변경하기
             </button>

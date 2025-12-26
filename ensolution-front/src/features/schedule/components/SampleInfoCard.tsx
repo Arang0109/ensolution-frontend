@@ -37,7 +37,7 @@ export const SampleInfoCard = ({
                 checked={form.measurementField === "대기"}
                 onChange={onChange}
                 disabled={isSubmitting}
-                className="w-4 h-4 text-brown-600 border-gray-300 focus:ring-brown-500"
+                className="w-4 h-4 text-neutral-600 border-gray-300 focus:ring-primary-500"
               />
               <span className="ml-2 text-gray-700">대기</span>
             </label>
@@ -55,7 +55,7 @@ export const SampleInfoCard = ({
             name="measureDate"
             value={form.measureDate ? new Date(form.measureDate).toISOString().split('T')[0] : ""}
             onChange={onChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             disabled={isSubmitting}
             required
           />
@@ -71,7 +71,7 @@ export const SampleInfoCard = ({
             name="measurementType"
             value={form.measurementType}
             onChange={onChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             disabled={isSubmitting}
             required
           >

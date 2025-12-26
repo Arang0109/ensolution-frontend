@@ -9,7 +9,7 @@ interface StackItemProps {
 export const StackItem = ({ stack }: StackItemProps) => {
   return (
     <div
-      className="border border-sand-200 rounded-lg p-4 hover:shadow-md hover:border-brown-400 transition-all cursor-pointer"
+      className="border border-slate-200 rounded-lg p-4 hover:shadow-md hover:border-neutral-400 transition-all cursor-pointer"
     >
       
         <div className="flex justify-between items-start mb-2">

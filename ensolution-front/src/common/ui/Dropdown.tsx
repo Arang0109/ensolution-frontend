@@ -30,7 +30,7 @@ export const Dropdown = ({ label, items }: DropdownProps) => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 text-brown-700 hover:text-brown-900 font-medium transition no-underline"
+        className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition no-underline"
       >
         {label}
         <svg
@@ -44,13 +44,13 @@ export const Dropdown = ({ label, items }: DropdownProps) => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full mt-2 w-40 bg-white rounded-lg shadow-lg border border-sand-200 py-2 z-50">
+        <div className="absolute top-full mt-2 w-40 bg-white rounded-lg shadow-lg border border-slate-200 py-2 z-50">
           {items.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               onClick={() => setIsOpen(false)}
-              className="block px-4 py-2 text-brown-700 hover:bg-sand-50 hover:text-brown-900 transition no-underline"
+              className="block px-4 py-2 text-neutral-700 hover:bg-slate-50 hover:text-neutral-900 transition no-underline"
             >
               {item.label}
             </Link>

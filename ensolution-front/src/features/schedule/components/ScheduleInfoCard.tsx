@@ -55,7 +55,7 @@ export const ScheduleInfoCard = ({
                 name="stackId"
                 value={editForm.stackId}
                 onChange={onChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             ) : (
               <p className="text-gray-800 font-medium">{stack.stack.name}</p>
@@ -72,7 +72,7 @@ export const ScheduleInfoCard = ({
                 name="teamId"
                 value={editForm.teamId}
                 onChange={onChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             ) : (
               <p className="text-gray-800 font-medium">{schedule.teamId}</p>
@@ -91,7 +91,7 @@ export const ScheduleInfoCard = ({
                 name="measureDate"
                 value={new Date(editForm.measureDate).toISOString().split('T')[0]}
                 onChange={onChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             ) : (
               <p className="text-gray-800 font-medium">
@@ -110,7 +110,7 @@ export const ScheduleInfoCard = ({
                 name="measurementType"
                 value={editForm.measurementType}
                 onChange={onChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             ) : (
               <p className="text-gray-800 font-medium">{schedule.measurementType}</p>

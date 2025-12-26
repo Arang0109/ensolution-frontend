@@ -34,11 +34,11 @@ export const CompanyInfoCard = ({
   onChange,
 }: CompanyInfoCardProps) => {
   return (
-    <div className="bg-white border border-sand-200 rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-brown-50 to-sand-50 px-6 py-4 border-b border-sand-200">
-        <h2 className="text-xl font-semibold text-brown-900 flex items-center gap-2">
-          <span className="w-1 h-6 bg-brown-600 rounded-full"></span>
+      <div className="bg-gradient-to-r from-neutral-50 to-slate-50 px-6 py-4 border-b border-slate-200">
+        <h2 className="text-xl font-semibold text-neutral-900 flex items-center gap-2">
+          <span className="w-1 h-6 bg-neutral-600 rounded-full"></span>
           업체 정보
         </h2>
       </div>
@@ -113,7 +113,7 @@ const InfoInput = ({ label, ...props }: InfoInputProps) => (
   <div>
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <input
-      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
       required
       {...props}
     />
@@ -125,7 +125,7 @@ const InfoTextarea = ({ label, ...props }: InfoTextareaProps) => (
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <textarea
       rows={3}
-      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent resize-none"
+      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
       {...props}
     />
   </div>

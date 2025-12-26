@@ -54,3 +54,11 @@ export const deleteSchedule = async (
   const res = await axiosPrivate.delete(`/schedules/${scheduleId}`);
   return res.data;
 }
+
+export const deleteMeasurement = async (
+  scheduleId: number,
+  measurementId: number
+): Promise<ApiResponseMessage<void>> => {
+  const res = await axiosPrivate.delete(`/schedules/${scheduleId}/measurements/${measurementId}`);
+  return res.data;
+}

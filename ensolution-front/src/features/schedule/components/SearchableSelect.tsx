@@ -81,9 +81,9 @@ export function SearchableSelect<T>({
           onClick={handleToggle}
           className={`
             w-full px-3 py-2 border border-gray-300 rounded-lg
-            focus-within:outline-none focus-within:ring-2 focus-within:ring-brown-500 focus-within:border-transparent
+            focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-transparent
             ${disabled || loading ? "bg-gray-100 cursor-not-allowed" : "cursor-pointer bg-white"}
-            ${isOpen ? "ring-2 ring-brown-500 border-transparent" : ""}
+            ${isOpen ? "ring-2 ring-primary-500 border-transparent" : ""}
           `}
         >
           <div className="flex items-center justify-between">
@@ -106,7 +106,7 @@ export function SearchableSelect<T>({
             <div className="p-2 border-b border-gray-200">
               <input
                 type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="검색..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -130,7 +130,7 @@ export function SearchableSelect<T>({
                       onClick={() => handleSelect(optionValue)}
                       className={`
                         px-3 py-2 cursor-pointer transition-colors
-                        ${isSelected ? "bg-brown-100 text-brown-900" : "hover:bg-gray-100"}
+                        ${isSelected ? "bg-neutral-100 text-neutral-900" : "hover:bg-gray-100"}
                       `}
                     >
                       {optionLabel}

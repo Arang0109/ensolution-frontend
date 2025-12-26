@@ -78,7 +78,7 @@ export const PollutantFormModal = ({
                 value={formData.nameKr}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: 먼지"
               />
             </div>
@@ -96,7 +96,7 @@ export const PollutantFormModal = ({
                 name="nameEn"
                 value={formData.nameEn}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: Dust"
               />
             </div>
@@ -114,7 +114,7 @@ export const PollutantFormModal = ({
                 name="method"
                 value={formData.method}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: Dust"
               />
             </div>
@@ -133,7 +133,7 @@ export const PollutantFormModal = ({
                 value={formData.equipmentName}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: 30"
               />
             </div>
@@ -152,7 +152,7 @@ export const PollutantFormModal = ({
                 value={formData.testMethodName}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: 30"
               />
             </div>
@@ -171,7 +171,7 @@ export const PollutantFormModal = ({
                 value={formData.samplingTime}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: 30"
               />
             </div>
@@ -189,7 +189,7 @@ export const PollutantFormModal = ({
                 name="samplingVolume"
                 value={formData.samplingVolume}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="예: 1000L"
               />
             </div>
@@ -198,7 +198,7 @@ export const PollutantFormModal = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting
                   ? "처리 중..."

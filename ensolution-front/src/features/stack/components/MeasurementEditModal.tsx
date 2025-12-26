@@ -113,7 +113,7 @@ export const MeasurementEditModal = ({
               id="cycle"
               value={cycle}
               onChange={(e) => setCycle(e.target.value as Cycle)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               required
               disabled={isSubmitting}
             >
@@ -138,7 +138,7 @@ export const MeasurementEditModal = ({
               id="allowance"
               value={allowance}
               onChange={(e) => setAllowance(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="허용기준을 입력하세요 (선택사항)"
               min="0"
               step="0.01"
@@ -158,7 +158,7 @@ export const MeasurementEditModal = ({
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting}
             >
               {isSubmitting ? "수정 중..." : "수정"}

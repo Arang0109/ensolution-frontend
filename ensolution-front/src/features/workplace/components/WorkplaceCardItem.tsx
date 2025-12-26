@@ -13,7 +13,7 @@ export const WorkplaceCardItem = ({workplace}: WorkplaceCardProps) => {
 
   return (
     <div
-      className="bg-white border border-sand-200 rounded-lg p-5 hover:shadow-lg hover:border-brown-400 transition-all cursor-pointer"
+      className="bg-white border border-slate-200 rounded-lg p-5 hover:shadow-lg hover:border-neutral-400 transition-all cursor-pointer"
     >
       <div className="flex justify-between items-start mb-3">
         <Link to={`/client/workplace/${workplace.id}`}>
