@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 import { ToastProvider } from '@common/components';
-import { ProtectedRoute, MainLayout } from '@common/routes/index';
+import { PublicRoute, ProtectedRoute, MainLayout } from '@common/routes/index';
 
 import { LoginPage, UserProfilePage } from '@auth/pages/index';
 
@@ -22,7 +22,11 @@ function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+            } />
 
           <Route
             element={
