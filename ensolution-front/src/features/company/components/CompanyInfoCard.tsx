@@ -36,7 +36,7 @@ export const CompanyInfoCard = ({
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-neutral-50 to-slate-50 px-6 py-4 border-b border-slate-200">
+      <div className="bg-slate-300 px-6 py-4 border-b border-slate-200">
         <h2 className="text-xl font-semibold text-neutral-900 flex items-center gap-2">
           <span className="w-1 h-6 bg-neutral-600 rounded-full"></span>
           업체 정보

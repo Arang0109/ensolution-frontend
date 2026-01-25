@@ -13,7 +13,7 @@ export const StackItem = ({ stack }: StackItemProps) => {
     >
       
         <div className="flex justify-between items-start mb-2">
-          <Link to={`/client/stack/${stack.id}`}>
+          <Link to={`/stack/${stack.id}`}>
             <h3 className="font-semibold text-gray-800">{stack.name}</h3>
           </Link>
           <div className="text-xs text-gray-500">

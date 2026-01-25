@@ -28,7 +28,7 @@ export const Button = ({
 }: ButtonProps) => {
   const VARIANT_STYLES: Record<ButtonVariant, string> = {
     primary:
-      "bg-gradient-to-r from-neutral-800 to-neutral-900 text-white hover:from-neutral-900 hover:to-neutral-950",
+      "bg-gradient-to-r from-neutral-600 to-neutral-700 text-white hover:from-neutral-800 hover:to-neutral-900",
 
     submit:
       "bg-primary-600 text-white hover:bg-primary-700",
@@ -55,7 +55,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={`
-        inline-flex items-center gap-2 rounded-lg font-medium
+        inline-flex items-center gap-2 rounded-md font-medium text-lg
         transition-colors shadow-md
         ${VARIANT_STYLES[variant]}
         ${SIZE_STYLES[size]}

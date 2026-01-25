@@ -7,7 +7,7 @@ import { LoginPage, UserProfilePage } from '@auth/pages/index';
 
 import { HomePage } from '@home/pages/index';
 
-import { TeamListPage, VehicleListPage, TeamDetailPage } from '@agency/pages/index';
+import { TeamListPage } from '@agency/pages/index';
 
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
@@ -48,8 +48,6 @@ function App() {
 
             {/* 측정대행업체 */}
             <Route path="/agency/team" element={<TeamListPage />} />
-            <Route path="/agency/team/:teamId" element={<TeamDetailPage />} />
-            <Route path="/agency/vehicle" element={<VehicleListPage />} />
 
             {/* 실험실 */}
             <Route path="/lab/pollutant" element={<PollutantPage />} />

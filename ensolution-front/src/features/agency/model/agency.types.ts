@@ -16,21 +16,4 @@ export interface TeamUpdateRequest {
 export interface TeamDetailResponse {
   team: TeamResponse;
   users: UserResponse[];
-  vehicles: VehicleResponse[];
-}
-
-export interface VehicleResponse {
-  id: number;
-  teamId: number;
-  vehicleNumber: string;
-}
-
-export interface VehicleRegisterRequest {
-  teamId: number;
-  vehicleNumber: string;
-}
-
-export interface VehicleUpdateRequest {
-  teamId: number;
-  vehicleNumber: string;
 }

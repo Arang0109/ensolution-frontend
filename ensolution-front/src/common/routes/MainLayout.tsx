@@ -45,16 +45,15 @@ export const MainLayout = () => {
                 <Dropdown
                   label="측정대행 의뢰업체"
                   items={[
-                    { label: '의뢰업체', path: '/client/company' },
-                    { label: '측정대상 사업장', path: '/client/workplace' },
-                    { label: '측정시설', path: '/client/stack' },
+                    { label: '의뢰업체', path: '/company' },
+                    { label: '측정대상 사업장', path: '/workplace' },
+                    { label: '측정시설', path: '/stack' },
                   ]}
                 />
                 <Dropdown
                   label="측정 관리"
                   items={[
                     { label: '측정팀', path: '/agency/team' },
-                    { label: '차량', path: '/agency/vehicle' },
                     { label: '장비', path: '/agency/equipment' },
                   ]}
                 />
@@ -132,21 +131,21 @@ export const MainLayout = () => {
                   <div className="text-neutral-900 font-semibold text-sm">측정대행 의뢰업체</div>
                   <div className="pl-4 space-y-2">
                     <Link
-                      to="/client/company"
+                      to="/company"
                       className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       의뢰업체
                     </Link>
                     <Link
-                      to="/client/workplace"
+                      to="/workplace"
                       className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       측정대상 사업장
                     </Link>
                     <Link
-                      to="/client/stack"
+                      to="/stack"
                       className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >

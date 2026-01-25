@@ -14,11 +14,13 @@ export const WorkplaceListPage = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="px-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">측정대상 사업장</h1>
+        <h1 className="text-2xl font-bold text-gray-800">측정대상 사업장</h1>
       </div>
+
+      <hr className="border-gray-200 mb-6" />
 
       {/* Workplace List */}
       {workplaces.length === 0 ? (
