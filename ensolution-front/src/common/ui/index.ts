@@ -6,5 +6,5 @@ export { NumberField } from './NumberField';
 export { SelectField } from './SelectField';
 export { TimeField } from './TimeField';
 export { Dropdown } from './Dropdown';
-export { MenuCardItem } from './MenuCardItem';
-export type { MenuCard } from './MenuCardItem';
+export { CardItem } from './CardItem';
+export type { CardItemProps } from './CardItem';

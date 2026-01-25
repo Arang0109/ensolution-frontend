@@ -7,7 +7,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // 사무적이고 전문적인 그레이 스케일
         neutral: {
           50: '#fafafa',
           100: '#f5f5f5',
@@ -21,7 +20,6 @@ export default {
           900: '#171717',
           950: '#0a0a0a',
         },
-        // 액센트 컬러 (미세한 블루 그레이)
         slate: {
           50: '#f8fafc',
           100: '#f1f5f9',
@@ -35,7 +33,6 @@ export default {
           900: '#0f172a',
           950: '#020617',
         },
-        // 포인트 컬러 (절제된 블루)
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',
