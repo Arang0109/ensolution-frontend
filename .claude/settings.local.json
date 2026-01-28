@@ -12,7 +12,8 @@
       "Bash(cat:*)",
       "Bash(grep:*)",
       "Bash(find:*)",
-      "Bash(npx @iconify/json-tools@latest list-icons)"
+      "Bash(npx @iconify/json-tools@latest list-icons)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

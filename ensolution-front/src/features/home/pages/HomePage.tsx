@@ -36,7 +36,7 @@ export const HomePage = () => {
         />
         <CardItem
           title="측정장비"
-          path="/company"
+          path="/equipment"
           icon={<AiOutlineInbox />}
         />
         <CardItem
