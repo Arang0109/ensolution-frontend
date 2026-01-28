@@ -2,43 +2,8 @@ import { axiosPrivate } from "@common/api";
 
 import type { ApiResponseMessage } from "@common/model";
 import type {
-  VehicleResponse, VehicleRegisterRequest, VehicleUpdateRequest,
   TeamResponse, TeamDetailResponse, TeamRegisterRequest, TeamUpdateRequest
 } from "@agency/model/agency.types";
-
-export const registerVehicle = async (
-  data: VehicleRegisterRequest
-): Promise<ApiResponseMessage<VehicleResponse>> => {
-  const res = await axiosPrivate.post("/vehicles", data);
-  return res.data;
-}
-
-export const getVehicles = async (): Promise<ApiResponseMessage<VehicleResponse[]>> => {
-  const res = await axiosPrivate.get("/vehicles");
-  return res.data;
-}
-
-export const getVehicle = async (
-  vehicleId: number
-): Promise<ApiResponseMessage<VehicleResponse>> => {
-  const res = await axiosPrivate.get(`/vehicles/${vehicleId}`);
-  return res.data;
-}
-
-export const patchVehicle = async (
-  vehicleId: number,
-  data: VehicleUpdateRequest
-): Promise<ApiResponseMessage<VehicleResponse>> => {
-  const res = await axiosPrivate.patch(`/vehicles/${vehicleId}`, data);
-  return res.data;
-}
-
-export const deleteVehicle = async (
-  vehicleId: number
-): Promise<ApiResponseMessage<void>> => {
-  const res = await axiosPrivate.delete(`/vehicles/${vehicleId}`);
-  return res.data;
-}
 
 /////
 

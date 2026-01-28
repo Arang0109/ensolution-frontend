@@ -38,6 +38,7 @@
       "@stack/*": ["./src/features/stack/*"],
       "@pollutant/*": ["./src/features/pollutant/*"],
       "@schedule/*": ["./src/features/schedule/*"],
+      "@equipment/*": ["./src/features/equipment/*"],
     }
   },
   "include": ["src"]

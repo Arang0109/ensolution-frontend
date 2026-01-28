@@ -93,7 +93,7 @@ export const ScheduleForm = ({
       <div className="flex gap-3 pt-4">
         <button
           type="submit"
-          className="w-full px-6 py-3 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          className="w-full px-6 py-3 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
           disabled={isSubmitting}
         >
           {isSubmitting ? '등록 중...' : '측정일정 등록'}

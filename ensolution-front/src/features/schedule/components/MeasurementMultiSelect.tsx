@@ -92,7 +92,7 @@ export const MeasurementMultiSelect = ({
 
       <div
         onClick={() => !disabled && !loading && setIsOpen(!isOpen)}
-        className={`w-full px-3 py-2 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent ${
+        className={`w-full px-3 py-2 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
           disabled || loading ? "bg-gray-100 cursor-not-allowed" : "bg-white hover:border-gray-400"
         }`}
       >
@@ -105,7 +105,7 @@ export const MeasurementMultiSelect = ({
             {selectedMeasurements.map((m) => (
               <span
                 key={m.id}
-                className="inline-flex items-center px-2 py-1 bg-brown-100 text-brown-800 rounded text-sm"
+                className="inline-flex items-center px-2 py-1 bg-neutral-100 text-neutral-800 rounded text-sm"
               >
                 {m.pollutant.nameKr}
                 <button
@@ -114,7 +114,7 @@ export const MeasurementMultiSelect = ({
                     e.stopPropagation();
                     toggleMeasurement(m.id);
                   }}
-                  className="ml-1 text-brown-600 hover:text-brown-800"
+                  className="ml-1 text-neutral-600 hover:text-neutral-800"
                 >
                   ×
                 </button>
@@ -135,7 +135,7 @@ export const MeasurementMultiSelect = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleSearchKeyDown}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -148,7 +148,7 @@ export const MeasurementMultiSelect = ({
                 e.stopPropagation();
                 selectAll();
               }}
-              className="flex-1 px-2 py-1 text-xs bg-brown-500 text-white rounded hover:bg-brown-600 transition-colors"
+              className="flex-1 px-2 py-1 text-xs bg-neutral-500 text-white rounded hover:bg-neutral-600 transition-colors"
             >
               전체 선택
             </button>
@@ -177,7 +177,7 @@ export const MeasurementMultiSelect = ({
                     toggleMeasurement(measurement.id);
                   }}
                   className={`px-4 py-2 cursor-pointer hover:bg-gray-100 border-b border-gray-100 last:border-b-0 ${
-                    selectedIds.includes(measurement.id) ? "bg-brown-50" : ""
+                    selectedIds.includes(measurement.id) ? "bg-neutral-50" : ""
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -192,7 +192,7 @@ export const MeasurementMultiSelect = ({
                         type="checkbox"
                         checked={selectedIds.includes(measurement.id)}
                         onChange={() => {}}
-                        className="w-4 h-4 text-brown-600 border-gray-300 rounded focus:ring-brown-500"
+                        className="w-4 h-4 text-neutral-600 border-gray-300 rounded focus:ring-primary-500"
                       />
                     </div>
                   </div>

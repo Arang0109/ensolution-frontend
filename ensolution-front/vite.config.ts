@@ -19,6 +19,7 @@ export default defineConfig({
       '@stack': path.resolve(__dirname, './src/features/stack'),
       '@pollutant': path.resolve(__dirname, './src/features/pollutant'),
       '@schedule': path.resolve(__dirname, './src/features/schedule'),
+      '@equipment': path.resolve(__dirname, './src/features/equipment'),
     },
   },
   server: {

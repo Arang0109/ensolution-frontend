@@ -13,8 +13,8 @@ export const WorkplaceItem = ({ workplace }: WorkplaceItemProps) => {
   return (
     <div
       className="
-      border border-sand-200 rounded-lg p-4
-      hover:shadow-md hover:border-brown-400 transition-all cursor-pointer"
+      border border-slate-200 rounded-lg p-4
+      hover:shadow-md hover:border-neutral-400 transition-all cursor-pointer"
     >
       <Link to={`/client/workplace/${workplace.id}`}>
         <div className="flex justify-between items-start mb-2">

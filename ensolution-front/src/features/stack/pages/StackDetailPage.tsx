@@ -169,7 +169,7 @@ export const StackDetailPage = () => {
   }
 
   return (
-    <>
+    <div className="px-6 max-w-7xl mx-auto">
       <DetailPageHeader
         title={stack.stack.name}
         isEditMode={isEditMode}
@@ -238,6 +238,6 @@ export const StackDetailPage = () => {
           onSuccess={handleMeasurementAddSuccess}
         />
       )}
-    </>
+    </div>
   );
 };

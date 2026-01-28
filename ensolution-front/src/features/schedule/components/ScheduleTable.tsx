@@ -37,25 +37,31 @@ export const ScheduleTable = ({ schedules }: ScheduleTableProps) => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                사업장
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                배출구
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                팀
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                 측정일
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                측정 종류
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                 상태
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                측정항목
+              </th>
+              <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                의뢰기관
+              </th>
+              <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                사업장
+              </th>
+              <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                측정시설
+              </th>
+              <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                팀
+              </th>
+              <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                측정 종류
+              </th>
+              <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                 등록일
               </th>
             </tr>
@@ -67,27 +73,33 @@ export const ScheduleTable = ({ schedules }: ScheduleTableProps) => {
                 onClick={() => navigate(`/schedule/${schedule.id}`)}
                 className="hover:bg-gray-50 cursor-pointer transition-colors"
               >
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {schedule.workplaceName}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {schedule.stackName}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {schedule.teamName}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
                   {new Date(schedule.measureDate).toLocaleDateString('ko-KR')}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {schedule.measurementType}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-3 py-2 whitespace-nowrap">
                   <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${STATUS_COLORS[schedule.status]}`}>
                     {STATUS_LABELS[schedule.status]}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {schedule.measurements.join(", ")}
+                </td>
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {schedule.companyName}
+                </td>
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {schedule.workplaceName}
+                </td>
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {schedule.stackName}
+                </td>
+                <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {schedule.teamName}
+                </td>
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {schedule.measurementType}
+                </td>
+                <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
                   {new Date(schedule.createdAt).toLocaleDateString('ko-KR')}
                 </td>
               </tr>

@@ -15,7 +15,7 @@ export const PreInfoTab = ({ scheduleDetail }: PreInfoTabProps) => {
       {/* Stack/Facility Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <section>
-          <div className="border-l-4 border-brown-600 pl-4 mb-4">
+          <div className="border-l-4 border-neutral-600 pl-4 mb-4">
             <h2 className="text-2xl font-bold text-gray-900">측정시설(배출구) 정보</h2>
           </div>
 
@@ -117,7 +117,7 @@ export const PreInfoTab = ({ scheduleDetail }: PreInfoTabProps) => {
 
         {/* Workplace Section */}
         <section className="lg:col-span-2">
-          <div className="border-l-4 border-brown-600 pl-4 mb-4">
+          <div className="border-l-4 border-neutral-600 pl-4 mb-4">
             <h2 className="text-2xl font-bold text-gray-900">사업장 정보</h2>
           </div>
 

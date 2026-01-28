@@ -24,7 +24,7 @@ import { AddWorkplaceModal } from '@workplace/components';
 
 export const CompanyDetailPage = () => {
   const navigate = useNavigate();
-  const backUrl = () => {navigate('/client/company')};
+  const backUrl = () => {navigate('/company')};
 
   const { showToast } = useToast();
 
@@ -117,7 +117,7 @@ export const CompanyDetailPage = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="px-6 max-w-7xl mx-auto">
       {/* Header */}
       <DetailPageHeader
         title={company.company.name}

@@ -18,12 +18,14 @@ export const CompanyListPage = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="px-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">측정대행 의뢰업체</h1>
+        <h1 className="text-2xl font-bold text-gray-800">측정대행 의뢰업체</h1>
         <Button label="업체추가" onClick={() => setShowAddModal(true)} />
       </div>
+
+      <hr className="border-gray-200 mb-6" />
 
       {/* Company List */}
       {companies.length === 0 ? (

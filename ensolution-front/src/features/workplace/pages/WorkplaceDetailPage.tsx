@@ -124,7 +124,7 @@ export const WorkplaceDetailPage = () => {
   }
 
   return (
-    <>
+    <div className="px-6 max-w-7xl mx-auto">
       <DetailPageHeader
         title={workplace.workplace.name}
         isEditMode={isEditMode}
@@ -164,6 +164,6 @@ export const WorkplaceDetailPage = () => {
           onSuccess={handleStackAddSuccess}
         />
       )}
-    </>
+    </div>
   );
 };

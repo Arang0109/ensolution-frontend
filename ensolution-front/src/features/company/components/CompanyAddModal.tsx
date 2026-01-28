@@ -54,7 +54,7 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
               name="name"
               value={form.name}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="업체명을 입력하세요"
               disabled={isSubmitting}
             />
@@ -70,7 +70,7 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
               name="address"
               value={form.address}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="주소를 입력하세요"
               disabled={isSubmitting}
             />
@@ -86,7 +86,7 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
               name="ceoName"
               value={form.ceoName}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="대표자명을 입력하세요"
               disabled={isSubmitting}
             />
@@ -102,7 +102,7 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
               name="bizNumber"
               value={form.bizNumber}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="000-00-00000"
               disabled={isSubmitting}
             />
@@ -118,7 +118,7 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
               value={form.remark}
               onChange={onChange}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
               placeholder="추가 정보를 입력하세요 (선택사항)"
               disabled={isSubmitting}
             />
@@ -135,7 +135,7 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting}
             >
               {isSubmitting ? '추가 중...' : '추가'}

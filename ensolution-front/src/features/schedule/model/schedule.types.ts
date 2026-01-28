@@ -29,14 +29,16 @@ export interface SchedulePollutantResponse {
 
 export interface ScheduleTableView {
   id: number;
-  workplaceId: number;
-  workplaceName: string;
-  stackId: number;
-  stackName: string;
-  teamId: number;
-  teamName: string;
   measureDate: Date;
   measurementType: string;
+
+  companyName: string;
+  workplaceName: string;
+  stackName: string;
+  teamName: string;
+
+  measurements: string[];
+
   status: ScheduleStatus;
   createdAt: Date;
 }

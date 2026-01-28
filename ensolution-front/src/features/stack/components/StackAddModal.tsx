@@ -101,7 +101,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="시설명을 입력하세요"
                 required
                 disabled={isSubmitting}
@@ -118,7 +118,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="semsNumber"
                 value={form.semsNumber}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="SEMS 번호를 입력하세요"
                 required
                 disabled={isSubmitting}
@@ -136,7 +136,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="grade"
                 value={form.grade}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 required
                 disabled={isSubmitting}
               >
@@ -158,7 +158,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="height"
                 value={form.height}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="높이를 입력하세요"
                 required
                 disabled={isSubmitting}
@@ -176,7 +176,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="shape"
                 value={form.shape}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 required
                 disabled={isSubmitting}
               >
@@ -197,7 +197,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="orientation"
                 value={form.orientation}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 required
                 disabled={isSubmitting}
               >
@@ -222,7 +222,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                 name="diameter"
                 value={form.horizontalLength}
                 onChange={handleDiameterChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="지름을 입력하세요"
                 required
                 disabled={isSubmitting}
@@ -240,7 +240,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                   name="horizontalLength"
                   value={form.horizontalLength}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="가로 길이를 입력하세요"
                   required
                   disabled={isSubmitting}
@@ -257,7 +257,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
                   name="verticalLength"
                   value={form.verticalLength}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="세로 길이를 입력하세요"
                   required
                   disabled={isSubmitting}
@@ -276,7 +276,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
               value={form.remark}
               onChange={handleChange}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
               placeholder="추가 정보를 입력하세요 (선택사항)"
               disabled={isSubmitting}
             />
@@ -293,7 +293,7 @@ export const StackAddModal = ({ workplaceId, onClose, onSuccess }: StackAddModal
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting}
             >
               {isSubmitting ? '추가 중...' : '추가'}

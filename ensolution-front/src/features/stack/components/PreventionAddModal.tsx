@@ -203,7 +203,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                   name="name"
                   value={preventionName}
                   onChange={handlePreventionChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="방지시설명을 입력하세요"
                   required
                   disabled={isSubmitting}
@@ -220,7 +220,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                   value={preventionRemark}
                   onChange={handlePreventionChange}
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                   placeholder="추가 정보를 입력하세요 (선택사항)"
                   disabled={isSubmitting}
                 />
@@ -279,7 +279,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="name"
                         value={facility.name}
                         onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="배출시설명"
                         disabled={isSubmitting}
                       />
@@ -294,7 +294,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="fuelUsage"
                         value={facility.fuelUsage}
                         onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="연료사용량"
                         disabled={isSubmitting}
                       />
@@ -309,7 +309,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="itemOutput"
                         value={facility.itemOutput}
                         onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="제품생산량"
                         disabled={isSubmitting}
                       />
@@ -324,7 +324,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="fuelInput"
                         value={facility.fuelInput}
                         onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="연료투입량"
                         disabled={isSubmitting}
                       />
@@ -339,7 +339,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="fuelType"
                         value={facility.fuelType}
                         onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="연료종류"
                         disabled={isSubmitting}
                       />
@@ -354,7 +354,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="remark"
                         value={facility.remark}
                         onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="비고"
                         disabled={isSubmitting}
                       />
@@ -416,7 +416,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="targetSubstance"
                         value={target.targetSubstance}
                         onChange={(e) => handleTargetChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="제거대상물질"
                         disabled={isSubmitting}
                       />
@@ -431,7 +431,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
                         name="removalEfficiency"
                         value={target.removalEfficiency ?? ""}
                         onChange={(e) => handleTargetChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="제거효율 (선택사항)"
                         min="0"
                         max="100"
@@ -456,7 +456,7 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting}
             >
               {isSubmitting ? "등록 중..." : "등록"}

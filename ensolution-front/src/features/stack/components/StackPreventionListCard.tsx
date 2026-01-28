@@ -15,9 +15,9 @@ export const StackPreventionListCard = ({
   onPreventionClick,
 }: StackPreventionListCardProps) => {
   return (
-    <div className="bg-white border border-sand-200 rounded-lg p-6 shadow-md">
+    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-brown-900">방지시설 목록</h2>
+        <h2 className="text-xl font-semibold text-neutral-900">방지시설 목록</h2>
         <Button
           label='방지시설 추가'
           onClick={onAddPrevention}
@@ -34,7 +34,7 @@ export const StackPreventionListCard = ({
             <div
               key={preventionDetail.prevention.id}
               onClick={() => onPreventionClick(preventionDetail)}
-              className="border border-sand-200 rounded-lg p-4 hover:shadow-md hover:border-brown-400 transition-all cursor-pointer"
+              className="border border-slate-200 rounded-lg p-4 hover:shadow-md hover:border-neutral-400 transition-all cursor-pointer"
             >
               <div className="flex justify-between items-start mb-3">
                 <h3 className="font-semibold text-gray-800 text-lg">
@@ -52,7 +52,7 @@ export const StackPreventionListCard = ({
 
               {/* 배출시설 목록 */}
               <div className="mt-3 pt-3 border-t border-gray-200">
-                <h4 className="text-sm font-semibold text-brown-800 mb-2">
+                <h4 className="text-sm font-semibold text-neutral-800 mb-2">
                   배출시설 ({preventionDetail.facilities.length})
                 </h4>
                 {preventionDetail.facilities.length === 0 ? (
@@ -60,7 +60,7 @@ export const StackPreventionListCard = ({
                 ) : (
                   <div className="space-y-2">
                     {preventionDetail.facilities.map((facility) => (
-                      <div key={facility.id} className="bg-sand-50 rounded p-3 text-sm">
+                      <div key={facility.id} className="bg-slate-50 rounded p-3 text-sm">
                         <div className="flex justify-between items-start mb-1">
                           <span className="font-medium text-gray-800">{facility.name}</span>
                           <span className="text-xs text-gray-500">ID: {facility.id}</span>
@@ -90,7 +90,7 @@ export const StackPreventionListCard = ({
 
               {/* 제거대상물질 목록 */}
               <div className="mt-3 pt-3 border-t border-gray-200">
-                <h4 className="text-sm font-semibold text-brown-800 mb-2">
+                <h4 className="text-sm font-semibold text-neutral-800 mb-2">
                   제거대상물질 ({preventionDetail.targets.length})
                 </h4>
                 {preventionDetail.targets.length === 0 ? (
@@ -98,15 +98,15 @@ export const StackPreventionListCard = ({
                 ) : (
                   <div className="space-y-2">
                     {preventionDetail.targets.map((target) => (
-                      <div key={target.id} className="bg-terracotta-50 rounded p-3 text-sm">
+                      <div key={target.id} className="bg-primary-50 rounded p-3 text-sm">
                         <div className="flex justify-between items-center">
                           <div>
                             <span className="font-medium text-gray-800">
                               {target.targetSubstance}
                             </span>
                             <span className="ml-3 text-xs">
-                              <span className="font-medium text-terracotta-700">제거효율:</span>{' '}
-                              <span className="font-semibold text-terracotta-800">
+                              <span className="font-medium text-primary-700">제거효율:</span>{' '}
+                              <span className="font-semibold text-primary-800">
                                 {target.removalEfficiency}%
                               </span>
                             </span>

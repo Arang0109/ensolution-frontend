@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 import { ToastProvider } from '@common/components';
-import { ProtectedRoute, MainLayout } from '@common/routes/index';
+import { PublicRoute, ProtectedRoute, MainLayout } from '@common/routes/index';
 
 import { LoginPage, UserProfilePage } from '@auth/pages/index';
 
-import { HomePage, ClientPage } from '@home/pages/index';
+import { HomePage } from '@home/pages/index';
 
-import { TeamListPage, VehicleListPage, TeamDetailPage } from '@agency/pages/index';
+import { TeamListPage } from '@agency/pages/index';
+import { EquipmentListPage } from '@/features/equipment/pages';
 
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
@@ -22,7 +23,11 @@ function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+            } />
 
           <Route
             element={
@@ -35,23 +40,20 @@ function App() {
             <Route path="/me" element={<UserProfilePage />} />
 
             {/* 측정대행 의뢰업체 */}
-            <Route path="/client/company" element={<CompanyListPage />} />
-            <Route path="/client/company/:companyId" element={<CompanyDetailPage />} />
-            <Route path="/client/workplace" element={<WorkplaceListPage />} />
-            <Route path="/client/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
-            <Route path="/client/stack" element={<StackListPage />} />
-            <Route path="/client/stack/:stackId" element={<StackDetailPage />} />
+            <Route path="/company" element={<CompanyListPage />} />
+            <Route path="/company/:companyId" element={<CompanyDetailPage />} />
+            <Route path="/workplace" element={<WorkplaceListPage />} />
+            <Route path="/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
+            <Route path="/stack" element={<StackListPage />} />
+            <Route path="/stack/:stackId" element={<StackDetailPage />} />
 
             {/* 측정대행업체 */}
             <Route path="/agency/team" element={<TeamListPage />} />
-            <Route path="/agency/team/:teamId" element={<TeamDetailPage />} />
-            <Route path="/agency/vehicle" element={<VehicleListPage />} />
+
+            <Route path="/equipment" element={<EquipmentListPage />} />
 
             {/* 실험실 */}
             <Route path="/lab/pollutant" element={<PollutantPage />} />
-
-            {/* 레거시 리다이렉트 (선택사항) */}
-            <Route path="/client" element={<ClientPage />} />
 
             {/* 측정일정 */}
             <Route path="/schedule" element={<ScheduleListPage />} />

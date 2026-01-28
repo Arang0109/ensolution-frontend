@@ -254,9 +254,9 @@ export const PreventionEditModal = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-brown-50 to-sand-50">
+        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-neutral-50 to-slate-50">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-brown-900">
+            <h2 className="text-2xl font-bold text-neutral-900">
               방지시설 수정
             </h2>
             <button
@@ -276,7 +276,7 @@ export const PreventionEditModal = ({
             onClick={() => setActiveTab('prevention')}
             className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
               activeTab === 'prevention'
-                ? 'border-brown-600 text-brown-700'
+                ? 'border-neutral-600 text-neutral-700'
                 : 'border-transparent text-gray-600 hover:text-gray-800'
             }`}
           >
@@ -286,7 +286,7 @@ export const PreventionEditModal = ({
             onClick={() => setActiveTab('facilities')}
             className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
               activeTab === 'facilities'
-                ? 'border-brown-600 text-brown-700'
+                ? 'border-neutral-600 text-neutral-700'
                 : 'border-transparent text-gray-600 hover:text-gray-800'
             }`}
           >
@@ -296,7 +296,7 @@ export const PreventionEditModal = ({
             onClick={() => setActiveTab('targets')}
             className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
               activeTab === 'targets'
-                ? 'border-brown-600 text-brown-700'
+                ? 'border-neutral-600 text-neutral-700'
                 : 'border-transparent text-gray-600 hover:text-gray-800'
             }`}
           >
@@ -319,7 +319,7 @@ export const PreventionEditModal = ({
                   onChange={(e) =>
                     setPreventionForm({ ...preventionForm, name: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="방지시설명 입력"
                 />
               </div>
@@ -334,7 +334,7 @@ export const PreventionEditModal = ({
                     setPreventionForm({ ...preventionForm, remark: e.target.value })
                   }
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="비고 입력"
                 />
               </div>
@@ -343,7 +343,7 @@ export const PreventionEditModal = ({
                 <button
                   onClick={handlePreventionSubmit}
                   disabled={isSubmitting || !preventionForm.name.trim()}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
                 >
                   {isSubmitting ? '저장 중...' : '저장'}
                 </button>
@@ -365,7 +365,7 @@ export const PreventionEditModal = ({
                 <h3 className="text-lg font-semibold text-gray-800">배출시설 목록</h3>
                 <button
                   onClick={addNewFacility}
-                  className="px-3 py-1.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white text-sm rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md"
+                  className="px-3 py-1.5 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white text-sm rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors shadow-md"
                 >
                   + 배출시설 추가
                 </button>
@@ -380,7 +380,7 @@ export const PreventionEditModal = ({
                   {facilities.map((facility, index) => (
                     <div
                       key={facility.id || `new-${index}`}
-                      className="border border-sand-200 rounded-lg p-4 bg-sand-50"
+                      className="border border-slate-200 rounded-lg p-4 bg-slate-50"
                     >
                       <div className="flex justify-between items-center mb-3">
                         <h4 className="font-medium text-gray-800">
@@ -408,7 +408,7 @@ export const PreventionEditModal = ({
                               newFacilities[index] = { ...facility, name: e.target.value };
                               setFacilities(newFacilities);
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                           />
                         </div>
 
@@ -425,7 +425,7 @@ export const PreventionEditModal = ({
                                 newFacilities[index] = { ...facility, fuelType: e.target.value };
                                 setFacilities(newFacilities);
                               }}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                             />
                           </div>
                           <div>
@@ -440,7 +440,7 @@ export const PreventionEditModal = ({
                                 newFacilities[index] = { ...facility, fuelUsage: e.target.value };
                                 setFacilities(newFacilities);
                               }}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                             />
                           </div>
                         </div>
@@ -458,7 +458,7 @@ export const PreventionEditModal = ({
                                 newFacilities[index] = { ...facility, fuelInput: e.target.value };
                                 setFacilities(newFacilities);
                               }}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                             />
                           </div>
                           <div>
@@ -473,7 +473,7 @@ export const PreventionEditModal = ({
                                 newFacilities[index] = { ...facility, itemOutput: e.target.value };
                                 setFacilities(newFacilities);
                               }}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                             />
                           </div>
                         </div>
@@ -490,14 +490,14 @@ export const PreventionEditModal = ({
                               setFacilities(newFacilities);
                             }}
                             rows={2}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                           />
                         </div>
 
                         <button
                           onClick={() => handleFacilitySubmit(index)}
                           disabled={isSubmitting || !facility.name.trim()}
-                          className="w-full px-4 py-2 bg-gradient-to-r from-brown-500 to-brown-600 text-white rounded-lg hover:from-brown-600 hover:to-brown-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
+                          className="w-full px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
                         >
                           {isSubmitting ? '저장 중...' : facility.isNew ? '추가' : '수정'}
                         </button>
@@ -516,7 +516,7 @@ export const PreventionEditModal = ({
                 <h3 className="text-lg font-semibold text-gray-800">제거대상물질 목록</h3>
                 <button
                   onClick={addNewTarget}
-                  className="px-3 py-1.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white text-sm rounded-lg hover:from-brown-600 hover:to-brown-700 transition-colors shadow-md"
+                  className="px-3 py-1.5 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white text-sm rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors shadow-md"
                 >
                   + 제거대상물질 추가
                 </button>
@@ -531,7 +531,7 @@ export const PreventionEditModal = ({
                   {targets.map((target, index) => (
                     <div
                       key={target.id || `new-${index}`}
-                      className="border border-terracotta-200 rounded-lg p-4 bg-terracotta-50"
+                      className="border border-primary-200 rounded-lg p-4 bg-primary-50"
                     >
                       <div className="flex justify-between items-center mb-3">
                         <h4 className="font-medium text-gray-800">
@@ -559,7 +559,7 @@ export const PreventionEditModal = ({
                               newTargets[index] = { ...target, targetSubstance: e.target.value };
                               setTargets(newTargets);
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-terracotta-500 focus:border-transparent text-sm"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                           />
                         </div>
 
@@ -581,7 +581,7 @@ export const PreventionEditModal = ({
                               };
                               setTargets(newTargets);
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-terracotta-500 focus:border-transparent text-sm"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                             placeholder="제거효율 (선택사항)"
                           />
                         </div>
@@ -593,7 +593,7 @@ export const PreventionEditModal = ({
                             !target.targetSubstance.trim() ||
                             (target.removalEfficiency != null && (target.removalEfficiency < 0 || target.removalEfficiency > 100))
                           }
-                          className="w-full px-4 py-2 bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white rounded-lg hover:from-terracotta-600 hover:to-terracotta-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
+                          className="w-full px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:from-primary-600 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
                         >
                           {isSubmitting ? '저장 중...' : target.isNew ? '추가' : '수정'}
                         </button>

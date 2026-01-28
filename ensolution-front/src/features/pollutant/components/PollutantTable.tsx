@@ -107,14 +107,14 @@ export const PollutantTable = ({
           <div className="flex gap-2 justify-center">
             <button
               onClick={() => onEdit(info.row.original)}
-              className="px-3 py-1.5 bg-gradient-to-r from-brown-500 to-brown-600 text-white text-sm rounded-md hover:from-brown-600 hover:to-brown-700 transition-colors shadow-sm"
+              className="px-3 py-1.5 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white text-sm rounded-md hover:from-neutral-900 hover:to-neutral-950 transition-colors shadow-sm"
             >
               수정
             </button>
             <button
               onClick={() => handleDelete(info.row.original)}
               disabled={isDeleting && deletingId === info.row.original.id}
-              className="px-3 py-1.5 bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-sm rounded-md hover:from-terracotta-600 hover:to-terracotta-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm rounded-md hover:from-primary-600 hover:to-primary-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isDeleting && deletingId === info.row.original.id
                 ? "삭제 중..."
@@ -167,7 +167,7 @@ export const PollutantTable = ({
                 table.getColumn("name")?.setFilterValue(e.target.value)
               }
               placeholder="검색..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
             />
           </div>
           <div>
@@ -181,7 +181,7 @@ export const PollutantTable = ({
                 table.getColumn("method")?.setFilterValue(e.target.value)
               }
               placeholder="검색..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
             />
           </div>
         </div>
@@ -189,7 +189,7 @@ export const PollutantTable = ({
           <div className="mt-3">
             <button
               onClick={() => setColumnFilters([])}
-              className="text-sm text-brown-600 hover:text-brown-700 font-medium"
+              className="text-sm text-neutral-600 hover:text-neutral-700 font-medium"
             >
               필터 초기화
             </button>
@@ -200,7 +200,7 @@ export const PollutantTable = ({
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-brown-500 to-brown-600 text-white">
+          <thead className="bg-gradient-to-r from-neutral-800 to-neutral-900 text-white">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

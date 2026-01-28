@@ -12,9 +12,9 @@ export const CompanyCardItem = ({ company }: CompanyCardProps) => {
 
   return (
     <div
-      className="bg-white border border-sand-200 rounded-lg p-5 hover:shadow-lg hover:border-brown-400 transition-all cursor-pointer"
+      className="bg-white border rounded-lg border-slate-200 p-5 hover:shadow-lg hover:border-neutral-400 transition-all cursor-pointer"
     >
-      <Link to={`/client/company/${company.id}`}>
+      <Link to={`/company/${company.id}`}>
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl font-semibold text-gray-800">{company.name}</h3>
         </div>

@@ -27,14 +27,13 @@ export const MainLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sand-50 via-brown-50 to-sand-100">
-      <header className="bg-white/90 backdrop-blur-sm shadow-md border-b border-sand-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100">
+      <header className="h-[72px] py-2.5 bg-white/90 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto h-full flex items-center justify-between">
             {/* 로고 */}
             <Link
               to="/dashboard"
-              className="text-2xl font-bold text-brown-900 no-underline hover:text-brown-700 transition"
+              className="text-2xl font-bold text-neutral-900 no-underline hover:text-neutral-700 transition"
               onClick={closeMobileMenu}
             >
               ENsolution
@@ -46,16 +45,15 @@ export const MainLayout = () => {
                 <Dropdown
                   label="측정대행 의뢰업체"
                   items={[
-                    { label: '의뢰업체', path: '/client/company' },
-                    { label: '측정대상 사업장', path: '/client/workplace' },
-                    { label: '측정시설', path: '/client/stack' },
+                    { label: '의뢰업체', path: '/company' },
+                    { label: '측정대상 사업장', path: '/workplace' },
+                    { label: '측정시설', path: '/stack' },
                   ]}
                 />
                 <Dropdown
                   label="측정 관리"
                   items={[
                     { label: '측정팀', path: '/agency/team' },
-                    { label: '차량', path: '/agency/vehicle' },
                     { label: '장비', path: '/agency/equipment' },
                   ]}
                 />
@@ -73,14 +71,14 @@ export const MainLayout = () => {
                 />
                 <Link
                   to="/me"
-                  className="text-brown-700 hover:text-brown-900 font-medium transition no-underline"
+                  className="text-neutral-700 hover:text-neutral-900 font-medium transition no-underline"
                 >
                   내정보
                 </Link>
               </nav>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-brown-600 text-white rounded-lg font-medium hover:bg-brown-700 transition-all shadow-sm hover:shadow-md"
+                className="px-4 py-2 bg-neutral-800 text-white rounded-lg font-medium hover:bg-neutral-900 transition-all shadow-sm hover:shadow-md"
               >
                 로그아웃
               </button>
@@ -89,7 +87,7 @@ export const MainLayout = () => {
             {/* 모바일 햄버거 버튼 */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-brown-700 hover:text-brown-900 focus:outline-none"
+              className="lg:hidden p-2 text-neutral-700 hover:text-neutral-900 focus:outline-none"
               aria-label="메뉴 열기"
             >
               <svg
@@ -115,15 +113,14 @@ export const MainLayout = () => {
                 )}
               </svg>
             </button>
-          </div>
 
           {/* 모바일 메뉴 */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden mt-4 pb-4 border-t border-sand-200 pt-4">
+            <div className="lg:hidden mt-4 pb-4 border-t border-slate-200 pt-4">
               <nav className="flex flex-col gap-3">
                 <Link
                   to="/home"
-                  className="text-brown-700 hover:text-brown-900 font-medium transition no-underline py-2"
+                  className="text-neutral-700 hover:text-neutral-900 font-medium transition no-underline py-2"
                   onClick={closeMobileMenu}
                 >
                   홈
@@ -131,25 +128,25 @@ export const MainLayout = () => {
 
                 {/* 측정대행 의뢰업체 */}
                 <div className="space-y-2">
-                  <div className="text-brown-900 font-semibold text-sm">측정대행 의뢰업체</div>
+                  <div className="text-neutral-900 font-semibold text-sm">측정대행 의뢰업체</div>
                   <div className="pl-4 space-y-2">
                     <Link
-                      to="/client/company"
-                      className="block text-brown-600 hover:text-brown-900 transition no-underline py-1"
+                      to="/company"
+                      className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       의뢰업체
                     </Link>
                     <Link
-                      to="/client/workplace"
-                      className="block text-brown-600 hover:text-brown-900 transition no-underline py-1"
+                      to="/workplace"
+                      className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       측정대상 사업장
                     </Link>
                     <Link
-                      to="/client/stack"
-                      className="block text-brown-600 hover:text-brown-900 transition no-underline py-1"
+                      to="/stack"
+                      className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       측정시설
@@ -159,18 +156,18 @@ export const MainLayout = () => {
 
                 {/* 측정대행업체 */}
                 <div className="space-y-2">
-                  <div className="text-brown-900 font-semibold text-sm">측정대행업체</div>
+                  <div className="text-neutral-900 font-semibold text-sm">측정대행업체</div>
                   <div className="pl-4 space-y-2">
                     <Link
                       to="/agency/team"
-                      className="block text-brown-600 hover:text-brown-900 transition no-underline py-1"
+                      className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       측정팀
                     </Link>
                     <Link
                       to="/agency/vehicle"
-                      className="block text-brown-600 hover:text-brown-900 transition no-underline py-1"
+                      className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       차량
@@ -180,11 +177,11 @@ export const MainLayout = () => {
 
                 {/* 실험실 */}
                 <div className="space-y-2">
-                  <div className="text-brown-900 font-semibold text-sm">실험실</div>
+                  <div className="text-neutral-900 font-semibold text-sm">실험실</div>
                   <div className="pl-4 space-y-2">
                     <Link
                       to="/lab/pollutant"
-                      className="block text-brown-600 hover:text-brown-900 transition no-underline py-1"
+                      className="block text-neutral-600 hover:text-neutral-900 transition no-underline py-1"
                       onClick={closeMobileMenu}
                     >
                       측정물질
@@ -194,7 +191,7 @@ export const MainLayout = () => {
 
                 <Link
                   to="/me"
-                  className="text-brown-700 hover:text-brown-900 font-medium transition no-underline py-2"
+                  className="text-neutral-700 hover:text-neutral-900 font-medium transition no-underline py-2"
                   onClick={closeMobileMenu}
                 >
                   내정보
@@ -205,7 +202,7 @@ export const MainLayout = () => {
                     handleLogout();
                     closeMobileMenu();
                   }}
-                  className="mt-2 px-4 py-2 bg-brown-600 text-white rounded-lg font-medium hover:bg-brown-700 transition-all shadow-sm hover:shadow-md text-left"
+                  className="mt-2 px-4 py-2 bg-neutral-800 text-white rounded-lg font-medium hover:bg-neutral-900 transition-all shadow-sm hover:shadow-md text-left"
                 >
                   로그아웃
                 </button>
@@ -214,7 +211,7 @@ export const MainLayout = () => {
           )}
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="w-full pt-6">
         <Outlet />
       </main>
     </div>

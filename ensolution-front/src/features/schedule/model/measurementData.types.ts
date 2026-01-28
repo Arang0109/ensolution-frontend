@@ -4,6 +4,13 @@ export interface TripleMeasurement {
   value3: number | null;
 }
 
+// 측정점별 데이터
+export interface MeasurementPointData {
+  exhaustGasTemperature: number | null; // 배출가스 온도 (°C)
+  dynamicPressure: number | null; // 동압 (mmH₂O)
+  staticPressure: number | null; // 정압 (mmH₂O)
+}
+
 // 측정 데이터 타입 정의
 export interface MeasurementData {
   // 사전 정보
@@ -17,10 +24,10 @@ export interface MeasurementData {
   windSpeed: number | null; // 풍속 (m/s)
 
   // 배출구 측정 데이터
-  exhaustGasTemperature: number | null; // 배출가스 온도 (°C)
   oxygenConcentration: TripleMeasurement; // 산소 농도 (%) - 3회 측정
   carbonDioxideConcentration: TripleMeasurement; // 이산화탄소 농도 (%) - 3회 측정
   carbonMonoxideConcentration: TripleMeasurement; // 일산화탄소 농도 (ppm) - 3회 측정
-  dynamicPressure: number | null; // 동압 (mmH₂O)
-  staticPressure: number | null; // 정압 (mmH₂O)
+
+  // 측정점별 데이터 (1~5개)
+  measurementPoints: MeasurementPointData[];
 }
