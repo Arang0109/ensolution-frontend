@@ -1,6 +1,6 @@
 import { useWorkplaces } from "@workplace/hooks/useWorkplaces";
 
-import { WorkplaceCardItem } from "@workplace/components";
+import { WorkplaceCardItem } from "@workplace/ui";
 
 export const WorkplaceListPage = () => {
   const { workplaces, loading } = useWorkplaces();

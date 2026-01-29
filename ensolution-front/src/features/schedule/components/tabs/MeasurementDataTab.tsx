@@ -1,14 +1,13 @@
 import { useMeasurementDataStore } from "@schedule/store/measurementDataStore";
 import { useMeasurementHandler } from "@schedule/hooks";
 
-import { Button } from "@common/ui";
-
 import {
+  Button,
   FieldWrapper,
   NumberField,
   SelectField,
   TimeField
-} from "@common/ui";
+} from "@shared/ui";
 
 export const MeasurementDataTab = () => {
   const {

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { patchSchedule, deleteMeasurement } from "@schedule/api/scheduleApi";
-import { TEAM_LABEL, CYCLE_LABELS } from "@common/constants/labels";
+import { CYCLE_LABELS } from "@stack/model";
+import { TEAM_LABEL } from "@agency/model";
 import { MdDelete } from "react-icons/md";
 
 import type { ScheduleDetailResponse } from "@schedule/model";
-import type { Cycle } from "@common/model";
-import { Button } from "@/common/ui";
+import type { Cycle } from "@/shared/model";
+import { Button } from "@/shared/ui";
 import { AddMeasurementModal } from "../AddMeasurementModal";
 
 const getCycleLabel = (cycle: Cycle): string => {

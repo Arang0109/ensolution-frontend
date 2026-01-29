@@ -11,6 +11,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@app': path.resolve(__dirname, './src/app'),
       '@common': path.resolve(__dirname, './src/common'),
+      '@shared': path.resolve(__dirname, './src/shared'),
+      '@widgets': path.resolve(__dirname, './src/widgets'),
       '@home': path.resolve(__dirname, './src/features/home'),
       '@auth': path.resolve(__dirname, './src/features/auth'),
       '@agency': path.resolve(__dirname, './src/features/agency'),

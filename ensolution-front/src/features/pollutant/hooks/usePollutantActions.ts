@@ -2,7 +2,7 @@ import { useState } from "react";
 import type {
   PollutantRegisterRequest,
   PollutantUpdateRequest,
-} from "@pollutant/model/pollutant.types";
+} from "@/features/pollutant/model/pollutant-types";
 import {
   registerPollutant,
   patchPollutant,

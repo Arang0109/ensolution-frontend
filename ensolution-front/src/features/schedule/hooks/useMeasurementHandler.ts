@@ -1,5 +1,5 @@
 // hooks/useMeasurementHandlers.ts
-import type { MeasurementData, MeasurementPointData } from "@schedule/model/measurementData.types";
+import type { MeasurementData, MeasurementPointData } from "@/features/schedule/model/measurement-data-types";
 
 type SetTime = (key: 'startTime' | 'endTime', value: string) => void;
 type SetWeather = (value: MeasurementData['weather']) => void;

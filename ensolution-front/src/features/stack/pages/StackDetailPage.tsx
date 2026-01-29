@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { useToast } from '@common/hooks';
+import { useToast } from "@app/providers/toast";
 import { useStackDetail, useStackActions } from '@stack/hooks';
 import {
   PreventionAddModal,
@@ -10,8 +10,10 @@ import {
   StackPreventionListCard,
   StackMeasurementListCard,
   StackSidebar,
-} from '@stack/components';
-import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
+} from '@stack/ui';
+
+import { DetailPageHeader } from '@widgets/detail-page-header';
+import { FullPageLoader, EmptyState } from '@shared/ui';
 import type { PreventionDetailResponse, StackUpdateRequest } from '@stack/model';
 
 export const StackDetailPage = () => {

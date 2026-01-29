@@ -1,9 +1,9 @@
-import { axiosPrivate } from "@common/api";
+import { axiosPrivate } from "@/shared/api";
 
-import type { ApiResponseMessage } from "@common/model";
+import type { ApiResponseMessage } from "@/shared/model";
 import type {
   TeamResponse, TeamDetailResponse, TeamRegisterRequest, TeamUpdateRequest
-} from "@agency/model/agency.types";
+} from "@/features/agency/model/agency-types";
 
 /////
 

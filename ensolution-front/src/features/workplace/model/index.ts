@@ -1,1 +1,1 @@
-export * from './workplace.types';
+export * from './workplace-types';

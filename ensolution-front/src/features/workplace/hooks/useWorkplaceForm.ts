@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import type { Grade } from "@common/model";
+import type { Grade } from "@/shared/model";
 import type { WorkplaceRegisterRequest } from "@workplace/model";
 import { registerWorkplace } from "@workplace/api/workplaceApi";
 

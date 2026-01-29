@@ -1,1 +1,1 @@
-export * from './company.types';
+export * from './company-types';

@@ -1,11 +1,10 @@
 import { useState } from "react";
 
-import { FullPageLoader } from "@common/components";
-import { Button } from "@common/ui";
+import { Button, FullPageLoader } from "@shared/ui";
 
 import { usePollutants, usePollutantActions } from "@pollutant/hooks";
-import { PollutantTable, PollutantFormModal } from "@pollutant/components";
-import type { PollutantRegisterRequest, PollutantResponse, PollutantUpdateRequest } from "@pollutant/model/pollutant.types";
+import { PollutantTable, PollutantFormModal } from "@/features/pollutant/ui";
+import type { PollutantRegisterRequest, PollutantResponse, PollutantUpdateRequest } from "@/features/pollutant/model/pollutant-types";
 
 export const PollutantPage = () => {
   const { pollutants, loading, refetch } = usePollutants();

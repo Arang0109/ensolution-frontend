@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { useWorkplaceDetail, useWorkplaceActions } from '@workplace/hooks';
-import { useSearch, useToast } from '@common/hooks';
-import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
-import { formatBizNumber, stripBizNumber } from '@common/utils/formatters';
+import { useSearch } from '@shared/lib';
+import { DetailPageHeader } from '@widgets/detail-page-header';
+import { FullPageLoader, EmptyState } from '@shared/ui';
+import { useToast } from "@app/providers/toast";
+import { formatBizNumber, stripBizNumber } from '@shared/lib';
 import type { WorkplaceUpdateRequest } from '@workplace/model';
 import {
   WorkplaceInfoCard,
   WorkplaceStackListCard
-} from '@workplace/components';
-import { StackAddModal } from '@stack/components';
+} from '@workplace/ui';
+import { StackAddModal } from '@stack/ui';
 
 export const WorkplaceDetailPage = () => {
   const navigate = useNavigate();

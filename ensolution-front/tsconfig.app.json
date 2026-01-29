@@ -30,6 +30,8 @@
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
       "@common/*": ["./src/common/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@widgets/*": ["./src/widgets/*"],
       "@home/*": ["./src/features/home/*"],
       "@auth/*": ["./src/features/auth/*"],
       "@agency/*": ["./src/features/agency/*"],

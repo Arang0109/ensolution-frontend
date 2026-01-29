@@ -3,7 +3,7 @@ import { useState } from "react";
 import { registerCompany } from "@company/api/companyApi";
 
 import type { CompanyRegisterRequest } from "@company/model";
-import { formatBizNumber, stripBizNumber } from "@common/utils/formatters";
+import { formatBizNumber, stripBizNumber } from "@shared/lib";
 
 export const useCompanyForm = () => {
   const [form, setForm] = useState<CompanyRegisterRequest>({

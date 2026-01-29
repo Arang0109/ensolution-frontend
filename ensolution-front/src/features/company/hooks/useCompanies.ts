@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 import { getCompanies } from "@company/api/companyApi";
 
 import type { CompanyResponse } from "@company/model";

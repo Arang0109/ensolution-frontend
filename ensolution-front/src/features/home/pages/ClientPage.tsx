@@ -1,31 +1,28 @@
-import { MenuCardItem, type MenuCard } from "@/common/ui";
+import { CardItem, type CardItemProps } from "@/shared/ui";
 
 import { GiChimney } from "react-icons/gi";
 import { HiOfficeBuilding } from "react-icons/hi";
 import { MdDashboard, MdTrendingUp, MdSecurity } from "react-icons/md";
 
 export const ClientPage = () => {
-  const menuCards: MenuCard[] = [
+  const menuCards: CardItemProps[] = [
     {
       title: "측정시설 검색",
       description: "측정시설 정보를 검색합니다.",
       icon: <HiOfficeBuilding style={{color: '#b89375'}} />,
       path: "/client/stack",
-      color: "from-neutral-800 to-neutral-900",
     },
     {
       title: "측정팀 관리",
       description: "측정팀 및 차량을 관리합니다.",
       icon: <HiOfficeBuilding style={{color: '#b89375'}} />,
       path: "/workplace",
-      color: "from-neutral-800 to-neutral-900",
     },
     {
       title: "측정시설 관리",
       description: "프로필 정보를 확인하고 수정합니다.",
       icon: <GiChimney style={{color: '#b89375'}} />,
       path: "/stack",
-      color: "from-neutral-800 to-neutral-900",
     },
   ];
 
@@ -44,7 +41,7 @@ export const ClientPage = () => {
       {/* 카드 그리드 */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mx-auto container">
         {menuCards.map((card) => (
-          <MenuCardItem key={card.path} {...card} />
+          <CardItem key={card.path} {...card} />
         ))}
       </div>
 

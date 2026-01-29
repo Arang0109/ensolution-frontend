@@ -1,5 +1,5 @@
-import { axiosPrivate, axiosPublic } from "@common/api";
-import type { ApiResponseMessage } from "@common/model";
+import { axiosPrivate, axiosPublic } from "@/shared/api";
+import type { ApiResponseMessage } from "@/shared/model";
 import type { LoginRequest, LoginResponse } from "@auth/model";
 
 export const loginApi = async (data: LoginRequest): Promise<ApiResponseMessage<LoginResponse>> => {

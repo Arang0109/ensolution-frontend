@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 import { getTeams } from "@agency/api/AgencyApi";
 
 import type { TeamResponse } from "@agency/model";

@@ -2,7 +2,7 @@ import { MdTrendingUp, MdFactory, MdManageAccounts } from "react-icons/md";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import { GiChimney } from "react-icons/gi";
 import { AiOutlineBarChart, AiOutlineCalendar, AiOutlineFile, AiOutlineTeam, AiOutlineInbox } from "react-icons/ai";
-import { CardItem } from "@common/ui";
+import { CardItem } from "@shared/ui";
 
 export const HomePage = () => {
   return (

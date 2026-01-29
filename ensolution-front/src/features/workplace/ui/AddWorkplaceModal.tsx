@@ -1,0 +1,244 @@
+// 📌 React & Hooks
+import { useState } from 'react';
+import { useToast } from "@app/providers/toast";
+
+// 📌 Types
+import type { Grade } from '@/shared/model';
+import { GRADE_LABELS } from '@/shared/model';
+import type { WorkplaceRegisterRequest } from '@workplace/model';
+
+import { Button } from '@shared/ui';
+
+// 📌 Utils
+import { formatBizNumber, stripBizNumber } from '@shared/lib';
+
+interface AddWorkplaceModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  companyId: number;
+  onSuccess: () => void;
+  onSubmit: (data: WorkplaceRegisterRequest) => Promise<{ success: boolean; message: string }>;
+}
+
+const getInitialForm = (companyId: number): WorkplaceRegisterRequest => ({
+  name: '',
+  companyId: companyId,
+  address: '',
+  bizNumber: '',
+  businessCategory: '',
+  grade: '' as Grade,
+  remark: '',
+});
+
+export const AddWorkplaceModal = ({
+  isOpen,
+  onClose,
+  companyId,
+  onSuccess,
+  onSubmit,
+}: AddWorkplaceModalProps) => {
+  const { showToast } = useToast();
+  const [form, setForm] = useState<WorkplaceRegisterRequest>(() => getInitialForm(companyId));
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === 'bizNumber') {
+      setForm(prev => ({ ...prev, bizNumber: formatBizNumber(value) }));
+      return;
+    }
+
+    setForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const resetForm = () => {
+    setForm(getInitialForm(companyId));
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const payload = {
+      ...form,
+      bizNumber: stripBizNumber(form.bizNumber),
+    };
+
+    const result = await onSubmit(payload);
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      showToast('사업장이 등록되었습니다.','success');
+      resetForm();
+      onSuccess();
+      onClose();
+    } else {
+      showToast('사업장 등록에 실패했습니다.','error');
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">사업장 추가</h2>
+            <button
+              onClick={handleClose}
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+              disabled={isSubmitting}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                사업장명 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="사업장명을 입력하세요"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                주소 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="주소를 입력하세요"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                사업자등록번호 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="bizNumber"
+                value={form.bizNumber}
+                onChange={handleChange}
+                required
+                maxLength={12}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="000-00-00000"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                업종 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="businessCategory"
+                value={form.businessCategory}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="업종을 입력하세요"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                종별 <span className="text-red-500">*</span>
+              </label>
+              <select
+                name="grade"
+                value={form.grade}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                disabled={isSubmitting}
+              >
+                <option value="">선택하세요</option>
+                {Object.entries(GRADE_LABELS).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                비고
+              </label>
+              <textarea
+                name="remark"
+                value={form.remark}
+                onChange={handleChange}
+                rows={3}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                placeholder="비고를 입력하세요"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div className="flex justify-end gap-3 pt-4">
+              <Button
+                label="취소"
+                onClick={handleClose}
+                variant="cancel"
+                size="md"
+                width="full"
+                type="button"
+                disabled={isSubmitting}
+              />
+              <Button
+                label="추가"
+                variant="add"
+                size="md"
+                width="full"
+                type="submit"
+                disabled={isSubmitting}
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
