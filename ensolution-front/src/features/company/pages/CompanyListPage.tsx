@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { Button } from '@/shared/ui';
 import { useCompanies } from '@company/hooks/useCompanies';
-import { CompanyAddModal } from '@company/components/CompanyAddModal';
-import { CompanyCardItem } from '@company/ui/CompanyCardItem';
+import { CompanyAddModal } from '@/features/company/ui/CompanyAddModal';
+import { CompanyCardItem } from '@company/ui';
 
 export const CompanyListPage = () => {
   const { companies, loading, refetch } = useCompanies();

@@ -1,4 +1,4 @@
-import { WorkplaceItem } from "@company/components/WorkplaceItem";
+import { WorkplaceItem } from "@company/ui";
 import type { WorkplaceResponse } from "@workplace/model";
 
 import { Button } from "@shared/ui";

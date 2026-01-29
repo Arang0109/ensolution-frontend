@@ -6,7 +6,7 @@ import { useAuth } from "@app/providers/auth";
 import axios, { AxiosError } from "axios";
 import { loginApi } from "@auth/api/authApi";
 
-import type { ApiResponseMessage } from "@/shared/types";
+import type { ApiResponseMessage } from "@/shared/model";
 import { useToast } from "@app/providers/toast";
 
 import type { LoginRequest } from "@auth/model";

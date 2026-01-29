@@ -1,6 +1,7 @@
 import { SearchableSelect } from "@schedule/components/SearchableSelect";
 import { MeasurementMultiSelect } from "@schedule/components/MeasurementMultiSelect";
-import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
+import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
+import { GRADE_LABELS } from "@shared/model";
 import type { ScheduleRegisterRequest } from "@schedule/model";
 import type { StackResponse, StackMeasurementResponse } from "@stack/model";
 

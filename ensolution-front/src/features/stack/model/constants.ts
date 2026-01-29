@@ -1,15 +1,4 @@
 /**
- * 배출시설 등급 라벨
- */
-export const GRADE_LABELS: Record<string, string> = {
-  TYPE_1: '1종',
-  TYPE_2: '2종',
-  TYPE_3: '3종',
-  TYPE_4: '4종',
-  TYPE_5: '5종',
-} as const;
-
-/**
  * 배출구 형태 라벨
  */
 export const SHAPE_LABELS: Record<string, string> = {

@@ -1,6 +1,6 @@
 import { axiosPrivate } from "@/shared/api";
 
-import type { ApiResponseMessage } from "@/shared/types";
+import type { ApiResponseMessage } from "@/shared/model";
 import type { PollutantResponse, PollutantRegisterRequest, PollutantUpdateRequest } from "@/features/pollutant/model/pollutant-types";
 
 export const registerPollutant = async (

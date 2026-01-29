@@ -3,7 +3,7 @@ import { useState, useMemo, Fragment } from 'react';
 import { Button } from '@shared/ui';
 import { Tabs } from '@/shared/ui/navigation';
 import { useEquipments } from '@equipment/hooks/useEquipments';
-import { EquipmentAddModal, EquipmentEditModal } from '@equipment/components';
+import { EquipmentAddModal, EquipmentEditModal } from '@/features/equipment/ui';
 import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS, PITOT_TUBE_OPTIONS } from '@equipment/model';
 import type {
   EquipmentResponse,

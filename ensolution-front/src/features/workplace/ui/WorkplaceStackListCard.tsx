@@ -1,4 +1,4 @@
-import { StackItem } from '@workplace/components';
+import { StackItem } from '@workplace/ui';
 import type { StackResponse } from '@stack/model';
 
 import { Button } from "@shared/ui";

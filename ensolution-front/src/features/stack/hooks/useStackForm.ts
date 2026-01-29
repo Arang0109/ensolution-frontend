@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Grade, Orientation, Shape } from "@/shared/types";
+import type { Grade, Orientation, Shape } from "@/shared/model";
 import type { StackRegisterRequest } from "@stack/model";
 import { registerStack } from "@stack/api/stackApi";
 

@@ -10,7 +10,7 @@ import {
   StackPreventionListCard,
   StackMeasurementListCard,
   StackSidebar,
-} from '@stack/components';
+} from '@stack/ui';
 
 import { DetailPageHeader } from '@widgets/detail-page-header';
 import { FullPageLoader, EmptyState } from '@shared/ui';

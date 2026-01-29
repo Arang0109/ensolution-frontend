@@ -1,5 +1,5 @@
 import { axiosPrivate } from "@/shared/api";
-import type { ApiResponseMessage } from "@/shared/types";
+import type { ApiResponseMessage } from "@/shared/model";
 
 import type {
   ScheduleResponse, ScheduleRegisterRequest, ScheduleStatusUpdateRequest,

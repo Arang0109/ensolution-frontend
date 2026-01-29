@@ -1,4 +1,4 @@
-import type { Grade } from '@/shared/types/common.types';
+import type { Grade } from '@/shared/model/common-types';
 import type { StackResponse } from '@/features/stack/model/stack-types';
 
 export interface WorkplaceResponse {

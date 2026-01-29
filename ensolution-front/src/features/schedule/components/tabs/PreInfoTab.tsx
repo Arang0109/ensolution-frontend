@@ -1,5 +1,6 @@
-import { formatBizNumber } from "@/shared/lib/formatter/formatters";
-import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
+import { formatBizNumber } from "@shared/lib";
+import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
+import { GRADE_LABELS } from "@shared/model";
 
 import type { ScheduleDetailResponse } from "@schedule/model";
 

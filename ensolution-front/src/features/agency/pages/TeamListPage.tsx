@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useTeams } from "@agency/hooks/useTeams";
-import { TeamCard } from "@agency/components/TeamCard";
+import { TeamCard } from "@/features/agency/ui/TeamCard";
 
 export const TeamListPage = () => {
   const navigate = useNavigate();

@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { useToast } from "@app/providers/toast";
 
 // 📌 Types
-import type { Grade } from '@/shared/types';
+import type { Grade } from '@/shared/model';
+import { GRADE_LABELS } from '@/shared/model';
 import type { WorkplaceRegisterRequest } from '@workplace/model';
 
 // 📌 Utils
-import { formatBizNumber, stripBizNumber } from '@/shared/lib/formatter/formatters';
+import { formatBizNumber, stripBizNumber } from '@shared/lib';
 
 interface AddWorkplaceModalProps {
   isOpen: boolean;
@@ -191,11 +192,11 @@ export const AddWorkplaceModal = ({
                 disabled={isSubmitting}
               >
                 <option value="">선택하세요</option>
-                <option value="TYPE_1">1종</option>
-                <option value="TYPE_2">2종</option>
-                <option value="TYPE_3">3종</option>
-                <option value="TYPE_4">4종</option>
-                <option value="TYPE_5">5종</option>
+                {Object.entries(GRADE_LABELS).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
               </select>
             </div>
 

@@ -1,4 +1,4 @@
-import type { Cycle } from "@/shared/types";
+import type { Cycle } from "@/shared/model";
 import type { PollutantResponse } from "@/features/pollutant/model/pollutant-types";
 
 export interface StackMeasurementResponse {

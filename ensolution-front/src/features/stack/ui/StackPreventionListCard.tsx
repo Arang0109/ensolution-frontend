@@ -1,7 +1,7 @@
 import type { PreventionDetailResponse } from '@stack/model';
 
 import { Button } from '@shared/ui';
-import { formatDate } from '@/shared/lib/formatter/formatters';
+import { formatDate } from '@/shared/lib/formatter/dateFormatter';
 
 interface StackPreventionListCardProps {
   preventions: PreventionDetailResponse[];

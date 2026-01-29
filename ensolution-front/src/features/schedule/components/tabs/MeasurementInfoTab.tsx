@@ -5,7 +5,7 @@ import { TEAM_LABEL } from "@agency/model";
 import { MdDelete } from "react-icons/md";
 
 import type { ScheduleDetailResponse } from "@schedule/model";
-import type { Cycle } from "@/shared/types";
+import type { Cycle } from "@/shared/model";
 import { Button } from "@/shared/ui";
 import { AddMeasurementModal } from "../AddMeasurementModal";
 

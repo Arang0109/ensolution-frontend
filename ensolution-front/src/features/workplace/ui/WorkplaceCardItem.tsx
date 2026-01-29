@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import type { WorkplaceResponse } from "@workplace/model";
 
 import { formatBizNumber } from "@shared/lib";
-import { GRADE_LABELS } from '@stack/model';
+import { GRADE_LABELS } from '@shared/model';
 
 interface WorkplaceCardProps {
   workplace: WorkplaceResponse

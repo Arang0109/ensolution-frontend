@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button, FullPageLoader } from "@shared/ui";
 
 import { usePollutants, usePollutantActions } from "@pollutant/hooks";
-import { PollutantTable, PollutantFormModal } from "@pollutant/components";
+import { PollutantTable, PollutantFormModal } from "@/features/pollutant/ui";
 import type { PollutantRegisterRequest, PollutantResponse, PollutantUpdateRequest } from "@/features/pollutant/model/pollutant-types";
 
 export const PollutantPage = () => {

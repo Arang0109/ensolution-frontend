@@ -18,10 +18,10 @@ import { useToast } from "@app/providers/toast"
 import { FullPageLoader, EmptyState } from '@shared/ui';
 
 // 📌 Company Domain Components
-import { WorkplaceListCard, CompanyInfoCard } from '@company/components';
+import { WorkplaceListCard, CompanyInfoCard } from '@company/ui';
 
 // 📌 Workplace Domain Components
-import { AddWorkplaceModal } from '@workplace/components';
+import { AddWorkplaceModal } from '@workplace/ui';
 
 export const CompanyDetailPage = () => {
   const navigate = useNavigate();
