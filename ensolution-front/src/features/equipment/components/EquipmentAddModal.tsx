@@ -52,7 +52,7 @@ export const EquipmentAddModal = ({ onClose, onSuccess }: EquipmentAddModalProps
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  총 용량 (L)
+                  적산량 (m<sup>3</sup>)
                 </label>
                 <input
                   type="number"
@@ -65,7 +65,7 @@ export const EquipmentAddModal = ({ onClose, onSuccess }: EquipmentAddModalProps
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  오리피스 DP
+                  오리피스 보정계수
                 </label>
                 <input
                   type="number"

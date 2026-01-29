@@ -52,11 +52,11 @@ export const EquipmentEditModal = ({ equipment, onClose, onSuccess }: EquipmentE
         const spec = form.spec as ParticleSamplerSpec;
         return (
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-700 border-b pb-2">먼지 시료채취기 스펙</h3>
+            <h3 className="text-sm font-semibold text-gray-700 border-b pb-2">입자상 시료채취장비 스펙</h3>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  총 용량 (L)
+                  적산량 (m<sup>3</sup>)
                 </label>
                 <input
                   type="number"
@@ -69,7 +69,7 @@ export const EquipmentEditModal = ({ equipment, onClose, onSuccess }: EquipmentE
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  오리피스 DP
+                  오리피스 보정계수
                 </label>
                 <input
                   type="number"
