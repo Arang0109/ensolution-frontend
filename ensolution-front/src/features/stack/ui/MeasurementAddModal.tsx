@@ -440,7 +440,7 @@ export const MeasurementAddModal = ({
               <button
                 type="button"
                 onClick={addMeasurement}
-                className="w-full px-4 py-2 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-primary-500 hover:text-primary-500 transition-colors"
+                className="w-full px-4 py-2 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-[#697243] hover:text-[#889063] transition-colors"
                 disabled={isSubmitting}
               >
                 + 측정물질 추가
@@ -460,7 +460,7 @@ export const MeasurementAddModal = ({
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 bg-[#889063] text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting || loadingPollutants}
             >
               {isSubmitting ? "등록 중..." : `등록 (${measurements.filter(m => m.pollutantId).length}개)`}

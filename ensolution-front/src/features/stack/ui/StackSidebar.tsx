@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { formatDateTime, formatDate } from '@/shared/lib/formatter/dateFormatter';
 import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
@@ -115,8 +114,6 @@ export const StackSidebar = ({
   editForm,
   onChange,
 }: StackSidebarProps) => {
-  const navigate = useNavigate();
-
   const gradeOptions = Object.entries(GRADE_LABELS).map(([value, label]) => ({
     value,
     label,
@@ -305,17 +302,6 @@ export const StackSidebar = ({
             </>
           )}
         </div>
-      </div>
-
-      {/* 사업장 정보 */}
-      <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
-        <h2 className="text-lg font-semibold mb-4 text-neutral-900">사업장 정보</h2>
-        <button
-          onClick={() => navigate(`/client/workplace/${stack.workplaceId}`)}
-          className="w-full px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors text-sm shadow-md"
-        >
-          사업장 상세 보기
-        </button>
       </div>
 
       {/* 통계 */}

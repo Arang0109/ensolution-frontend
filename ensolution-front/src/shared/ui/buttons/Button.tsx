@@ -38,7 +38,7 @@ export const Button = ({
       "bg-primary-600 text-white hover:bg-primary-700",
 
     add:
-      "bg-[#889063] text-white hover:bg-emerald-700",
+      "bg-[#889063] text-white hover:bg-[#666E43]",
 
     edit:
       "bg-blue-600/60 text-white hover:bg-blue-700",

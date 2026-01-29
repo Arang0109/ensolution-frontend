@@ -7,6 +7,8 @@ import type { Grade } from '@/shared/model';
 import { GRADE_LABELS } from '@/shared/model';
 import type { WorkplaceRegisterRequest } from '@workplace/model';
 
+import { Button } from '@shared/ui';
+
 // 📌 Utils
 import { formatBizNumber, stripBizNumber } from '@shared/lib';
 
@@ -216,21 +218,23 @@ export const AddWorkplaceModal = ({
             </div>
 
             <div className="flex justify-end gap-3 pt-4">
-              <button
-                type="button"
+              <Button
+                label="취소"
                 onClick={handleClose}
+                variant="cancel"
+                size="md"
+                width="full"
+                type="button"
                 disabled={isSubmitting}
-                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                취소
-              </button>
-              <button
+              />
+              <Button
+                label="추가"
+                variant="add"
+                size="md"
+                width="full"
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? '등록 중...' : '등록'}
-              </button>
+              />
             </div>
           </form>
         </div>

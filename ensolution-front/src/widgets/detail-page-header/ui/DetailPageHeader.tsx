@@ -49,7 +49,7 @@ export const DetailPageHeader = ({
             />
             <Button
               label="저장"
-              variant="primary"
+              variant="add"
               onClick={onSave}
             />
           </>
