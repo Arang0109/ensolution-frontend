@@ -1,6 +1,6 @@
 import { useCompanyForm } from '@company/hooks';
 
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 
 interface CompanyAddModalProps {
   onClose: () => void;

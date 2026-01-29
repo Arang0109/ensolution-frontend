@@ -1,6 +1,6 @@
 // 📌 React & Hooks
 import { useState } from 'react';
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 
 // 📌 Types
 import type { Grade } from '@common/model';

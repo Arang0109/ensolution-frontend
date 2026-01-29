@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 import { Button } from "@common/ui";
 
 import { useScheduleDetail, useScheduleActions } from "@schedule/hooks";

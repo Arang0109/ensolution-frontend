@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { useWorkplaceDetail, useWorkplaceActions } from '@workplace/hooks';
-import { useSearch, useToast } from '@common/hooks';
+import { useSearch } from '@common/hooks';
+import { useToast } from "@app/providers/toast";
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 import { formatBizNumber, stripBizNumber } from '@common/utils/formatters';
 import type { WorkplaceUpdateRequest } from '@workplace/model';

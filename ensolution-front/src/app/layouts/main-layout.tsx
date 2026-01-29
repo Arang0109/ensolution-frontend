@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router';
 
+import { useAuth } from "@app/providers/auth";
+
 import { logoutApi } from '@auth/api/authApi';
-import { useToast } from '@common/hooks';
+import { useToast } from "@app/providers/toast";
 import { Dropdown } from '@common/ui';
 
 export const MainLayout = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { logout } = useAuth();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
       await logoutApi();
-      localStorage.removeItem('accessToken');
+      logout()
       showToast('로그아웃되었습니다.', 'success');
       navigate('/');
     } catch (error) {

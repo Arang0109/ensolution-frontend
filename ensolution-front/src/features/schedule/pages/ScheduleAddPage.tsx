@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useScheduleForm } from "@schedule/hooks";
 import { ScheduleForm } from "@schedule/ui/ScheduleForm";
 
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 
 export const ScheduleAddPage = () => {
   const navigate = useNavigate();

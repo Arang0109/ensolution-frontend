@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 import type { Grade, Orientation, Shape } from "@common/model";
 import type { StackRegisterRequest } from "@stack/model";
 import { registerStack } from "@stack/api/stackApi";

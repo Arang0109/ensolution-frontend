@@ -2,7 +2,7 @@ import { useEquipmentForm } from '@equipment/hooks';
 import { EquipType, EQUIP_TYPE_OPTIONS } from '@equipment/model';
 import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from '@equipment/model';
 
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 
 interface EquipmentAddModalProps {
   onClose: () => void;

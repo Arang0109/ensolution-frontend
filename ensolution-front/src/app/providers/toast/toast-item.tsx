@@ -1,24 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import type { Toast } from "./toast-context";
 
-export type ToastType = 'success' | 'error' | 'info' | 'warning';
-
-export interface Toast {
-  id: string;
-  message: string;
-  type: ToastType;
-}
-
-interface ToastItemProps {
+interface Props {
   toast: Toast;
   onClose: (id: string) => void;
 }
 
-export const ToastItem = ({ toast, onClose }: ToastItemProps) => {
+export const ToastItem = ({ toast, onClose }: Props) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose(toast.id);
-    }, 3000);
-
+    const timer = setTimeout(() => onClose(toast.id), 3000);
     return () => clearTimeout(timer);
   }, [toast.id, onClose]);
 
@@ -82,21 +72,6 @@ export const ToastItem = ({ toast, onClose }: ToastItemProps) => {
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
-    </div>
-  );
-};
-
-interface ToastContainerProps {
-  toasts: Toast[];
-  onClose: (id: string) => void;
-}
-
-export const ToastContainer = ({ toasts, onClose }: ToastContainerProps) => {
-  return (
-    <div className="fixed top-4 right-4 z-50">
-      {toasts.map((toast) => (
-        <ToastItem key={toast.id} toast={toast} onClose={onClose} />
-      ))}
     </div>
   );
 };

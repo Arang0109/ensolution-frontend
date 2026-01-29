@@ -13,7 +13,7 @@ import type { CompanyUpdateRequest } from '@company/model';
 import { formatBizNumber } from '@common/utils/formatters';
 
 // 📌 Shared UI Components
-import { useToast } from "@common/hooks"
+import { useToast } from "@app/providers/toast"
 import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
 
 // 📌 Company Domain Components

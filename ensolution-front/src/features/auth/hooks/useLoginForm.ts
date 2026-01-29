@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "@app/providers/auth";
+
 import axios, { AxiosError } from "axios";
 import { loginApi } from "@auth/api/authApi";
 
 import type { ApiResponseMessage } from "@common/model";
-import { useToast } from "@common/hooks";
+import { useToast } from "@app/providers/toast";
 
 import type { LoginRequest } from "@auth/model";
 
 export function useLoginForm() {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { login } = useAuth();
+
   const [form, setForm] = useState<LoginRequest>({
     username: "",
     password: "",
@@ -32,8 +36,7 @@ export function useLoginForm() {
       const res = await loginApi(form);
 
       if (res.status) {
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("username", res.data.username);
+        login(res.data.accessToken);
         showToast("로그인되었습니다.", "success");
         navigate("/dashboard", { replace: true });
         return { success: true };

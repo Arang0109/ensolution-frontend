@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { useToast } from '@common/hooks';
+import { useToast } from "@app/providers/toast";
 import { useStackDetail, useStackActions } from '@stack/hooks';
 import {
   PreventionAddModal,
