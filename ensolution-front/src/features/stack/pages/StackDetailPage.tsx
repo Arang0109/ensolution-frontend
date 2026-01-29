@@ -11,7 +11,9 @@ import {
   StackMeasurementListCard,
   StackSidebar,
 } from '@stack/components';
-import { DetailPageHeader, FullPageLoader, EmptyState } from '@common/components';
+
+import { DetailPageHeader } from '@widgets/detail-page-header';
+import { FullPageLoader, EmptyState } from '@shared/ui';
 import type { PreventionDetailResponse, StackUpdateRequest } from '@stack/model';
 
 export const StackDetailPage = () => {

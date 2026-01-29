@@ -1,7 +1,7 @@
 import type { PreventionDetailResponse } from '@stack/model';
 
-import { Button } from '@common/ui';
-import { formatDate } from '@common/utils/formatters';
+import { Button } from '@shared/ui';
+import { formatDate } from '@/shared/lib/formatter/formatters';
 
 interface StackPreventionListCardProps {
   preventions: PreventionDetailResponse[];
@@ -19,9 +19,12 @@ export const StackPreventionListCard = ({
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-neutral-900">방지시설 목록</h2>
         <Button
-          label='방지시설 추가'
-          onClick={onAddPrevention}
-        />
+                    label="방지시설추가"
+                    onClick={onAddPrevention}
+                    variant="add"
+                    size="md"
+                    type="button"
+                  />
       </div>
 
       {preventions.length === 0 ? (

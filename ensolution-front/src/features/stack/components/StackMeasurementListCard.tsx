@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { StackMeasurementResponse } from '@stack/model';
-import type { Cycle } from '@common/model';
-import { CYCLE_LABELS } from '@common/constants/labels';
+import { CYCLE_LABELS } from '@stack/model';
+import type { Cycle } from '@/shared/types';
 import { MeasurementEditModal } from '@stack/components/MeasurementEditModal';
-import { Button } from '@common/ui';
+import { Button } from '@shared/ui';
 
 interface StackMeasurementListCardProps {
   measurements: StackMeasurementResponse[];
@@ -50,26 +50,13 @@ export const StackMeasurementListCard = ({
       <div className="bg-white border border-slate-200 rounded-lg shadow-md p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-neutral-900">측정물질 정보</h2>
-          <button
+          <Button
+            label="측정시설추가"
             onClick={onAddMeasurement}
-            className="px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors flex items-center gap-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            측정물질 추가
-          </button>
+            variant="add"
+            size="md"
+            type="button"
+          />
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-gray-500">
           <svg
@@ -100,10 +87,13 @@ export const StackMeasurementListCard = ({
             총 {measurements.length}개
           </span>
         </div>
-        <Button 
-          label='측정물질 추가'
-          onClick={onAddMeasurement}
-        />
+        <Button
+            label="측정시설추가"
+            onClick={onAddMeasurement}
+            variant="add"
+            size="md"
+            type="button"
+          />
       </div>
 
       <div className="space-y-6">

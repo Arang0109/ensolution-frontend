@@ -2,8 +2,7 @@ export type {
   TeamResponse,
   TeamRegisterRequest,
   TeamUpdateRequest,
-  TeamDetailResponse,
-  VehicleResponse,
-  VehicleRegisterRequest,
-  VehicleUpdateRequest,
-} from "./agency.types";
+  TeamDetailResponse
+} from "./agency-types";
+
+export { TEAM_LABEL } from "./team-constants";

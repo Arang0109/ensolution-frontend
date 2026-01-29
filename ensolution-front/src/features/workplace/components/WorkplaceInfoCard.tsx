@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { GRADE_LABELS } from '@common/constants';
-import { formatBizNumber, formatDate } from '@common/utils/formatters';
+import { GRADE_LABELS } from '@stack/model';
+import { formatBizNumber, formatDate } from '@/shared/lib/formatter/formatters';
 import type { WorkplaceResponse, WorkplaceUpdateRequest } from '@workplace/model';
 
 interface WorkplaceInfoCardProps {

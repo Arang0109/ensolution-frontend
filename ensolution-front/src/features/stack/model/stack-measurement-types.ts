@@ -1,5 +1,5 @@
-import type { Cycle } from "@common/model";
-import type { PollutantResponse } from "@pollutant/model/pollutant.types";
+import type { Cycle } from "@/shared/types";
+import type { PollutantResponse } from "@/features/pollutant/model/pollutant-types";
 
 export interface StackMeasurementResponse {
   id: number;

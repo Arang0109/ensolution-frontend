@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button } from '@common/ui';
+import { Button } from '@/shared/ui';
 import { useCompanies } from '@company/hooks/useCompanies';
 import { CompanyAddModal } from '@company/components/CompanyAddModal';
 import { CompanyCardItem } from '@company/ui/CompanyCardItem';
@@ -22,7 +22,13 @@ export const CompanyListPage = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">측정대행 의뢰업체</h1>
-        <Button label="업체추가" onClick={() => setShowAddModal(true)} />
+        <Button
+          label="업체추가"
+          onClick={() => setShowAddModal(true)}
+          variant="add"
+          size="md"
+          type="button"
+        />
       </div>
 
       <hr className="border-gray-200 mb-6" />

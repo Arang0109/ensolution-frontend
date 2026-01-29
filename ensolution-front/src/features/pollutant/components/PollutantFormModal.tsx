@@ -4,7 +4,7 @@ import type {
   PollutantResponse,
   PollutantRegisterRequest,
   PollutantUpdateRequest,
-} from "@pollutant/model/pollutant.types";
+} from "@/features/pollutant/model/pollutant-types";
 
 interface PollutantFormModalProps {
   pollutant?: PollutantResponse | null;

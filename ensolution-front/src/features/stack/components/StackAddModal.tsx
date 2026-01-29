@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useToast } from "@app/providers/toast";
-import type { Grade, Orientation, Shape } from "@common/model";
+import type { Grade, Orientation, Shape } from "@/shared/types";
 import type { StackRegisterRequest } from "@stack/model";
 import { registerStack } from "@stack/api/stackApi";
-import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from "@common/constants/labels";
+import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
 
 interface StackAddModalProps {
   workplaceId: number;

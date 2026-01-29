@@ -1,7 +1,7 @@
 import { WorkplaceItem } from "@company/components/WorkplaceItem";
 import type { WorkplaceResponse } from "@workplace/model";
 
-import { Button } from "@common/ui";
+import { Button } from "@shared/ui";
 
 interface WorkplaceListCardProps {
   workplaces: WorkplaceResponse[];
@@ -21,7 +21,13 @@ export const WorkplaceListCard = ({ workplaces, isEditMode=false, onClick }: Wor
           사업장 목록
         </h2>
         {showAddButton && (
-          <Button label="사업장 추가" onClick={onClick} />
+          <Button
+            label="사업장추가"
+            onClick={onClick}
+            variant="add"
+            size="md"
+            type="button"
+          />
         )}
       </div>
 

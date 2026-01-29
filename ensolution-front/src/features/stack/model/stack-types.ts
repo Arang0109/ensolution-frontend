@@ -1,4 +1,4 @@
-import type { Grade, Shape, Orientation } from '@common/model/common.types';
+import type { Grade, Shape, Orientation } from '@/shared/types/common.types';
 import type { PreventionResponse, PreventionDetailResponse, StackMeasurementResponse } from '@stack/model';
 
 export interface StackResponse {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSchedules } from "@schedule/hooks";
 import { ScheduleTable } from "@schedule/components";
 
-import { Button } from "@common/ui";
+import { Button } from "@shared/ui";
 
 export const ScheduleListPage = () => {
   const navigate = useNavigate();

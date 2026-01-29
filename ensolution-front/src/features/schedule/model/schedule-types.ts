@@ -1,7 +1,7 @@
 import type { CompanyResponse } from "@company/model";
 import type { StackDetailResponse, StackMeasurementResponse } from "@stack/model";
 import type { WorkplaceResponse } from "@workplace/model";
-import type { ScheduleStatus } from "@common/model/common.types";
+import type { ScheduleStatus } from "@/shared/types/common.types";
 
 export interface ScheduleResponse {
   id: number;

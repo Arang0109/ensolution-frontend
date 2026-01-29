@@ -1,6 +1,7 @@
 import { useCompanyForm } from '@company/hooks';
 
 import { useToast } from "@app/providers/toast";
+import { Button } from '@shared/ui';
 
 interface CompanyAddModalProps {
   onClose: () => void;
@@ -125,21 +126,21 @@ export const CompanyAddModal = ({ onClose, onSuccess }: CompanyAddModalProps) =>
           </div>
 
           <div className="flex gap-3 pt-4">
-            <button
-              type="button"
+            <Button
+              label="취소"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+              variant="cancel"
+              size="md"
+              type="button"
               disabled={isSubmitting}
-            >
-              취소
-            </button>
-            <button
+            />
+            <Button
+              label="추가"
+              variant="add"
+              size="md"
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting}
-            >
-              {isSubmitting ? '추가 중...' : '추가'}
-            </button>
+            />
           </div>
         </form>
       </div>

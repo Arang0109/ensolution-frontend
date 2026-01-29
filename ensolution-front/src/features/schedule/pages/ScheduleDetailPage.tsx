@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { useToast } from "@app/providers/toast";
-import { Button } from "@common/ui";
+import { Button, FullPageLoader, EmptyState, Tabs } from "@shared/ui";
 
 import { useScheduleDetail, useScheduleActions } from "@schedule/hooks";
-import { FullPageLoader, EmptyState, Tabs } from "@common/components";
 import { PreInfoTab, MeasurementInfoTab, MeasurementDataTab, LabDataTab } from "@schedule/components/tabs";
 
 export const ScheduleDetailPage = () => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useStacks } from '@stack/hooks';
-import { useSearch } from '@common/hooks';
+import { useSearch } from '@shared/lib';
 
 import { WorkplaceStackListCard } from '@workplace/components';
 

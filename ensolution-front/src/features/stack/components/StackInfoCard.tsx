@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@common/constants';
-import { formatDate } from '@common/utils/formatters';
-import type { Grade, Shape, Orientation } from '@common/model/common.types';
+import { GRADE_LABELS, SHAPE_LABELS, ORIENTATION_LABELS } from '@stack/model';
+import { formatDate } from '@/shared/lib/formatter/formatters';
+import type { Grade, Shape, Orientation } from '@/shared/types/common.types';
 
 interface StackInfoCardProps {
   stack: {

@@ -1,4 +1,4 @@
-import { FullPageLoader, FullPageError } from "@common/components";
+import { FullPageLoader, FullPageError } from "@shared/ui";
 
 import { useUserProfileForm } from "@auth/hooks";
 import { useTeams } from "@agency/hooks";

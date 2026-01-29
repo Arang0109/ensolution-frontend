@@ -2,8 +2,8 @@ import { Link } from "react-router";
 
 import type { WorkplaceResponse } from "@workplace/model";
 
-import { formatBizNumber } from "@common/utils/formatters";
-import { GRADE_LABELS } from '@common/constants';
+import { formatBizNumber } from "@/shared/lib/formatter/formatters";
+import { GRADE_LABELS } from '@stack/model';
 
 interface WorkplaceItemProps {
   workplace: WorkplaceResponse;

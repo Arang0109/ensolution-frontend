@@ -1,4 +1,4 @@
-import type { VehicleResponse } from "@agency/model/agency.types";
+import type { VehicleResponse } from "@/features/agency/model/agency-types";
 
 interface TeamVehicleListCardProps {
   vehicles: VehicleResponse[];

@@ -1,4 +1,4 @@
-import type { EquipType, PitotTubeType } from "./equipment.constants";
+import type { EquipType, PitotTubeType } from "./equipment-constants";
 
 export interface EquipmentRegisterResponse {
   equipmentId: string;

@@ -1,2 +1,2 @@
-export * from './schedule.types';
-export * from './measurementData.types';
+export * from './schedule-types';
+export * from './measurement-data-types';

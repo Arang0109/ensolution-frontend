@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 import type { CompanyResponse } from "@company/model";
 
-import { formatBizNumber, formatDate } from '@common/utils/formatters';
+import { formatBizNumber, formatDate } from '@/shared/lib/formatter/formatters';
 
 interface CompanyCardProps {
   company: CompanyResponse

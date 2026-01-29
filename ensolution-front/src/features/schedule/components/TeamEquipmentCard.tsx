@@ -1,6 +1,6 @@
 import { SearchableSelect } from "@schedule/components/SearchableSelect";
 import type { ScheduleRegisterRequest } from "@schedule/model";
-import type { TeamResponse } from "@agency/model/agency.types";
+import type { TeamResponse } from "@/features/agency/model/agency-types";
 
 interface TeamEquipmentCardProps {
   form: ScheduleRegisterRequest;

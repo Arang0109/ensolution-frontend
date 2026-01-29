@@ -1,10 +1,10 @@
-import { axiosPrivate } from "@common/api";
-import type { ApiResponseMessage } from "@common/model";
+import { axiosPrivate } from "@/shared/api";
+import type { ApiResponseMessage } from "@/shared/types";
 import type {
   StackMeasurementResponse,
   StackMeasurementCreateRequest,
   StackMeasurementUpdateRequest,
-} from "@stack/model/stackMeasurement.types";
+} from "@/features/stack/model/stack-measurement-types";
 
 export const registerStackMeasurement = async (
   data: StackMeasurementCreateRequest

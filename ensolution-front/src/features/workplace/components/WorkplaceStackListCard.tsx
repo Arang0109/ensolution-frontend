@@ -1,7 +1,7 @@
 import { StackItem } from '@workplace/components';
 import type { StackResponse } from '@stack/model';
 
-import { Button } from "@common/ui";
+import { Button } from "@shared/ui";
 
 interface WorkplaceStackListCardProps {
   stacks: StackResponse[];
@@ -25,7 +25,13 @@ export const WorkplaceStackListCard = ({
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-neutral-900">측정 대상 시설 목록</h2>
         {showAddButton && (
-          <Button label="사업장 추가" onClick={onClick} />
+          <Button
+            label="측정시설추가"
+            onClick={onClick}
+            variant="add"
+            size="md"
+            type="button"
+          />
         )}
       </div>
 

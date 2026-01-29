@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 
-import type { PollutantResponse } from "@pollutant/model/pollutant.types";
+import type { PollutantResponse } from "@/features/pollutant/model/pollutant-types";
 
 import {
   useReactTable,

@@ -3,7 +3,7 @@ import { FacilityInfoCard } from "@schedule/components/FacilityInfoCard";
 import { TeamEquipmentCard } from "@schedule/components/TeamEquipmentCard";
 import type { ScheduleRegisterRequest } from "@schedule/model";
 import type { WorkplaceResponse } from "@workplace/model";
-import type { TeamResponse } from "@agency/model/agency.types";
+import type { TeamResponse } from "@/features/agency/model/agency-types";
 import type { StackResponse } from "@stack/model";
 import type { StackMeasurementResponse } from "@stack/model";
 

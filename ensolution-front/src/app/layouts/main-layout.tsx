@@ -5,7 +5,7 @@ import { useAuth } from "@app/providers/auth";
 
 import { logoutApi } from '@auth/api/authApi';
 import { useToast } from "@app/providers/toast";
-import { Dropdown } from '@common/ui';
+import { Button, Dropdown } from '@shared/ui';
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -80,12 +80,13 @@ export const MainLayout = () => {
                   내정보
                 </Link>
               </nav>
-              <button
+              <Button
+                label="로그아웃"
                 onClick={handleLogout}
-                className="px-4 py-2 bg-neutral-800 text-white rounded-lg font-medium hover:bg-neutral-900 transition-all shadow-sm hover:shadow-md"
-              >
-                로그아웃
-              </button>
+                variant="primary"
+                size="md"
+                type="button"
+              />
             </div>
 
             {/* 모바일 햄버거 버튼 */}

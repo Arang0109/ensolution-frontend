@@ -2,7 +2,7 @@ import React from "react";
 
 import type { CompanyResponse, CompanyUpdateRequest } from "@company/model";
 
-import { formatBizNumber } from "@common/utils/formatters";
+import { formatBizNumber } from "@/shared/lib/formatter/formatters";
 
 interface CompanyInfoCardProps {
   company: CompanyResponse;

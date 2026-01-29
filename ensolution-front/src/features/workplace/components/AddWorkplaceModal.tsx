@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useToast } from "@app/providers/toast";
 
 // 📌 Types
-import type { Grade } from '@common/model';
+import type { Grade } from '@/shared/types';
 import type { WorkplaceRegisterRequest } from '@workplace/model';
 
 // 📌 Utils
-import { formatBizNumber, stripBizNumber } from '@common/utils/formatters';
+import { formatBizNumber, stripBizNumber } from '@/shared/lib/formatter/formatters';
 
 interface AddWorkplaceModalProps {
   isOpen: boolean;

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { ScheduleRegisterRequest } from '@schedule/model';
 import type { WorkplaceResponse } from '@workplace/model';
-import type { TeamResponse } from '@agency/model/agency.types';
+import type { TeamResponse } from '@/features/agency/model/agency-types';
 import type { StackResponse, StackMeasurementResponse } from '@stack/model';
 
 interface ScheduleFormState {

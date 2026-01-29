@@ -1,5 +1,5 @@
-import { axiosPrivate } from "@common/api";
-import type { ApiResponseMessage } from "@common/model";
+import { axiosPrivate } from "@/shared/api";
+import type { ApiResponseMessage } from "@/shared/types";
 import type { UserResponse, UserUpdateRequest } from "@auth/model";
 import type { TeamResponse } from "@/features/agency/model";
 

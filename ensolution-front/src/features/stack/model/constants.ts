@@ -37,13 +37,3 @@ export const CYCLE_LABELS: Record<string, string> = {
   SEMI_ANNUAL: '반기 1회',
   ANNUAL: '연간 1회',
 } as const;
-
-/**
- * 측정팀
- */
-export const TEAM_LABEL: Record<number, string> = {
-  1: '1팀',
-  2: '2팀',
-  3: '3팀',
-  4: '4팀',
-} as const;

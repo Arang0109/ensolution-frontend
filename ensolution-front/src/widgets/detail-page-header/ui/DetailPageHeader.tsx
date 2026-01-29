@@ -1,4 +1,4 @@
-import { Button } from "@common/ui";
+import { Button } from "@shared/ui";
 
 interface DetailPageHeaderProps {
   title: string;
@@ -44,11 +44,12 @@ export const DetailPageHeader = ({
           <>
             <Button
               label="취소"
-              variant="secondary"
+              variant="cancel"
               onClick={onCancel}
             />
             <Button
               label="저장"
+              variant="primary"
               onClick={onSave}
             />
           </>
@@ -56,10 +57,12 @@ export const DetailPageHeader = ({
           <>
             <Button
               label="수정"
+              variant="edit"
               onClick={onUpdate}
             />
             <Button
               label="삭제"
+              variant="delete"
               onClick={onDelete}
               disabled={isDeleting}
             />

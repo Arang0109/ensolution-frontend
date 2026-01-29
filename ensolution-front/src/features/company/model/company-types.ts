@@ -1,4 +1,4 @@
-import type {  WorkplaceResponse } from '@workplace/model/workplace.types';
+import type {  WorkplaceResponse } from '@/features/workplace/model/workplace-types';
 
 export interface CompanyResponse {
   id: number;

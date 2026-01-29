@@ -8,12 +8,9 @@ export const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100 p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 p-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-md border border-slate-200 p-8">
           {/* 헤더 */}
           <header className="mb-8 text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-neutral-500 to-primary-600 rounded-xl mb-3 shadow-md">
-              <span className="text-lg font-bold text-white">E</span>
-            </div>
             <h1 className="text-2xl font-bold text-neutral-900">
               Easywork
             </h1>

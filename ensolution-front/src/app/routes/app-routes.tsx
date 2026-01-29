@@ -18,6 +18,8 @@ import { PollutantPage } from '@pollutant/pages/index';
 
 import { ScheduleListPage, ScheduleDetailPage, ScheduleAddPage } from "@schedule/pages";
 
+import { TestPage } from "@/shared/test/test-page";
+
 export const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
@@ -26,6 +28,8 @@ export const AppRoutes = () => (
           <LoginPage />
         </PublicRoute>
         } />
+      
+      <Route path="/test" element= {< TestPage/>}/>
 
       <Route
         element={

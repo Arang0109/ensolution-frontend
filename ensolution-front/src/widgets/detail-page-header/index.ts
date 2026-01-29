@@ -1,0 +1,1 @@
+export { DetailPageHeader } from "./ui/DetailPageHeader";
