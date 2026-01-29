@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { patchEquipment } from "@equipment/api/EquipmentApi";
 import { EquipType } from "@equipment/model";
 
-import type { EquipmentResponse, EquipmentUpdateRequest, EquipmentSpecMap, PitotTubeSpec, NozzleSpec } from "@equipment/model";
+import { type EquipmentResponse, type EquipmentUpdateRequest, type EquipmentSpecMap, type PitotTubeSpec, type NozzleSpec } from "@equipment/model";
 
 type EquipTypeKey = keyof typeof EquipType;
 

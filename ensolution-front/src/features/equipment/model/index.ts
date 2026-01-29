@@ -13,4 +13,8 @@ export type {
   NozzleSpec,
 } from "./equipment.types";
 
-export { EquipType, PitotTubeType, EQUIP_TYPE_OPTIONS, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from "./equipment.constants";
+export {
+  EquipType, PitotTubeType,
+  EQUIP_TYPE_OPTIONS, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS,
+  PITOT_TUBE_OPTIONS
+} from "./equipment.constants";

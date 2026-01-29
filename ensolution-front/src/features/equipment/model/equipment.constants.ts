@@ -14,6 +14,12 @@ export const PitotTubeType = {
 } as const;
 export type PitotTubeType = typeof PitotTubeType[keyof typeof PitotTubeType];
 
+export const PITOT_TUBE_OPTIONS: { value: PitotTubeType; label: string }[] = [
+  { value: PitotTubeType.DUST, label: "먼지/중금속" },
+  { value: PitotTubeType.FINE_DUST, label: "미세먼지" },
+  { value: PitotTubeType.MERCURY, label: "수은" },
+]
+
 export const EQUIP_TYPE_OPTIONS: { value: EquipType; label: string }[] = [
   { value: EquipType.PARTICLE_SAMPLER, label: "입자상 시료채취장비" },
   { value: EquipType.GAS_SAMPLER, label: "가스상 시료채취장비" },

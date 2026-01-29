@@ -4,7 +4,7 @@ import { Button } from '@common/ui';
 import { Tabs } from '@common/components';
 import { useEquipments } from '@equipment/hooks/useEquipments';
 import { EquipmentAddModal, EquipmentEditModal } from '@equipment/components';
-import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from '@equipment/model';
+import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS, PITOT_TUBE_OPTIONS } from '@equipment/model';
 import type {
   EquipmentResponse,
   ParticleSamplerSpec,
@@ -114,9 +114,6 @@ const EquipmentTable = ({ equipments, expandedId, onRowClick, onEdit }: Equipmen
               관리번호
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              장비명
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               모델명
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -157,9 +154,6 @@ const EquipmentTable = ({ equipments, expandedId, onRowClick, onEdit }: Equipmen
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {equipment.managementNumber || '-'}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {equipment.equipmentName}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {equipment.modelName || '-'}
@@ -239,12 +233,12 @@ const EquipmentDetailSpec = ({ equipment, onEdit }: EquipmentDetailSpecProps) =>
         return (
           <div className="space-y-4">
             <div>
-              <span className="text-gray-500 text-sm">피토관 용도</span>
-              <p className="font-medium">{spec?.type || '-'}</p>
+              <span className="text-gray-500 text-sm">피토우관 용도</span>
+              <p className="font-medium">{PITOT_TUBE_OPTIONS.find(v => v.value === spec?.type)?.label ?? '-'}</p>
             </div>
             {spec?.coefficients && spec.coefficients.length > 0 && (
               <div>
-                <span className="text-gray-500 text-sm">계수 목록</span>
+                <span className="text-gray-500 text-sm">유속 별 적용되는 피토우관 계수</span>
                 <div className="mt-2 grid grid-cols-4 gap-2">
                   {spec.coefficients.map((coef, idx) => (
                     <div key={idx} className="bg-white p-2 rounded border text-sm">
@@ -302,7 +296,11 @@ const EquipmentDetailSpec = ({ equipment, onEdit }: EquipmentDetailSpecProps) =>
       {/* 추가 정보 */}
       <div className="pt-4 border-t border-gray-200">
         <h4 className="font-semibold text-gray-800 mb-3">추가 정보</h4>
-        <div className="grid grid-cols-3 gap-4 text-sm">
+        <div className="grid grid-cols-4 gap-4 text-sm">
+          <div>
+            <span className="text-gray-500">장비명</span>
+            <p className="font-medium">{equipment.equipmentName || '-'}</p>
+          </div>
           <div>
             <span className="text-gray-500">원산지</span>
             <p className="font-medium">{equipment.originCountry || '-'}</p>
