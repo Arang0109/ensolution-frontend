@@ -35,19 +35,19 @@ export const Button = ({
 }: ButtonProps) => {
   const VARIANT_STYLES: Record<ButtonVariant, string> = {
     primary:
-      "bg-primary-600 text-white hover:bg-primary-700",
+      "bg-[#1F2937]/90 text-white hover:bg-[#111827]",
 
     add:
-      "bg-[#889063] text-white hover:bg-[#666E43]",
+      "bg-[#3B82F6]/90 text-white hover:bg-[#2770e7]",
 
     edit:
-      "bg-blue-600/60 text-white hover:bg-blue-700",
+      "bg-[#16a34a]/80 text-white hover:bg-[#1b8241]/90",
 
     delete:
-      "bg-red-600/60 text-white hover:bg-red-700",
+      "bg-[#FF4646]/80 text-white hover:bg-[#f52d2d]",
 
     cancel:
-      "bg-neutral-200/60 text-neutral-700 hover:bg-neutral-300",
+      "bg-neutral-300/80 text-neutral-700 hover:bg-neutral-400/50",
 
     ghost:
       "bg-transparent text-neutral-600 hover:bg-neutral-100 shadow-none text-primary-600 hover:text-primary-700 font-medium",
@@ -71,7 +71,7 @@ export const Button = ({
       disabled={disabled}
       className={`
         inline-flex items-center gap-2 rounded-md font-medium text-lg
-        transition-colors shadow-md
+        transition-colors
         ${VARIANT_STYLES[variant]}
         ${SIZE_STYLES[size]}
         ${WIDTH_STYLES[width]}

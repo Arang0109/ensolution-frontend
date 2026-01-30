@@ -69,7 +69,7 @@ export const LoginForm = ({
 
       <Button
         label="로그인"
-        variant="add"
+        variant="primary"
         size="md"
         width="full"
         type="submit"

@@ -48,7 +48,7 @@ export const HomePage = () => {
         />
         <CardItem
           title="측정인력"
-          path="/company"
+          path="/team"
           icon={<AiOutlineTeam />}
         />
         <CardItem
