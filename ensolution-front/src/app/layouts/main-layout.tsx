@@ -83,7 +83,7 @@ export const MainLayout = () => {
               <Button
                 label="로그아웃"
                 onClick={handleLogout}
-                variant="primary"
+                variant="secondary"
                 size="md"
                 type="button"
               />

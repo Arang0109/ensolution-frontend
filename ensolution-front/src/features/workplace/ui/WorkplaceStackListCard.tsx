@@ -28,7 +28,7 @@ export const WorkplaceStackListCard = ({
           <Button
             label="측정시설추가"
             onClick={onClick}
-            variant="add"
+            variant="primary"
             size="md"
             type="button"
           />

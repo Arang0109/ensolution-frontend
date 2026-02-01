@@ -25,7 +25,7 @@ export const CompanyListPage = () => {
         <Button
           label="업체추가"
           onClick={() => setShowAddModal(true)}
-          variant="add"
+          variant="primary"
           size="md"
           type="button"
         />

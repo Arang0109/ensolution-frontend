@@ -1,6 +1,6 @@
 import type { LoginRequest } from "@auth/model";
 
-import { Button } from "@/shared/ui";
+import { Button } from "@shared/ui";
 
 interface LoginFormProps {
   form: LoginRequest;

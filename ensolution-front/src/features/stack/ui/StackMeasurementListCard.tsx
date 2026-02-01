@@ -3,7 +3,8 @@ import type { StackMeasurementResponse } from '@stack/model';
 import { CYCLE_LABELS } from '@stack/model';
 import type { Cycle } from '@/shared/model';
 import { MeasurementEditModal } from '@stack/ui';
-import { Button } from '@shared/ui';
+import { Button, IconButton } from '@shared/ui';
+import { Pencil } from "lucide-react";
 
 interface StackMeasurementListCardProps {
   measurements: StackMeasurementResponse[];
@@ -53,7 +54,7 @@ export const StackMeasurementListCard = ({
           <Button
             label="측정시설추가"
             onClick={onAddMeasurement}
-            variant="add"
+            variant="primary"
             size="md"
             type="button"
           />
@@ -88,9 +89,9 @@ export const StackMeasurementListCard = ({
           </span>
         </div>
         <Button
-            label="측정시설추가"
+            label="측정물질추가"
             onClick={onAddMeasurement}
-            variant="add"
+            variant="primary"
             size="md"
             type="button"
           />
@@ -115,26 +116,13 @@ export const StackMeasurementListCard = ({
                   className="bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-300 rounded-lg p-3 hover:shadow-md transition-all hover:border-neutral-400 relative group"
                 >
                   {/* Edit button */}
-                  <button
-                    onClick={() => setEditingMeasurement(measurement)}
-                    className="absolute top-2 right-2 p-1 bg-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-neutral-100 text-neutral-600"
+                  <IconButton 
+                    icon={<Pencil className="h-4 w-4" />}
                     title="수정"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
-                  </button>
+                    variant='ghost'
+                    onClick={() => setEditingMeasurement(measurement)}
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100"
+                  />
 
                   <div className="space-y-2">
                     {/* Pollutant name */}

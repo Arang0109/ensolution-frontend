@@ -5,6 +5,9 @@ import type {
   TargetForm,
 } from "@stack/model";
 
+import { X, Plus, Trash2 } from "lucide-react";
+import { IconButton, Button } from "@shared/ui";
+
 interface PreventionAddModalProps {
   stackId: number;
   onClose: () => void;
@@ -166,26 +169,14 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
       <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 my-8 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">방지시설 추가</h2>
-          <button
+          <IconButton 
+            icon={<X/>}
+            title="닫기"
+            variant="ghost"
             onClick={onClose}
+            size="md"
             className="text-gray-500 hover:text-gray-700 transition-colors"
-            disabled={isSubmitting}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -232,41 +223,28 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
           <div className="border-b pb-4">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-gray-800">배출시설</h3>
-              <button
+              <Button
                 type="button"
+                label="배출시설 추가"
                 onClick={addFacility}
-                className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
-                disabled={isSubmitting}
-              >
-                + 배출시설 추가
-              </button>
+                icon={<Plus className="h-4 w-4" />}
+                variant="primary"
+                size="sm"
+              />
             </div>
 
             <div className="space-y-4">
               {facilities.map((facility, index) => (
                 <div key={index} className="border rounded-lg p-4 bg-gray-50 relative">
                   {facilities.length > 1 && (
-                    <button
-                      type="button"
+                    <IconButton 
+                      icon={<Trash2/>}
+                      title="삭제"
+                      variant="danger"
                       onClick={() => removeFacility(index)}
-                      className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                      disabled={isSubmitting}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
+                      size="sm"
+                      className="absolute top-2 right-2"
+                    />
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -369,41 +347,28 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
           <div>
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-gray-800">제거대상물질</h3>
-              <button
+              <Button
                 type="button"
+                label="제거대상물질 추가"
                 onClick={addTarget}
-                className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
-                disabled={isSubmitting}
-              >
-                + 제거대상물질 추가
-              </button>
+                icon={<Plus className="h-4 w-4" />}
+                variant="primary"
+                size="sm"
+              />
             </div>
 
             <div className="space-y-3">
               {targets.map((target, index) => (
                 <div key={index} className="border rounded-lg p-4 bg-gray-50 relative">
                   {targets.length > 1 && (
-                    <button
-                      type="button"
+                    <IconButton 
+                      icon={<Trash2/>}
+                      title="삭제"
+                      variant="danger"
                       onClick={() => removeTarget(index)}
-                      className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                      disabled={isSubmitting}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
+                      size="sm"
+                      className="absolute top-2 right-2"
+                    />
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -446,21 +411,21 @@ export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAd
 
           {/* 버튼 */}
           <div className="flex gap-3 pt-4">
-            <button
+            <Button
               type="button"
+              label="취소"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+              variant="secondary"
               disabled={isSubmitting}
-            >
-              취소
-            </button>
-            <button
+              width="full"
+            />
+            <Button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              label="등록"
+              variant="primary"
               disabled={isSubmitting}
-            >
-              {isSubmitting ? "등록 중..." : "등록"}
-            </button>
+              width="full"
+            />
           </div>
         </form>
       </div>

@@ -1,10 +1,8 @@
 type ButtonVariant =
-  | "primary"   // 기본 저장, 확인
-  | "add"       // 추가
-  | "edit"      // 수정
-  | "delete"    // 삭제
-  | "cancel"    // 취소
-  | "ghost";    // 아이콘 전용, 테이블 액션용
+  | "primary"
+  | "secondary"
+  | "danger"
+  | "ghost";
 
 type ButtonSize = "sm" | "md" | "lg";
 
@@ -35,19 +33,13 @@ export const Button = ({
 }: ButtonProps) => {
   const VARIANT_STYLES: Record<ButtonVariant, string> = {
     primary:
-      "bg-[#1F2937]/90 text-white hover:bg-[#111827]",
-
-    add:
       "bg-[#3B82F6]/90 text-white hover:bg-[#2770e7]",
 
-    edit:
-      "bg-[#16a34a]/80 text-white hover:bg-[#1b8241]/90",
-
-    delete:
-      "bg-[#FF4646]/80 text-white hover:bg-[#f52d2d]",
-
-    cancel:
+    secondary:
       "bg-neutral-300/80 text-neutral-700 hover:bg-neutral-400/50",
+
+    danger:
+      "bg-[#FF4646]/80 text-white hover:bg-[#f52d2d]",
 
     ghost:
       "bg-transparent text-neutral-600 hover:bg-neutral-100 shadow-none text-primary-600 hover:text-primary-700 font-medium",

@@ -7,6 +7,10 @@ import type { Cycle } from "@/shared/model";
 
 import { CYCLE_LABELS } from "@stack/model";
 
+import { X, Trash2 } from "lucide-react";
+
+import { IconButton, Button, InlineAddButton } from "@shared/ui/buttons";
+
 interface MeasurementAddModalProps {
   stackId: number;
   onClose: () => void;
@@ -258,26 +262,14 @@ export const MeasurementAddModal = ({
       <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 my-8 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">측정물질 추가</h2>
-          <button
+          <IconButton 
+            icon={<X/>}
+            title="닫기"
+            variant="ghost"
             onClick={onClose}
+            size="md"
             className="text-gray-500 hover:text-gray-700 transition-colors"
-            disabled={isSubmitting}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -290,27 +282,13 @@ export const MeasurementAddModal = ({
                   <div className="flex justify-between items-center mb-2">
                     <h3 className="font-semibold text-gray-700">측정물질 #{index + 1}</h3>
                     {measurements.length > 1 && (
-                      <button
-                        type="button"
+                      <IconButton 
+                        icon={<Trash2/>}
+                        title="삭제"
+                        variant="danger"
                         onClick={() => removeMeasurement(measurement.id)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
-                        disabled={isSubmitting}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button>
+                        size="sm"
+                      />
                     )}
                   </div>
 
@@ -341,30 +319,17 @@ export const MeasurementAddModal = ({
                           disabled={isSubmitting}
                         />
                         {measurement.pollutantId && (
-                          <button
-                            type="button"
+                          <IconButton 
+                            icon={<X/>}
+                            title="삭제"
+                            variant="danger"
                             onClick={() => {
                               updateMeasurement(measurement.id, "pollutantId", null);
                               setSearchTerms({ ...searchTerms, [measurement.id]: "" });
                             }}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            disabled={isSubmitting}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-5 w-5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M6 18L18 6M6 6l12 12"
-                              />
-                            </svg>
-                          </button>
+                            size="sm"
+                            className="absolute right-2 top-3"
+                          />
                         )}
                       </div>
 
@@ -437,34 +402,31 @@ export const MeasurementAddModal = ({
               ))}
 
               {/* 측정물질 추가 버튼 */}
-              <button
-                type="button"
+              <InlineAddButton
+                label="측정물질 추가"
                 onClick={addMeasurement}
-                className="w-full px-4 py-2 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-[#697243] hover:text-[#889063] transition-colors"
                 disabled={isSubmitting}
-              >
-                + 측정물질 추가
-              </button>
+              />
             </>
           )}
 
           {/* 버튼 */}
           <div className="flex gap-3 pt-4">
-            <button
+            <Button
               type="button"
+              label="취소"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+              variant="secondary"
               disabled={isSubmitting}
-            >
-              취소
-            </button>
-            <button
+              width="full"
+            />
+            <Button
               type="submit"
-              className="flex-1 px-4 py-2 bg-[#889063] text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={isSubmitting || loadingPollutants}
-            >
-              {isSubmitting ? "등록 중..." : `등록 (${measurements.filter(m => m.pollutantId).length}개)`}
-            </button>
+              label="등록"
+              variant="primary"
+              disabled={isSubmitting}
+              width="full"
+            />
           </div>
         </form>
       </div>

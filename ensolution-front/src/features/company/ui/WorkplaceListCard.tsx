@@ -24,7 +24,7 @@ export const WorkplaceListCard = ({ workplaces, isEditMode=false, onClick }: Wor
           <Button
             label="사업장추가"
             onClick={onClick}
-            variant="add"
+            variant="primary"
             size="md"
             type="button"
           />

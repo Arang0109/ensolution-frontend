@@ -22,26 +22,20 @@ export const TestPage = () => {
         type="button"
       ></Button>
       <Button
-        label="sm add"
-        variant="add"
+        label="sm secondary"
+        variant="secondary"
         size="sm"
         type="button"
       ></Button>
       <Button
-        label="lg edit"
-        variant="edit"
+        label="lg danger"
+        variant="danger"
         size="lg"
         type="button"
       ></Button>
       <Button
-        label="lg delete"
-        variant="delete"
-        size="lg"
-        type="button"
-      ></Button>
-      <Button
-        label="lg cancel"
-        variant="cancel"
+        label="lg ghost"
+        variant="ghost"
         size="lg"
         type="button"
       ></Button>
