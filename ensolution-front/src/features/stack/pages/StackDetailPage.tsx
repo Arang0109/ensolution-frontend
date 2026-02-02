@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 
 import {
-  PreventionAddModal,
+  PreventionCreateModal,
   PreventionEditModal,
   MeasurementCreateModal,
   StackPreventionListCard,
@@ -146,7 +146,7 @@ export const StackDetailPage = () => {
 
       {/* Prevention Add Modal */}
       {showPreventionAddModal && stack?.stack.id && (
-        <PreventionAddModal
+        <PreventionCreateModal
           stackId={Number(stack?.stack.id)}
           onClose={() => setShowPreventionAddModal(false)}
           onSuccess={handlePreventionAddSuccess}

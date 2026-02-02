@@ -43,9 +43,6 @@ export const StackPreventionListCard = ({
                 <h3 className="font-semibold text-gray-800 text-lg">
                   {preventionDetail.prevention.name}
                 </h3>
-                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                  ID: {preventionDetail.prevention.id}
-                </span>
               </div>
               {preventionDetail.prevention.remark && (
                 <p className="text-sm text-gray-600 mb-3">
@@ -66,7 +63,6 @@ export const StackPreventionListCard = ({
                       <div key={facility.id} className="bg-slate-50 rounded p-3 text-sm">
                         <div className="flex justify-between items-start mb-1">
                           <span className="font-medium text-gray-800">{facility.name}</span>
-                          <span className="text-xs text-gray-500">ID: {facility.id}</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 mt-2 text-xs text-gray-600">
                           <div>
@@ -114,7 +110,6 @@ export const StackPreventionListCard = ({
                               </span>
                             </span>
                           </div>
-                          <span className="text-xs text-gray-500">ID: {target.id}</span>
                         </div>
                       </div>
                     ))}

@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { registerPrevention } from "@stack/api/preventionApi";
-import type {
-  FacilityForm,
-  TargetForm,
-} from "@stack/model";
-
 import { X, Plus, Trash2 } from "lucide-react";
+
+import { registerPrevention } from "@stack/api";
+import type { FacilityForm, TargetForm } from "@stack/model";
+
 import { IconButton, Button } from "@shared/ui";
 
-interface PreventionAddModalProps {
+interface PreventionCreateModalProps {
   stackId: number;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const PreventionAddModal = ({ stackId, onClose, onSuccess }: PreventionAddModalProps) => {
+export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: PreventionCreateModalProps) => {
   const [preventionName, setPreventionName] = useState("");
   const [preventionRemark, setPreventionRemark] = useState("");
 

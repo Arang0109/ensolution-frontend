@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { patchPrevention, deletePrevention } from '@stack/api/preventionApi';
-import { patchFacility, deleteFacility, registerFacility } from '@stack/api/facilityApi';
-import { patchTarget, deleteTarget, registerTarget } from '@stack/api/targetApi';
+import { 
+  patchFacility, deleteFacility, registerFacility,
+  patchTarget, deleteTarget, registerTarget
+} from '@stack/api';
 import type {
   PreventionDetailResponse,
   PreventionUpdateRequest,
@@ -10,6 +12,9 @@ import type {
   TargetUpdateRequest,
   TargetRegisterRequest,
 } from '@stack/model';
+
+import { X, Plus, Trash2 } from "lucide-react";
+import { Button, IconButton } from '@/shared/ui';
 
 interface PreventionEditModalProps {
   preventionDetail: PreventionDetailResponse;
@@ -259,13 +264,14 @@ export const PreventionEditModal = ({
             <h2 className="text-2xl font-bold text-neutral-900">
               방지시설 수정
             </h2>
-            <button
+            <IconButton 
+              icon={<X/>}
+              title="닫기"
+              variant="ghost"
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
-              disabled={isSubmitting}
-            >
-              ×
-            </button>
+              size="md"
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+            />
           </div>
           <p className="text-sm text-gray-600 mt-1">{preventionDetail.prevention.name}</p>
         </div>
@@ -340,20 +346,24 @@ export const PreventionEditModal = ({
               </div>
 
               <div className="flex gap-2 pt-4">
-                <button
-                  onClick={handlePreventionSubmit}
-                  disabled={isSubmitting || !preventionForm.name.trim()}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-                >
-                  {isSubmitting ? '저장 중...' : '저장'}
-                </button>
-                <button
+                <Button
+                  type='button'
+                  label="방지시설 삭제"
                   onClick={handlePreventionDelete}
                   disabled={isSubmitting}
-                  className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-                >
-                  방지시설 삭제
-                </button>
+                  variant="danger"
+                  width='full'
+                  size="sm"
+                />
+                <Button
+                  type='button'
+                  label="수정"
+                  onClick={handlePreventionSubmit}
+                  disabled={isSubmitting || !preventionForm.name.trim()}
+                  variant="primary"
+                  width='full'
+                  size="sm"
+                />
               </div>
             </div>
           )}
@@ -363,12 +373,14 @@ export const PreventionEditModal = ({
             <div className="space-y-4">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">배출시설 목록</h3>
-                <button
+                <Button
+                  type="button"
+                  label="배출시설 추가"
                   onClick={addNewFacility}
-                  className="px-3 py-1.5 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white text-sm rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors shadow-md"
-                >
-                  + 배출시설 추가
-                </button>
+                  icon={<Plus className="h-4 w-4" />}
+                  variant="primary"
+                  size="sm"
+                />
               </div>
 
               {facilities.length === 0 ? (
@@ -386,13 +398,13 @@ export const PreventionEditModal = ({
                         <h4 className="font-medium text-gray-800">
                           {facility.isNew ? '새 배출시설' : `배출시설 #${facility.id}`}
                         </h4>
-                        <button
+                        <IconButton 
+                          icon={<Trash2/>}
+                          title="삭제"
+                          variant="danger"
                           onClick={() => handleFacilityDelete(index)}
-                          disabled={isSubmitting}
-                          className="text-red-600 hover:text-red-800 text-sm font-medium"
-                        >
-                          삭제
-                        </button>
+                          size="md"
+                        />
                       </div>
 
                       <div className="space-y-3">
@@ -494,13 +506,14 @@ export const PreventionEditModal = ({
                           />
                         </div>
 
-                        <button
+                        <Button
+                          type="button"
+                          label={isSubmitting ? '저장 중...' : facility.isNew ? '추가' : '수정'}
+                          variant="primary"
                           onClick={() => handleFacilitySubmit(index)}
                           disabled={isSubmitting || !facility.name.trim()}
-                          className="w-full px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
-                        >
-                          {isSubmitting ? '저장 중...' : facility.isNew ? '추가' : '수정'}
-                        </button>
+                          width="full"
+                        />
                       </div>
                     </div>
                   ))}
@@ -514,12 +527,14 @@ export const PreventionEditModal = ({
             <div className="space-y-4">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">제거대상물질 목록</h3>
-                <button
+                <Button
+                  type="button"
+                  label="제거대상물질 추가"
                   onClick={addNewTarget}
-                  className="px-3 py-1.5 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white text-sm rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors shadow-md"
-                >
-                  + 제거대상물질 추가
-                </button>
+                  icon={<Plus className="h-4 w-4" />}
+                  variant="primary"
+                  size="sm"
+                />
               </div>
 
               {targets.length === 0 ? (
@@ -537,13 +552,13 @@ export const PreventionEditModal = ({
                         <h4 className="font-medium text-gray-800">
                           {target.isNew ? '새 제거대상물질' : `제거대상물질 #${target.id}`}
                         </h4>
-                        <button
+                        <IconButton 
+                          icon={<Trash2/>}
+                          title="삭제"
+                          variant="danger"
                           onClick={() => handleTargetDelete(index)}
-                          disabled={isSubmitting}
-                          className="text-red-600 hover:text-red-800 text-sm font-medium"
-                        >
-                          삭제
-                        </button>
+                          size="md"
+                        />
                       </div>
 
                       <div className="space-y-3">
@@ -586,17 +601,18 @@ export const PreventionEditModal = ({
                           />
                         </div>
 
-                        <button
+                        <Button
+                          type="button"
+                          label={isSubmitting ? '저장 중...' : target.isNew ? '추가' : '수정'}
+                          variant="primary"
                           onClick={() => handleTargetSubmit(index)}
                           disabled={
                             isSubmitting ||
                             !target.targetSubstance.trim() ||
                             (target.removalEfficiency != null && (target.removalEfficiency < 0 || target.removalEfficiency > 100))
                           }
-                          className="w-full px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:from-primary-600 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md text-sm"
-                        >
-                          {isSubmitting ? '저장 중...' : target.isNew ? '추가' : '수정'}
-                        </button>
+                          width="full"
+                        />
                       </div>
                     </div>
                   ))}
@@ -608,13 +624,14 @@ export const PreventionEditModal = ({
 
         {/* Footer */}
         <div className="p-4 border-t border-gray-200 bg-gray-50 flex justify-end">
-          <button
+          <Button
+            type="button"
+            label="닫기"
             onClick={onClose}
-            className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
+            variant="secondary"
             disabled={isSubmitting}
-          >
-            닫기
-          </button>
+            width="full"
+          />
         </div>
       </div>
     </div>
