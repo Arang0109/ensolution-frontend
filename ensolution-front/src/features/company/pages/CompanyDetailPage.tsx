@@ -24,7 +24,6 @@ export const CompanyDetailPage = () => {
     handleEditChange,
 
     setShowAddModal,
-    handleCreate,
     fetchCompany,
   } = useCompanyDetailPage();
 
@@ -70,13 +69,13 @@ export const CompanyDetailPage = () => {
         />
       </div>
 
-      <WorkplaceCreateModal
-        isOpen={showAddModal}
-        onClose={() => setShowAddModal(false)}
-        companyId={company.company.id}
-        onSuccess={() => fetchCompany(company.company.id)}
-        onSubmit={handleCreate}
-      />
+      {showAddModal && (
+        <WorkplaceCreateModal
+          companyId={company.company.id}
+          onClose={() => setShowAddModal(false)}
+          onSuccess={() => fetchCompany(company.company.id)}
+        />
+      )}
     </div>
   );
 };

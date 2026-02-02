@@ -6,12 +6,13 @@ import { GRADE_LABELS } from "@shared/model";
 import { Button, InputField, SelectField, TextAreaField } from "@shared/ui";
 
 interface WorkplaceCreateFormProps {
+  companyId: number;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const WorkplaceCreateForm = ({ onClose, onSuccess }: WorkplaceCreateFormProps) => {
-  const { form, isSubmitting, onChange, onSubmit } = useWorkplaceForm();
+export const WorkplaceCreateForm = ({ onClose, onSuccess, companyId }: WorkplaceCreateFormProps) => {
+  const { form, isSubmitting, onChange, onSubmit } = useWorkplaceForm(companyId);
   const { showToast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

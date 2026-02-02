@@ -5,10 +5,10 @@ import type { WorkplaceRegisterRequest } from "@workplace/model";
 import { registerWorkplace } from "@workplace/api/workplaceApi";
 import { formatBizNumber, stripBizNumber } from "@shared/lib";
 
-export const useWorkplaceForm = () => {
+export const useWorkplaceForm = (companyId: number) => {
   const [form, setForm] = useState<WorkplaceRegisterRequest>({
+    companyId,
     name: "",
-    companyId: 0,
     address: "",
     bizNumber: "",
     businessCategory: "",
