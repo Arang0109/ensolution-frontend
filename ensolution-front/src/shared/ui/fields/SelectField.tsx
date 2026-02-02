@@ -1,12 +1,15 @@
-interface SelectOption<T extends string | number> {
+import { FieldWrapper } from "./FieldWrapper";
+
+interface SelectOption<T = string> {
   value: T;
   label: string;
 }
 
-interface SelectFieldProps<T extends string | number> {
+interface SelectFieldProps<T = string> {
   id?: string;
   label?: string;
   value: T | "";
+  name?: string;
   options: readonly SelectOption<T>[];
   
   onChange: (value: T) => void;
@@ -19,6 +22,7 @@ export const SelectField = <T extends string | number>({
   id,
   label,
   value,
+  name,
   options,
   onChange,
   disabled,
@@ -26,19 +30,11 @@ export const SelectField = <T extends string | number>({
 }: SelectFieldProps<T>) => {
     
   return (
-    <div>
-      {label && (
-        <label
-          htmlFor={id}
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          {label} {required && <span className="text-red-500">*</span>}
-        </label>
-      )}
-
+    <FieldWrapper label={label} required={required}>
       <select
         id={id}
         value={value}
+        name={name}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value as T)}
         className="w-full px-3 py-2 border border-gray-300 rounded-lg
@@ -51,6 +47,6 @@ export const SelectField = <T extends string | number>({
           </option>
         ))}
       </select>
-    </div>
+    </FieldWrapper>
   )
 };

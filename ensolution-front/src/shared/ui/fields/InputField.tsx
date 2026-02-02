@@ -1,12 +1,17 @@
-type BaseInputFieldProps<T extends string | number> = {
-  id?: string;
+import { FieldWrapper } from "./FieldWrapper";
+
+interface InputFieldProps<T = string> {
   label?: string;
-  type?: "text" | "number" | "email" | "password";
 
-  value: T | "";
+  value: T;
+  onChange?: (value: T) => void;
 
+  type?: React.HTMLInputTypeAttribute;
+  name?: string;
   placeholder?: string;
+
   disabled?: boolean;
+  readOnly?: boolean;
   required?: boolean;
 
   min?: number;
@@ -14,76 +19,50 @@ type BaseInputFieldProps<T extends string | number> = {
   step?: number;
 
   helperText?: string;
-};
+}
 
-type EditableInputFieldProps<T extends string | number> =
-  BaseInputFieldProps<T> & {
-    readOnly?: false;
-    onChange: (value: T | "") => void;
-  };
-
-type ReadOnlyInputFieldProps<T extends string | number> =
-  BaseInputFieldProps<T> & {
-    readOnly: true;
-    onChange?: never;
-  };
-
-export type InputFieldProps<T extends string | number = string> =
-  | EditableInputFieldProps<T>
-  | ReadOnlyInputFieldProps<T>;
-
-export const InputField = <T extends string | number = string>({
-  id,
+export const InputField = <T extends string | number>({
   label,
-  type = "text",
   value,
   onChange,
-  readOnly = false,
+  type = "text",
+  name,
+  placeholder,
   disabled = false,
+  readOnly = false,
   required,
+  min,
+  max,
+  step,
   helperText,
-  ...props
 }: InputFieldProps<T>) => {
   return (
-    <div>
-      {label && (
-        <label
-          htmlFor={id}
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          {label} {required && <span className="text-red-500">*</span>}
-        </label>
-      )}
-
+    <FieldWrapper label={label} required={required}>
       <input
-        id={id}
         type={type}
         value={value}
-        readOnly={readOnly}
+        name={name}
+        placeholder={placeholder}
         disabled={disabled}
-        onChange={
-          readOnly || !onChange
-            ? undefined
-            : (e) => {
-                if (type === "number") {
-                  const v = e.target.value;
-                  onChange(v === "" ? "" : (Number(v) as T));
-                } else {
-                  onChange(e.target.value as T);
-                }
-              }
-        }
-        className="
-          w-full px-3 py-2
-          border border-gray-300 rounded-lg
+        readOnly={readOnly}
+        min={min}
+        max={max}
+        step={step}
+        onChange={(e) => onChange?.(e.target.value as T)}
+        className={`
+          w-full px-3 py-2 rounded-lg border
+          text-sm
+          ${readOnly ? "bg-gray-100 text-gray-600" : "bg-white"}
+          ${disabled ? "opacity-50 cursor-not-allowed" : ""}
           focus:outline-none focus:ring-2 focus:ring-primary-500
-        "
-        {...props}
+        `}
       />
 
       {helperText && (
-        <p className="text-xs text-gray-500 mt-1">{helperText}</p>
+        <p className="mt-1 text-xs text-gray-500">
+          {helperText}
+        </p>
       )}
-    </div>
+    </FieldWrapper>
   );
-}
+};

@@ -17,19 +17,16 @@ export const useCompanyForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    name: keyof CompanyRegisterRequest,
+    value: string
   ) => {
-    const { name, value } = e.target;
-
-    // 사업자번호일 때 자동 포맷팅 적용
-    if (name === "bizNumber") {
-      return setForm(prev => ({
-        ...prev,
-        bizNumber: formatBizNumber(value)
-      }));
-    }
-
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm(prev => ({
+      ...prev,
+      [name]:
+        name === "bizNumber"
+          ? formatBizNumber(value)
+          : value,
+    }));
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
