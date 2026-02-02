@@ -1,14 +1,14 @@
-import { axiosPrivate } from "@/shared/api";
+import { axiosPrivate } from "@shared/api";
 
-import type { ApiResponseMessage } from "@/shared/model";
+import type { ApiResponseMessage } from "@shared/model";
 import type {
   EquipmentResponse,
   TypedEquipmentResponse,
   TypedEquipmentRegisterRequest,
   TypedEquipmentUpdateRequest,
-  EquipmentSpecMap
-} from "../model";
-import type { EquipType } from "../model/equipment-types";
+  EquipmentSpecMap,
+  EquipType
+} from "@equipment/model";
 
 export const registerEquipment = async <T extends keyof EquipmentSpecMap>(
   data: TypedEquipmentRegisterRequest<T>
