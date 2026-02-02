@@ -1,6 +1,6 @@
 import type { LoginRequest } from "@auth/model";
 
-import { Button } from "@/shared/ui";
+import { Button } from "@shared/ui";
 
 interface LoginFormProps {
   form: LoginRequest;
@@ -69,7 +69,7 @@ export const LoginForm = ({
 
       <Button
         label="로그인"
-        variant="add"
+        variant="primary"
         size="md"
         width="full"
         type="submit"

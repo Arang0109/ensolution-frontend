@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Button } from '@/shared/ui';
-import { useCompanies } from '@company/hooks/useCompanies';
-import { CompanyAddModal } from '@/features/company/ui/CompanyAddModal';
-import { CompanyCardItem } from '@company/ui';
+import { useCompanies } from '@company/hooks';
+import { CompanyCreateModal, CompanyListTable } from '@company/ui';
+
+import { Button, EmptyState } from '@shared/ui';
 
 export const CompanyListPage = () => {
   const { companies, loading, refetch } = useCompanies();
@@ -25,7 +25,7 @@ export const CompanyListPage = () => {
         <Button
           label="업체추가"
           onClick={() => setShowAddModal(true)}
-          variant="add"
+          variant="primary"
           size="md"
           type="button"
         />
@@ -35,21 +35,16 @@ export const CompanyListPage = () => {
 
       {/* Company List */}
       {companies.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-500 text-lg">등록된 업체가 없습니다.</p>
-          <p className="text-gray-400 text-sm mt-2">업체 추가 버튼을 눌러 새로운 업체를 등록하세요.</p>
-        </div>
+        <EmptyState
+          title='등록된 업체가 없습니다.'
+        />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {companies.map((company) => (
-            <CompanyCardItem key={company.id} company={company}/>
-          ))}
-        </div>
+        <CompanyListTable companies={companies} />
       )}
 
       {/* Add Company Modal */}
       {showAddModal && (
-        <CompanyAddModal
+        <CompanyCreateModal
           onClose={() => setShowAddModal(false)}
           onSuccess={() => refetch()}
         />

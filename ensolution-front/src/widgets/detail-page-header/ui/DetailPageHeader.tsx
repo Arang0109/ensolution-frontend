@@ -44,12 +44,12 @@ export const DetailPageHeader = ({
           <>
             <Button
               label="취소"
-              variant="cancel"
+              variant="secondary"
               onClick={onCancel}
             />
             <Button
               label="저장"
-              variant="add"
+              variant="primary"
               onClick={onSave}
             />
           </>
@@ -57,12 +57,12 @@ export const DetailPageHeader = ({
           <>
             <Button
               label="수정"
-              variant="edit"
+              variant="primary"
               onClick={onUpdate}
             />
             <Button
               label="삭제"
-              variant="delete"
+              variant="danger"
               onClick={onDelete}
               disabled={isDeleting}
             />

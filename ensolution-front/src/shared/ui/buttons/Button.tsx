@@ -1,10 +1,8 @@
 type ButtonVariant =
-  | "primary"   // 기본 저장, 확인
-  | "add"       // 추가
-  | "edit"      // 수정
-  | "delete"    // 삭제
-  | "cancel"    // 취소
-  | "ghost";    // 아이콘 전용, 테이블 액션용
+  | "primary"
+  | "secondary"
+  | "danger"
+  | "ghost";
 
 type ButtonSize = "sm" | "md" | "lg";
 
@@ -35,19 +33,13 @@ export const Button = ({
 }: ButtonProps) => {
   const VARIANT_STYLES: Record<ButtonVariant, string> = {
     primary:
-      "bg-primary-600 text-white hover:bg-primary-700",
+      "bg-[#3B82F6]/90 text-white hover:bg-[#2770e7]",
 
-    add:
-      "bg-[#889063] text-white hover:bg-[#666E43]",
+    secondary:
+      "bg-neutral-300/80 text-neutral-700 hover:bg-neutral-400/50",
 
-    edit:
-      "bg-blue-600/60 text-white hover:bg-blue-700",
-
-    delete:
-      "bg-red-600/60 text-white hover:bg-red-700",
-
-    cancel:
-      "bg-neutral-200/60 text-neutral-700 hover:bg-neutral-300",
+    danger:
+      "bg-[#FF4646]/80 text-white hover:bg-[#f52d2d]",
 
     ghost:
       "bg-transparent text-neutral-600 hover:bg-neutral-100 shadow-none text-primary-600 hover:text-primary-700 font-medium",
@@ -71,7 +63,7 @@ export const Button = ({
       disabled={disabled}
       className={`
         inline-flex items-center gap-2 rounded-md font-medium text-lg
-        transition-colors shadow-md
+        transition-colors
         ${VARIANT_STYLES[variant]}
         ${SIZE_STYLES[size]}
         ${WIDTH_STYLES[width]}

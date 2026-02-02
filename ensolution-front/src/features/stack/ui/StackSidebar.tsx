@@ -1,108 +1,23 @@
-import React from 'react';
+import type { StackResponse, StackUpdateRequest } from '@stack/model';
 
-import { formatDateTime, formatDate } from '@/shared/lib/formatter/dateFormatter';
+import { formatDateTime } from '@/shared/lib/formatter/dateFormatter';
 import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
 import { GRADE_LABELS } from "@shared/model";
-import type { Grade, Shape, Orientation } from '@/shared/model/common-types';
+import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
 interface StackSidebarProps {
-  stack: {
-    name: string;
-    semsNumber: string;
-    grade: Grade;
-    height: string;
-    horizontalLength: string;
-    verticalLength: string;
-    shape: Shape;
-    orientation: Orientation;
-    remark?: string | null;
-    createdAt: Date;
-    modifiedAt: Date | string;
-    workplaceId: number;
-  };
+  stack: StackResponse;
   preventionCount: number;
   facilityCount: number;
   targetCount: number;
   measurementCount: number;
   isEditMode: boolean;
-  editForm: {
-    name: string;
-    semsNumber: string;
-    grade: Grade;
-    height: string;
-    horizontalLength: string;
-    verticalLength: string;
-    shape: Shape;
-    orientation: Orientation;
-    remark: string;
-  };
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+  editForm: StackUpdateRequest;
+  onChange: (
+    name: keyof StackUpdateRequest,
+    value: string
+  ) => void;
 }
-
-interface InfoInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
-
-interface InfoTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
-}
-
-interface InfoSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label: string;
-  options: { value: string; label: string }[];
-}
-
-interface ReadOnlyPairProps {
-  label: string;
-  value: string;
-  multiLine?: boolean;
-}
-
-const InfoInput: React.FC<InfoInputProps> = ({ label, ...props }) => (
-  <div>
-    <label className="text-sm font-medium text-gray-500">{label}</label>
-    <input
-      {...props}
-      className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-    />
-  </div>
-);
-
-const InfoTextarea: React.FC<InfoTextareaProps> = ({ label, ...props }) => (
-  <div>
-    <label className="text-sm font-medium text-gray-500">{label}</label>
-    <textarea
-      {...props}
-      className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-      rows={3}
-    />
-  </div>
-);
-
-const InfoSelect: React.FC<InfoSelectProps> = ({ label, options, ...props }) => (
-  <div>
-    <label className="text-sm font-medium text-gray-500">{label}</label>
-    <select
-      {...props}
-      className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-    >
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
-    </select>
-  </div>
-);
-
-const ReadOnlyPair: React.FC<ReadOnlyPairProps> = ({ label, value, multiLine = false }) => (
-  <div>
-    <label className="text-sm font-medium text-gray-500">{label}</label>
-    <p className={`text-base text-gray-800 mt-1 ${multiLine ? 'whitespace-pre-wrap' : ''}`}>
-      {value}
-    </p>
-  </div>
-);
 
 export const StackSidebar = ({
   stack,
@@ -132,173 +47,169 @@ export const StackSidebar = ({
   // 원형일 경우 true
   const isCircular = isEditMode ? editForm.shape === 'CIRCULAR' : stack.shape === 'CIRCULAR';
 
-  // 원형일 때 지름 입력 시 horizontalLength와 verticalLength 모두 업데이트
-  const handleDiameterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const syntheticEvent = {
-      target: {
-        name: 'horizontalLength',
-        value: value,
-      },
-    } as React.ChangeEvent<HTMLInputElement>;
-
-    onChange(syntheticEvent);
-
-    // verticalLength도 동일하게 설정
-    const verticalEvent = {
-      target: {
-        name: 'verticalLength',
-        value: value,
-      },
-    } as React.ChangeEvent<HTMLInputElement>;
-
-    onChange(verticalEvent);
-  };
-
   return (
     <div className="space-y-6">
       {/* 기본 정보 */}
       <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
-        <h2 className="text-lg font-semibold mb-4 text-neutral-900">기본 정보</h2>
+        <SectionHeader title="기본정보" />
         <div className="space-y-4">
           {isEditMode ? (
             <>
               {/* 시설명 */}
-              <InfoInput
-                label="시설명 *"
-                name="name"
+              <InputField
+                label="시설명"
+                required={true}
                 value={editForm.name}
-                onChange={onChange}
+                onChange={(v) => onChange("name", v)}
               />
 
               {/* Sems 번호 */}
-              <InfoInput
-                label="Sems 번호 *"
-                name="semsNumber"
+              <InputField
+                label="SEMS 번호"
+                required={true}
                 value={editForm.semsNumber}
-                onChange={onChange}
+                onChange={(v) => onChange("name", v)}
               />
 
               {/* 배출시설 규모 */}
-              <InfoSelect
-                label="배출시설 규모 *"
-                name="grade"
+              <SelectField
+                label='배출시설 규모'
+                name='grade'
                 value={editForm.grade}
-                onChange={onChange}
+                onChange={(v) => onChange("grade", v)}
                 options={gradeOptions}
               />
 
               {/* 높이 */}
-              <InfoInput
-                label="높이 (m) *"
-                name="height"
+              <InputField
+                label="높이 (m)"
                 value={editForm.height}
-                onChange={onChange}
-                type="text"
+                onChange={(v) => onChange("name", v)}
+              />
+
+              {/* 형상 */}
+              <SelectField
+                label='형상'
+                name='shape'
+                value={editForm.shape}
+                onChange={(v) => onChange("shape", v)}
+                options={shapeOptions}
               />
 
               {/* 지름 또는 가로/세로 길이 */}
               {isCircular ? (
-                <InfoInput
-                  label="지름 (m) *"
-                  name="diameter"
+                <InputField
+                  label="지름 (m)"
+                  name="horizontalLength"
                   value={editForm.horizontalLength}
-                  onChange={handleDiameterChange}
-                  type="text"
+                  onChange={(v) => onChange("name", v)}
                 />
               ) : (
                 <>
-                  <InfoInput
-                    label="가로 길이 (m) *"
+                  <InputField
+                    label="가로 (m)"
                     name="horizontalLength"
                     value={editForm.horizontalLength}
-                    onChange={onChange}
-                    type="text"
+                    onChange={(v) => onChange("name", v)}
                   />
-                  <InfoInput
-                    label="세로 길이 (m) *"
+                  <InputField
+                    label="세로 (m)"
                     name="verticalLength"
                     value={editForm.verticalLength}
-                    onChange={onChange}
-                    type="text"
+                    onChange={(v) => onChange("name", v)}
                   />
                 </>
               )}
 
-              {/* 형상 */}
-              <InfoSelect
-                label="형상 *"
-                name="shape"
-                value={editForm.shape}
-                onChange={onChange}
-                options={shapeOptions}
-              />
-
               {/* 방향 */}
-              <InfoSelect
-                label="방향 *"
-                name="orientation"
+              <SelectField
+                label='방향'
+                name='orientation'
                 value={editForm.orientation}
-                onChange={onChange}
+                onChange={(v) => onChange("orientation", v)}
                 options={orientationOptions}
               />
 
               {/* 비고 */}
-              <InfoTextarea
+              <TextAreaField
                 label="비고"
-                name="remark"
                 value={editForm.remark}
-                onChange={onChange}
+                onChange={(v) => onChange("remark", v)}
               />
             </>
           ) : (
             <>
               {/* 시설명 */}
-              <ReadOnlyPair label="시설명" value={stack.name} />
+              <InputField
+                label="시설명"
+                value={stack.name}
+                readOnly
+              />
 
               {/* Sems 번호 */}
-              <ReadOnlyPair label="Sems 번호" value={stack.semsNumber} />
+              <InputField
+                label="SEMS 번호"
+                value={stack.semsNumber}
+                readOnly
+              />
 
               {/* 배출시설 규모 */}
-              <div>
-                <label className="text-sm font-medium text-gray-500">배출시설 규모</label>
-                <p className="text-base text-gray-800 mt-1">
-                  <span>{GRADE_LABELS[stack.grade] ?? stack.grade}</span>
-                </p>
-              </div>
+              <InputField
+                label="종별"
+                value={GRADE_LABELS[stack.grade] ?? stack.grade}
+                readOnly
+              />
 
-              {/* 높이 */}
-              <ReadOnlyPair label="높이" value={`${stack.height} m`} />
+              <InputField
+                label="높이"
+                value={stack.height}
+                readOnly
+              />
 
               {/* 지름 또는 가로/세로 길이 */}
               {isCircular ? (
-                <ReadOnlyPair label="지름" value={`${stack.horizontalLength} m`} />
+                <InputField
+                  label="지름"
+                  value={stack.horizontalLength}
+                  readOnly
+                />  
               ) : (
                 <>
-                  <ReadOnlyPair label="가로 길이" value={`${stack.horizontalLength} m`} />
-                  <ReadOnlyPair label="세로 길이" value={`${stack.verticalLength} m`} />
+                  <InputField
+                    label="가로"
+                    value={stack.horizontalLength}
+                    readOnly
+                  />  
+                  <InputField
+                    label="세로"
+                    value={stack.verticalLength}
+                    readOnly
+                  />  
                 </>
               )}
 
               {/* 형상 */}
-              <ReadOnlyPair
+              <InputField
                 label="형상"
-                value={SHAPE_LABELS[stack.shape] ?? stack.shape}
-              />
+                value={SHAPE_LABELS[editForm.shape] ?? '-'}
+                readOnly
+              />  
 
               {/* 방향 */}
-              <ReadOnlyPair
+              <InputField
                 label="방향"
-                value={ORIENTATION_LABELS[stack.orientation] ?? stack.orientation}
-              />
+                value={ORIENTATION_LABELS[editForm.orientation] ?? '-'}
+                readOnly
+              />  
 
               {/* 비고 */}
               {stack.remark && (
-                <ReadOnlyPair label="비고" value={stack.remark} multiLine />
+                <TextAreaField
+                  label="비고"
+                  value={stack.remark}
+                  readOnly
+                />
               )}
-
-              {/* 등록일 */}
-              <ReadOnlyPair label="등록일" value={formatDate(stack.createdAt)} />
             </>
           )}
         </div>

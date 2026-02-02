@@ -1,115 +1,36 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-
-import { useWorkplaceDetail, useWorkplaceActions } from '@workplace/hooks';
-import { useSearch } from '@shared/lib';
 import { DetailPageHeader } from '@widgets/detail-page-header';
 import { FullPageLoader, EmptyState } from '@shared/ui';
-import { useToast } from "@app/providers/toast";
-import { formatBizNumber, stripBizNumber } from '@shared/lib';
-import type { WorkplaceUpdateRequest } from '@workplace/model';
 import {
-  WorkplaceInfoCard,
-  WorkplaceStackListCard
+  WorkplaceDetailCard,
+  StackListCard
 } from '@workplace/ui';
-import { StackAddModal } from '@stack/ui';
+import { StackCreateModal } from '@stack/ui';
+
+import { useWorkplaceDetailPage } from '@workplace/hooks';
 
 export const WorkplaceDetailPage = () => {
-  const navigate = useNavigate();
-  const backUrl = () => {navigate('/client/workplace')}
+  const {
+    workplace,
+    showAddModal,
+    setShowAddModal,
 
-  const { showToast } = useToast();
+    handleEditChange,
+    handleUpdateClick,
+    handleDeleteClick,
+    handleSaveEdit,
+    handleCancelEdit,
+    handleStackAddSuccess,
 
-  const { workplaceId } = useParams();
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
+    isEditMode,
+    isDeleting,
+    
+    filtered: filteredStacks,
 
-  const { workplace, fetchWorkplace, loading } = useWorkplaceDetail();
-  const { handleUpdate, handleDelete, isDeleting } = useWorkplaceActions();
-
-  const [editForm, setEditForm] = useState<WorkplaceUpdateRequest>({
-    name: '',
-    address: '',
-    bizNumber: '',
-    businessCategory: '',
-    grade: 'TYPE_1',
-    remark: '',
-  });
-
-  const { searchTerm, setSearchTerm, filtered: filteredStacks } = useSearch(
-    workplace?.stacks || [],
-    ['name', 'semsNumber']
-  );
-
-  useEffect(() => {
-    if (workplaceId) {
-      fetchWorkplace(Number(workplaceId));
-    }
-  }, [workplaceId, fetchWorkplace]);
-
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
-    if (name === 'bizNumber') {
-      setEditForm(prev => ({ ...prev, bizNumber: formatBizNumber(value) }));
-      return;
-    }
-
-    setEditForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleUpdateClick = async () => {
-    if (!workplace) return;
-
-    setEditForm({
-      name: workplace.workplace.name,
-      address: workplace.workplace.address,
-      bizNumber: formatBizNumber(workplace.workplace.bizNumber),
-      businessCategory: workplace.workplace.businessCategory,
-      grade: workplace.workplace.grade,
-      remark: workplace.workplace.remark || '',
-    });
-
-    setIsEditMode(true);
-  };
-
-  const handleDeleteClick = async () => {
-    if (!workplaceId) return;
-
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      const result = await handleDelete(Number(workplaceId));
-      if (result.success) {
-        backUrl();
-      } else {
-        showToast(result.message, "error");
-      }
-    }
-  };
-
-  const handleSaveEdit = async () => {
-    if (!workplaceId) return;
-
-    const updateData: WorkplaceUpdateRequest = {
-      ...editForm,
-      bizNumber: stripBizNumber(editForm.bizNumber),
-    };
-
-    const result = await handleUpdate(Number(workplaceId), updateData);
-    showToast(result.message);
-
-    setIsEditMode(false);
-    fetchWorkplace(Number(workplaceId));
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditMode(false);
-  };
-
-  const handleStackAddSuccess = () => {
-    if (workplaceId) {
-      fetchWorkplace(Number(workplaceId));
-    }
-  };
+    loading,
+    editForm,
+    backUrl,
+  } = useWorkplaceDetailPage();
+  
 
   if (loading) {
     return <FullPageLoader />;
@@ -141,27 +62,25 @@ export const WorkplaceDetailPage = () => {
       <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          <WorkplaceInfoCard
+          <WorkplaceDetailCard
             workplace={workplace.workplace}
             isEditMode={isEditMode}
             editForm={editForm}
             onChange={handleEditChange}
           />
 
-          <WorkplaceStackListCard
+          <StackListCard
             stacks={filteredStacks}
             isEditMode={isEditMode}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
             onClick={() => setShowAddModal(true)}
           />
         </div>
       </div>
 
       {/* Stack Add Modal */}
-      {showAddModal && workplaceId && (
-        <StackAddModal
-          workplaceId={Number(workplaceId)}
+      {showAddModal && (
+        <StackCreateModal
+          workplaceId={(workplace.workplace.id)}
           onClose={() => setShowAddModal(false)}
           onSuccess={handleStackAddSuccess}
         />

@@ -7,8 +7,8 @@ import { LoginPage, UserProfilePage } from '@auth/pages/index';
 
 import { HomePage } from '@home/pages/index';
 
-import { TeamListPage } from '@agency/pages/index';
 import { EquipmentListPage } from '@/features/equipment/pages';
+import { TeamListPage } from '@agency/pages';
 
 import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
@@ -49,10 +49,8 @@ export const AppRoutes = () => (
         <Route path="/stack" element={<StackListPage />} />
         <Route path="/stack/:stackId" element={<StackDetailPage />} />
 
-        {/* 측정대행업체 */}
-        <Route path="/agency/team" element={<TeamListPage />} />
-
         <Route path="/equipment" element={<EquipmentListPage />} />
+        <Route path="/team" element={<TeamListPage />} />
 
         {/* 실험실 */}
         <Route path="/lab/pollutant" element={<PollutantPage />} />

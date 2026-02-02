@@ -83,7 +83,7 @@ export const MainLayout = () => {
               <Button
                 label="로그아웃"
                 onClick={handleLogout}
-                variant="primary"
+                variant="secondary"
                 size="md"
                 type="button"
               />
@@ -216,9 +216,12 @@ export const MainLayout = () => {
           )}
         </div>
       </header>
-      <main className="w-full pt-6">
+      <main className="w-full min-h-[calc(100vh-64px)] py-6 pb-16">
         <Outlet />
       </main>
+      <footer className="mt-8 py-4 text-center text-sm text-neutral-500 border-t border-slate-200 bg-white/80">
+        © {new Date().getFullYear()} ENsolution. All rights reserved.
+      </footer>
     </div>
   );
 };

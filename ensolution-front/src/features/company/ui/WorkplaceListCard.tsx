@@ -1,7 +1,7 @@
-import { WorkplaceItem } from "@company/ui";
+import { WorkplaceListTable } from "@workplace/ui";
 import type { WorkplaceResponse } from "@workplace/model";
 
-import { Button } from "@shared/ui";
+import { Button, SectionHeader, EmptyState } from "@shared/ui";
 
 interface WorkplaceListCardProps {
   workplaces: WorkplaceResponse[];
@@ -15,35 +15,25 @@ export const WorkplaceListCard = ({ workplaces, isEditMode=false, onClick }: Wor
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md">
-      <div className="flex justify-between items-center bg-slate-300 px-6 py-4 border-b border-slate-200">
-        <h2 className="text-xl font-semibold text-neutral-900 flex items-center gap-2">
-          <span className="w-1 h-6 bg-neutral-600 rounded-full"></span>
-          사업장 목록
-        </h2>
-        {showAddButton && (
-          <Button
-            label="사업장추가"
-            onClick={onClick}
-            variant="add"
-            size="md"
-            type="button"
-          />
-        )}
-      </div>
+      <SectionHeader
+        title="사업장 목록"
+        rightSlot={
+          showAddButton && (
+            <Button
+              label="사업장추가"
+              onClick={onClick}
+              variant="primary"
+              size="md"
+              type="button"
+            />
+          )
+        }
+      />
 
       {workplaces.length === 0 ? (
-        <div className="text-center py-8 bg-gray-50 rounded-lg">
-          <p className="text-gray-500">등록된 사업장이 없습니다.</p>
-        </div>
+        <EmptyState title="등록된 사업장이 없습니다." />
       ) : (
-        <div className="space-y-3 m-6">
-          {workplaces.map(workplace => (
-            <WorkplaceItem
-              key={workplace.id}
-              workplace={workplace}
-            />
-          ))}
-        </div>
+        <WorkplaceListTable workplaces={workplaces} />
       )}
     </div>
   );

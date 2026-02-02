@@ -1,1 +1,1 @@
-export { TeamListPage } from "./TeamListPage";
+export * from './TeamListPage';

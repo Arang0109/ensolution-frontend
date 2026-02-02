@@ -1,4 +1,5 @@
 export { FieldWrapper } from "./FieldWrapper";
-export { NumberField } from "./NumberField";
 export { SelectField } from "./SelectField";
-export { TimeField } from "./TimeField";
+export { InputField } from "./InputField";
+export { TextAreaField } from "./TextAreaField";
+export { SearchableSelect } from "./SearchableSelect";

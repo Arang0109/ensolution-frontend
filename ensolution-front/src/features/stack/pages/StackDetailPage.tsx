@@ -1,72 +1,42 @@
-import { useEffect, useState, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useMemo } from 'react';
 
-import { useToast } from "@app/providers/toast";
-import { useStackDetail, useStackActions } from '@stack/hooks';
 import {
-  PreventionAddModal,
+  PreventionCreateModal,
   PreventionEditModal,
-  MeasurementAddModal,
+  MeasurementCreateModal,
   StackPreventionListCard,
   StackMeasurementListCard,
   StackSidebar,
 } from '@stack/ui';
 
+import { useStackDetailPage } from '@stack/hooks';
+
 import { DetailPageHeader } from '@widgets/detail-page-header';
 import { FullPageLoader, EmptyState } from '@shared/ui';
-import type { PreventionDetailResponse, StackUpdateRequest } from '@stack/model';
+import type { PreventionDetailResponse } from '@stack/model';
 
 export const StackDetailPage = () => {
-  const navigate = useNavigate();
-  const backUrl = () => {navigate('/client/stack')}
+  const {
+    stack,
+    fetchStack,
 
-  const { showToast } = useToast();
-  
-  const { stackId } = useParams();
-  const [isEditMode, setIsEditMode] = useState(false);
+    handleEditChange,
+    handleUpdateClick,
+    handleDeleteClick,
+    handleSaveEdit,
+    handleCancelEdit,
 
-  const { stack, fetchStack, loading } = useStackDetail();
-  const { handleUpdate, handleDelete, isDeleting } = useStackActions();
+    isEditMode,
+    isDeleting,
 
-  const getInitialEditForm = (): StackUpdateRequest => {
-    if (!stack) {
-      return {
-        name: '',
-        semsNumber: '',
-        grade: 'TYPE_1',
-        height: '',
-        horizontalLength: '',
-        verticalLength: '',
-        shape: 'CIRCULAR',
-        orientation: 'VERTICAL',
-        remark: '',
-      };
-    }
-
-    return {
-      name: stack.stack.name || '',
-      semsNumber: stack.stack.semsNumber || '',
-      grade: stack.stack.grade || 'TYPE_1',
-      height: stack.stack.height || '',
-      horizontalLength: stack.stack.horizontalLength || '',
-      verticalLength: stack.stack.verticalLength || '',
-      shape: stack.stack.shape || 'CIRCULAR',
-      orientation: stack.stack.orientation || 'VERTICAL',
-      remark: stack.stack.remark || '',
-    };
-  };
-
-  const [editForm, setEditForm] = useState<StackUpdateRequest>(getInitialEditForm());
+    loading,
+    editForm,
+    backUrl,
+  } = useStackDetailPage();
 
   const [showPreventionAddModal, setShowPreventionAddModal] = useState(false);
   const [showMeasurementAddModal, setShowMeasurementAddModal] = useState(false);
   const [selectedPrevention, setSelectedPrevention] = useState<PreventionDetailResponse | null>(null);
-
-  useEffect(() => {
-    if (stackId) {
-      fetchStack(Number(stackId));
-    }
-  }, [stackId, fetchStack]);
 
   const { preventionCount, facilityCount, targetCount, measurementCount } = useMemo(() => {
     if (!stack) {
@@ -81,56 +51,6 @@ export const StackDetailPage = () => {
     };
   }, [stack]);
 
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setEditForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleUpdateClick = () => {
-    // Refresh form data when entering edit mode
-    setEditForm(getInitialEditForm());
-    setIsEditMode(true);
-  };
-
-  const handleDeleteClick = async () => {
-    if (!stackId) return;
-
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      const result = await handleDelete(Number(stackId));
-      if (result.success) {
-        backUrl();
-      } else {
-        showToast(result.message, "error");
-      }
-    }
-  };
-
-  const handleSaveEdit = async () => {
-    if (!stackId) return;
-
-    const result = await handleUpdate(Number(stackId), editForm);
-    showToast(result.message);
-
-    setIsEditMode(false);
-    fetchStack(Number(stackId));
-  };
-
-  const handleCancelEdit = () => {
-    // Reset form data when canceling
-    setEditForm(getInitialEditForm());
-    setIsEditMode(false);
-  };
-
-  const handleAddPrevention = () => {
-    setShowPreventionAddModal(true);
-  };
-
-  const handlePreventionAddSuccess = () => {
-    if (stackId) {
-      fetchStack(Number(stackId));
-    }
-  };
-
   const handlePreventionClick = (preventionDetail: PreventionDetailResponse) => {
     setSelectedPrevention(preventionDetail);
   };
@@ -140,8 +60,8 @@ export const StackDetailPage = () => {
   };
 
   const handlePreventionEditSuccess = () => {
-    if (stackId) {
-      fetchStack(Number(stackId));
+    if (stack?.stack.id) {
+      fetchStack(Number(stack?.stack.id));
     }
     setSelectedPrevention(null);
   };
@@ -150,11 +70,21 @@ export const StackDetailPage = () => {
     setShowMeasurementAddModal(true);
   };
 
+  const handleAddPrevention = () => {
+    setShowPreventionAddModal(true);
+  }
+
   const handleMeasurementAddSuccess = () => {
-    if (stackId) {
-      fetchStack(Number(stackId));
+    if (stack?.stack.id) {
+      fetchStack(Number(stack?.stack.id));
     }
   };
+
+  const handlePreventionAddSuccess = () => {
+    if (stack?.stack.id) {
+      fetchStack(Number(stack?.stack.id));
+    }
+  }
 
   if (loading) {
     return <FullPageLoader />;
@@ -189,7 +119,7 @@ export const StackDetailPage = () => {
           <StackMeasurementListCard
             measurements={stack.stackMeasurements}
             onAddMeasurement={handleAddMeasurement}
-            onEditSuccess={() => fetchStack(Number(stackId))}
+            onEditSuccess={() => fetchStack(Number(stack?.stack.id))}
           />
 
           <StackPreventionListCard
@@ -215,9 +145,9 @@ export const StackDetailPage = () => {
       </div>
 
       {/* Prevention Add Modal */}
-      {showPreventionAddModal && stackId && (
-        <PreventionAddModal
-          stackId={Number(stackId)}
+      {showPreventionAddModal && stack?.stack.id && (
+        <PreventionCreateModal
+          stackId={Number(stack?.stack.id)}
           onClose={() => setShowPreventionAddModal(false)}
           onSuccess={handlePreventionAddSuccess}
         />
@@ -233,9 +163,9 @@ export const StackDetailPage = () => {
       )}
 
       {/* Measurement Add Modal */}
-      {showMeasurementAddModal && stackId && (
-        <MeasurementAddModal
-          stackId={Number(stackId)}
+      {showMeasurementAddModal && stack?.stack.id && (
+        <MeasurementCreateModal
+          stackId={Number(stack?.stack.id)}
           onClose={() => setShowMeasurementAddModal(false)}
           onSuccess={handleMeasurementAddSuccess}
         />

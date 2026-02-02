@@ -1,5 +1,7 @@
-export { AddWorkplaceModal } from './AddWorkplaceModal';
-export { WorkplaceInfoCard } from './WorkplaceInfoCard';
-export { WorkplaceCardItem } from './WorkplaceCardItem';
+export { WorkplaceCreateModal } from './WorkplaceCreateModal';
+export { WorkplaceCreateForm } from './WorkplaceCreateForm';
+export { WorkplaceDetailCard } from './WorkplaceDetailCard';
 export { StackItem } from './StackItem';
-export { WorkplaceStackListCard } from './WorkplaceStackListCard';
+export { StackListCard } from './StackListCard';
+
+export { WorkplaceListTable } from "./WorkplaceListTable";

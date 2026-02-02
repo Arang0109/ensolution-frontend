@@ -1,6 +1,6 @@
-export * from "./CompanyAddForm";
-export * from "./CompanyAddModal";
-export * from "./CompanyCardItem";
-export * from './WorkplaceListCard';
-export * from './WorkplaceItem';
-export * from './CompanyInfoCard';
+export { CompanyCreateForm } from "./CompanyCreateForm";
+export { CompanyCreateModal } from "./CompanyCreateModal";
+export { CompanyListTable } from "./CompanyListTable";
+export { CompanyDetailCard } from './CompanyDetailCard';
+
+export { WorkplaceListCard } from './WorkplaceListCard';

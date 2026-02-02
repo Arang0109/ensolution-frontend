@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { useStacks } from '@stack/hooks';
 import { useSearch } from '@shared/lib';
 
-import { WorkplaceStackListCard } from '@workplace/ui';
+import { StackListCard } from '@workplace/ui';
 
 export const StackListPage = () => {
   const { stacks, loading } = useStacks();
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const { searchTerm, setSearchTerm, filtered: filteredStacks } = useSearch(
+  const { searchTerm, filtered: filteredStacks } = useSearch(
     stacks,
     ['name', 'semsNumber']
   );
@@ -36,10 +36,8 @@ export const StackListPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          <WorkplaceStackListCard 
+          <StackListCard 
             stacks={filteredStacks}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
           />
         </div>
       )}
