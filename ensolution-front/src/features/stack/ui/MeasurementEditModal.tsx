@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { patchStackMeasurement } from "@stack/api/stackMeasurementApi";
+import { useToast } from "@app/providers/toast";
+
+import { patchStackMeasurement, deleteStackMeasurement } from "@stack/api/stackMeasurementApi";
 import type { StackMeasurementResponse } from "@stack/model";
 import type { Cycle } from "@/shared/model";
 import { CYCLE_LABELS } from "@stack/model";
 
 import { X } from "lucide-react";
 
-import { IconButton, Button } from "@shared/ui/buttons";
+import { IconButton, Button, InputField, SelectField } from "@shared/ui";
 
 interface MeasurementEditModalProps {
   measurement: StackMeasurementResponse;
@@ -19,21 +21,46 @@ export const MeasurementEditModal = ({
   onClose,
   onSuccess,
 }: MeasurementEditModalProps) => {
+  const { showToast } = useToast();
+
   const [cycle, setCycle] = useState<Cycle>(measurement.cycle);
   const [allowance, setAllowance] = useState<string>(
     measurement.allowance != null ? String(measurement.allowance) : ""
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleDelete = async (stackMeasurementId: number) => {
+    
+    try {
+      if (!window.confirm("삭제하시겠습니까?")) return;
 
+      const res = await deleteStackMeasurement(stackMeasurementId);
+      if (res.status) {
+        showToast('측정물질이 삭제되었습니다.', 'success');
+      } else {
+        showToast(res.message || '측정물질 삭제에 실패했습니다.', 'error');
+      }
+
+      onSuccess();
+      onClose();
+
+      return { success: res.status, message: res.message };
+    } catch {
+      const errorMsg = '측정물질 삭제 중 오류가 발생했습니다.';
+      showToast(errorMsg, 'error');
+      return { success: false, message: errorMsg };
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!window.confirm("수정하시겠습니까?")) return;
+    e.preventDefault();
     setIsSubmitting(true);
 
-    try {
+    try {      
       const requestData = {
         cycle,
-        allowance: allowance === "" ? null : Number(allowance),
+        allowance: allowance === "" ? "" : allowance,
       };
 
       const response = await patchStackMeasurement(measurement.id, requestData);
@@ -80,63 +107,39 @@ export const MeasurementEditModal = ({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* 측정물질 (읽기 전용) */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              측정물질
-            </label>
-            <div className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700">
-              {measurement.pollutant.nameKr}
-              {measurement.pollutant.nameEn && ` (${measurement.pollutant.nameEn})`}
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              측정물질은 수정할 수 없습니다.
-            </p>
-          </div>
+         <InputField<string>
+            label="측정물질"
+            value={`${measurement.pollutant.nameKr}${
+              measurement.pollutant.nameEn ? ` (${measurement.pollutant.nameEn})` : ""
+            }`}
+            readOnly
+            helperText="측정물질은 수정할 수 없습니다."
+          />
 
-          {/* 측정 주기 선택 */}
-          <div>
-            <label
-              htmlFor="cycle"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              측정 주기 <span className="text-red-500">*</span>
-            </label>
-            <select
-              id="cycle"
-              value={cycle}
-              onChange={(e) => setCycle(e.target.value as Cycle)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              required
-              disabled={isSubmitting}
-            >
-              {cycleOptions.map((cycleOption) => (
-                <option key={cycleOption} value={cycleOption}>
-                  {CYCLE_LABELS[cycleOption]}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* 측정 주기 */}
+          <SelectField<Cycle>
+            id={`cycle-${measurement.id}`}
+            label="측정 주기"
+            required
+            value={measurement.cycle}
+            disabled={isSubmitting}
+            options={cycleOptions.map((c) => ({
+              value: c,
+              label: CYCLE_LABELS[c],
+            }))}
+            onChange={(value) => setCycle(value)}
+          />
 
           {/* 허용기준 입력 */}
-          <div>
-            <label
-              htmlFor="allowance"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              허용기준
-            </label>
-            <input
-              type="number"
-              id="allowance"
-              value={allowance}
-              onChange={(e) => setAllowance(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="허용기준을 입력하세요 (선택사항)"
-              min="0"
-              step="0.01"
-              disabled={isSubmitting}
-            />
-          </div>
+          <InputField<string>
+            label="허용기준"
+            type="number"
+            value={allowance}
+            step={0.1}
+            min={0}
+            onChange={(value) => setAllowance(value)}
+            disabled={isSubmitting}
+          />
 
           {/* 버튼 */}
           <div className="flex gap-3 pt-4">
@@ -145,6 +148,14 @@ export const MeasurementEditModal = ({
               label="취소"
               onClick={onClose}
               variant="secondary"
+              disabled={isSubmitting}
+              width="full"
+            />
+            <Button
+              type="button"
+              label="삭제"
+              onClick={() => handleDelete(measurement.id)}
+              variant="danger"
               disabled={isSubmitting}
               width="full"
             />

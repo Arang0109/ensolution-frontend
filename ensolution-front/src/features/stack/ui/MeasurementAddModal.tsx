@@ -106,7 +106,7 @@ export const MeasurementAddModal = ({
             stackId,
             pollutantId: m.pollutantId!,
             cycle: m.cycle,
-            allowance: m.allowance === "" ? null : Number(m.allowance),
+            allowance: m.allowance === "" ? "" : m.allowance,
           })
         )
       );
@@ -211,7 +211,7 @@ export const MeasurementAddModal = ({
                   label="허용기준"
                   type="number"
                   value={measurement.allowance}
-                  step={0.01}
+                  step={0.1}
                   min={0}
                   onChange={(value) =>
                     updateMeasurement(measurement.id, "allowance", value)

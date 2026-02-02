@@ -1,11 +1,9 @@
-interface InputFieldProps<T extends string | number = string> {
+type BaseInputFieldProps<T extends string | number> = {
   id?: string;
   label?: string;
-
   type?: "text" | "number" | "email" | "password";
 
   value: T | "";
-  onChange: (value: T | "") => void;
 
   placeholder?: string;
   disabled?: boolean;
@@ -14,7 +12,25 @@ interface InputFieldProps<T extends string | number = string> {
   min?: number;
   max?: number;
   step?: number;
-}
+
+  helperText?: string;
+};
+
+type EditableInputFieldProps<T extends string | number> =
+  BaseInputFieldProps<T> & {
+    readOnly?: false;
+    onChange: (value: T | "") => void;
+  };
+
+type ReadOnlyInputFieldProps<T extends string | number> =
+  BaseInputFieldProps<T> & {
+    readOnly: true;
+    onChange?: never;
+  };
+
+export type InputFieldProps<T extends string | number = string> =
+  | EditableInputFieldProps<T>
+  | ReadOnlyInputFieldProps<T>;
 
 export const InputField = <T extends string | number = string>({
   id,
@@ -22,7 +38,10 @@ export const InputField = <T extends string | number = string>({
   type = "text",
   value,
   onChange,
+  readOnly = false,
+  disabled = false,
   required,
+  helperText,
   ...props
 }: InputFieldProps<T>) => {
   return (
@@ -40,14 +59,20 @@ export const InputField = <T extends string | number = string>({
         id={id}
         type={type}
         value={value}
-        onChange={(e) => {
-          const v =
-            type === "number"
-              ? (e.target.value === "" ? "" : Number(e.target.value))
-              : e.target.value;
-
-          onChange(v as T | "");
-        }}
+        readOnly={readOnly}
+        disabled={disabled}
+        onChange={
+          readOnly || !onChange
+            ? undefined
+            : (e) => {
+                if (type === "number") {
+                  const v = e.target.value;
+                  onChange(v === "" ? "" : (Number(v) as T));
+                } else {
+                  onChange(e.target.value as T);
+                }
+              }
+        }
         className="
           w-full px-3 py-2
           border border-gray-300 rounded-lg
@@ -55,6 +80,10 @@ export const InputField = <T extends string | number = string>({
         "
         {...props}
       />
+
+      {helperText && (
+        <p className="text-xs text-gray-500 mt-1">{helperText}</p>
+      )}
     </div>
   );
 }

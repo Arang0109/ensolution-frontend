@@ -52,7 +52,7 @@ export const StackMeasurementListCard = ({
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-neutral-900">측정물질 정보</h2>
           <Button
-            label="측정시설추가"
+            label="측정항목추가"
             onClick={onAddMeasurement}
             variant="primary"
             size="md"

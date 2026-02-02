@@ -6,7 +6,7 @@ export interface StackMeasurementResponse {
   stackId: number;
   pollutant: PollutantResponse;
   cycle: Cycle;
-  allowance: number | null;
+  allowance: string;
   createdAt: Date;
   modifiedAt: Date;
 }
@@ -15,10 +15,10 @@ export interface StackMeasurementCreateRequest {
   stackId: number;
   pollutantId: number;
   cycle: Cycle;
-  allowance: number | null;
+  allowance: string;
 }
 
 export interface StackMeasurementUpdateRequest {
   cycle: Cycle;
-  allowance: number | null;
+  allowance: string;
 }
