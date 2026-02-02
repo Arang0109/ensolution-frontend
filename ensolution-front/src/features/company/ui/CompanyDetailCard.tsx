@@ -22,7 +22,7 @@ export const CompanyDetailCard = ({
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <SectionHeader title="업체 정보" />
+      <SectionHeader title="측정대행 의뢰기관 정보" />
 
       {/* Content */}
       <div className="p-6">

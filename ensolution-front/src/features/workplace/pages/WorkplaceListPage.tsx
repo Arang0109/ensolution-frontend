@@ -1,6 +1,7 @@
-import { useWorkplaces } from "@workplace/hooks/useWorkplaces";
+import { useWorkplaces } from "@workplace/hooks";
+import { WorkplaceListTable } from "@workplace/ui";
 
-import { WorkplaceCardItem } from "@workplace/ui";
+import { EmptyState } from "@shared/ui";
 
 export const WorkplaceListPage = () => {
   const { workplaces, loading } = useWorkplaces();
@@ -24,18 +25,9 @@ export const WorkplaceListPage = () => {
 
       {/* Workplace List */}
       {workplaces.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-500 text-lg">등록된 사업장이 없습니다.</p>
-          <p className="text-gray-400 text-sm mt-2">
-            새로운 사업장을 등록하세요.
-          </p>
-        </div>
+        <EmptyState title="등록된 사업장이 없습니다." />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {workplaces.map((workplace) => (
-            <WorkplaceCardItem workplace={workplace} />
-          ))}
-        </div>
+        <WorkplaceListTable workplaces={workplaces} />
       )}
     </div>
   );

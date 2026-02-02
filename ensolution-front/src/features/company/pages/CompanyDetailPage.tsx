@@ -2,7 +2,7 @@ import { DetailPageHeader } from "@widgets/detail-page-header";
 
 import { CompanyDetailCard, WorkplaceListCard } from "@company/ui";
 import { useCompanyDetailPage } from "@company/hooks";
-import { AddWorkplaceModal } from "@workplace/ui";
+import { WorkplaceCreateModal } from "@workplace/ui";
 
 import { FullPageLoader, EmptyState } from "@shared/ui";
 
@@ -70,7 +70,7 @@ export const CompanyDetailPage = () => {
         />
       </div>
 
-      <AddWorkplaceModal
+      <WorkplaceCreateModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
         companyId={company.company.id}

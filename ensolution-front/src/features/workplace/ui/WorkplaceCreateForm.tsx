@@ -1,34 +1,35 @@
 import { useToast } from "@app/providers/toast";
 
-import { useCompanyForm } from "@company/hooks";
+import { useWorkplaceForm } from "@workplace/hooks";
 
-import { Button, InputField, TextAreaField } from "@shared/ui";
+import { GRADE_LABELS } from "@shared/model";
+import { Button, InputField, SelectField, TextAreaField } from "@shared/ui";
 
-interface CompanyCreateFormProps {
+interface WorkplaceCreateFormProps {
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps ) => {
-  const { form, isSubmitting, onChange, onSubmit } = useCompanyForm();
+export const WorkplaceCreateForm = ({ onClose, onSuccess }: WorkplaceCreateFormProps) => {
+  const { form, isSubmitting, onChange, onSubmit } = useWorkplaceForm();
   const { showToast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const result = await onSubmit(e);
 
     if (result?.success) {
-      showToast("업체가 등록되었습니다.", "success");
+      showToast('사업장이 등록되었습니다.','success');
       onSuccess();
       onClose();
     } else {
-      showToast(result?.message ?? "업체 등록 중 오류가 발생했습니다.", "error");
+      showToast(result?.message ?? '사업장 등록 중 오류가 발생했습니다.','error');
     }
   };
 
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">업체 추가</h2>
+        <h2 className="text-2xl font-bold text-gray-800">사업장 추가</h2>
         <button
           onClick={onClose}
           className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -42,12 +43,12 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <InputField
-          label="업체명"
+          label="사업장명"
           required={true}
           name="name"
           value={form.name}
           onChange={(v) => onChange("name", v)}
-          placeholder="업체명을 입력하세요"
+          placeholder="사업장명을 입력하세요"
           disabled={isSubmitting}
         />
         <InputField
@@ -59,14 +60,6 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
           disabled={isSubmitting}
         />
         <InputField
-          label="대표자명"
-          name="ceoName"
-          value={form.ceoName}
-          onChange={(v) => onChange("ceoName", v)}
-          placeholder="대표자명을 입력하세요"
-          disabled={isSubmitting}
-        />
-        <InputField
           label="사업자번호"
           required={true}
           name="bizNumber"
@@ -74,6 +67,26 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
           onChange={(v) => onChange("bizNumber", v)}
           placeholder="000-00-00000"
           disabled={isSubmitting}
+        />
+        <InputField
+          label="업종"
+          name="businessCategory"
+          value={form.businessCategory}
+          onChange={(v) => onChange("businessCategory", v)}
+          placeholder="업종을 입력하세요"
+          disabled={isSubmitting}
+        />
+        <SelectField
+          label="종별"
+          name="grade"
+          value={form.grade}
+          onChange={(v) => onChange("grade", v)}
+          required
+          disabled={isSubmitting}
+          options={Object.entries(GRADE_LABELS).map(([value, label]) => ({
+            value,
+            label,
+          }))}
         />
         <TextAreaField
           label="비고"
@@ -83,7 +96,7 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
           disabled={isSubmitting}
         />
 
-        <div className="flex gap-3 pt-4">
+        <div className="flex justify-end gap-3 pt-4">
           <Button
             label="취소"
             onClick={onClose}
@@ -104,5 +117,5 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
         </div>
       </form>
     </>
-  );
-};
+  )
+}
