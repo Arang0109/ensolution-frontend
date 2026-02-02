@@ -4,7 +4,7 @@ import { GRADE_LABELS } from '@shared/model';
 import { formatBizNumber, formatDate } from '@shared/lib';
 import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
-interface WorkplaceInfoCardProps {
+interface WorkplaceDetailCardProps {
   workplace: WorkplaceResponse;
   isEditMode: boolean;
   editForm: WorkplaceUpdateRequest;
@@ -19,7 +19,7 @@ export const WorkplaceDetailCard = ({
   isEditMode,
   editForm,
   onChange,
-}: WorkplaceInfoCardProps) => {
+}: WorkplaceDetailCardProps) => {
   const gradeOptions = Object.entries(GRADE_LABELS).map(([value, label]) => ({
     value,
     label,
@@ -73,10 +73,10 @@ export const WorkplaceDetailCard = ({
 
             {/* 비고 */}
             <TextAreaField
-                label="비고"
-                value={editForm.remark}
-                onChange={(v) => onChange("remark", v)}
-              />
+              label="비고"
+              value={editForm.remark}
+              onChange={(v) => onChange("remark", v)}
+            />
           </div>
         ) : (
           <div className="space-y-6">

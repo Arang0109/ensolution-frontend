@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { WorkplaceCreateForm } from "./WorkplaceCreateForm";
+import { WorkplaceCreateForm } from "@workplace/ui";
 
 interface AddWorkplaceModalProps {
   companyId: number,

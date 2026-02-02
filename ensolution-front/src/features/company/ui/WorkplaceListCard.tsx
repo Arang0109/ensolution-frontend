@@ -33,9 +33,7 @@ export const WorkplaceListCard = ({ workplaces, isEditMode=false, onClick }: Wor
       {workplaces.length === 0 ? (
         <EmptyState title="등록된 사업장이 없습니다." />
       ) : (
-        <WorkplaceListTable
-          workplaces={workplaces}
-        />
+        <WorkplaceListTable workplaces={workplaces} />
       )}
     </div>
   );

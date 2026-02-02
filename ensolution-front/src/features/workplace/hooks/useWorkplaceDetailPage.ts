@@ -3,9 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { useWorkplaceDetail, useWorkplaceActions } from '@workplace/hooks';
+import type { WorkplaceUpdateRequest } from '@workplace/model';
 
 import { formatBizNumber, stripBizNumber, useSearch } from '@shared/lib';
-import type { WorkplaceUpdateRequest } from '../model';
 
 export const useWorkplaceDetailPage = () => {
   const navigate = useNavigate();

@@ -2,9 +2,9 @@ import { DetailPageHeader } from '@widgets/detail-page-header';
 import { FullPageLoader, EmptyState } from '@shared/ui';
 import {
   WorkplaceDetailCard,
-  WorkplaceStackListCard
+  StackListCard
 } from '@workplace/ui';
-import { StackAddModal } from '@stack/ui';
+import { StackCreateModal } from '@stack/ui';
 
 import { useWorkplaceDetailPage } from '@workplace/hooks';
 
@@ -23,9 +23,7 @@ export const WorkplaceDetailPage = () => {
 
     isEditMode,
     isDeleting,
-
-    searchTerm,
-    setSearchTerm,
+    
     filtered: filteredStacks,
 
     loading,
@@ -71,11 +69,9 @@ export const WorkplaceDetailPage = () => {
             onChange={handleEditChange}
           />
 
-          <WorkplaceStackListCard
+          <StackListCard
             stacks={filteredStacks}
             isEditMode={isEditMode}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
             onClick={() => setShowAddModal(true)}
           />
         </div>
@@ -83,7 +79,7 @@ export const WorkplaceDetailPage = () => {
 
       {/* Stack Add Modal */}
       {showAddModal && (
-        <StackAddModal
+        <StackCreateModal
           workplaceId={(workplace.workplace.id)}
           onClose={() => setShowAddModal(false)}
           onSuccess={handleStackAddSuccess}
