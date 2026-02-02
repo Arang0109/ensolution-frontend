@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 
+import { FieldWrapper } from "./FieldWrapper";
+
 interface SearchableSelectProps<T, V extends string | number = number> {
   id: string;
   label: string;
@@ -97,13 +99,8 @@ export function SearchableSelect<T, V extends string | number = number>({
   };
 
   return (
-    <div className="relative">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
-
-      <div className="relative">
-        <div
+    <FieldWrapper label={label} required={required} id={id}>
+      <div
           ref={triggerRef}
           onClick={handleToggle}
           className={`
@@ -184,7 +181,6 @@ export function SearchableSelect<T, V extends string | number = number>({
           </div>,
           document.body
         )}
-      </div>
-    </div>
+    </FieldWrapper>
   );
 }

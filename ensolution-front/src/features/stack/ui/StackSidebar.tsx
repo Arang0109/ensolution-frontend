@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { StackResponse, StackUpdateRequest } from '@stack/model';
 
 import { formatDateTime } from '@/shared/lib/formatter/dateFormatter';

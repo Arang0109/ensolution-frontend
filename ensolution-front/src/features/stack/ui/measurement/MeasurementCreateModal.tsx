@@ -12,7 +12,7 @@ import { X, Trash2 } from "lucide-react";
 import { IconButton, Button, InlineAddButton } from "@shared/ui/buttons";
 import { SearchableSelect, SelectField, InputField } from "@shared/ui";
 
-interface MeasurementAddModalProps {
+interface MeasurementCreateModalProps {
   stackId: number;
   onClose: () => void;
   onSuccess: () => void;
@@ -25,11 +25,11 @@ interface MeasurementItem {
   allowance: string;
 }
 
-export const MeasurementAddModal = ({
+export const MeasurementCreateModal = ({
   stackId,
   onClose,
   onSuccess,
-}: MeasurementAddModalProps) => {
+}: MeasurementCreateModalProps) => {
   const [pollutants, setPollutants] = useState<PollutantResponse[]>([]);
   const [loadingPollutants, setLoadingPollutants] = useState(true);
 
@@ -207,7 +207,7 @@ export const MeasurementAddModal = ({
                 />
 
                 {/* 허용기준 */}
-                <InputField<string>
+                <InputField
                   label="허용기준"
                   type="number"
                   value={measurement.allowance}

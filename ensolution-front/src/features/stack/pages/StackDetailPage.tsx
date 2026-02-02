@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import {
   PreventionAddModal,
   PreventionEditModal,
-  MeasurementAddModal,
+  MeasurementCreateModal,
   StackPreventionListCard,
   StackMeasurementListCard,
   StackSidebar,
@@ -164,7 +164,7 @@ export const StackDetailPage = () => {
 
       {/* Measurement Add Modal */}
       {showMeasurementAddModal && stack?.stack.id && (
-        <MeasurementAddModal
+        <MeasurementCreateModal
           stackId={Number(stack?.stack.id)}
           onClose={() => setShowMeasurementAddModal(false)}
           onSuccess={handleMeasurementAddSuccess}
