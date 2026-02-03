@@ -6,6 +6,7 @@ import type { TeamRegisterRequest } from "@agency/model";
 
 const getDefaultForm = (): TeamRegisterRequest => ({
   name: "",
+  vehicleNumber: "",
   particleSamplerId: "",
   gasSamplerId: "",
   pitotTubeId: "",
@@ -17,9 +18,9 @@ export const useTeamForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    name: keyof TeamRegisterRequest,
+    value: string
   ) => {
-    const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
 

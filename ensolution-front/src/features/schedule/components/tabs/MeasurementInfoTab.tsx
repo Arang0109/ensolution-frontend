@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { patchSchedule, deleteMeasurement } from "@schedule/api/scheduleApi";
 import { CYCLE_LABELS } from "@stack/model";
-import { TEAM_LABEL } from "@agency/model";
+import { TeamType } from "@agency/model";
 import { MdDelete } from "react-icons/md";
 
 import type { ScheduleDetailResponse } from "@schedule/model";
@@ -257,7 +257,7 @@ export const MeasurementInfoTab = ({ scheduleDetail }: MeasurementInfoTabProps) 
                   onChange={(e) => setScheduleForm(prev => ({ ...prev, teamId: Number(e.target.value) }))}
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base bg-white"
                 >
-                  {Object.entries(TEAM_LABEL).map(([value, label]) => (
+                  {Object.entries(TeamType).map(([value, label]) => (
                     <option key={value} value={value}>
                       {label}
                     </option>
@@ -265,9 +265,7 @@ export const MeasurementInfoTab = ({ scheduleDetail }: MeasurementInfoTabProps) 
                 </select>
               ) : (
                 <div className="px-4 py-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <p className="text-sm text-gray-900">
-                    {TEAM_LABEL[schedule.teamId as keyof typeof TEAM_LABEL]}
-                  </p>
+                  
                 </div>
               )}
             </div>

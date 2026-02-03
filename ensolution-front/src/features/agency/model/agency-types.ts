@@ -12,6 +12,7 @@ export interface TeamResponse {
 
 export interface TeamRegisterRequest {
   name: string;
+  vehicleNumber: string;
   particleSamplerId: string;
   gasSamplerId: string;
   pitotTubeId: string;
@@ -20,6 +21,7 @@ export interface TeamRegisterRequest {
 
 export interface TeamUpdateRequest {
   name: string;
+  vehicleNumber: string;
   particleSamplerId: string;
   gasSamplerId: string;
   pitotTubeId: string;

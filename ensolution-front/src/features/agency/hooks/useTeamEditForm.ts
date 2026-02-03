@@ -12,6 +12,7 @@ export const useTeamEditForm = (team: TeamResponse | null) => {
     if (team) {
       setForm({
         name: team.name,
+        vehicleNumber: team.vehicleNumber,
         particleSamplerId: team.particleSamplerId,
         gasSamplerId: team.gasSamplerId,
         pitotTubeId: team.pitotTubeId,
@@ -23,9 +24,9 @@ export const useTeamEditForm = (team: TeamResponse | null) => {
   }, [team]);
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    name: keyof TeamUpdateRequest,
+    value: string
   ) => {
-    const { name, value } = e.target;
     setForm(prev => prev ? { ...prev, [name]: value } : null);
   };
 

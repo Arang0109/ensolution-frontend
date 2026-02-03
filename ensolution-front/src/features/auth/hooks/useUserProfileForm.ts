@@ -27,8 +27,10 @@ export const useUserProfileForm = () => {
   };
 
   /** input 변경 */
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const onChange = (
+    name: string,
+    value: string
+  ) => {
     setForm((prev) => prev ? { ...prev, [name]: value } : prev);
   };
 
