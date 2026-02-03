@@ -2,6 +2,8 @@ export type FieldType = "text" | "number" | "date";
 
 export type ComponentSize = "sm" | "md" | "lg" | "xl" | "full";
 
+export type Phase = 'PARTICULATE' | 'GAS';
+
 export type Grade = 'TYPE_1' | 'TYPE_2' | 'TYPE_3' | 'TYPE_4' | 'TYPE_5';
 
 export type Shape = 'CIRCULAR' | 'RECTANGULAR' | 'OTHER';

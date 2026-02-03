@@ -17,7 +17,7 @@ export interface PollutantRegisterRequest {
   phase: string;
   equipmentName: string;
   testMethodName: string;
-  samplingTime: number;
+  samplingTime: string;
   samplingVolume: string;
 }
 
@@ -28,6 +28,6 @@ export interface PollutantUpdateRequest {
   phase: string;
   equipmentName: string;
   testMethodName: string;
-  samplingTime: number;
+  samplingTime: string;
   samplingVolume: string;
 }

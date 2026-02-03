@@ -3,19 +3,13 @@ import { useState } from 'react';
 import { useCompanies } from '@company/hooks';
 import { CompanyCreateModal, CompanyListTable } from '@company/ui';
 
-import { Button, EmptyState } from '@shared/ui';
+import { Button, EmptyState, FullPageLoader } from '@shared/ui';
 
 export const CompanyListPage = () => {
   const { companies, loading, refetch } = useCompanies();
   const [showAddModal, setShowAddModal] = useState(false);
   
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-gray-600">로딩 중...</div>
-      </div>
-    );
-  }
+  if (loading) return <FullPageLoader />;
 
   return (
     <div className="px-6 max-w-7xl mx-auto">
