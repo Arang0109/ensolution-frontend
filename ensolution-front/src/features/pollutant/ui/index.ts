@@ -1,2 +1,3 @@
 export { PollutantTable } from "./PollutantTable";
-export { PollutantFormModal } from "./PollutantFormModal";
+export { PollutantCreateModal } from "./PollutantCreateModal";
+export { PollutantCreateForm } from "./PollutantCreateForm";

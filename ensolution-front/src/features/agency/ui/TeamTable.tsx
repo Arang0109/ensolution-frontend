@@ -2,8 +2,8 @@ import { Fragment } from "react";
 
 import { useEquipments } from '@equipment/hooks';
 import type { TeamResponse } from "@agency/model";
-import { EquipType, EQUIP_TYPE_LABELS } from '@equipment/model';
 import { TeamDetailCard } from "@agency/ui";
+import type { EquipmentResponse } from "@equipment/model";
 
 import { TableContainer } from "@shared/ui";
 
@@ -24,11 +24,8 @@ export const TeamTable = ({
 }: TeamTableProps) => {
   const { equipments } = useEquipments();
 
-  const getEquipmentName = (equipmentId: string) => {
-    if (!equipmentId) return '-';
-    const equipment = equipments.find(eq => eq.id === equipmentId);
-    if (!equipment) return '-';
-    return equipment.alias || equipment.equipmentName || equipment.managementNumber;
+  const getEquipment = (equipmentId: string): EquipmentResponse | undefined => {
+    return equipments.find(eq => eq.id === equipmentId);
   };
 
   return (
@@ -43,10 +40,10 @@ export const TeamTable = ({
             차량 번호
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {EQUIP_TYPE_LABELS[EquipType.PARTICLE_SAMPLER]}
+            사수
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {EQUIP_TYPE_LABELS[EquipType.GAS_SAMPLER]}
+            부사수
           </th>
         </tr>
       </thead>
@@ -75,19 +72,13 @@ export const TeamTable = ({
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {team.vehicleNumber || '-'}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {getEquipmentName(team.particleSamplerId)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {getEquipmentName(team.gasSamplerId)}
-                </td>
               </tr>
               {isExpanded && (
                 <tr>
                   <td colSpan={5} className="px-6 py-4 bg-gray-50">
                     <TeamDetailCard
                       team={team}
-                      getEquipmentName={getEquipmentName}
+                      getEquipment={getEquipment}
                       onEdit={() => onEdit(team)}
                       onDelete={() => onDelete(team)}
                     />

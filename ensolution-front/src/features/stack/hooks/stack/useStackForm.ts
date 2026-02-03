@@ -26,11 +26,11 @@ export const useStackForm = (workplaceId: number) => {
     name: keyof StackRegisterRequest,
     value: string,
   ) => {
-      setForm(prev => ({
-        ...prev,
-        [name]: value,
-      }));
-    };
+    setForm(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

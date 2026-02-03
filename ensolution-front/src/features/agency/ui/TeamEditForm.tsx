@@ -157,7 +157,7 @@ export const TeamEditForm = ({
             disabled={isSubmitting}
           />
           <Button
-            label="추가"
+            label="수정"
             variant="primary"
             size="md"
             width="full"
