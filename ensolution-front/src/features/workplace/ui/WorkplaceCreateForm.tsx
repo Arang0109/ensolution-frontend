@@ -3,7 +3,8 @@ import { useToast } from "@app/providers/toast";
 import { useWorkplaceForm } from "@workplace/hooks";
 
 import { GRADE_LABELS } from "@shared/model";
-import { Button, InputField, SelectField, TextAreaField } from "@shared/ui";
+import { IconButton, Button, InputField, SelectField, TextAreaField } from "@shared/ui";
+import { X } from "lucide-react";
 
 interface WorkplaceCreateFormProps {
   companyId: number;
@@ -31,15 +32,12 @@ export const WorkplaceCreateForm = ({ onClose, onSuccess, companyId }: Workplace
     <>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">사업장 추가</h2>
-        <button
+        <IconButton
+          icon={<X />}
+          title="닫기"
+          size="md"
           onClick={onClose}
-          className="text-gray-500 hover:text-gray-700 transition-colors"
-          disabled={isSubmitting}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+        />
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">

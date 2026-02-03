@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { patchEquipment } from "@equipment/api/EquipmentApi";
 import { EquipType } from "@equipment/model";
 
+import type { FieldType } from "@shared/model";
+
 import { type EquipmentResponse, type EquipmentUpdateRequest, type EquipmentSpecMap, type PitotTubeSpec, type NozzleSpec } from "@equipment/model";
 
 type EquipTypeKey = keyof typeof EquipType;
@@ -38,15 +40,15 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
   }, [equipment]);
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    name: keyof EquipmentUpdateRequest,
+    value: string,
+    type: FieldType
   ) => {
-    const { name, value, type } = e.target;
-
     if (name === "type") {
       const equipType = value as EquipTypeKey;
       setForm(prev => prev ? ({
         ...prev,
-        type: EquipType[equipType],
+        type: equipType,
         spec: getDefaultSpec(equipType),
       }) : null);
       return;
@@ -60,11 +62,19 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     setForm(prev => prev ? ({ ...prev, [name]: value }) : null);
   };
 
+  const parseFieldValue = (value: string, type: FieldType) => {
+    if (type === "number") {
+      return value === "" ? "" : Number(value);
+    }
+    return value;
+  };
+
   const onSpecChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    name: string,
+    value: string,
+    type: FieldType
   ) => {
-    const { name, value, type } = e.target;
-    const parsedValue = type === "number" ? Number(value) : value;
+    const parsedValue = parseFieldValue(value, type);
 
     setForm(prev => prev ? ({
       ...prev,

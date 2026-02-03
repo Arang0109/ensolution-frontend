@@ -3,6 +3,8 @@ import { useState } from "react";
 import { registerEquipment } from "@equipment/api/EquipmentApi";
 import { EquipType } from "@equipment/model";
 
+import type { FieldType } from "@shared/model";
+
 import type { EquipmentRegisterRequest, EquipmentSpecMap, PitotTubeSpec, NozzleSpec } from "@equipment/model";
 
 type EquipTypeKey = keyof typeof EquipType;
@@ -43,15 +45,15 @@ export const useEquipmentForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    name: keyof EquipmentRegisterRequest,
+    value: string,
+    type: FieldType
   ) => {
-    const { name, value, type } = e.target;
-
     if (name === "type") {
       const equipType = value as EquipTypeKey;
       setForm(prev => ({
         ...prev,
-        type: EquipType[equipType],
+        type: equipType,
         spec: getDefaultSpec(equipType),
       }));
       return;
@@ -65,16 +67,24 @@ export const useEquipmentForm = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
+  const parseFieldValue = (value: string, type: FieldType) => {
+    if (type === "number") {
+      return value === "" ? "" : Number(value);
+    }
+    return value;
+  };
+
   const onSpecChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    name: string,
+    value: string,
+    type: FieldType
   ) => {
-    const { name, value, type } = e.target;
-    const parsedValue = type === "number" ? Number(value) : value;
+    const parsedValue = parseFieldValue(value, type);
 
     setForm(prev => ({
       ...prev,
       spec: {
-        ...prev.spec as Record<string, unknown>,
+        ...(prev.spec as Record<string, unknown>),
         [name]: parsedValue,
       },
     }));

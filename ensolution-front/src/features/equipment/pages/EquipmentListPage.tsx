@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { Button } from '@shared/ui';
 import { Tabs } from '@/shared/ui/navigation';
 import { useEquipments } from '@equipment/hooks/useEquipments';
-import { EquipmentAddModal, EquipmentEditModal, EquipmentTable } from '@equipment/ui';
+import { EquipmentCreateModal, EquipmentEditModal, EquipmentTable } from '@equipment/ui';
 import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from '@equipment/model';
 import type {
   EquipmentResponse,
@@ -74,7 +74,7 @@ export const EquipmentListPage = () => {
 
       {/* Add Equipment Modal */}
       {showAddModal && (
-        <EquipmentAddModal
+        <EquipmentCreateModal
           onClose={() => setShowAddModal(false)}
           onSuccess={() => refetch()}
         />
