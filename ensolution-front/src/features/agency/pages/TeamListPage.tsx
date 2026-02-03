@@ -51,7 +51,10 @@ export const TeamListPage = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">팀 관리</h1>
-        <Button label="팀 추가" onClick={() => setShowAddModal(true)} />
+        <Button
+          label="팀 추가"
+          onClick={() => setShowAddModal(true)}
+        />
       </div>
 
       {/* Team Table */}

@@ -4,3 +4,4 @@ export { TeamEditModal } from './TeamEditModal';
 export { TeamEditForm } from './TeamEditForm';
 export { TeamTable } from './TeamTable';
 export { TeamDetailCard } from './TeamDetailCard';
+export { TeamEquipmentTable } from './TeamEquipmentTable';
