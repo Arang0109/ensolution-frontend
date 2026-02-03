@@ -5,4 +5,4 @@ export type {
   TeamDetailResponse
 } from "./agency-types";
 
-export { TEAM_LABEL } from "./team-constants";
+export { TeamType, TEAM_TYPE_OPTIONS } from "./team-constants";

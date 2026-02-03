@@ -113,17 +113,18 @@ export const EquipmentDetailSpec = ({ equipment, onEdit }: EquipmentDetailSpecPr
       {/* 추가 정보 */}
       <div className="pt-4 border-t border-gray-200">
         <h4 className="font-semibold text-gray-800 mb-3">추가 정보</h4>
-        <div className="grid grid-cols-4 gap-4 text-sm">
+        <div>
+          <span className="text-gray-500">장비명</span>
+          <p className="font-medium">{equipment.equipmentName || '-'}</p>
+        </div>
+        <div className="grid grid-cols-3 gap-4 text-sm">
+          
           <div>
-            <span className="text-gray-500">장비명</span>
-            <p className="font-medium">{equipment.equipmentName || '-'}</p>
-          </div>
-          <div>
-            <span className="text-gray-500">원산지</span>
+            <span className="text-gray-500">제조국가</span>
             <p className="font-medium">{equipment.originCountry || '-'}</p>
           </div>
           <div>
-            <span className="text-gray-500">가격</span>
+            <span className="text-gray-500">구입가격</span>
             <p className="font-medium">{equipment.price ? `${equipment.price.toLocaleString()}원` : '-'}</p>
           </div>
           <div>

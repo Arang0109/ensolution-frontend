@@ -1,14 +1,18 @@
-import Select from "react-select";
 import { useState } from "react";
 
 import type { UserResponse } from "@auth/model";
 import type { TeamResponse } from "@agency/model";
 
+import { Button, InputField, SelectField } from "@shared/ui";
+
 interface ProfileFormProps {
   form: UserResponse;
   teams: TeamResponse[];
   isSubmitting: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    name: string,
+    value: string
+  ) => void;
   onTeamChange: (teamId: number) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -43,167 +47,88 @@ export const ProfileForm = ({
       <form onSubmit={onSubmit} className="space-y-6">
         {/* 읽기 전용 필드 */}
         <div className="space-y-4 pb-6 border-b border-slate-200">
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-1">
-              아이디
-            </label>
-            <input
-              type="text"
-              value={form.username}
-              disabled
-              className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-neutral-900 cursor-not-allowed"
-            />
-          </div>
+          <InputField
+            label="아이디"
+            value={form.username}
+            disabled={true}
+            readOnly={true}
+          />
         </div>
 
         {/* 수정 가능한 필드 - 그리드 레이아웃 */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
-              이름
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={form.name}
-              onChange={onChange}
-              required
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
-              이메일
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={onChange}
-              required
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="phoneNumber" className="block text-sm font-medium text-neutral-700 mb-1">
-              전화번호
-            </label>
-            <input
-              id="phoneNumber"
-              name="phoneNumber"
-              type="tel"
-              value={form.phoneNumber}
-              onChange={onChange}
-              required
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="birthDate" className="block text-sm font-medium text-neutral-700 mb-1">
-              생년월일
-            </label>
-            <input
-              id="birthDate"
-              name="birthDate"
-              type="date"
-              value={form.birthDate}
-              onChange={onChange}
-              required
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="department" className="block text-sm font-medium text-neutral-700 mb-1">
-              부서
-            </label>
-            <input
-              id="department"
-              name="department"
-              type="text"
-              value={form.department}
-              onChange={onChange}
-              required
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="grade" className="block text-sm font-medium text-neutral-700 mb-1">
-              직급
-            </label>
-            <input
-              id="grade"
-              name="grade"
-              type="text"
-              value={form.grade}
-              onChange={onChange}
-              required
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
+          <InputField
+            label="이름"
+            name="name"
+            value={form.name}
+            onChange={(value) => onChange("name", value)}
+            required
+          />
+          <InputField
+            label="이메일"
+            id="email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={(value) => onChange("email", value)}
+            required
+          />
+          <InputField
+            label="이름"
+            name="phoneNumber"
+            type="tel"
+            value={form.phoneNumber}
+            onChange={(value) => onChange("phoneNumber", value)}
+            required
+          />
+          <InputField
+            label="생년월일"
+            name="birthDate"
+            type="date"
+            value={form.birthDate}
+            onChange={(value) => onChange("birthDate", value)}
+            required
+          />
+          <InputField
+            label="부서"
+            name="department"
+            value={form.department}
+            onChange={(value) => onChange("department", value)}
+            required
+          />
+          <InputField
+            label="직급"
+            name="grade"
+            value={form.grade}
+            onChange={(value) => onChange("grade", value)}
+            required
+          />
 
           <div className="md:col-span-2">
-            <label htmlFor="teamId" className="block text-sm font-medium text-neutral-700 mb-1">
-              팀
-            </label>
-            <Select<TeamOption>
+            <SelectField
               id="teamId"
-              value={selectedTeam}
-              onChange={(option) => option && onTeamChange(option.value)}
+              label="팀"
+              value={selectedTeam?.value ?? ""}
+              onChange={(value) => value && onTeamChange(Number(value))}
               options={teamOptions}
-              placeholder="팀을 선택하세요"
-              className="react-select-container"
-              classNamePrefix="react-select"
-              styles={{
-                control: (base, state) => ({
-                  ...base,
-                  borderColor: state.isFocused ? '#92400e' : '#e7d4c0',
-                  boxShadow: state.isFocused ? '0 0 0 2px rgba(146, 64, 14, 0.2)' : 'none',
-                  '&:hover': {
-                    borderColor: '#92400e'
-                  },
-                  padding: '2px',
-                  borderRadius: '0.5rem'
-                }),
-                option: (base, state) => ({
-                  ...base,
-                  backgroundColor: state.isSelected
-                    ? '#92400e'
-                    : state.isFocused
-                    ? '#fef3e2'
-                    : 'white',
-                  color: state.isSelected ? 'white' : '#78350f',
-                  '&:active': {
-                    backgroundColor: '#92400e'
-                  }
-                })
-              }}
             />
           </div>
         </div>
 
         {/* 버튼 */}
         <div className="pt-6 flex gap-4">
-          <button
+          <Button
+            label="프로필 저장"
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-neutral-600 text-white py-2 rounded-lg font-medium hover:bg-neutral-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? "저장 중..." : "프로필 저장"}
-          </button>
-          <button
-            type="button"
+            width="full"
+          />
+          <Button
+            label="비밀번호 변경"
+            variant="secondary"
             onClick={() => setShowPasswordChange(!showPasswordChange)}
-            className="px-6 py-2 border-2 border-neutral-500 text-neutral-700 rounded-lg font-medium hover:bg-neutral-50 transition-all"
-          >
-            비밀번호 변경
-          </button>
+            width="full"
+          />
         </div>
       </form>
 
@@ -214,45 +139,36 @@ export const ProfileForm = ({
           <form className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
-                <label htmlFor="currentPassword" className="block text-sm font-medium text-neutral-700 mb-1">
-                  현재 비밀번호
-                </label>
-                <input
-                  id="currentPassword"
+                <InputField
+                  label="현재 비밀번호"
+                  value=""
                   name="currentPassword"
                   type="password"
-                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  required
                 />
               </div>
-              <div>
-                <label htmlFor="newPassword" className="block text-sm font-medium text-neutral-700 mb-1">
-                  새 비밀번호
-                </label>
-                <input
-                  id="newPassword"
+              <InputField
+                  label="새 비밀번호"
+                  value=""
                   name="newPassword"
                   type="password"
-                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  required
                 />
-              </div>
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700 mb-1">
-                  비밀번호 확인
-                </label>
-                <input
+                <InputField
                   id="confirmPassword"
+                  label="비밀번호 확인"
+                  value=""
                   name="confirmPassword"
                   type="password"
-                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  required
                 />
-              </div>
             </div>
-            <button
+            <Button
+              label="비밀번호 변경하기"
               type="submit"
-              className="w-full bg-neutral-600 text-white py-2 rounded-lg font-medium hover:bg-neutral-700 transition-all"
-            >
-              비밀번호 변경하기
-            </button>
+              disabled={isSubmitting}
+              width="full"
+            />
           </form>
         </div>
       )}

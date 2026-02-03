@@ -1,6 +1,7 @@
 import { FieldWrapper } from "./FieldWrapper";
 
 interface InputFieldProps<T = string> {
+  id?: string;
   label?: string;
 
   value: T;
@@ -22,6 +23,7 @@ interface InputFieldProps<T = string> {
 }
 
 export const InputField = <T extends string | number>({
+  id,
   label,
   value,
   onChange,
@@ -37,7 +39,7 @@ export const InputField = <T extends string | number>({
   helperText,
 }: InputFieldProps<T>) => {
   return (
-    <FieldWrapper label={label} required={required}>
+    <FieldWrapper id={id} label={label} required={required}>
       <input
         type={type}
         value={value}
