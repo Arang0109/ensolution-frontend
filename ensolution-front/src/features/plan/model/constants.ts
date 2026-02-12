@@ -14,3 +14,10 @@ export const MEASUREMENT_TYPES = {
 
 export type MeasurementType =
   typeof MEASUREMENT_TYPES[keyof typeof MEASUREMENT_TYPES];
+
+export const MEASUREMENT_FIELD_OPTIONS = Object.entries(MEASUREMENT_FIELDS).map(
+  ([key, value]) => ({
+    label: value,
+    value: key,
+  })
+);

@@ -1,9 +1,7 @@
-import type { CompanyResponse } from "@company/model";
-import type { StackDetailResponse, StackMeasurementResponse } from "@stack/model";
-import type { WorkplaceResponse } from "@workplace/model";
+import type { StackMeasurementResponse } from "@stack/model";
 import type { PlanStatus } from "@shared/model/common-types";
 
-import type { MeasurementField, MeasurementType } from "@plan/model";
+import type { MeasurementField, MeasurementType, MeasurementResponse } from "@plan/model";
 
 // ============ Response Types ============
 
@@ -11,7 +9,8 @@ export interface PlanResponse {
   id: number;
   stackId: number;
   teamId: number;
-  measureDate: Date;
+  measureField: string;
+  measureDate: string;
   measurementType: string;
   status: PlanStatus;
   createdAt: Date;
@@ -19,10 +18,7 @@ export interface PlanResponse {
 
 export interface PlanDetailResponse {
   plan: PlanResponse;
-  stack: StackDetailResponse;
-  workplace: WorkplaceResponse;
-  company: CompanyResponse;
-  measurements: PlanPollutantResponse[];
+  measurementInfo: MeasurementResponse;
 }
 
 export interface PlanPollutantResponse {
@@ -33,7 +29,7 @@ export interface PlanPollutantResponse {
 
 export interface PlanTableView {
   id: number;
-  measureDate: Date;
+  measureDate: string;
   measurementType: string;
 
   companyName: string;
@@ -57,7 +53,7 @@ export interface PlanTableView {
 export interface PlanFormData {
   // 시료채취정보
   measurementField: MeasurementField;
-  measureDate: Date;
+  measureDate: string;
   measurementType: MeasurementType;
 
   // 사업장/배출구
@@ -105,7 +101,8 @@ export interface PlanPollutant {
 export interface PlanUpdateRequest {
   stackId: number;
   teamId: number;
-  measureDate: Date;
+  measureField: string;
+  measureDate: string;
   measurementType: string;
 }
 
@@ -126,7 +123,7 @@ export const toRegisterRequest = (
   plan: {
     stackId: form.stackId,
     teamId: form.teamId,
-    measureDate: form.measureDate.toISOString().split('T')[0],
+    measureDate: form.measureDate,
     measurementType: form.measurementType,
     measurementIds: form.measurementIds,
   },

@@ -83,7 +83,7 @@ export const PlanDetailPage = () => {
           </button>
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold text-gray-900 leading-tight">
-              {`${planDetail.workplace.name} - ${planDetail.stack.stack.name}`}
+              {`${planDetail.measurementInfo.client.company.workplaceName} - ${planDetail.measurementInfo.client.stack.name}`}
             </h1>
           </div>
         </div>

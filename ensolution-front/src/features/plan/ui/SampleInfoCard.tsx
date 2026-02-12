@@ -1,7 +1,9 @@
 import { SearchableSelect } from "@plan/components/SearchableSelect";
 import type { PlanFormData } from "@plan/model";
-import { MEASUREMENT_TYPES, MEASUREMENT_FIELDS } from "@plan/model";
+import { MEASUREMENT_TYPES, MEASUREMENT_FIELD_OPTIONS } from "@plan/model";
 import type { WorkplaceResponse } from "@workplace/model";
+
+import { RadioButton } from "@shared/ui";
 
 interface SampleInfoCardProps {
   form: PlanFormData;
@@ -25,37 +27,12 @@ export const SampleInfoCard = ({
       <h2 className="text-xl font-semibold mb-4 text-gray-900">시료채취정보</h2>
       <div className="space-y-4">
         {/* 측정분야 */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            측정분야 <span className="text-red-500">*</span>
-          </label>
-          <div className="flex items-center gap-4">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="measurementField"
-                value={MEASUREMENT_FIELDS.AIR}
-                checked={form.measurementField === MEASUREMENT_FIELDS.AIR}
-                onChange={(e) => onChange("measurementField", e.target.value)}
-                disabled={isSubmitting}
-                className="w-4 h-4 text-neutral-600 border-gray-300 focus:ring-primary-500"
-              />
-              <span className="ml-2 text-gray-700">대기</span>
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="measurementField"
-                value={MEASUREMENT_FIELDS.WATER}
-                checked={form.measurementField === MEASUREMENT_FIELDS.WATER}
-                onChange={(e) => onChange("measurementField", e.target.value)}
-                disabled={isSubmitting}
-                className="w-4 h-4 text-neutral-600 border-gray-300 focus:ring-primary-500"
-              />
-              <span className="ml-2 text-gray-700">수질</span>
-            </label>
-          </div>
-        </div>
+        <RadioButton
+          options={MEASUREMENT_FIELD_OPTIONS}
+          value={form.measurementField}
+          onChange={(value) => onChange("measurementField", value)}
+          disabled={isSubmitting}
+        />
 
         {/* 측정일 */}
         <div>

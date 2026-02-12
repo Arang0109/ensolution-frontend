@@ -50,7 +50,7 @@ interface PlanFormState {
 
 const initialForm: PlanFormData = {
   measurementField: MEASUREMENT_FIELDS.AIR,
-  measureDate: new Date(),
+  measureDate: "",
   measurementType: MEASUREMENT_TYPES.SELF,
   workplaceId: 0,
   stackId: 0,

@@ -18,11 +18,12 @@ interface MeasurementInfoTabProps {
 }
 
 export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
-  const { plan, measurements, stack } = planDetail;
+  const { plan, measurementInfo } = planDetail;
 
   const [isEditing, setIsEditing] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [planForm, setPlanForm] = useState({
+    measureField: plan.measureField,
     measureDate: plan.measureDate,
     measurementType: plan.measurementType,
     teamId: plan.teamId,
@@ -45,6 +46,7 @@ export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
 
   const handleCancel = () => {
     setPlanForm({
+      measureField: plan.measureField,
       measureDate: plan.measureDate,
       measurementType: plan.measurementType,
       teamId: plan.teamId,
@@ -85,7 +87,7 @@ export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">측정항목</h2>
                 <p className="text-sm text-gray-500 mt-1">
-                  총 {measurements.length}개의 측정항목
+                  총 {measurementInfo.preInfo.measurementItems.length}개의 측정항목
                 </p>
               </div>
               <Button
@@ -96,7 +98,7 @@ export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
           </div>
 
           <div className="p-8">
-            {measurements.length === 0 ? (
+            {measurementInfo.preInfo.measurementItems.length === 0 ? (
               <div className="text-center py-12">
                 <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -130,32 +132,32 @@ export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {measurements.map((measurement, index) => (
-                      <tr key={measurement.id} className="hover:bg-gray-50 transition-colors">
+                    {measurementInfo.preInfo.measurementItems.map((measurement, index) => (
+                      <tr key={measurement.stackMeasurementId} className="hover:bg-gray-50 transition-colors">
                         <td className="text-center px-1 py-2 whitespace-nowrap text-sm text-gray-900">
                           {index + 1}
                         </td>
                         <td className="px-3 py-2 whitespace-nowrap">
                           <div className="text-sm font-semibold text-gray-900">
-                            {measurement.stackMeasurement.pollutant.nameKr} {measurement.stackMeasurement.pollutant.nameEn}
+                            {measurement.pollutantNameKr} {measurement.pollutantNameEn}
                           </div>
                         </td>
                         <td className="text-center px-1 py-2 whitespace-nowrap">
                           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            {getCycleLabel(measurement.stackMeasurement.cycle)}
+                            {getCycleLabel(measurement.cycle)}
                           </span>
                         </td>
                         <td className="text-center px-6 py-2 whitespace-nowrap text-sm text-gray-900">
-                          {measurement.stackMeasurement.allowance
-                            ? `${measurement.stackMeasurement.allowance} ppm`
+                          {measurement.allowance
+                            ? `${measurement.allowance} ppm`
                             : '-'}
                         </td>
                         <td className="text-center px-6 py-2 whitespace-nowrap text-sm text-gray-600">
-                          {measurement.stackMeasurement.pollutant.method}
+                          {measurement.method}
                         </td>
                         <td className="text-center px-2 py-2 whitespace-nowrap">
                           <button
-                            onClick={() => handleDeleteMeasurement(measurement.id)}
+                            onClick={() => handleDeleteMeasurement(measurement.stackMeasurementId)}
                             className="text-red-600 hover:text-red-800 transition-colors p-1"
                             title="삭제"
                           >
@@ -209,7 +211,7 @@ export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
                 <input
                   type="date"
                   value={new Date(planForm.measureDate).toISOString().split('T')[0]}
-                  onChange={(e) => setPlanForm(prev => ({ ...prev, measureDate: new Date(e.target.value) }))}
+                  onChange={(e) => setPlanForm(prev => ({ ...prev, measureDate: e.target.value }))}
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
                 />
               ) : (
@@ -278,8 +280,8 @@ export const MeasurementInfoTab = ({ planDetail }: MeasurementInfoTabProps) => {
       {showAddModal && (
         <AddMeasurementModal
           planId={plan.id}
-          stackId={stack.stack.id}
-          existingMeasurementIds={measurements.map((m) => m.stackMeasurement.id)}
+          stackId={plan.stackId}
+          existingMeasurementIds={measurementInfo.preInfo.measurementItems.map((m) => m.stackMeasurementId)}
           onClose={() => setShowAddModal(false)}
           onSuccess={handleAddSuccess}
         />
