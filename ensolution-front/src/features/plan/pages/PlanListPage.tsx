@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { usePlans } from "@plan/hooks";
-import { PlanTable } from "@plan/components";
+import { PlanListTable } from "@plan/ui";
 
 import { Button, FullPageLoader } from "@shared/ui";
 
@@ -25,7 +25,7 @@ export const PlanListPage = () => {
       </div>
 
       {/* Plan Table */}
-      <PlanTable plans={plans} />
+      <PlanListTable plans={plans} />
     </div>
   );
 };

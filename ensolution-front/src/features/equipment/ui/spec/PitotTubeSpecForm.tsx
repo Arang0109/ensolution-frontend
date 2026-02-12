@@ -43,6 +43,8 @@ export const PitotTubeSpecForm = ({
         onChange={(value) => onSpecChange("pitotTubeType", value, "text")}
         disabled={isSubmitting}
         options={PITOT_TUBE_OPTIONS}
+        getOptionLabel={(v) => v.label}
+        getOptionValue={(v) => v.value}
       />
       <div>
         <div className="flex justify-between items-center p-3 rounded-lg">

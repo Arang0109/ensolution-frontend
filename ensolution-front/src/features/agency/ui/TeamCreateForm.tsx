@@ -130,6 +130,8 @@ export const TeamCreateForm = ({
             name="particleSamplerId"
             value={form.particleSamplerId}
             options={particleSamplerOptions}
+            getOptionLabel={(v) => v.label}
+            getOptionValue={(v) => v.value}
             onChange={(value) => onChange("particleSamplerId", value)}
           />
           <SelectField
@@ -138,6 +140,8 @@ export const TeamCreateForm = ({
             name="gasSamplerId"
             value={form.gasSamplerId}
             options={gasSamplerOptions}
+            getOptionLabel={(v) => v.label}
+            getOptionValue={(v) => v.value}
             onChange={(value) => onChange("gasSamplerId", value)}
           />
           <SelectField
@@ -146,6 +150,8 @@ export const TeamCreateForm = ({
             name="pitotTubeId"
             value={form.pitotTubeId}
             options={pitotTubeOptions}
+            getOptionLabel={(v) => v.label}
+            getOptionValue={(v) => v.value}
             onChange={(value) => onChange("pitotTubeId", value)}
           />
           <SelectField
@@ -154,6 +160,8 @@ export const TeamCreateForm = ({
             name="nozzleId"
             value={form.nozzleId}
             options={nozzleOptions}
+            getOptionLabel={(v) => v.label}
+            getOptionValue={(v) => v.value}
             onChange={(value) => onChange("nozzleId", value)}
           />
         </div>

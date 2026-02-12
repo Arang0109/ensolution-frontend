@@ -29,6 +29,7 @@ export interface PlanPollutantResponse {
 
 export interface PlanTableView {
   id: number;
+  measureField: string;
   measureDate: string;
   measurementType: string;
 

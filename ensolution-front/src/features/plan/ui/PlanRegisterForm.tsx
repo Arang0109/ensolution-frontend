@@ -1,11 +1,13 @@
 import { SampleInfoCard } from "@/features/plan/ui/SampleInfoCard";
-import { FacilityInfoCard } from "@plan/components/FacilityInfoCard";
-import { TeamEquipmentCard } from "@plan/components/TeamEquipmentCard";
+import { FacilityInfoCard, TeamEquipmentCard } from "@plan/components";
 
 import type { PlanFormData } from "@plan/model";
 import type { WorkplaceResponse } from "@workplace/model";
 import type { TeamResponse } from "@agency/model";
 import type { StackResponse, StackMeasurementResponse } from "@stack/model";
+
+import { Button } from "@shared/ui";
+import { usePreventSubmitOnEnter } from "@shared/hooks";
 
 interface PlanFormProps {
   form: PlanFormData;
@@ -43,15 +45,8 @@ export const PlanRegisterForm = ({
   availableMeasurements,
   loadingMeasurements,
 }: PlanFormProps) => {
-  // Prevent Enter key from submitting the form
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key === "Enter" && e.target instanceof HTMLInputElement && e.target.type !== "submit") {
-      e.preventDefault();
-    }
-  };
-
   return (
-    <form onSubmit={onSubmit} onKeyDown={handleKeyDown} className="space-y-6">
+    <form onSubmit={onSubmit} onKeyDown={usePreventSubmitOnEnter} className="space-y-6">
       {/* 2-column grid layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left column: 시료채취정보 + 출장인력 및 장비 */}
@@ -89,15 +84,14 @@ export const PlanRegisterForm = ({
         </div>
       </div>
 
-      {/* Submit button */}
       <div className="flex gap-3 pt-4">
-        <button
+        <Button
+          label={isSubmitting ? "등록 중..." : "측정일정 등록"}
           type="submit"
-          className="w-full px-6 py-3 bg-gradient-to-r from-neutral-800 to-neutral-900 text-white rounded-lg hover:from-neutral-900 hover:to-neutral-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          size="lg"
+          width="full"
           disabled={isSubmitting}
-        >
-          {isSubmitting ? '등록 중...' : '측정일정 등록'}
-        </button>
+        />
       </div>
     </form>
   );

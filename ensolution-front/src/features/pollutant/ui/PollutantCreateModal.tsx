@@ -10,7 +10,7 @@ export const PollutantCreateModal = ({
   onClose, onSuccess
 }: PollutantFormModalProps) => {
   return (
-    <Modal>
+    <Modal size="xl">
       <PollutantCreateForm onClose={onClose} onSuccess={onSuccess} />
     </Modal>
   );

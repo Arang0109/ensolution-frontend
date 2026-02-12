@@ -1,8 +1,8 @@
 import type { StackResponse, StackUpdateRequest } from '@stack/model';
 
 import { formatDateTime } from '@/shared/lib/formatter/dateFormatter';
-import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
-import { GRADE_LABELS } from "@shared/model";
+import { SHAPE_LABELS, SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
+import { GRADE_LABELS, GRADE_LABELS_OPTIONS } from "@shared/model";
 import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
 interface StackSidebarProps {
@@ -29,20 +29,6 @@ export const StackSidebar = ({
   editForm,
   onChange,
 }: StackSidebarProps) => {
-  const gradeOptions = Object.entries(GRADE_LABELS).map(([value, label]) => ({
-    value,
-    label,
-  }));
-
-  const shapeOptions = Object.entries(SHAPE_LABELS).map(([value, label]) => ({
-    value,
-    label,
-  }));
-
-  const orientationOptions = Object.entries(ORIENTATION_LABELS).map(([value, label]) => ({
-    value,
-    label,
-  }));
 
   // 원형일 경우 true
   const isCircular = isEditMode ? editForm.shape === 'CIRCULAR' : stack.shape === 'CIRCULAR';
@@ -77,7 +63,9 @@ export const StackSidebar = ({
                 name='grade'
                 value={editForm.grade}
                 onChange={(v) => onChange("grade", v)}
-                options={gradeOptions}
+                options={GRADE_LABELS_OPTIONS}
+                getOptionLabel={(g) => g.label}
+                getOptionValue={(g) => g.value}
               />
 
               {/* 높이 */}
@@ -93,7 +81,9 @@ export const StackSidebar = ({
                 name='shape'
                 value={editForm.shape}
                 onChange={(v) => onChange("shape", v)}
-                options={shapeOptions}
+                options={SHAPE_LABELS_OPTIONS}
+                getOptionLabel={(g) => g.label}
+                getOptionValue={(g) => g.value}
               />
 
               {/* 지름 또는 가로/세로 길이 */}
@@ -127,7 +117,9 @@ export const StackSidebar = ({
                 name='orientation'
                 value={editForm.orientation}
                 onChange={(v) => onChange("orientation", v)}
-                options={orientationOptions}
+                options={ORIENTATION_LABELS_OPTIONS}
+                getOptionLabel={(g) => g.label}
+                getOptionValue={(g) => g.value}
               />
 
               {/* 비고 */}

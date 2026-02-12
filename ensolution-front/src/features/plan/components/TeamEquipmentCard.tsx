@@ -1,6 +1,7 @@
-import { SearchableSelect } from "@plan/components/SearchableSelect";
 import type { PlanFormData } from "@plan/model";
 import type { TeamResponse } from "@/features/agency/model/agency-types";
+
+import { SelectField } from "@shared/ui";
 
 interface TeamEquipmentCardProps {
   form: PlanFormData;
@@ -25,18 +26,15 @@ export const TeamEquipmentCard = ({
       <h2 className="text-xl font-semibold mb-4 text-gray-900">출장인력 및 장비</h2>
       <div className="space-y-4">
         {/* 현장팀 선택 */}
-        <SearchableSelect
+        <SelectField
           id="teamId"
           label="현장팀"
-          placeholder="측정팀을 선택하세요"
           value={form.teamId}
           options={filteredTeams}
           getOptionLabel={(team) => team.name}
           getOptionValue={(team) => team.id}
           onChange={(value) => setFieldValue("teamId", value)}
           disabled={isSubmitting || loading}
-          loading={loading}
-          emptyMessage="측정팀이 없습니다"
           required
         />
 

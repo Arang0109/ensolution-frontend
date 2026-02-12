@@ -1,9 +1,9 @@
-import { SearchableSelect } from "@plan/components/SearchableSelect";
-import { MeasurementMultiSelect } from "@plan/components/MeasurementMultiSelect";
 import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
 import { GRADE_LABELS } from "@shared/model";
 import type { PlanFormData } from "@plan/model";
 import type { StackResponse, StackMeasurementResponse } from "@stack/model";
+
+import { SelectField, MultiSelectField } from "@shared/ui";
 
 interface FacilityInfoCardProps {
   form: PlanFormData;
@@ -34,22 +34,15 @@ export const FacilityInfoCard = ({
       <h2 className="text-xl font-semibold mb-4 text-gray-900">측정시설</h2>
       <div className="space-y-4">
         {/* 측정시설 (배출구 선택) */}
-        <SearchableSelect
+        <SelectField
           id="stackId"
           label="측정시설"
-          placeholder={
-            !form.workplaceId
-              ? "먼저 사업장을 선택하세요"
-              : "배출구를 선택하세요"
-          }
           value={form.stackId}
           options={filteredStacks}
           getOptionLabel={(stack) => `${stack.name} (${stack.semsNumber})`}
           getOptionValue={(stack) => stack.id}
           onChange={(value) => setFieldValue("stackId", value)}
           disabled={isSubmitting || !form.workplaceId || loadingStacks}
-          loading={loadingStacks}
-          emptyMessage="배출구가 없습니다"
           required
         />
 
@@ -110,22 +103,16 @@ export const FacilityInfoCard = ({
         )}
 
         {/* 측정항목 선택 (Multi-select) */}
-        <MeasurementMultiSelect
-          id="measurementIds"
+        <MultiSelectField
           label="측정항목"
-          placeholder={
-            !form.stackId
-              ? "먼저 배출구를 선택하세요"
-              : "측정항목을 선택하세요"
-          }
-          measurements={availableMeasurements}
-          selectedIds={form.measurementIds}
+          options={availableMeasurements}
+          value={form.measurementIds}   // ⭐ 반드시 필요
+          getOptionLabel={(p) => p.pollutant.nameKr}
+          getOptionValue={(p) => p.id}
           onChange={(selectedIds) => setFieldValue("measurementIds", selectedIds)}
           disabled={isSubmitting || !form.stackId || loadingMeasurements}
-          loading={loadingMeasurements}
-          emptyMessage="등록된 측정항목이 없습니다"
-          required
         />
+
       </div>
     </div>
   );

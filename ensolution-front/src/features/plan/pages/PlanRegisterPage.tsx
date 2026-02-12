@@ -5,6 +5,9 @@ import { PlanRegisterForm } from "@plan/ui";
 
 import { useToast } from "@app/providers/toast";
 
+import { Button } from "@shared/ui";
+import { ChevronLeft } from 'lucide-react';
+
 export const PlanRegisterPage = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -39,26 +42,14 @@ export const PlanRegisterPage = () => {
   return (
     <div className="px-6 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-              disabled={isSubmitting}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">측정일정 등록</h1>
-          </div>
-          <p className="text-gray-600 ml-9">새로운 측정일정을 등록합니다.</p>
+        <div className="mb-4">
+          <Button 
+            label="뒤로가기"
+            size="xl"
+            variant="ghost"
+            icon={<ChevronLeft />}
+            onClick={() => navigate(-1)}
+          />
         </div>
 
         {/* Form Card */}

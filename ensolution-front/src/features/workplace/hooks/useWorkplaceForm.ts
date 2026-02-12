@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import type { Grade } from "@/shared/model";
 import type { WorkplaceRegisterRequest } from "@workplace/model";
 import { registerWorkplace } from "@workplace/api/workplaceApi";
 import { formatBizNumber, stripBizNumber } from "@shared/lib";
@@ -12,7 +11,7 @@ export const useWorkplaceForm = (companyId: number) => {
     address: "",
     bizNumber: "",
     businessCategory: "",
-    grade: "" as Grade,
+    grade: null,
     remark: "",
   });
 

@@ -4,7 +4,7 @@ type ButtonVariant =
   | "danger"
   | "ghost";
 
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 type ButtonWidth = "auto" | "full";
 
@@ -49,6 +49,7 @@ export const Button = ({
     sm: "px-3 py-1.5 text-sm",
     md: "px-4 py-2 text-sm",
     lg: "px-6 py-3 text-lg",
+    xl: "px-7 py-3.5 text-xl",
   };
 
   const WIDTH_STYLES: Record<ButtonWidth, string> = {
@@ -62,7 +63,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={`
-        inline-flex items-center gap-2 rounded-md font-medium text-lg
+        inline-flex items-center gap-2 rounded-md font-medium
         transition-colors
         ${VARIANT_STYLES[variant]}
         ${SIZE_STYLES[size]}

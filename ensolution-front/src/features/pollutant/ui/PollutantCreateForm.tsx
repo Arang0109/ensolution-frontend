@@ -80,6 +80,8 @@ export const PollutantCreateForm = ({
             value,
             label,
           }))}
+          getOptionLabel={(v) => v.label}
+          getOptionValue={(v) => v.value}
         />
         <InputField
           label="시험기기"

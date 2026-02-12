@@ -1,7 +1,7 @@
 import { useStackForm } from "@stack/hooks";
-import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
+import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
 
-import { GRADE_LABELS } from "@shared/model";
+import { GRADE_LABELS_OPTIONS } from "@shared/model";
 import { IconButton, Button, InputField, SelectField, TextAreaField } from "@shared/ui";
 import { X } from "lucide-react";
 
@@ -66,10 +66,9 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             onChange={(v) => onChange("grade", v)}
             required
             disabled={isSubmitting}
-            options={Object.entries(GRADE_LABELS).map(([value, label]) => ({
-              value,
-              label,
-            }))}
+            options={GRADE_LABELS_OPTIONS}
+            getOptionLabel={(g) => g.label}
+            getOptionValue={(g) => g.value}
           />
           <InputField
             label="높이"
@@ -90,10 +89,9 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             onChange={(v) => onChange("shape", v)}
             required
             disabled={isSubmitting}
-            options={Object.entries(SHAPE_LABELS).map(([value, label]) => ({
-              value,
-              label,
-            }))}
+            options={SHAPE_LABELS_OPTIONS}
+            getOptionLabel={(g) => g.label}
+            getOptionValue={(g) => g.value}
           />
           <SelectField
             label="방향"
@@ -102,10 +100,9 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             onChange={(v) => onChange("orientation", v)}
             required
             disabled={isSubmitting}
-            options={Object.entries(ORIENTATION_LABELS).map(([value, label]) => ({
-              value,
-              label,
-            }))}
+            options={ORIENTATION_LABELS_OPTIONS}
+            getOptionLabel={(g) => g.label}
+            getOptionValue={(g) => g.value}
           />
         </div>
 

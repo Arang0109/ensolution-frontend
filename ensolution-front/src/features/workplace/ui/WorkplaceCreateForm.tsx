@@ -2,7 +2,7 @@ import { useToast } from "@app/providers/toast";
 
 import { useWorkplaceForm } from "@workplace/hooks";
 
-import { GRADE_LABELS } from "@shared/model";
+import { GRADE_LABELS_OPTIONS } from "@shared/model";
 import { IconButton, Button, InputField, SelectField, TextAreaField } from "@shared/ui";
 import { X } from "lucide-react";
 
@@ -82,10 +82,9 @@ export const WorkplaceCreateForm = ({ onClose, onSuccess, companyId }: Workplace
           onChange={(v) => onChange("grade", v)}
           required
           disabled={isSubmitting}
-          options={Object.entries(GRADE_LABELS).map(([value, label]) => ({
-            value,
-            label,
-          }))}
+          options={GRADE_LABELS_OPTIONS}
+          getOptionLabel={(o) => o.label}
+          getOptionValue={(o) => o.value}
         />
         <TextAreaField
           label="비고"

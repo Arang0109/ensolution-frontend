@@ -10,7 +10,7 @@ import { CYCLE_LABELS } from "@stack/model";
 import { X, Trash2 } from "lucide-react";
 
 import { IconButton, Button, InlineAddButton } from "@shared/ui/buttons";
-import { SearchableSelect, SelectField, InputField } from "@shared/ui";
+import { SelectField, InputField } from "@shared/ui";
 
 interface MeasurementCreateModalProps {
   stackId: number;
@@ -31,7 +31,6 @@ export const MeasurementCreateModal = ({
   onSuccess,
 }: MeasurementCreateModalProps) => {
   const [pollutants, setPollutants] = useState<PollutantResponse[]>([]);
-  const [loadingPollutants, setLoadingPollutants] = useState(true);
 
   const [measurements, setMeasurements] = useState<MeasurementItem[]>([
     { id: crypto.randomUUID(), pollutantId: null, cycle: "MONTHLY_1", allowance: "" },
@@ -50,9 +49,7 @@ export const MeasurementCreateModal = ({
       } catch (e) {
         console.error(e);
         alert("측정물질 목록을 불러오는데 실패했습니다.");
-      } finally {
-        setLoadingPollutants(false);
-      }
+      } 
     };
 
     fetchPollutants();
@@ -171,16 +168,13 @@ export const MeasurementCreateModal = ({
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* 측정물질 선택 */}
-                <SearchableSelect<PollutantResponse, number>
+                <SelectField
                   id={`pollutant-${measurement.id}`}
                   label="측정물질"
-                  placeholder="측정물질 검색..."
                   required
                   value={measurement.pollutantId}
                   options={pollutants}
-                  loading={loadingPollutants}
                   disabled={isSubmitting}
-                  emptyMessage="검색 결과가 없습니다."
                   getOptionLabel={(p) =>
                     `${p.nameKr}${p.nameEn ? ` (${p.nameEn})` : ""}`
                   }
@@ -191,16 +185,17 @@ export const MeasurementCreateModal = ({
                 />
 
                 {/* 측정 주기 */}
-                <SelectField<Cycle>
+                <SelectField
                   id={`cycle-${measurement.id}`}
                   label="측정 주기"
                   required
                   value={measurement.cycle}
                   disabled={isSubmitting}
-                  options={cycleOptions.map((c) => ({
-                    value: c,
-                    label: CYCLE_LABELS[c],
-                  }))}
+                  options={cycleOptions}
+
+                  getOptionLabel={(c) => CYCLE_LABELS[c]}
+                  getOptionValue={(c) => c}
+                  
                   onChange={(value) =>
                     updateMeasurement(measurement.id, "cycle", value)
                   }

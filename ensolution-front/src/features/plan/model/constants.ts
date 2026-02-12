@@ -21,3 +21,10 @@ export const MEASUREMENT_FIELD_OPTIONS = Object.entries(MEASUREMENT_FIELDS).map(
     value: key,
   })
 );
+
+export const MEASUREMENT_TYPES_OPTIONS = Object.entries(MEASUREMENT_TYPES).map(
+  ([key, value]) => ({
+    label: value,
+    value: key,
+  })
+);

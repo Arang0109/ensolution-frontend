@@ -1,6 +1,6 @@
 import type { WorkplaceResponse, WorkplaceUpdateRequest } from '@workplace/model';
 
-import { GRADE_LABELS } from '@shared/model';
+import { GRADE_LABELS_OPTIONS, GRADE_LABELS } from '@shared/model';
 import { formatBizNumber, formatDate } from '@shared/lib';
 import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
@@ -20,10 +20,6 @@ export const WorkplaceDetailCard = ({
   editForm,
   onChange,
 }: WorkplaceDetailCardProps) => {
-  const gradeOptions = Object.entries(GRADE_LABELS).map(([value, label]) => ({
-    value,
-    label,
-  }));
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
@@ -67,7 +63,9 @@ export const WorkplaceDetailCard = ({
                 name='grade'
                 value={editForm.grade}
                 onChange={(v) => onChange("grade", v)}
-                options={gradeOptions}
+                options={GRADE_LABELS_OPTIONS}
+                getOptionValue={(g) => g.value}
+                getOptionLabel={(g) => g.label}
               />
             </div>
 

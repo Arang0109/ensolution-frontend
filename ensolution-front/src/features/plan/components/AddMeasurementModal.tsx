@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { getStackMeasurementsByStack } from "@stack/api/stackApi";
 import { registerMeasurements } from "@plan/api/planApi";
-import { MeasurementMultiSelect } from "./MeasurementMultiSelect";
 import type { StackMeasurementResponse } from "@stack/model";
 import type { PlanPollutant } from "@plan/model";
+
+import { MultiSelectField } from "@shared/ui";
 
 interface AddMeasurementModalProps {
   planId: number;
@@ -83,16 +84,16 @@ export const AddMeasurementModal = ({
 
         {/* Content */}
         <div className="px-6 py-4">
-          <MeasurementMultiSelect
-            id="add-measurements"
+          <MultiSelectField
             label="측정항목"
-            placeholder="측정항목을 선택하세요"
-            measurements={availableMeasurements}
-            selectedIds={selectedIds}
+            options={availableMeasurements}
+            value={selectedIds}
+
+            getOptionLabel={(v) => v.pollutant.nameKr}
+            getOptionValue={(v) => v.id}
+
             onChange={setSelectedIds}
-            loading={fetchingMeasurements}
-            emptyMessage="추가 가능한 측정항목이 없습니다"
-            required
+            disabled={fetchingMeasurements || loading}
           />
 
           {availableMeasurements.length === 0 && !fetchingMeasurements && (
