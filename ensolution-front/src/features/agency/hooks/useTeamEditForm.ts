@@ -13,6 +13,8 @@ export const useTeamEditForm = (team: TeamResponse | null) => {
       setForm({
         name: team.name,
         vehicleNumber: team.vehicleNumber,
+        mentor: team.mentor,
+        mentee: team.mentee,
         particleSamplerId: team.particleSamplerId,
         gasSamplerId: team.gasSamplerId,
         pitotTubeId: team.pitotTubeId,

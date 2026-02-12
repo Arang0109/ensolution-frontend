@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { UserResponse } from "@auth/model";
 import type { TeamResponse } from "@agency/model";
 
-import { Button, InputField, SelectField } from "@shared/ui";
+import { Button, InputField } from "@shared/ui";
 
 interface ProfileFormProps {
   form: UserResponse;
@@ -19,28 +19,11 @@ interface ProfileFormProps {
 
 export const ProfileForm = ({
   form,
-  teams,
   isSubmitting,
   onChange,
-  onTeamChange,
   onSubmit
 }: ProfileFormProps) => {
   const [showPasswordChange, setShowPasswordChange] = useState(false);
-
-  type TeamOption = {
-    value: number;
-    label: string;
-  };
-
-  const teamOptions: TeamOption[] = teams.map(({id, name}) => ({
-    value: id,
-    label: name
-  }));
-
-  // 선택된 값 찾기
-  const selectedTeam = teamOptions.find(
-    (option) => option.value === Number(form.teamId)
-  );
 
   return (
     <>
@@ -103,16 +86,6 @@ export const ProfileForm = ({
             onChange={(value) => onChange("grade", value)}
             required
           />
-
-          <div className="md:col-span-2">
-            <SelectField
-              id="teamId"
-              label="팀"
-              value={selectedTeam?.value ?? ""}
-              onChange={(value) => value && onTeamChange(Number(value))}
-              options={teamOptions}
-            />
-          </div>
         </div>
 
         {/* 버튼 */}

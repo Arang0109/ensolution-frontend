@@ -8,6 +8,8 @@ const getDefaultForm = (): TeamRegisterRequest => ({
   name: "",
   vehicleNumber: "",
   particleSamplerId: "",
+  mentor: "",
+  mentee: "",
   gasSamplerId: "",
   pitotTubeId: "",
   nozzleId: "",

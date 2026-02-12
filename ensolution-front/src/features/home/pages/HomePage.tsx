@@ -53,7 +53,7 @@ export const HomePage = () => {
         />
         <CardItem
           title="측정일정"
-          path="/company"
+          path="/plan"
           icon={<AiOutlineCalendar />}
         />
         <CardItem
