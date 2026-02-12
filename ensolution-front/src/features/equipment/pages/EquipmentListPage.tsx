@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 
-import { Button } from '@shared/ui';
-import { Tabs } from '@/shared/ui/navigation';
+import { Button, Tabs } from '@shared/ui';
 import { useEquipments } from '@equipment/hooks/useEquipments';
 import { EquipmentCreateModal, EquipmentEditModal, EquipmentTable } from '@equipment/ui';
 import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from '@equipment/model';

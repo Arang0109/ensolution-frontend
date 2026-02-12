@@ -7,7 +7,7 @@ interface NozzleSpecFormProps {
   spec: NozzleSpec;
   isSubmitting: boolean;
   addNozzleDiameter: () => void;
-  updateNozzleDiameter: (idx: number, value: number) => void;
+  updateNozzleDiameter: (idx: number, value: string) => void;
   removeNozzleDiameter: (idx: number) => void;
 }
 
@@ -33,16 +33,16 @@ export const NozzleSpecForm = ({
             size="sm"
           />
         </div>
-        {spec?.nozzleDiameters && spec.nozzleDiameters.length > 0 ? (
+        {spec?.diameters && spec.diameters.length > 0 ? (
           <div className="grid grid-cols-3 gap-2">
-            {spec.nozzleDiameters.map((nozzle, idx) => (
+            {spec.diameters.map((nozzle, idx) => (
               <div key={idx} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
                 <div className="flex-1">
                   <InputField
                     label="직경"
                     type="number"
                     value={nozzle.diameter}
-                    onChange={(value) => updateNozzleDiameter(idx, Number(value))}
+                    onChange={(value) => updateNozzleDiameter(idx, value)}
                     placeholder="직경"
                     disabled={isSubmitting}
                     min={0.000}

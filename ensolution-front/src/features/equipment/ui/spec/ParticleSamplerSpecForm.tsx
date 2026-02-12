@@ -29,7 +29,7 @@ export const ParticleSamplerSpecForm = ({
         type="number"
         name="totalVolume"
         value={spec.totalVolume}
-        onChange={() => onSpecChange}
+        onChange={(value) => onSpecChange("totalVolume", String(value), "number")}
         disabled={isSubmitting}
       />
       <div className="grid grid-cols-2 gap-4">
@@ -38,7 +38,7 @@ export const ParticleSamplerSpecForm = ({
           type="number"
           name="orificeDp"
           value={spec.orificeDp}
-          onChange={() => onSpecChange}
+          onChange={(value) => onSpecChange("orificeDp", String(value), "number")}
           disabled={isSubmitting}
         />
         <InputField
@@ -46,7 +46,7 @@ export const ParticleSamplerSpecForm = ({
           type="number"
           name="yd"
           value={spec.yd}
-          onChange={() => onSpecChange}
+          onChange={(value) => onSpecChange("yd", String(value), "number")}
           disabled={isSubmitting}
         />
       </div>

@@ -39,7 +39,9 @@ export const EquipmentCreateForm = ({
   } = useEquipmentForm();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const result = await onSubmit(e);
+    e.preventDefault();
+    
+    const result = await onSubmit();
 
     if (result?.success) {
       showToast('측정장비가 등록되었습니다.','success');
@@ -48,6 +50,12 @@ export const EquipmentCreateForm = ({
     } else {
       showToast(result?.message ?? '측정장비 등록 중 오류가 발생했습니다.','error');
     }
+  };
+
+  const preventEnterSubmit = (
+    e: React.KeyboardEvent
+  ) => {
+    if (e.key === "Enter") e.preventDefault();
   };
 
   const renderSpecFields = () => {
@@ -115,7 +123,7 @@ export const EquipmentCreateForm = ({
         />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" onKeyDown={preventEnterSubmit}>
         {/* 장비 타입 선택 */}
         <SelectField
           id="type"

@@ -22,13 +22,13 @@ export const GasSamplerSpecForm = ({
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-gray-700 border-b pb-2">
         가스상 시료채취장비 스펙</h3>
-      
+
       <InputField
         label="적산량 (m³)"
         type="number"
         name="totalVolume"
         value={spec.totalVolume}
-        onChange={() => onSpecChange}
+        onChange={(value) => onSpecChange("totalVolume", String(value), "number")}
         disabled={isSubmitting}
       />
     </div>

@@ -39,7 +39,7 @@
       "@workplace/*": ["./src/features/workplace/*"],
       "@stack/*": ["./src/features/stack/*"],
       "@pollutant/*": ["./src/features/pollutant/*"],
-      "@schedule/*": ["./src/features/schedule/*"],
+      "@plan/*": ["./src/features/plan/*"],
       "@equipment/*": ["./src/features/equipment/*"],
     }
   },
