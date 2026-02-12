@@ -5,14 +5,21 @@ import { EquipType } from "@equipment/model";
 
 import type { FieldType } from "@shared/model";
 
-import { type EquipmentResponse, type EquipmentUpdateRequest, type EquipmentSpecMap, type PitotTubeSpec, type NozzleSpec } from "@equipment/model";
+import type { EquipmentResponse, EquipmentUpdateRequest, EquipmentSpecMap, PitotTubeSpec, NozzleSpec } from "@equipment/model";
 
-type EquipTypeKey = keyof typeof EquipType;
-
-const getEquipTypeKey = (type: string): EquipTypeKey => {
-  return Object.keys(EquipType).find(
-    key => EquipType[key as EquipTypeKey] === type
-  ) as EquipTypeKey;
+const getDefaultSpec = (type: EquipType): EquipmentSpecMap[EquipType] => {
+  switch (type) {
+    case EquipType.PARTICLE_SAMPLER:
+      return { totalVolume: 0, orificeDp: 0, yd: 0 };
+    case EquipType.GAS_SAMPLER:
+      return { totalVolume: 0 };
+    case EquipType.PITOT_TUBE:
+      return { pitotTubeType: "" as never, coefficients: [] };
+    case EquipType.NOZZLE:
+      return { nozzleDiameters: [] };
+    default:
+      return {};
+  }
 };
 
 export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
@@ -45,7 +52,7 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     type: FieldType
   ) => {
     if (name === "type") {
-      const equipType = value as EquipTypeKey;
+      const equipType = value as EquipType;
       setForm(prev => prev ? ({
         ...prev,
         type: equipType,
@@ -79,7 +86,7 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     setForm(prev => prev ? ({
       ...prev,
       spec: {
-        ...prev.spec as Record<string, unknown>,
+        ...(prev.spec as Record<string, unknown>),
         [name]: parsedValue,
       },
     }) : null);
@@ -100,7 +107,7 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     });
   };
 
-  const updateCoefficient = (index: number, field: 'coefficient' | 'velocity', value: number) => {
+  const updateCoefficient = (index: number, field: 'coefficient' | 'velocity', value: string) => {
     setForm(prev => {
       if (!prev) return null;
       const spec = prev.spec as PitotTubeSpec;
@@ -141,23 +148,23 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
         ...prev,
         spec: {
           ...spec,
-          nozzleDiameters: [...(spec.nozzleDiameters || []), { diameter: 0 }],
+          diameters: [...(spec.diameters || []), { diameter: 0 }],
         },
       };
     });
   };
 
-  const updateNozzleDiameter = (index: number, value: number) => {
+  const updateNozzleDiameter = (index: number, value: string) => {
     setForm(prev => {
       if (!prev) return null;
       const spec = prev.spec as NozzleSpec;
-      const newDiameters = [...(spec.nozzleDiameters || [])];
+      const newDiameters = [...(spec.diameters || [])];
       newDiameters[index] = { diameter: value };
       return {
         ...prev,
         spec: {
           ...spec,
-          nozzleDiameters: newDiameters,
+          diameters: newDiameters,
         },
       };
     });
@@ -167,21 +174,22 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     setForm(prev => {
       if (!prev) return null;
       const spec = prev.spec as NozzleSpec;
-      const newDiameters = [...(spec.nozzleDiameters || [])];
+      const newDiameters = [...(spec.diameters || [])];
       newDiameters.splice(index, 1);
       return {
         ...prev,
         spec: {
           ...spec,
-          nozzleDiameters: newDiameters,
+          diameters: newDiameters,
         },
       };
     });
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     if (!equipment || !form) return { success: false, message: "장비 정보가 없습니다." };
+
+    console.log(form.spec);
 
     setIsSubmitting(true);
 
@@ -201,7 +209,6 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     onChange,
     onSpecChange,
     onSubmit,
-    getEquipTypeKey,
     // PitotTube
     addCoefficient,
     updateCoefficient,
@@ -211,19 +218,4 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
     updateNozzleDiameter,
     removeNozzleDiameter,
   };
-};
-
-const getDefaultSpec = (type: EquipTypeKey): EquipmentSpecMap[typeof EquipType[EquipTypeKey]] => {
-  switch (type) {
-    case "PARTICLE_SAMPLER":
-      return { totalVolume: 0, orificeDp: 0, yd: 0 };
-    case "GAS_SAMPLER":
-      return { totalVolume: 0 };
-    case "PITOT_TUBE":
-      return { type: "", coefficients: [] };
-    case "NOZZLE":
-      return { nozzleDiameters: [] };
-    default:
-      return {};
-  }
 };

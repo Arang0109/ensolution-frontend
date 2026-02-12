@@ -1,13 +1,8 @@
 import type { EquipType, PitotTubeType } from "./equipment-constants";
 
-export interface EquipmentRegisterResponse {
-  equipmentId: string;
-}
-
-export interface EquipmentResponse<TSpec = unknown> {
+export interface EquipmentResponse<T extends EquipType = EquipType> {
+  type: T,
   id: string;
-
-  type: EquipType;
 
   managementNumber: string;
   serialNumber: string;
@@ -15,20 +10,20 @@ export interface EquipmentResponse<TSpec = unknown> {
   equipmentName: string;
   alias: string;
 
-  price: number;          // BigDecimal → number
+  price: number;
   manufacturer: string;
   originCountry: string;
-  purchaseDate: string;   // LocalDate → ISO 문자열 (yyyy-MM-dd)
+  purchaseDate: string;
   remark: string;
 
   calibrationCycle: number;
   lastCalibrationDate: string;
 
-  spec: TSpec;
+  spec: EquipmentSpecMap[T];
 }
 
-export interface EquipmentRegisterRequest<TSpec = unknown> {
-  type: EquipType;
+export interface EquipmentRegisterRequest<T extends EquipType = EquipType> {
+  type: T,
 
   managementNumber: string;
   serialNumber: string;
@@ -36,19 +31,19 @@ export interface EquipmentRegisterRequest<TSpec = unknown> {
   equipmentName: string;
   alias: string;
 
-  price: number;          // BigDecimal → number
+  price: number;
   manufacturer: string;
   originCountry: string;
-  purchaseDate: string;   // LocalDate → ISO 문자열 (yyyy-MM-dd)
+  purchaseDate: string;
   remark: string;
 
   calibrationCycle: number;
 
-  spec: TSpec;
+  spec: EquipmentSpecMap[T];
 }
 
-export interface EquipmentUpdateRequest<TSpec = unknown> {
-  type: EquipType;
+export interface EquipmentUpdateRequest<T extends EquipType = EquipType> {
+  type: T,
 
   managementNumber: string;
   serialNumber: string;
@@ -56,15 +51,15 @@ export interface EquipmentUpdateRequest<TSpec = unknown> {
   equipmentName: string;
   alias: string;
 
-  price: number;          // BigDecimal → number
+  price: number;
   manufacturer: string;
   originCountry: string;
-  purchaseDate: string;   // LocalDate → ISO 문자열 (yyyy-MM-dd)
+  purchaseDate: string;
   remark: string;
 
   calibrationCycle: number;
 
-  spec: TSpec;
+  spec: EquipmentSpecMap[T];
 }
 
 export interface ParticleSamplerSpec {
@@ -78,15 +73,15 @@ export interface GasSamplerSpec {
 }
 
 export interface PitotTubeSpec {
-  type: PitotTubeType;
+  pitotTubeType: PitotTubeType;
   coefficients: {
-    coefficient: number;
-    velocity: number;
+    coefficient: string;
+    velocity: string;
   }[];
 }
 export interface NozzleSpec {
-  nozzleDiameters: {
-    diameter: number
+  diameters: {
+    diameter: string
   }[];
 }
 
@@ -95,14 +90,9 @@ export type EquipmentSpecMap = {
   [EquipType.GAS_SAMPLER]: GasSamplerSpec;
   [EquipType.PITOT_TUBE]: PitotTubeSpec;
   [EquipType.NOZZLE]: NozzleSpec;
-  [EquipType.OTHER]: unknown;
+  [EquipType.OTHER]: Record<string, unknown>;
 };
 
-export type TypedEquipmentResponse<T extends keyof EquipmentSpecMap> =
-  EquipmentResponse<EquipmentSpecMap[T]> & { type: T };
-
-export type TypedEquipmentRegisterRequest<T extends keyof EquipmentSpecMap> =
-  EquipmentRegisterRequest<EquipmentSpecMap[T]> & { type: T };
-
-export type TypedEquipmentUpdateRequest<T extends keyof EquipmentSpecMap> =
-  EquipmentUpdateRequest<EquipmentSpecMap[T]> & { type: T };
+export type TypedEquipmentResponse = {
+  [K in EquipType]: EquipmentResponse<K>
+}[EquipType];

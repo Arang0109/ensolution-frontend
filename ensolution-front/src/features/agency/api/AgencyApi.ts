@@ -2,7 +2,7 @@ import { axiosPrivate } from "@/shared/api";
 
 import type { ApiResponseMessage } from "@/shared/model";
 import type {
-  TeamResponse, TeamDetailResponse, TeamRegisterRequest, TeamUpdateRequest
+  TeamResponse, TeamRegisterRequest, TeamUpdateRequest
 } from "@/features/agency/model/agency-types";
 
 /////
@@ -21,7 +21,7 @@ export const getTeams = async (): Promise<ApiResponseMessage<TeamResponse[]>> =>
 
 export const getTeam = async (
   teamId: number
-): Promise<ApiResponseMessage<TeamDetailResponse>> => {
+): Promise<ApiResponseMessage<TeamResponse>> => {
   const res = await axiosPrivate.get(`/teams/${teamId}`);
   return res.data;
 }

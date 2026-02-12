@@ -12,6 +12,6 @@ export type Orientation = 'VERTICAL' | 'HORIZONTAL';
 
 export type Cycle = 'MONTHLY_1' | 'MONTHLY_2' | 'BIMONTHLY' | 'QUARTERLY' | 'SEMI_ANNUAL' | 'ANNUAL';
 
-export type ScheduleStatus = 'MEASURING' | 'ANALYZING' | 'COMPLETED' | 'CANCELED';
+export type PlanStatus = 'MEASURING' | 'ANALYZING' | 'COMPLETED' | 'CANCELED';
 
 export type Team = 1 | 2 | 3 | 4;

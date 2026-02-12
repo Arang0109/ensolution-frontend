@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToast } from "@app/providers/toast";
 
-import type { Grade, Orientation, Shape } from "@/shared/model";
+import type { Grade, Orientation, Shape } from "@shared/model";
 import type { StackRegisterRequest } from "@stack/model";
 import { registerStack } from "@stack/api/stackApi";
 

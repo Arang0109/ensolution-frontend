@@ -7,17 +7,15 @@ import type { FieldType } from "@shared/model";
 
 import type { EquipmentRegisterRequest, EquipmentSpecMap, PitotTubeSpec, NozzleSpec } from "@equipment/model";
 
-type EquipTypeKey = keyof typeof EquipType;
-
-const getDefaultSpec = (type: EquipTypeKey): EquipmentSpecMap[typeof EquipType[EquipTypeKey]] => {
+const getDefaultSpec = (type: EquipType): EquipmentSpecMap[EquipType] => {
   switch (type) {
-    case "PARTICLE_SAMPLER":
+    case EquipType.PARTICLE_SAMPLER:
       return { totalVolume: 0, orificeDp: 0, yd: 0 };
-    case "GAS_SAMPLER":
+    case EquipType.GAS_SAMPLER:
       return { totalVolume: 0 };
-    case "PITOT_TUBE":
-      return { type: "", coefficients: [] };
-    case "NOZZLE":
+    case EquipType.PITOT_TUBE:
+      return { pitotTubeType: "" as never, coefficients: [] };
+    case EquipType.NOZZLE:
       return { nozzleDiameters: [] };
     default:
       return {};
@@ -37,7 +35,7 @@ const getDefaultForm = (): EquipmentRegisterRequest => ({
   purchaseDate: new Date().toISOString().split("T")[0],
   remark: "",
   calibrationCycle: 12,
-  spec: getDefaultSpec("PARTICLE_SAMPLER"),
+  spec: getDefaultSpec(EquipType.PARTICLE_SAMPLER),
 });
 
 export const useEquipmentForm = () => {
@@ -50,7 +48,7 @@ export const useEquipmentForm = () => {
     type: FieldType
   ) => {
     if (name === "type") {
-      const equipType = value as EquipTypeKey;
+      const equipType = value as EquipType;
       setForm(prev => ({
         ...prev,
         type: equipType,
@@ -104,7 +102,7 @@ export const useEquipmentForm = () => {
     });
   };
 
-  const updateCoefficient = (index: number, field: 'coefficient' | 'velocity', value: number) => {
+  const updateCoefficient = (index: number, field: 'coefficient' | 'velocity', value: string) => {
     setForm(prev => {
       const spec = prev.spec as PitotTubeSpec;
       const newCoefficients = [...(spec.coefficients || [])];
@@ -142,22 +140,22 @@ export const useEquipmentForm = () => {
         ...prev,
         spec: {
           ...spec,
-          nozzleDiameters: [...(spec.nozzleDiameters || []), { diameter: 0 }],
+          diameters: [...(spec.diameters || []), { diameter: 0 }],
         },
       };
     });
   };
 
-  const updateNozzleDiameter = (index: number, value: number) => {
+  const updateNozzleDiameter = (index: number, value: string) => {
     setForm(prev => {
       const spec = prev.spec as NozzleSpec;
-      const newDiameters = [...(spec.nozzleDiameters || [])];
+      const newDiameters = [...(spec.diameters || [])];
       newDiameters[index] = { diameter: value };
       return {
         ...prev,
         spec: {
           ...spec,
-          nozzleDiameters: newDiameters,
+          diameters: newDiameters,
         },
       };
     });
@@ -166,20 +164,19 @@ export const useEquipmentForm = () => {
   const removeNozzleDiameter = (index: number) => {
     setForm(prev => {
       const spec = prev.spec as NozzleSpec;
-      const newDiameters = [...(spec.nozzleDiameters || [])];
+      const newDiameters = [...(spec.diameters || [])];
       newDiameters.splice(index, 1);
       return {
         ...prev,
         spec: {
           ...spec,
-          nozzleDiameters: newDiameters,
+          diameters: newDiameters,
         },
       };
     });
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     setIsSubmitting(true);
 
     try {

@@ -3,10 +3,10 @@ import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@app/providers/toast";
 import { getEquipments } from "@equipment/api/EquipmentApi";
 
-import type { EquipmentResponse } from "@equipment/model";
+import type { TypedEquipmentResponse } from "@equipment/model";
 
 export const useEquipments = () => {
-  const [equipments, setEquipments] = useState<EquipmentResponse[]>([]);
+  const [equipments, setEquipments] = useState<TypedEquipmentResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
 

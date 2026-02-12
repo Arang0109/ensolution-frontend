@@ -70,7 +70,7 @@ export const MainLayout = () => {
                 <Dropdown
                   label="일정"
                   items={[
-                    { label: '측정일정', path: '/schedule' },
+                    { label: '측정일정', path: '/plan' },
                   ]}
                 />
                 <Link

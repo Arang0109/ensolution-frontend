@@ -17,7 +17,7 @@ interface PitotTubeSpecFormProps {
   updateCoefficient: (
     idx: number,
     field: 'coefficient' | 'velocity',
-    value: number
+    value: string
   ) => void;
   removeCoefficient: (idx: number) => void;
 }
@@ -35,15 +35,15 @@ export const PitotTubeSpecForm = ({
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-gray-700 border-b pb-2">
         피토우관 스펙</h3>
-      <SelectField 
-        id="type"
+      <SelectField
+        id="pitotTubeType"
         label="피토우관타입"
-        name="type"
-        value={spec.type}
-        onChange={(value) => onSpecChange("type", value, "text")}
+        name="pitotTubeType"
+        value={spec.pitotTubeType}
+        onChange={(value) => onSpecChange("pitotTubeType", value, "text")}
         disabled={isSubmitting}
         options={PITOT_TUBE_OPTIONS}
-      /> 
+      />
       <div>
         <div className="flex justify-between items-center p-3 rounded-lg">
           <label className="block text-sm font-medium text-gray-700">
@@ -64,14 +64,14 @@ export const PitotTubeSpecForm = ({
                   label="속도 (m/s)"
                   name="number"
                   value={coef.velocity}
-                  onChange={(value) => updateCoefficient(idx, 'velocity', Number(value))}
+                  onChange={(value) => updateCoefficient(idx, 'velocity', value)}
                   disabled={isSubmitting}
                 />
                 <InputField
                   label="피토우관 계수"
                   name="number"
                   value={coef.coefficient}
-                  onChange={(value) => updateCoefficient(idx, 'coefficient', Number(value))}
+                  onChange={(value) => updateCoefficient(idx, 'coefficient', value)}
                   disabled={isSubmitting}
                   min={0.000}
                   step={0.001}

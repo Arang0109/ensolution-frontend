@@ -1,4 +1,5 @@
-import { EquipType } from "@equipment/model";
+import type { EquipType, ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from "@equipment/model";
+import { EquipType as EquipTypeConst } from "@equipment/model";
 import {
   ParticleSamplerSpecForm,
   GasSamplerSpecForm,
@@ -6,14 +7,14 @@ import {
   PitotTubeSpecForm
 } from "@equipment/ui";
 
+import type { FieldType } from "@shared/model";
+
 interface EquipmentSpecFieldsProps {
   type: EquipType;
   spec: unknown;
   isSubmitting: boolean;
 
-  onSpecChange: React.ChangeEventHandler<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >;
+  onSpecChange: (name: string, value: string, type: FieldType) => void;
   addCoefficient: () => void;
   updateCoefficient: (idx: number, key: 'velocity' | 'coefficient', value: number) => void;
   removeCoefficient: (idx: number) => void;
@@ -25,17 +26,46 @@ interface EquipmentSpecFieldsProps {
 
 export const EquipmentSpecFields = (props: EquipmentSpecFieldsProps) => {
   switch (props.type) {
-    case EquipType.PARTICLE_SAMPLER:
-      return <ParticleSamplerSpecForm {...props} />;
+    case EquipTypeConst.PARTICLE_SAMPLER:
+      return (
+        <ParticleSamplerSpecForm
+          spec={props.spec as ParticleSamplerSpec}
+          isSubmitting={props.isSubmitting}
+          onSpecChange={props.onSpecChange}
+        />
+      );
 
-    case EquipType.GAS_SAMPLER:
-      return <GasSamplerSpecForm {...props} />;
+    case EquipTypeConst.GAS_SAMPLER:
+      return (
+        <GasSamplerSpecForm
+          spec={props.spec as GasSamplerSpec}
+          isSubmitting={props.isSubmitting}
+          onSpecChange={props.onSpecChange}
+        />
+      );
 
-    case EquipType.PITOT_TUBE:
-      return <PitotTubeSpecForm {...props} />;
+    case EquipTypeConst.PITOT_TUBE:
+      return (
+        <PitotTubeSpecForm
+          spec={props.spec as PitotTubeSpec}
+          isSubmitting={props.isSubmitting}
+          onSpecChange={props.onSpecChange}
+          addCoefficient={props.addCoefficient}
+          updateCoefficient={props.updateCoefficient}
+          removeCoefficient={props.removeCoefficient}
+        />
+      );
 
-    case EquipType.NOZZLE:
-      return <NozzleSpecForm {...props} />;
+    case EquipTypeConst.NOZZLE:
+      return (
+        <NozzleSpecForm
+          spec={props.spec as NozzleSpec}
+          isSubmitting={props.isSubmitting}
+          addNozzleDiameter={props.addNozzleDiameter}
+          updateNozzleDiameter={props.updateNozzleDiameter}
+          removeNozzleDiameter={props.removeNozzleDiameter}
+        />
+      );
 
     default:
       return null;

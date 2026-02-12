@@ -104,6 +104,22 @@ export const TeamCreateForm = ({
           disabled={isSubmitting}
           required
         />
+        <InputField
+          label='사수'
+          name="mentor"
+          value={form.mentor}
+          onChange={(value) => onChange("mentor", value)}
+          disabled={isSubmitting}
+          required
+        />
+        <InputField
+          label='부사수'
+          name="mentee"
+          value={form.mentee}
+          onChange={(value) => onChange("mentee", value)}
+          disabled={isSubmitting}
+          required
+        />
 
         {/* 장비 선택 섹션 */}
         <div className="space-y-4 pt-4 border-t">

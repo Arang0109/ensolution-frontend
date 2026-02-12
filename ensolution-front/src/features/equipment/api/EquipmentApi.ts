@@ -2,51 +2,34 @@ import { axiosPrivate } from "@shared/api";
 
 import type { ApiResponseMessage } from "@shared/model";
 import type {
+  EquipmentRegisterRequest,
   EquipmentResponse,
   TypedEquipmentResponse,
-  TypedEquipmentRegisterRequest,
-  TypedEquipmentUpdateRequest,
+  EquipmentUpdateRequest,
   EquipmentSpecMap,
   EquipType
 } from "@equipment/model";
 
 export const registerEquipment = async <T extends keyof EquipmentSpecMap>(
-  data: TypedEquipmentRegisterRequest<T>
-): Promise<ApiResponseMessage<TypedEquipmentResponse<T>>> => {
+  data: EquipmentRegisterRequest<T>
+): Promise<ApiResponseMessage<EquipmentResponse<T>>> => {
   const res = await axiosPrivate.post("/equipments", data);
   return res.data;
 };
 
-export const getEquipments = async ():Promise<ApiResponseMessage<EquipmentResponse[]>> => {
-  const res = await axiosPrivate.get("/equipments");
+export const getEquipments = async (
+  type?: EquipType
+): Promise<ApiResponseMessage<TypedEquipmentResponse[]>> => {
+  const res = await axiosPrivate.get("/equipments", {
+    params: { type }
+  });
   return res.data;
 }
 
 export const patchEquipment = async <T extends keyof EquipmentSpecMap>(
   equipmentId: string,
-  data: TypedEquipmentUpdateRequest<T>
-): Promise<ApiResponseMessage<TypedEquipmentResponse<T>>> => {
+  data: EquipmentUpdateRequest<T>
+): Promise<ApiResponseMessage<TypedEquipmentResponse>> => {
   const res = await axiosPrivate.patch(`/equipments/${equipmentId}`, data);
   return res.data;
 };
-
-export const getParticleSamplerList = async ():Promise<
-  ApiResponseMessage<TypedEquipmentResponse<typeof EquipType.PARTICLE_SAMPLER>[]>
-> => {
-  const res = await axiosPrivate.get("/equpiments/particle-sampler");
-  return res.data;
-}
-
-export const getPitotTubeList = async ():Promise<
-  ApiResponseMessage<TypedEquipmentResponse<typeof EquipType.PITOT_TUBE>[]>
-> => {
-  const res = await axiosPrivate.get("/equpiments/pitot-tube");
-  return res.data;
-}
-
-export const getNozzleList = async ():Promise<
-  ApiResponseMessage<TypedEquipmentResponse<typeof EquipType.NOZZLE>[]>
-> => {
-  const res = await axiosPrivate.get("/equpiments/nozzle");
-  return res.data;
-}

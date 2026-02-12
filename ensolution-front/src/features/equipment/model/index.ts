@@ -1,11 +1,8 @@
 export type {
-  EquipmentRegisterResponse,
   EquipmentResponse,
   EquipmentRegisterRequest,
   EquipmentUpdateRequest,
   TypedEquipmentResponse,
-  TypedEquipmentRegisterRequest,
-  TypedEquipmentUpdateRequest,
   EquipmentSpecMap,
   ParticleSamplerSpec,
   GasSamplerSpec,

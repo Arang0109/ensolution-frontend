@@ -53,7 +53,7 @@ export const EquipmentDetailSpec = ({ equipment, onEdit }: EquipmentDetailSpecPr
           <div className="space-y-4">
             <div>
               <span className="text-gray-500 text-sm">피토우관 용도</span>
-              <p className="font-medium">{PITOT_TUBE_OPTIONS.find(v => v.value === spec?.type)?.label ?? '-'}</p>
+              <p className="font-medium">{PITOT_TUBE_OPTIONS.find(v => v.value === spec?.pitotTubeType)?.label ?? '-'}</p>
             </div>
             {spec?.coefficients && spec.coefficients.length > 0 && (
               <div>
@@ -75,9 +75,9 @@ export const EquipmentDetailSpec = ({ equipment, onEdit }: EquipmentDetailSpecPr
         return (
           <div>
             <span className="text-gray-500 text-sm">노즐 직경 목록</span>
-            {spec?.nozzleDiameters && spec.nozzleDiameters.length > 0 ? (
+            {spec?.diameters && spec.diameters.length > 0 ? (
               <div className="mt-2 flex flex-wrap gap-2">
-                {spec.nozzleDiameters.map((nozzle, idx) => (
+                {spec.diameters.map((nozzle, idx) => (
                   <span key={idx} className="bg-white px-3 py-1 rounded border text-sm">
                     {nozzle.diameter} cm
                   </span>

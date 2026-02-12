@@ -1,9 +1,9 @@
-import type { UserResponse } from "@auth/model";
-
 export interface TeamResponse {
   id: number;
   name: string;
   vehicleNumber: string;
+  mentor: string;
+  mentee: string
   particleSamplerId: string;
   gasSamplerId: string;
   pitotTubeId: string;
@@ -13,6 +13,8 @@ export interface TeamResponse {
 export interface TeamRegisterRequest {
   name: string;
   vehicleNumber: string;
+  mentor: string;
+  mentee: string
   particleSamplerId: string;
   gasSamplerId: string;
   pitotTubeId: string;
@@ -22,13 +24,10 @@ export interface TeamRegisterRequest {
 export interface TeamUpdateRequest {
   name: string;
   vehicleNumber: string;
+  mentor: string;
+  mentee: string
   particleSamplerId: string;
   gasSamplerId: string;
   pitotTubeId: string;
   nozzleId: string;
-}
-
-export interface TeamDetailResponse {
-  team: TeamResponse;
-  users: UserResponse[];
 }
