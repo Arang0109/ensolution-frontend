@@ -4,7 +4,7 @@ import { X, Plus, Trash2 } from "lucide-react";
 import { registerPrevention } from "@stack/api";
 import type { FacilityForm, TargetForm } from "@stack/model";
 
-import { IconButton, Button } from "@shared/ui";
+import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
 
 interface PreventionCreateModalProps {
   stackId: number;
@@ -37,9 +37,9 @@ export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: Preventio
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePreventionChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    name: string,
+    value: string,
   ) => {
-    const { name, value } = e.target;
     if (name === "name") {
       setPreventionName(value);
     } else if (name === "remark") {
@@ -49,9 +49,9 @@ export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: Preventio
 
   const handleFacilityChange = (
     index: number,
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    name: string,
+    value: string,
   ) => {
-    const { name, value } = e.target;
     setFacilities((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], [name]: value };
@@ -61,9 +61,9 @@ export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: Preventio
 
   const handleTargetChange = (
     index: number,
-    e: React.ChangeEvent<HTMLInputElement>
+    name: string,
+    value: string,
   ) => {
-    const { name, value } = e.target;
     setTargets((prev) => {
       const updated = [...prev];
       updated[index] = {
@@ -182,38 +182,24 @@ export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: Preventio
           <div className="border-b pb-4">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">방지시설 정보</h3>
             <div className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  방지시설명 <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={preventionName}
-                  onChange={handlePreventionChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="방지시설명을 입력하세요"
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="remark" className="block text-sm font-medium text-gray-700 mb-1">
-                  비고
-                </label>
-                <textarea
-                  id="remark"
-                  name="remark"
-                  value={preventionRemark}
-                  onChange={handlePreventionChange}
-                  rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
-                  placeholder="추가 정보를 입력하세요 (선택사항)"
-                  disabled={isSubmitting}
-                />
-              </div>
+              <InputField
+                id="name"
+                label="방지시설명"
+                type="text"
+                name="name"
+                value={preventionName}
+                onChange={(value) => handlePreventionChange("name", value)}
+                placeholder="방지시설명을 입력하세요"
+                disabled={isSubmitting}
+                required
+              />
+              <TextAreaField
+                label="비고"
+                value={preventionRemark}
+                onChange={(value) => handlePreventionChange("remark", value)}
+                placeholder="추가 정보를 입력하세요 (선택사항)"
+                disabled={isSubmitting}
+              />
             </div>
           </div>
 
@@ -246,96 +232,65 @@ export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: Preventio
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        배출시설명
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={facility.name}
-                        onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="배출시설명"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        연료사용량
-                      </label>
-                      <input
-                        type="text"
-                        name="fuelUsage"
-                        value={facility.fuelUsage}
-                        onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="연료사용량"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        제품생산량
-                      </label>
-                      <input
-                        type="text"
-                        name="itemOutput"
-                        value={facility.itemOutput}
-                        onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="제품생산량"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        연료투입량
-                      </label>
-                      <input
-                        type="text"
-                        name="fuelInput"
-                        value={facility.fuelInput}
-                        onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="연료투입량"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        연료종류
-                      </label>
-                      <input
-                        type="text"
-                        name="fuelType"
-                        value={facility.fuelType}
-                        onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="연료종류"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        비고
-                      </label>
-                      <input
-                        type="text"
-                        name="remark"
-                        value={facility.remark}
-                        onChange={(e) => handleFacilityChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="비고"
-                        disabled={isSubmitting}
-                      />
-                    </div>
+                    <InputField
+                      id="name"
+                      label="배출시설명"
+                      type="text"
+                      name="name"
+                      value={facility.name}
+                      onChange={(value) => handleFacilityChange(index, "name", value)}
+                      placeholder="배출시설명을 입력하세요"
+                      disabled={isSubmitting}
+                      required
+                    />
+                    <InputField
+                      id="fuelUsage"
+                      label="연료사용량"
+                      type="text"
+                      name="fuelUsage"
+                      value={facility.fuelUsage}
+                      onChange={(value) => handleFacilityChange(index, "fuelUsage", value)}
+                      placeholder="연료사용량을 입력하세요"
+                      disabled={isSubmitting}
+                    />
+                    <InputField
+                      id="itemOutput"
+                      label="제품생산량"
+                      type="text"
+                      name="itemOutput"
+                      value={facility.itemOutput}
+                      onChange={(value) => handleFacilityChange(index, "itemOutput", value)}
+                      placeholder="제품생산량을 입력하세요"
+                      disabled={isSubmitting}
+                    />
+                    <InputField
+                      id="fuelInput"
+                      label="연료투입량"
+                      type="text"
+                      name="fuelInput"
+                      value={facility.fuelInput}
+                      onChange={(value) => handleFacilityChange(index, "fuelInput", value)}
+                      placeholder="제품투입량을 입력하세요"
+                      disabled={isSubmitting}
+                    />
+                    <InputField
+                      id="fuelType"
+                      label="연료종류"
+                      type="text"
+                      name="fuelType"
+                      value={facility.fuelType}
+                      onChange={(value) => handleFacilityChange(index, "fuelType", value)}
+                      placeholder="연료종류를 입력하세요"
+                      disabled={isSubmitting}
+                    />
                   </div>
+                  <TextAreaField
+                      label="비고"
+                      value={facility.remark}
+                      onChange={(value) => handleFacilityChange(index, "remark", value)}
+                      placeholder="추가 정보를 입력하세요 (선택사항)"
+                      disabled={isSubmitting}
+                    />
                 </div>
               ))}
             </div>
@@ -370,37 +325,30 @@ export const PreventionCreateModal = ({ stackId, onClose, onSuccess }: Preventio
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        제거대상물질
-                      </label>
-                      <input
-                        type="text"
-                        name="targetSubstance"
-                        value={target.targetSubstance}
-                        onChange={(e) => handleTargetChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="제거대상물질"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        제거효율 (%)
-                      </label>
-                      <input
-                        type="number"
-                        name="removalEfficiency"
-                        value={target.removalEfficiency ?? ""}
-                        onChange={(e) => handleTargetChange(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="제거효율 (선택사항)"
-                        min="0"
-                        max="100"
-                        disabled={isSubmitting}
-                      />
-                    </div>
+                    <InputField
+                      id="targetSubstance"
+                      label="제거대상물질"
+                      type="text"
+                      name="targetSubstance"
+                      value={target.targetSubstance}
+                      onChange={(value) => handleTargetChange(index, "targetSubstance", value)}
+                      placeholder="제거대상물질을 입력하세요"
+                      disabled={isSubmitting}
+                      required
+                    />
+                    <InputField
+                      id="removalEfficiency"
+                      label="제거효율 (%)"
+                      type="number"
+                      name="removalEfficiency"
+                      value={Number(target.removalEfficiency)}
+                      onChange={(value) => handleTargetChange(index, "removalEfficiency", String(value))}
+                      placeholder="제거효율을 입력하세요"
+                      min={0}
+                      max={100}
+                      disabled={isSubmitting}
+                      required
+                    />
                   </div>
                 </div>
               ))}

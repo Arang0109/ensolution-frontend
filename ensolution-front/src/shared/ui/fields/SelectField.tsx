@@ -7,6 +7,7 @@ interface SelectFieldProps<T, V extends string | number> {
 
   value: V | null;
   name?: string;
+  placeholder?: string;
 
   options: readonly T[];
 
@@ -25,6 +26,7 @@ export const SelectField = <T, V extends string | number>({
   label,
   value,
   name,
+  placeholder,
   options,
   getOptionLabel,
   getOptionValue,
@@ -49,8 +51,9 @@ export const SelectField = <T, V extends string | number>({
         options={mappedOptions}
         value={selectedOption}
         isDisabled={disabled}
-        placeholder="선택하세요"
+        placeholder={placeholder}
         onChange={(opt) => opt && onChange(opt.value)}
+        className="text-sm"
       />
     </FieldWrapper>
   );

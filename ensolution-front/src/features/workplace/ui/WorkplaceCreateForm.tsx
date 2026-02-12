@@ -80,6 +80,7 @@ export const WorkplaceCreateForm = ({ onClose, onSuccess, companyId }: Workplace
           name="grade"
           value={form.grade}
           onChange={(v) => onChange("grade", v)}
+          placeholder="종별을 선택하세요"
           required
           disabled={isSubmitting}
           options={GRADE_LABELS_OPTIONS}

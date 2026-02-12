@@ -63,6 +63,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             label="종별"
             name="grade"
             value={form.grade}
+            placeholder="종별을 선택하세요"
             onChange={(v) => onChange("grade", v)}
             required
             disabled={isSubmitting}
@@ -86,6 +87,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             label="형태"
             name="shape"
             value={form.shape}
+            placeholder="형태를 선택하세요"
             onChange={(v) => onChange("shape", v)}
             required
             disabled={isSubmitting}
@@ -98,6 +100,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             name="orientation"
               value={form.orientation}
             onChange={(v) => onChange("orientation", v)}
+            placeholder="방향을 선택하세요"
             required
             disabled={isSubmitting}
             options={ORIENTATION_LABELS_OPTIONS}

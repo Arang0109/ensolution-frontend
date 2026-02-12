@@ -4,25 +4,24 @@ import {
   patchFacility, deleteFacility, registerFacility,
   patchTarget, deleteTarget, registerTarget
 } from '@stack/api';
-import type {
-  PreventionDetailResponse,
-  PreventionUpdateRequest,
-  FacilityUpdateRequest,
-  FacilityRegisterRequest,
-  TargetUpdateRequest,
-  TargetRegisterRequest,
+import {
+  type PreventionDetailResponse,
+  type PreventionUpdateRequest,
+  type FacilityUpdateRequest,
+  type FacilityRegisterRequest,
+  type TargetUpdateRequest,
+  type TargetRegisterRequest,
+  PREVENTION_TABS
 } from '@stack/model';
 
 import { X, Plus, Trash2 } from "lucide-react";
-import { Button, IconButton } from '@/shared/ui';
+import { Button, IconButton, Tabs } from '@/shared/ui';
 
 interface PreventionEditModalProps {
   preventionDetail: PreventionDetailResponse;
   onClose: () => void;
   onSuccess: () => void;
 }
-
-type TabType = 'prevention' | 'facilities' | 'targets';
 
 interface FacilityFormData extends FacilityUpdateRequest {
   id?: number;
@@ -39,7 +38,7 @@ export const PreventionEditModal = ({
   onClose,
   onSuccess,
 }: PreventionEditModalProps) => {
-  const [activeTab, setActiveTab] = useState<TabType>('prevention');
+  const [activeTab, setActiveTab] = useState('PREVENTION');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Prevention form state
@@ -277,43 +276,18 @@ export const PreventionEditModal = ({
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-gray-200 bg-gray-50 px-6">
-          <button
-            onClick={() => setActiveTab('prevention')}
-            className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
-              activeTab === 'prevention'
-                ? 'border-neutral-600 text-neutral-700'
-                : 'border-transparent text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            방지시설 정보
-          </button>
-          <button
-            onClick={() => setActiveTab('facilities')}
-            className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
-              activeTab === 'facilities'
-                ? 'border-neutral-600 text-neutral-700'
-                : 'border-transparent text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            배출시설 ({facilities.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('targets')}
-            className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
-              activeTab === 'targets'
-                ? 'border-neutral-600 text-neutral-700'
-                : 'border-transparent text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            제거대상물질 ({targets.length})
-          </button>
+        <div className="px-6">
+          <Tabs
+            tabs={PREVENTION_TABS}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
           {/* Prevention Tab */}
-          {activeTab === 'prevention' && (
+          {activeTab === 'PREVENTION' && (
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -369,7 +343,7 @@ export const PreventionEditModal = ({
           )}
 
           {/* Facilities Tab */}
-          {activeTab === 'facilities' && (
+          {activeTab === 'FACILITY' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">배출시설 목록</h3>
@@ -523,7 +497,7 @@ export const PreventionEditModal = ({
           )}
 
           {/* Targets Tab */}
-          {activeTab === 'targets' && (
+          {activeTab === 'TARGET' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">제거대상물질 목록</h3>

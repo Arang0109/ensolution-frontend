@@ -6,6 +6,7 @@ interface MultiSelectFieldProps<T, V extends string | number> {
   options: T[];
 
   value: V[];
+  placeholder?: string;
   onChange: (values: V[]) => void;
 
   getOptionLabel: (option: T) => string;
@@ -18,6 +19,7 @@ export function MultiSelectField<T, V extends string | number>({
   label,
   options,
   value,
+  placeholder,
   onChange,
   getOptionLabel,
   getOptionValue,
@@ -40,11 +42,13 @@ export function MultiSelectField<T, V extends string | number>({
         options={mappedOptions}
         value={selectedOptions}
         isDisabled={disabled}
+        placeholder={placeholder}
 
         onChange={(selected) => {
           const values = selected.map(s => s.value);
           onChange(values);
         }}
+        className="text-sm"
       />
     </FieldWrapper>
   );

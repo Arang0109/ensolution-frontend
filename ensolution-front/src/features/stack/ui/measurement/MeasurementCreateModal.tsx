@@ -173,6 +173,7 @@ export const MeasurementCreateModal = ({
                   label="측정물질"
                   required
                   value={measurement.pollutantId}
+                  placeholder="측정물질을 선택하세요"
                   options={pollutants}
                   disabled={isSubmitting}
                   getOptionLabel={(p) =>
@@ -187,9 +188,10 @@ export const MeasurementCreateModal = ({
                 {/* 측정 주기 */}
                 <SelectField
                   id={`cycle-${measurement.id}`}
-                  label="측정 주기"
+                  label="측정주기"
                   required
                   value={measurement.cycle}
+                  placeholder="측정주기를 선택하세요"
                   disabled={isSubmitting}
                   options={cycleOptions}
 

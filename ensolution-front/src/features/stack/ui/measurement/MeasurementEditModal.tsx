@@ -113,20 +113,20 @@ export const MeasurementEditModal = ({
               measurement.pollutant.nameEn ? ` (${measurement.pollutant.nameEn})` : ""
             }`}
             readOnly
-            helperText="측정물질은 수정할 수 없습니다."
+            helperText="측정물질 이름은 수정할 수 없습니다."
           />
 
           {/* 측정 주기 */}
-          <SelectField<Cycle>
+          <SelectField
             id={`cycle-${measurement.id}`}
             label="측정 주기"
             required
             value={measurement.cycle}
+            placeholder="측정주기를 선택하세요"
             disabled={isSubmitting}
-            options={cycleOptions.map((c) => ({
-              value: c,
-              label: CYCLE_LABELS[c],
-            }))}
+            options={cycleOptions}
+            getOptionLabel={(c) => CYCLE_LABELS[c]}
+            getOptionValue={(c) => c}
             onChange={(value) => setCycle(value)}
           />
 
