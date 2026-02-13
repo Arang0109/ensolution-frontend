@@ -1,44 +1,94 @@
 import { useState, useCallback } from "react";
 
-import { deleteCompany, patchCompany } from "@company/api/companyApi";
+import { registerCompany, deleteCompany, patchCompany } from "@company/api/companyApi";
+import type { CompanyRegisterRequest, CompanyUpdateRequest } from "@company/model";
 
-import type { CompanyUpdateRequest } from "@company/model";
+import type { ActionResult } from "@shared/model";
 
 export const useCompanyActions = () => {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
 
-  const handleDelete = useCallback(async (companyId: number) => {
-    if (!window.confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.")) {
-      return { success: false, message: "삭제가 취소되었습니다." };
-    }
+  const handleCreate = useCallback(
+    async (data: CompanyRegisterRequest): Promise<ActionResult> => {
+      setCreating(true);
+      try {
+        const res = await registerCompany(data);
 
-    setIsDeleting(true);
+        return {
+          success: res.status,
+          message: res.message ?? "등록이 완료되었습니다.",
+        };
+
+      } catch (error) {
+        console.error(error);
+
+        return {
+          success: false,
+          message: "등록 중 오류가 발생했습니다.",
+        };
+      } finally {
+        setCreating(false);
+      }
+    },
+    []
+  );
+
+  const handleDelete = useCallback(async (companyId: number): Promise<ActionResult> => {
+    setDeletingId(companyId);
+
     try {
       const res = await deleteCompany(companyId);
-      return { success: res.status, message: res.message };
-    } catch {
-      return { success: false, message: "삭제 중 오류가 발생했습니다." };
+
+      return {
+        success: res.status,
+        message: res.message ?? "삭제가 완료되었습니다.",
+      };
+
+    } catch (error) {
+      console.error(error);
+
+      return {
+        success: false,
+        message: "삭제 중 오류가 발생했습니다.",
+      };
     } finally {
-      setIsDeleting(false);
+      setDeletingId(null);
     }
   }, []);
 
-  const handleUpdate = useCallback(async (companyId: number, data: CompanyUpdateRequest) => {
-    setIsUpdating(true);
-    try {
-      const res = await patchCompany(companyId, data);
-      return { success: res.status, message: res.message };
-    } catch {
-      return { success: false, message: "수정 중 오류가 발생했습니다." };
-    } finally {
-      setIsUpdating(false);
-    }
-  }, []);
+  const handleUpdate = useCallback(
+    async (companyId: number, data: CompanyUpdateRequest): Promise<ActionResult> => {
+      setUpdatingId(companyId);
+
+      try {
+        const res = await patchCompany(companyId, data);
+
+        return {
+          success: res.status,
+          message: res.message ?? "수정이 완료되었습니다.",
+        };
+
+      } catch (error) {
+        console.error(error);
+
+        return {
+          success: false,
+          message: "수정 중 오류가 발생했습니다.",
+        };
+      } finally {
+        setUpdatingId(null);
+      }
+    },
+    []
+  );
 
   return {
-    isDeleting,
-    isUpdating,
+    creating,
+    deletingId,
+    updatingId,
+    handleCreate,
     handleDelete,
     handleUpdate,
   };

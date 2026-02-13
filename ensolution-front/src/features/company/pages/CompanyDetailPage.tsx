@@ -1,7 +1,7 @@
 import { DetailPageHeader } from "@widgets/detail-page-header";
 
-import { CompanyDetailCard, WorkplaceListCard } from "@company/ui";
-import { useCompanyDetailPage } from "@company/hooks";
+import { CompanyProfileSection, CompanyWorkplaceListSection } from "@company/ui";
+import { useCompanyDetailViewModel } from "@company/hooks";
 import { WorkplaceCreateModal } from "@workplace/ui";
 
 import { FullPageLoader, EmptyState } from "@shared/ui";
@@ -10,9 +10,10 @@ export const CompanyDetailPage = () => {
   const {
     company,
     loading,
-    isDeleting,
+    deletingId,
     isEditMode,
     showAddModal,
+    errors,
 
     editForm,
 
@@ -25,7 +26,7 @@ export const CompanyDetailPage = () => {
 
     setShowAddModal,
     fetchCompany,
-  } = useCompanyDetailPage();
+  } = useCompanyDetailViewModel();
 
   if (loading) {
     return <FullPageLoader message="업체 정보를 불러오는 중입니다..." />;
@@ -46,7 +47,7 @@ export const CompanyDetailPage = () => {
       <DetailPageHeader
         title={company.company.name}
         isEditMode={isEditMode}
-        isDeleting={isDeleting}
+        isDeleting={deletingId === company.company.id}
         onDelete={deleteCompany}
         onUpdate={startEdit}
         onSave={saveEdit}
@@ -55,14 +56,15 @@ export const CompanyDetailPage = () => {
       />
 
       <div className="grid grid-cols-1 gap-6">
-        <CompanyDetailCard
+        <CompanyProfileSection
           company={company.company}
           isEditMode={isEditMode}
           editForm={editForm}
           onChange={handleEditChange}
+          errors={errors}
         />
 
-        <WorkplaceListCard
+        <CompanyWorkplaceListSection
           workplaces={company.workplaces}
           isEditMode={isEditMode}
           onClick={() => setShowAddModal(true)}

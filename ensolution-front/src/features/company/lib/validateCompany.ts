@@ -1,10 +1,10 @@
-import type { CompanyCreateForm } from "@company/model";
+import type { CompanyCreateForm, CompanyUpdateForm } from "@company/model";
 
 import { stripBizNumber } from "@/shared/lib";
 
 export type ValidationErrors = Record<string, string>;
 
-export const validateCompany = (form: CompanyCreateForm): ValidationErrors => {
+export const validateCompany = (form: CompanyCreateForm | CompanyUpdateForm): ValidationErrors => {
   const errors: ValidationErrors = {};
 
   if (!form.name.trim()) {

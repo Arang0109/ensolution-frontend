@@ -1,6 +1,7 @@
 import { useToast } from "@app/providers/toast";
 
-import { useCompanyCreateForm } from "@company/hooks";
+import { useCompanyCreate, useCompanyActions } from "@company/hooks";
+import { mapCreateFormToRequest } from "@company/model";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
@@ -11,23 +12,28 @@ interface CompanyCreateFormProps {
   onSuccess: () => void;
 }
 
-export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormProps ) => {
-  const { form, errors, isSubmitting, onChange, onSubmit } = useCompanyCreateForm();
+export const CompanyCreateContent = ({ onClose, onSuccess }: CompanyCreateFormProps) => {
+
+  const { form, errors, onChange, validate } = useCompanyCreate();
+  const { handleCreate, creating } = useCompanyActions();
   const { showToast } = useToast();
 
   const preventSubmitOnEnter = usePreventSubmitOnEnter();
 
-  const handleSubmit = async () => {
-    const result = await onSubmit();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    if (!result) return;
+    if (!validate()) return;
 
-    if (result?.success) {
+    const payload = mapCreateFormToRequest(form);
+    const result = await handleCreate(payload);
+
+    if (result.success) {
       showToast("업체가 등록되었습니다.", "success");
       onSuccess();
       onClose();
     } else {
-      showToast(result?.message ?? "업체 등록 중 오류가 발생했습니다.", "error");
+      showToast(result.message, "error");
     }
   };
 
@@ -52,7 +58,7 @@ export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormPro
           onChange={(v) => onChange("name", v)}
           placeholder="업체명을 입력하세요"
           helperText={errors.name}
-          disabled={isSubmitting}
+          disabled={creating}
         />
         <InputField
           label="주소"
@@ -60,7 +66,7 @@ export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormPro
           value={form.address}
           onChange={(v) => onChange("address", v)}
           placeholder="주소를 입력하세요"
-          disabled={isSubmitting}
+          disabled={creating}
         />
         <InputField
           label="대표자명"
@@ -69,7 +75,7 @@ export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormPro
           onChange={(v) => onChange("ceoName", v)}
           placeholder="대표자명을 입력하세요"
           helperText={errors.ceoName}
-          disabled={isSubmitting}
+          disabled={creating}
         />
         <InputField
           label="사업자번호"
@@ -79,14 +85,14 @@ export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormPro
           onChange={(v) => onChange("bizNumber", v)}
           placeholder="000-00-00000"
           helperText={errors.bizNumber}
-          disabled={isSubmitting}
+          disabled={creating}
         />
         <TextAreaField
           label="비고"
           value={form.remark}
           onChange={(v) => onChange("remark", v)}
           placeholder="추가 정보를 입력하세요 (선택사항)"
-          disabled={isSubmitting}
+          disabled={creating}
         />
 
         <div className="flex gap-3 pt-4">
@@ -97,7 +103,7 @@ export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormPro
             size="md"
             width="full"
             type="button"
-            disabled={isSubmitting}
+            disabled={creating}
           />
           <Button
             label="추가"
@@ -105,7 +111,7 @@ export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormPro
             size="md"
             width="full"
             type="submit"
-            disabled={isSubmitting}
+            disabled={creating}
           />
         </div>
       </form>

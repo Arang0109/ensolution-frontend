@@ -14,7 +14,14 @@ export const useCompanies = () => {
     setLoading(true);
     try {
       const res = await getCompanies();
-      setCompanies(res.status && res.data ? res.data : []);
+
+      if (!res.status || !res.data) {
+        setCompanies([]);
+        return;
+      }
+
+      setCompanies(res.data);
+
     } catch (error) {
       console.error(error);
       showToast('업체 목록을 불러오지 못했습니다.', 'error');
@@ -31,6 +38,6 @@ export const useCompanies = () => {
   return {
     companies,
     loading,
-    refetch: fetchCompanies
+    reload: fetchCompanies
   }
 }

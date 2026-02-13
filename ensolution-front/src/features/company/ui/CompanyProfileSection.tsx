@@ -1,9 +1,10 @@
 import type { CompanyResponse, CompanyUpdateRequest } from "@company/model";
+import type { ValidationErrors } from "@company/lib";
 
 import { InputField, TextAreaField, SectionHeader } from "@shared/ui";
 import { formatBizNumber, formatDate } from "@shared/lib";
 
-interface CompanyInfoCardProps {
+interface CompanyProfileSectionProps {
   company: CompanyResponse;
   isEditMode: boolean;
   editForm: CompanyUpdateRequest;
@@ -11,14 +12,16 @@ interface CompanyInfoCardProps {
     name: keyof CompanyUpdateRequest,
     value: string
   ) => void;
+  errors: ValidationErrors;
 }
 
-export const CompanyDetailCard = ({
+export const CompanyProfileSection = ({
   company,
   isEditMode,
   editForm,
   onChange,
-}: CompanyInfoCardProps) => {
+  errors,
+}: CompanyProfileSectionProps) => {
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
       {/* Header */}
@@ -35,12 +38,14 @@ export const CompanyDetailCard = ({
                 required={true}
                 value={editForm.name}
                 onChange={(v) => onChange("name", v)}
+                helperText={errors.name}
               />
               <InputField
                 label="대표자명"
                 name="ceoName"
                 value={editForm.ceoName}
                 onChange={(v) => onChange("ceoName", v)}
+                helperText={errors.ceoName}
               />
               <InputField
                 label="사업자번호"
@@ -48,6 +53,7 @@ export const CompanyDetailCard = ({
                 name="bizNumber"
                 value={editForm.bizNumber}
                 onChange={(v) => onChange("bizNumber", v)}
+                helperText={errors.bizNumber}
                 placeholder="000-00-00000"
                 max={12}
               />

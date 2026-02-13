@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 import { useCompanies } from '@company/hooks';
-import { CompanyCreateModal, CompanyListTable } from '@company/ui';
+import { CompanyCreateModal, CompanyListSection } from '@company/ui';
 
 import { Button, EmptyState, FullPageLoader } from '@shared/ui';
 
 export const CompanyListPage = () => {
-  const { companies, loading, refetch } = useCompanies();
+  const { companies, loading, reload } = useCompanies();
   const [showAddModal, setShowAddModal] = useState(false);
   
   if (loading) return <FullPageLoader />;
@@ -33,14 +33,14 @@ export const CompanyListPage = () => {
           title='등록된 업체가 없습니다.'
         />
       ) : (
-        <CompanyListTable companies={companies} />
+        <CompanyListSection companies={companies} />
       )}
 
       {/* Add Company Modal */}
       {showAddModal && (
         <CompanyCreateModal
           onClose={() => setShowAddModal(false)}
-          onSuccess={() => refetch()}
+          onSuccess={() => reload()}
         />
       )}
     </div>

@@ -3,13 +3,13 @@ import type { WorkplaceResponse } from "@workplace/model";
 
 import { Button, SectionHeader, EmptyState } from "@shared/ui";
 
-interface WorkplaceListCardProps {
+interface CompanyWorkplaceListSectionProps {
   workplaces: WorkplaceResponse[];
   isEditMode: boolean
   onClick?: () => void;
 }
 
-export const WorkplaceListCard = ({ workplaces, isEditMode=false, onClick }: WorkplaceListCardProps) => {
+export const CompanyWorkplaceListSection = ({ workplaces, isEditMode=false, onClick }: CompanyWorkplaceListSectionProps) => {
 
   const showAddButton = !isEditMode && typeof onClick === "function";
 
