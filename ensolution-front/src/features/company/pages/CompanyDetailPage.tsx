@@ -1,6 +1,6 @@
 import { DetailPageHeader } from "@widgets/detail-page-header";
 
-import { CompanyProfileSection, CompanyWorkplaceListSection } from "@company/component";
+import { CompanyProfileSection, CompanyWorkplaceTableSection } from "@company/component";
 import { useCompanyDetailViewModel } from "@company/hooks";
 import { WorkplaceCreateModal } from "@workplace/ui";
 
@@ -64,7 +64,7 @@ export const CompanyDetailPage = () => {
           errors={errors}
         />
 
-        <CompanyWorkplaceListSection
+        <CompanyWorkplaceTableSection
           workplaces={company.workplaces}
           isEditMode={isEditMode}
           onClick={() => setShowAddModal(true)}

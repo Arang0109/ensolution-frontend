@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCompanies } from '@company/hooks';
-import { CompanyCreateModal, CompanyListSection } from '@company/component';
+import { CompanyCreateModal, CompanyTableSection } from '@company/component';
 
 import { Button, EmptyState, FullPageLoader } from '@shared/ui';
 
@@ -33,7 +33,7 @@ export const CompanyListPage = () => {
           title='등록된 업체가 없습니다.'
         />
       ) : (
-        <CompanyListSection companies={companies} />
+        <CompanyTableSection companies={companies} />
       )}
 
       {/* Add Company Modal */}

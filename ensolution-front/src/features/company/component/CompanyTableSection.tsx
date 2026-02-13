@@ -5,11 +5,11 @@ import type { CompanyResponse } from "@company/model";
 import { formatBizNumber } from "@shared/lib";
 import { TableContainer } from "@shared/ui";
 
-interface CompanyListSectionProps {
+interface CompanyTableSectionProps {
   companies: CompanyResponse[];
 }
 
-export const CompanyListSection = ({ companies }: CompanyListSectionProps) => {
+export const CompanyTableSection = ({ companies }: CompanyTableSectionProps) => {
   const navigate = useNavigate();
 
   return (
