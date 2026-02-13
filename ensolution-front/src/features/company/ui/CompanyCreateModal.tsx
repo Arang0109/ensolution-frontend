@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { CompanyCreateForm } from "@company/ui";
+import { CompanyCreateContent } from "@company/ui";
 
 interface CompanyAddModalProps {
   onClose: () => void;
@@ -9,7 +9,7 @@ interface CompanyAddModalProps {
 export const CompanyCreateModal = ({ onClose, onSuccess }: CompanyAddModalProps) => {
   return (
     <Modal>
-      <CompanyCreateForm onClose={onClose} onSuccess={onSuccess} />
+      <CompanyCreateContent onClose={onClose} onSuccess={onSuccess} />
     </Modal>
   );
 };

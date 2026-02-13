@@ -61,7 +61,7 @@ export const InputField = <T extends string | number>({
       />
 
       {helperText && (
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-red-500">
           {helperText}
         </p>
       )}

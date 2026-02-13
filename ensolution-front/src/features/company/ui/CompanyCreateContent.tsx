@@ -1,7 +1,8 @@
 import { useToast } from "@app/providers/toast";
 
-import { useCompanyForm } from "@company/hooks";
+import { useCompanyCreateForm } from "@company/hooks";
 
+import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
 import { X } from "lucide-react";
 
@@ -10,12 +11,16 @@ interface CompanyCreateFormProps {
   onSuccess: () => void;
 }
 
-export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps ) => {
-  const { form, isSubmitting, onChange, onSubmit } = useCompanyForm();
+export const CompanyCreateContent = ({ onClose, onSuccess }:CompanyCreateFormProps ) => {
+  const { form, errors, isSubmitting, onChange, onSubmit } = useCompanyCreateForm();
   const { showToast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const result = await onSubmit(e);
+  const preventSubmitOnEnter = usePreventSubmitOnEnter();
+
+  const handleSubmit = async () => {
+    const result = await onSubmit();
+
+    if (!result) return;
 
     if (result?.success) {
       showToast("업체가 등록되었습니다.", "success");
@@ -38,7 +43,7 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
         />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} onKeyDown={preventSubmitOnEnter} className="space-y-4">
         <InputField
           label="업체명"
           required={true}
@@ -46,6 +51,7 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
           value={form.name}
           onChange={(v) => onChange("name", v)}
           placeholder="업체명을 입력하세요"
+          helperText={errors.name}
           disabled={isSubmitting}
         />
         <InputField
@@ -62,6 +68,7 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
           value={form.ceoName}
           onChange={(v) => onChange("ceoName", v)}
           placeholder="대표자명을 입력하세요"
+          helperText={errors.ceoName}
           disabled={isSubmitting}
         />
         <InputField
@@ -71,6 +78,7 @@ export const CompanyCreateForm = ({ onClose, onSuccess }:CompanyCreateFormProps 
           value={form.bizNumber}
           onChange={(v) => onChange("bizNumber", v)}
           placeholder="000-00-00000"
+          helperText={errors.bizNumber}
           disabled={isSubmitting}
         />
         <TextAreaField

@@ -66,7 +66,7 @@ export const useCompanyDetailPage = () => {
     if (!companyId) return;
 
     const result = await handleUpdate(Number(companyId), editForm);
-    showToast(result.message);
+    showToast(result.success ? "수정에 성공했습니다." : "수정에 실패했습니다.");
 
     setIsEditMode(false);
     fetchCompany(Number(companyId));

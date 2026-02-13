@@ -15,9 +15,15 @@ export interface PreventionRegisterRequest {
   targets: Omit<TargetRegisterRequest, 'preventionId'>[];
 }
 
-export interface PreventionUpdateRequest {
+export interface PreventionUpdate {
   name: string;
   remark: string;
+}
+
+export interface PreventionUpdateRequest {
+  prevention: PreventionUpdate;
+  facilities: Omit<FacilityRegisterRequest, 'preventionId'>[];
+  targets: Omit<TargetRegisterRequest, 'preventionId'>[];
 }
 
 export interface PreventionDetailResponse {

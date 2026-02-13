@@ -6,6 +6,7 @@ import {
 } from '@stack/api';
 import {
   type PreventionDetailResponse,
+  type PreventionUpdate,
   type PreventionUpdateRequest,
   type FacilityUpdateRequest,
   type FacilityRegisterRequest,
@@ -15,7 +16,7 @@ import {
 } from '@stack/model';
 
 import { X, Plus, Trash2 } from "lucide-react";
-import { Button, IconButton, Tabs } from '@/shared/ui';
+import { Button, IconButton, Tabs, InputField, TextAreaField } from '@/shared/ui';
 
 interface PreventionEditModalProps {
   preventionDetail: PreventionDetailResponse;
@@ -42,7 +43,7 @@ export const PreventionEditModal = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Prevention form state
-  const [preventionForm, setPreventionForm] = useState<PreventionUpdateRequest>({
+  const [preventionForm, setPreventionForm] = useState<PreventionUpdate>({
     name: preventionDetail.prevention.name,
     remark: preventionDetail.prevention.remark,
   });
@@ -74,7 +75,22 @@ export const PreventionEditModal = ({
   const handlePreventionSubmit = async () => {
     try {
       setIsSubmitting(true);
-      await patchPrevention(preventionDetail.prevention.id, preventionForm);
+      const data: PreventionUpdateRequest = {
+        prevention: preventionForm,
+        facilities: facilities.map((f) => ({
+          name: f.name,
+          fuelUsage: f.fuelUsage,
+          itemOutput: f.itemOutput,
+          fuelInput: f.fuelInput,
+          fuelType: f.fuelType,
+          remark: f.remark,
+        })),
+        targets: targets.map((t) => ({
+          targetSubstance: t.targetSubstance,
+          removalEfficiency: t.removalEfficiency,
+        })),
+      };
+      await patchPrevention(preventionDetail.prevention.id, data);
       alert('방지시설 정보가 수정되었습니다.');
       onSuccess();
     } catch (error) {
@@ -289,36 +305,28 @@ export const PreventionEditModal = ({
           {/* Prevention Tab */}
           {activeTab === 'PREVENTION' && (
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  시설명 <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={preventionForm.name}
-                  onChange={(e) =>
-                    setPreventionForm({ ...preventionForm, name: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="방지시설명 입력"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  비고
-                </label>
-                <textarea
-                  value={preventionForm.remark}
-                  onChange={(e) =>
-                    setPreventionForm({ ...preventionForm, remark: e.target.value })
-                  }
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="비고 입력"
-                />
-              </div>
-
+              <InputField
+                id="name"
+                label="방지시설명"
+                type="text"
+                name="name"
+                value={preventionForm.name}
+                onChange={(value) =>
+                  setPreventionForm({ ...preventionForm, name: value })
+                }
+                placeholder="방지시설명을 입력하세요"
+                disabled={isSubmitting}
+                required
+              />
+              <TextAreaField
+                label="비고"
+                value={preventionForm.remark}
+                onChange={(value) =>
+                  setPreventionForm({ ...preventionForm, remark: value })
+                }
+                placeholder="추가 정보를 입력하세요 (선택사항)"
+                disabled={isSubmitting}
+              />
               <div className="flex gap-2 pt-4">
                 <Button
                   type='button'

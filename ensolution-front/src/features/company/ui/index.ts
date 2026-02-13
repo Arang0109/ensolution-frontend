@@ -1,4 +1,4 @@
-export { CompanyCreateForm } from "./CompanyCreateForm";
+export { CompanyCreateContent } from "./CompanyCreateContent";
 export { CompanyCreateModal } from "./CompanyCreateModal";
 export { CompanyListTable } from "./CompanyListTable";
 export { CompanyDetailCard } from './CompanyDetailCard';
