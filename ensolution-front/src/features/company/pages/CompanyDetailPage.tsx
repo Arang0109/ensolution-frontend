@@ -1,6 +1,6 @@
 import { DetailPageHeader } from "@widgets/detail-page-header";
 
-import { CompanyProfileSection, CompanyWorkplaceListSection } from "@company/ui";
+import { CompanyProfileSection, CompanyWorkplaceListSection } from "@company/component";
 import { useCompanyDetailViewModel } from "@company/hooks";
 import { WorkplaceCreateModal } from "@workplace/ui";
 

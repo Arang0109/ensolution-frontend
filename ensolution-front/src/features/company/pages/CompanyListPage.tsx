@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCompanies } from '@company/hooks';
-import { CompanyCreateModal, CompanyListSection } from '@company/ui';
+import { CompanyCreateModal, CompanyListSection } from '@company/component';
 
 import { Button, EmptyState, FullPageLoader } from '@shared/ui';
 

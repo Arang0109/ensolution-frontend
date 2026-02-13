@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { CompanyCreateContent } from "@company/ui";
+import { CompanyCreateContent } from "@/features/company/component";
 
 interface CompanyAddModalProps {
   onClose: () => void;
