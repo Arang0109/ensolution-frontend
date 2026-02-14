@@ -4,7 +4,7 @@ import type {
   StackMeasurementResponse,
   StackMeasurementCreateRequest,
   StackMeasurementUpdateRequest,
-} from "@/features/stack/model/stack-measurement-types";
+} from "@/features/stack/model/stack-measurement/stack-measurement-dto";
 
 export const registerStackMeasurement = async (
   data: StackMeasurementCreateRequest

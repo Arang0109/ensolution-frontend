@@ -7,7 +7,7 @@ import {
   StackPreventionListCard,
   StackMeasurementListCard,
   StackSidebar,
-} from '@stack/ui';
+} from '@stack/component';
 
 import { useStackDetailPage } from '@stack/hooks';
 

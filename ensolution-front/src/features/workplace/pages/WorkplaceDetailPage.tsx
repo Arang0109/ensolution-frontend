@@ -4,7 +4,7 @@ import {
   WorkplaceProfileSection,
   WorkplaceStackTableSection
 } from '@workplace/component';
-import { StackCreateModal } from '@stack/ui';
+import { StackCreateModal } from '@stack/component';
 
 import { useWorkplaceDetailViewModel } from '@workplace/hooks';
 

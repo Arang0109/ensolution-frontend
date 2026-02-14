@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { useToast } from "@app/providers/toast";
 
 import { useCompanyDetail, useCompanyActions, useCompanyEdit } from "@company/hooks";
-import { mapCreateFormToRequest } from "@company/model";
+import { mapUpdateFormToRequest } from "@company/model";
 
 import { useWorkplaceActions } from "@workplace/hooks";
 
@@ -42,7 +42,7 @@ export const useCompanyDetailViewModel = () => {
 
     if (!validate()) return;
 
-    const payload = mapCreateFormToRequest(editForm);
+    const payload = mapUpdateFormToRequest(editForm);
     const result = await handleUpdate(Number(companyId), payload);
 
     if (result.success) {

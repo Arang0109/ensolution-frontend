@@ -5,8 +5,8 @@ export interface PreventionResponse {
   stackId: number;
   name: string;
   remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface PreventionRegisterRequest {

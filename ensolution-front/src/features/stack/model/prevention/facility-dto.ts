@@ -7,8 +7,8 @@ export interface FacilityResponse {
   fuelInput: string;
   fuelType: string;
   remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface FacilityRegisterRequest {

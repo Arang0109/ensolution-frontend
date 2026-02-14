@@ -1,5 +1,7 @@
-import type { Grade, Shape, Orientation } from '@/shared/model/common-types';
-import type { PreventionResponse, PreventionDetailResponse, StackMeasurementResponse } from '@stack/model';
+import type { PreventionResponse, StackMeasurementResponse } from '@stack/model';
+
+import type { Shape, Orientation } from '@stack/model';
+import type { Grade } from '@shared/model';
 
 export interface StackResponse {
   id: number;
@@ -13,8 +15,8 @@ export interface StackResponse {
   shape: Shape;
   orientation: Orientation;
   remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface StackRegisterRequest {
@@ -45,11 +47,5 @@ export interface StackUpdateRequest {
 export interface StackDetailResponse {
   stack: StackResponse;
   preventions: PreventionResponse[];
-  stackMeasurements: StackMeasurementResponse[];
-}
-
-export interface StackDetailWithPreventionsResponse {
-  stack: StackResponse;
-  preventions: PreventionDetailResponse[];
   stackMeasurements: StackMeasurementResponse[];
 }

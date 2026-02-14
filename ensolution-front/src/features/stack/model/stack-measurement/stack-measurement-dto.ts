@@ -1,5 +1,6 @@
-import type { Cycle } from "@/shared/model";
-import type { PollutantResponse } from "@/features/pollutant/model/pollutant-dto";
+import type { PollutantResponse } from "@pollutant/model";
+
+import type { Cycle } from "@shared/model";
 
 export interface StackMeasurementResponse {
   id: number;
@@ -7,8 +8,8 @@ export interface StackMeasurementResponse {
   pollutant: PollutantResponse;
   cycle: Cycle;
   allowance: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface StackMeasurementCreateRequest {
