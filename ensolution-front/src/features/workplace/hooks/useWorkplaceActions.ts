@@ -1,79 +1,73 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { useToast } from "@app/providers/toast";
-import type { WorkplaceRegisterRequest, WorkplaceUpdateRequest } from '@workplace/model';
 import { registerWorkplace, patchWorkplace, deleteWorkplace } from '@workplace/api/workplaceApi';
+import type { WorkplaceRegisterRequest, WorkplaceUpdateRequest } from '@workplace/model';
+
+import type { ActionResult } from "@shared/model";
 
 export const useWorkplaceActions = () => {
-  const { showToast } = useToast();
-  const [isCreating, setIsCreating] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
 
-  const handleCreate = async (data: WorkplaceRegisterRequest) => {
-    setIsCreating(true);
-
+  const handleCreate = useCallback(
+    async (data: WorkplaceRegisterRequest) => {
+    setCreating(true);
     try {
       const res = await registerWorkplace(data);
-      if (res.status) {
-        showToast('사업장이 등록되었습니다.', 'success');
-      } else {
-        showToast(res.message || '사업장 등록에 실패했습니다.', 'error');
+      return {
+          success: res.status,
+          message: res.message,
+        };
+
+      } finally {
+        setCreating(false);
       }
-      return { success: res.status, message: res.message };
-    } catch {
-      const errorMsg = '사업장 등록 중 오류가 발생했습니다.';
-      showToast(errorMsg, 'error');
-      return { success: false, message: errorMsg };
-    } finally {
-      setIsCreating(false);
-    }
-  };
+    },
+    []
+  );
 
-  const handleUpdate = async (workplaceId: number, data: WorkplaceUpdateRequest) => {
-    setIsUpdating(true);
-
-    try {
-      const res = await patchWorkplace(workplaceId, data);
-      if (res.status) {
-        showToast('사업장이 수정되었습니다.', 'success');
-      } else {
-        showToast(res.message || '사업장 수정에 실패했습니다.', 'error');
-      }
-      return { success: res.status, message: res.message };
-    } catch {
-      const errorMsg = '사업장 수정 중 오류가 발생했습니다.';
-      showToast(errorMsg, 'error');
-      return { success: false, message: errorMsg };
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  const handleDelete = async (workplaceId: number) => {
-    setIsDeleting(true);
+  const handleDelete = useCallback(async (workplaceId: number) => {
+    setDeletingId(workplaceId);
 
     try {
       const res = await deleteWorkplace(workplaceId);
-      if (res.status) {
-        showToast('사업장이 삭제되었습니다.', 'success');
-      } else {
-        showToast(res.message || '사업장 삭제에 실패했습니다.', 'error');
+
+      return {
+          success: res.status,
+          message: res.message,
+        };
+
+      } finally {
+        setDeletingId(null);
       }
-      return { success: res.status, message: res.message };
-    } catch {
-      const errorMsg = '사업장 삭제 중 오류가 발생했습니다.';
-      showToast(errorMsg, 'error');
-      return { success: false, message: errorMsg };
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+    },
+    []
+  );
+
+  const handleUpdate = useCallback(
+    async (workplaceId: number, data: WorkplaceUpdateRequest): Promise<ActionResult> => {
+      setUpdatingId(workplaceId);
+
+      try {
+        const res = await patchWorkplace(workplaceId, data);
+
+        return {
+          success: res.status,
+          message: res.message,
+        };
+
+      } finally {
+        setUpdatingId(null);
+      }
+    },
+    []
+  );
 
   return {
-    isCreating,
-    isUpdating,
-    isDeleting,
+    creating,
+    deletingId,
+    updatingId,
     handleCreate,
     handleUpdate,
     handleDelete,

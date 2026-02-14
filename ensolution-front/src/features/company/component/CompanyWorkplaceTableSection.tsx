@@ -1,4 +1,4 @@
-import { WorkplaceListTable } from "@workplace/component";
+import { WorkplaceTableSection } from "@workplace/component";
 import type { WorkplaceResponse } from "@workplace/model";
 
 import { Button, SectionHeader, EmptyState } from "@shared/ui";
@@ -33,7 +33,7 @@ export const CompanyWorkplaceTableSection = ({ workplaces, isEditMode=false, onC
       {workplaces.length === 0 ? (
         <EmptyState title="등록된 사업장이 없습니다." />
       ) : (
-        <WorkplaceListTable workplaces={workplaces} />
+        <WorkplaceTableSection workplaces={workplaces} />
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import type { Grade } from '@/shared/model';
 
-const DEFAULT_GRADE: Grade = "TYPE_1";
+export const DEFAULT_GRADE: Grade = "TYPE_1";
 
 export interface WorkplaceCreateForm {
   companyId: number;
@@ -12,8 +12,8 @@ export interface WorkplaceCreateForm {
   remark: string;
 }
 
-export const getDefaultWorkplaceCreateForm = (): WorkplaceCreateForm => ({
-  companyId: 1,
+export const getDefaultWorkplaceCreateForm = (companyId: number): WorkplaceCreateForm => ({
+  companyId: companyId,
   name: "",
   address: "",
   bizNumber: "",
@@ -32,8 +32,8 @@ export interface WorkplaceUpdateForm {
   remark: string;
 }
 
-export const getDefaultWorkplaceUpdateForm = (): WorkplaceUpdateForm => ({
-  companyId: 1,
+export const getDefaultWorkplaceUpdateForm = (companyId: number): WorkplaceUpdateForm => ({
+  companyId: companyId,
   name: "",
   address: "",
   bizNumber: "",

@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { CompanyCreateContent } from "@workplace/component";
+import { WorkplaceCreateContent } from "@workplace/component";
 
 interface AddWorkplaceModalProps {
   companyId: number,
@@ -13,8 +13,8 @@ export const WorkplaceCreateModal = ({
   onSuccess,
 }: AddWorkplaceModalProps) => {
   return (
-    <Modal>
-      <CompanyCreateContent onClose={onClose} onSuccess={onSuccess} companyId={companyId} />
+    <Modal size="xl">
+      <WorkplaceCreateContent onClose={onClose} onSuccess={onSuccess} companyId={companyId} />
     </Modal>
   );
 };

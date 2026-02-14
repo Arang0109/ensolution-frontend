@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useStacks } from '@stack/hooks';
 import { useSearch } from '@shared/lib';
 
-import { StackListCard } from '@workplace/component';
+import { WorkplaceStackTableSection } from '@workplace/component';
 
 export const StackListPage = () => {
   const { stacks, loading } = useStacks();
@@ -36,7 +36,7 @@ export const StackListPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          <StackListCard 
+          <WorkplaceStackTableSection 
             stacks={filteredStacks}
           />
         </div>

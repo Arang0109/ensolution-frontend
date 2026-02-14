@@ -8,7 +8,7 @@ interface CompanyAddModalProps {
 
 export const CompanyCreateModal = ({ onClose, onSuccess }: CompanyAddModalProps) => {
   return (
-    <Modal>
+    <Modal size="xl">
       <CompanyCreateContent onClose={onClose} onSuccess={onSuccess} />
     </Modal>
   );

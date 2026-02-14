@@ -1,26 +1,30 @@
 import { useState } from "react";
 
-import { getDefaultCompanyUpdateForm } from "@company/model";
-import type { CompanyDetailResponse, CompanyUpdateForm } from "@company/model";
-import { validateCompany } from "@company/lib";
+import { getDefaultWorkplaceUpdateForm } from "@workplace/model";
+import type { WorkplaceDetailResponse, WorkplaceUpdateForm } from "@workplace/model";
+import { validateWorkplace } from "@workplace/lib";
 
 import type { ValidationErrors } from "@shared/model";
 import { formatBizNumber } from "@shared/lib";
 
-export const useCompanyEdit = (company: CompanyDetailResponse | null) => {
+export const useWorkplaceEdit = (workplace: WorkplaceDetailResponse | null) => {
+  const companyId = Number(workplace?.workplace.companyId);
+
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editForm, setEditForm] = useState<CompanyUpdateForm>(getDefaultCompanyUpdateForm());
+  const [editForm, setEditForm] = useState<WorkplaceUpdateForm>(getDefaultWorkplaceUpdateForm(companyId));
   const [errors, setErrors] = useState<ValidationErrors>({});
 
   const startEdit = () => {
-    if (!company) return;
+    if (!workplace) return;
 
     setEditForm({
-      name: company.company.name,
-      address: company.company.address,
-      ceoName: company.company.ceoName,
-      bizNumber: company.company.bizNumber,
-      remark: company.company.remark ?? "",
+      companyId: companyId,
+      name: workplace.workplace.name,
+      address: workplace.workplace.address,
+      bizNumber: workplace.workplace.bizNumber,
+      businessCategory: workplace.workplace.businessCategory,
+      grade: workplace.workplace.grade,
+      remark: workplace.workplace.remark ?? "",
     });
 
     setErrors({});
@@ -33,7 +37,7 @@ export const useCompanyEdit = (company: CompanyDetailResponse | null) => {
   };
 
   const handleChange = (
-    name: keyof CompanyUpdateForm,
+    name: keyof WorkplaceUpdateForm,
     value: string
   ) => {
     const formattedValue =
@@ -52,7 +56,7 @@ export const useCompanyEdit = (company: CompanyDetailResponse | null) => {
   };
 
   const validate = () => {
-    const validationErrors = validateCompany(editForm);
+    const validationErrors = validateWorkplace(editForm);
     setErrors(validationErrors);
 
     return Object.keys(validationErrors).length === 0;
@@ -70,4 +74,4 @@ export const useCompanyEdit = (company: CompanyDetailResponse | null) => {
 
     validate,
   };
-};
+}

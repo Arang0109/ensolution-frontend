@@ -6,11 +6,11 @@ import { formatBizNumber } from "@shared/lib";
 import { GRADE_LABELS } from "@shared/model";
 import { TableContainer } from "@shared/ui";
 
-interface WorkplaceListTableProps {
+interface WorkplaceTableSectionProps {
   workplaces: WorkplaceResponse[];
 }
 
-export const WorkplaceListTable = ({ workplaces }: WorkplaceListTableProps) => {
+export const WorkplaceTableSection = ({ workplaces }: WorkplaceTableSectionProps) => {
   const navigate = useNavigate();
 
   return (

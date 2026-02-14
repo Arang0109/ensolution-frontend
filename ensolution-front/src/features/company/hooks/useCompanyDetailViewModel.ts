@@ -10,6 +10,8 @@ import { useWorkplaceActions } from "@workplace/hooks";
 
 export const useCompanyDetailViewModel = () => {
   const navigate = useNavigate();
+  const goBack = () => navigate("/company");
+
   const { companyId } = useParams();
   const { showToast } = useToast();
 
@@ -35,8 +37,6 @@ export const useCompanyDetailViewModel = () => {
     if (companyId) fetchCompany(Number(companyId));
   }, [companyId, fetchCompany])
 
-  const goBack = () => navigate("/company");
-
   const handleSave = async () => {
     if (!companyId) return;
 
@@ -50,7 +50,7 @@ export const useCompanyDetailViewModel = () => {
       setIsEditMode(false);
       fetchCompany(Number(companyId));
     } else {
-      showToast("수정에 실패했습니다.");
+      showToast(result?.message, "error");
     }
   };
 
@@ -60,9 +60,13 @@ export const useCompanyDetailViewModel = () => {
     if (!companyId) return;
 
     const result = await deleteCompanyAction(Number(companyId));
-    showToast(result.success ? "삭제에 성공했습니다." : "삭제에 실패했습니다.");
 
-    if (result.success) goBack();
+    if (result.success) {
+      showToast("삭제에 성공했습니다.");
+      goBack();
+    } else {
+      showToast(result?.message, "error");
+    }
   };
 
   return {
@@ -87,5 +91,5 @@ export const useCompanyDetailViewModel = () => {
 
     handleCreate,
     refreshCompany: fetchCompany,
-};
+  };
 }

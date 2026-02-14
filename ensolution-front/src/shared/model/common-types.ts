@@ -14,6 +14,8 @@ export type PlanStatus = 'MEASURING' | 'ANALYZING' | 'COMPLETED' | 'CANCELED';
 
 export type Team = 1 | 2 | 3 | 4;
 
+export type ValidationErrors = Record<string, string>;
+
 export interface ActionResult {
   success: boolean;
   message: string;

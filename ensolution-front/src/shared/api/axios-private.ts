@@ -1,5 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { axiosPublic } from '@/shared/api/axios-public';
+import type { ApiResponseMessage } from '@shared/model';
 
 const baseURL = import.meta.env.DEV ? 'http://localhost:8080/api' : '/api';
 
@@ -26,11 +27,13 @@ axiosPrivate.interceptors.request.use(
 
 axiosPrivate.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+
+  async (error: AxiosError<ApiResponseMessage<unknown>>) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
 
+    // 🔹 401 refresh
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -50,6 +53,10 @@ axiosPrivate.interceptors.response.use(
         window.location.href = '/';
         return Promise.reject(refreshError);
       }
+    }
+
+    if (error.response?.data) {
+      return Promise.resolve(error.response);
     }
 
     return Promise.reject(error);

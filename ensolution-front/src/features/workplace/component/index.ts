@@ -1,7 +1,6 @@
 export { WorkplaceCreateModal } from './WorkplaceCreateModal';
-export { CompanyCreateContent } from './CompanyCreateContent';
-export { WorkplaceDetailCard } from './WorkplaceDetailCard';
-export { StackItem } from './StackItem';
-export { StackListCard } from './StackListCard';
+export { WorkplaceCreateContent } from './WorkplaceCreateContent';
+export { WorkplaceProfileSection } from './WorkplaceProfileSection';
+export { WorkplaceStackTableSection } from './WorkplaceStackTableSection';
 
-export { WorkplaceListTable } from "./WorkplaceListTable";
+export { WorkplaceTableSection } from "./WorkplaceTableSection";

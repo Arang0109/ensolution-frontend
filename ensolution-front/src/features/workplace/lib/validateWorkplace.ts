@@ -1,13 +1,14 @@
-import type { CompanyCreateForm, CompanyUpdateForm } from "@company/model";
+import type { WorkplaceCreateForm, WorkplaceUpdateForm } from "@workplace/model";
 
 import { stripBizNumber } from "@/shared/lib";
+
 import type { ValidationErrors } from "@shared/model";
 
-export const validateCompany = (form: CompanyCreateForm | CompanyUpdateForm): ValidationErrors => {
+export const validateWorkplace = (form: WorkplaceCreateForm | WorkplaceUpdateForm): ValidationErrors => {
   const errors: ValidationErrors = {};
 
   if (!form.name.trim()) {
-    errors.name = "의뢰기관명은 필수 입력사항입니다.";
+    errors.name = "사업장명은 필수 입력사항입니다.";
   }
 
   const cleanBiz = stripBizNumber(form.bizNumber);
@@ -17,8 +18,6 @@ export const validateCompany = (form: CompanyCreateForm | CompanyUpdateForm): Va
   } else if (!/^\d{10}$/.test(cleanBiz)) {
     errors.bizNumber = "사업자번호는 10자리 숫자여야 합니다.";
   }
-
-  if(!form.ceoName.trim()) { errors.ceoName = "대표자명은 필수 입력사항입니다."}
 
   return errors;
 };

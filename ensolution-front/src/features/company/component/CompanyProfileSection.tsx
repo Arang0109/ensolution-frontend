@@ -1,5 +1,5 @@
 import type { CompanyResponse, CompanyUpdateRequest } from "@company/model";
-import type { ValidationErrors } from "@company/lib";
+import type { ValidationErrors } from "@shared/model";
 
 import { InputField, TextAreaField, SectionHeader } from "@shared/ui";
 import { formatBizNumber, formatDate } from "@shared/lib";

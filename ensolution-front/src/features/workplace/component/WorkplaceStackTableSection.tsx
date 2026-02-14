@@ -3,17 +3,17 @@ import type { StackResponse } from '@stack/model';
 
 import { Button, SectionHeader, EmptyState } from "@shared/ui";
 
-interface StackListCardProps {
+interface WorkplaceStackTableSectionProps {
   stacks: StackResponse[];
   isEditMode?: boolean;
   onClick?: () => void;
 }
 
-export const StackListCard = ({
+export const WorkplaceStackTableSection = ({
   stacks,
   isEditMode=false,
   onClick,
-}: StackListCardProps) => {
+}: WorkplaceStackTableSectionProps) => {
   const showAddButton = !isEditMode && typeof onClick === "function";
 
   return (

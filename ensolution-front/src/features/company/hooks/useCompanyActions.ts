@@ -18,16 +18,9 @@ export const useCompanyActions = () => {
 
         return {
           success: res.status,
-          message: res.message ?? "등록이 완료되었습니다.",
+          message: res.message,
         };
 
-      } catch (error) {
-        console.error(error);
-
-        return {
-          success: false,
-          message: "등록 중 오류가 발생했습니다.",
-        };
       } finally {
         setCreating(false);
       }
@@ -35,28 +28,23 @@ export const useCompanyActions = () => {
     []
   );
 
-  const handleDelete = useCallback(async (companyId: number): Promise<ActionResult> => {
-    setDeletingId(companyId);
+  const handleDelete = useCallback(
+    async (companyId: number): Promise<ActionResult> => {
+      setDeletingId(companyId);
 
-    try {
-      const res = await deleteCompany(companyId);
+      try {
+        const res = await deleteCompany(companyId);
 
-      return {
-        success: res.status,
-        message: res.message ?? "삭제가 완료되었습니다.",
-      };
-
-    } catch (error) {
-      console.error(error);
-
-      return {
-        success: false,
-        message: "삭제 중 오류가 발생했습니다.",
-      };
-    } finally {
-      setDeletingId(null);
-    }
-  }, []);
+        return {
+          success: res.status,
+          message: res.message,
+        };
+      } finally {
+        setDeletingId(null);
+      }
+    },
+    []
+  );
 
   const handleUpdate = useCallback(
     async (companyId: number, data: CompanyUpdateRequest): Promise<ActionResult> => {
@@ -67,15 +55,7 @@ export const useCompanyActions = () => {
 
         return {
           success: res.status,
-          message: res.message ?? "수정이 완료되었습니다.",
-        };
-
-      } catch (error) {
-        console.error(error);
-
-        return {
-          success: false,
-          message: "수정 중 오류가 발생했습니다.",
+          message: res.message,
         };
       } finally {
         setUpdatingId(null);

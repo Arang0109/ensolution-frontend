@@ -1,10 +1,11 @@
 import type { WorkplaceResponse, WorkplaceUpdateRequest } from '@workplace/model';
 
 import { GRADE_LABELS_OPTIONS, GRADE_LABELS } from '@shared/model';
+import type { ValidationErrors } from "@shared/model";
 import { formatBizNumber, formatDate } from '@shared/lib';
 import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
-interface WorkplaceDetailCardProps {
+interface WorkplaceProfileSectionProps {
   workplace: WorkplaceResponse;
   isEditMode: boolean;
   editForm: WorkplaceUpdateRequest;
@@ -12,14 +13,16 @@ interface WorkplaceDetailCardProps {
     name: keyof WorkplaceUpdateRequest,
     value: string
   ) => void;
+  errors: ValidationErrors;
 }
 
-export const WorkplaceDetailCard = ({
+export const WorkplaceProfileSection = ({
   workplace,
   isEditMode,
+  errors,
   editForm,
   onChange,
-}: WorkplaceDetailCardProps) => {
+}: WorkplaceProfileSectionProps) => {
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
@@ -34,6 +37,7 @@ export const WorkplaceDetailCard = ({
                 required={true}
                 value={editForm.name}
                 onChange={(v) => onChange("name", v)}
+                helperText={errors.name}
               />
               <InputField
                 label="주소"
@@ -50,6 +54,7 @@ export const WorkplaceDetailCard = ({
                 value={editForm.bizNumber}
                 onChange={(v) => onChange("bizNumber", v)}
                 placeholder="000-00-00000"
+                helperText={errors.bizNumber}
                 max={12}
               />
               <InputField

@@ -1,35 +1,38 @@
 import { DetailPageHeader } from '@widgets/detail-page-header';
 import { FullPageLoader, EmptyState } from '@shared/ui';
 import {
-  WorkplaceDetailCard,
-  StackListCard
+  WorkplaceProfileSection,
+  WorkplaceStackTableSection
 } from '@workplace/component';
 import { StackCreateModal } from '@stack/ui';
 
-import { useWorkplaceDetailPage } from '@workplace/hooks';
+import { useWorkplaceDetailViewModel } from '@workplace/hooks';
 
 export const WorkplaceDetailPage = () => {
   const {
     workplace,
+    loading,
+    deletingId,
+
     showAddModal,
     setShowAddModal,
 
-    handleEditChange,
-    handleUpdateClick,
-    handleDeleteClick,
-    handleSaveEdit,
-    handleCancelEdit,
-    handleStackAddSuccess,
-
-    isEditMode,
-    isDeleting,
-    
-    filtered: filteredStacks,
-
-    loading,
     editForm,
-    backUrl,
-  } = useWorkplaceDetailPage();
+    errors,
+    isEditMode,
+
+    startEdit,
+    cancelEdit,
+    handleChange,
+
+    goBack,
+    handleSave,
+    handleDelete,
+
+    refreshWorkplace,
+
+    filtered: filteredStacks
+  } = useWorkplaceDetailViewModel();
   
 
   if (loading) {
@@ -41,7 +44,7 @@ export const WorkplaceDetailPage = () => {
       <EmptyState
         title="사업장 정보를 불러올 수 없습니다."
         actionLabel="목록으로 돌아가기"
-        onAction={backUrl}
+        onAction={goBack}
       />
     );
   }
@@ -51,25 +54,26 @@ export const WorkplaceDetailPage = () => {
       <DetailPageHeader
         title={workplace.workplace.name}
         isEditMode={isEditMode}
-        isDeleting={isDeleting}
-        onDelete={handleDeleteClick}
-        onUpdate={handleUpdateClick}
-        onSave={handleSaveEdit}
-        onCancel={handleCancelEdit}
-        backUrl={backUrl}
+        isDeleting={deletingId === workplace.workplace.id}
+        onSave={handleSave}
+        onDelete={handleDelete}
+        onUpdate={startEdit}
+        onCancel={cancelEdit}
+        backUrl={goBack}
       />
 
       <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          <WorkplaceDetailCard
+          <WorkplaceProfileSection
             workplace={workplace.workplace}
             isEditMode={isEditMode}
             editForm={editForm}
-            onChange={handleEditChange}
+            onChange={handleChange}
+            errors={errors}
           />
 
-          <StackListCard
+          <WorkplaceStackTableSection
             stacks={filteredStacks}
             isEditMode={isEditMode}
             onClick={() => setShowAddModal(true)}
@@ -82,7 +86,7 @@ export const WorkplaceDetailPage = () => {
         <StackCreateModal
           workplaceId={(workplace.workplace.id)}
           onClose={() => setShowAddModal(false)}
-          onSuccess={handleStackAddSuccess}
+          onSuccess={() => refreshWorkplace(workplace.workplace.id)}
         />
       )}
     </div>

@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { useToast } from "@app/providers/toast";
 import { getWorkplaces } from "@workplace/api/workplaceApi";
 
 import type { WorkplaceResponse } from "@workplace/model";
@@ -8,7 +7,7 @@ import type { WorkplaceResponse } from "@workplace/model";
 export const useWorkplaces = () => {
   const [workplaces, setWorkplaces] = useState<WorkplaceResponse[]>([]);
   const [loading, setLoading] = useState(false);
-  const { showToast } = useToast();
+  const [error, setError] = useState<string | null>(null);
 
   const fetchWorkplaces = useCallback(async () => {
     setLoading(true);
@@ -24,12 +23,12 @@ export const useWorkplaces = () => {
 
     } catch (error) {
       console.error(error);
-      showToast('사업장 목록을 불러오지 못했습니다.', 'error');
+      setError('사업장 목록을 불러오지 못했습니다.');
       setWorkplaces([]);
     } finally {
       setLoading(false);
     }
-  }, [showToast]);
+  }, []);
 
   useEffect(() => {
     fetchWorkplaces();
@@ -38,6 +37,7 @@ export const useWorkplaces = () => {
   return {
     workplaces,
     loading,
+    error,
     reload: fetchWorkplaces
   }
 }

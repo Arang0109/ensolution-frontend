@@ -5,8 +5,8 @@ import {
 } from "@company/model";
 import type { CompanyCreateForm } from "@company/model";
 import { validateCompany } from "@company/lib";
-import type { ValidationErrors } from "@company/lib";
 
+import type { ValidationErrors } from "@shared/model";
 import { formatBizNumber } from "@/shared/lib";
 
 export const useCompanyCreate = () => {
