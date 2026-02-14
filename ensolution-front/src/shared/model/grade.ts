@@ -1,3 +1,5 @@
+// 사업장, 배출시설 등 시설의 규모를 나타내는 단위입니다.
+
 export const GRADE_LABELS = {
   TYPE_1: '1종',
   TYPE_2: '2종',

@@ -1,14 +1,17 @@
-import type { PollutantResponse } from "@/features/pollutant/model/pollutant-types";
+import type { PollutantResponse } from "@/features/pollutant/model/pollutant-dto";
 
+import { METHOD_LABELS } from "@pollutant/model";
+
+import { formatPollutantName } from "@shared/lib";
 import { TableContainer } from "@shared/ui";
 
-interface PollutantTableProps {
+interface PollutantTableSectionProps {
   pollutants: PollutantResponse[];
 }
 
-export const PollutantTable = ({
+export const PollutantTableSection = ({
   pollutants,
-}: PollutantTableProps) => {
+}: PollutantTableSectionProps) => {
     return (
     <TableContainer>
       <thead className="bg-gray-50">
@@ -40,10 +43,10 @@ export const PollutantTable = ({
             className="cursor-pointer hover:bg-gray-50 transition-colors"
           >
             <td className="px-6 py-4 text-sm font-medium text-gray-900">
-              {`${pollutant.nameKr} (${pollutant.nameEn})`}
+              {formatPollutantName(pollutant)}
             </td>
             <td className="px-6 py-4 text-sm text-gray-600 truncate max-w-xs">
-              {pollutant.method}
+              {METHOD_LABELS[pollutant.method] ?? '-'}
             </td>
             <td className="px-6 py-4 text-sm text-gray-600">
               {pollutant.equipmentName}

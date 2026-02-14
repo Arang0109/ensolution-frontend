@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { registerStackMeasurement } from "@stack/api/stackMeasurementApi";
 import { getPollutants } from "@pollutant/api/pollutantApi";
-import type { PollutantResponse } from "@/features/pollutant/model/pollutant-types";
+import type { PollutantResponse } from "@/features/pollutant/model/pollutant-dto";
 import type { Cycle } from "@/shared/model";
 
 import { CYCLE_LABELS } from "@stack/model";

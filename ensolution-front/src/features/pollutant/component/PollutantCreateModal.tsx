@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { PollutantCreateForm } from "@pollutant/ui";
+import { PollutantCreateContent } from "@pollutant/component";
 
 interface PollutantFormModalProps {
   onClose: () => void;
@@ -11,7 +11,7 @@ export const PollutantCreateModal = ({
 }: PollutantFormModalProps) => {
   return (
     <Modal size="xl">
-      <PollutantCreateForm onClose={onClose} onSuccess={onSuccess} />
+      <PollutantCreateContent onClose={onClose} onSuccess={onSuccess} />
     </Modal>
   );
 };

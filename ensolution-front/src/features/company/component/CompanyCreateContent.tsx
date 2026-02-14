@@ -6,7 +6,6 @@ import { mapCreateFormToRequest } from "@company/model";
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
 import { X } from "lucide-react";
-import type { FormEvent } from "react";
 
 interface CompanyCreateFormProps {
   onClose: () => void;
@@ -21,7 +20,7 @@ export const CompanyCreateContent = ({ onClose, onSuccess }: CompanyCreateFormPr
 
   const preventSubmitOnEnter = usePreventSubmitOnEnter();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
 

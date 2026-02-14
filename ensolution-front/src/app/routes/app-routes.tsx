@@ -14,7 +14,7 @@ import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
 import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
 
 import { StackListPage, StackDetailPage } from '@stack/pages/index';
-import { PollutantPage } from '@pollutant/pages/index';
+import { PollutantListPage } from '@pollutant/pages/index';
 
 import { PlanListPage, PlanDetailPage, PlanRegisterPage } from "@plan/pages";
 
@@ -53,7 +53,7 @@ export const AppRoutes = () => (
         <Route path="/team" element={<TeamListPage />} />
 
         {/* 실험실 */}
-        <Route path="/lab/pollutant" element={<PollutantPage />} />
+        <Route path="/lab/pollutant" element={<PollutantListPage />} />
 
         {/* 측정일정 */}
         <Route path="/plan" element={<PlanListPage />} />
