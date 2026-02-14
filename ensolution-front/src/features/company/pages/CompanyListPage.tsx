@@ -6,8 +6,10 @@ import { CompanyCreateModal, CompanyTableSection } from '@company/component';
 import { Button, EmptyState, FullPageLoader } from '@shared/ui';
 
 export const CompanyListPage = () => {
-  const { companies, loading, reload } = useCompanies();
+  const { companies, error, loading, reload } = useCompanies();
   const [showAddModal, setShowAddModal] = useState(false);
+
+  const isEmpty = !error && companies.length === 0;
   
   if (loading) return <FullPageLoader />;
 
@@ -27,16 +29,20 @@ export const CompanyListPage = () => {
 
       <hr className="border-gray-200 mb-6" />
 
-      {/* Company List */}
-      {companies.length === 0 ? (
+      {error ? (
+      <EmptyState
+        title="목록을 불러오지 못했습니다."
+        actionLabel="다시 시도"
+        onAction={reload}
+      />
+      ) : isEmpty ? (
         <EmptyState
-          title='등록된 업체가 없습니다.'
+          title="등록된 업체가 없습니다."
         />
       ) : (
         <CompanyTableSection companies={companies} />
       )}
 
-      {/* Add Company Modal */}
       {showAddModal && (
         <CompanyCreateModal
           onClose={() => setShowAddModal(false)}

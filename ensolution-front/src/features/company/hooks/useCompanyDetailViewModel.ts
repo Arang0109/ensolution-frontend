@@ -9,12 +9,12 @@ import { mapCreateFormToRequest } from "@company/model";
 import { useWorkplaceActions } from "@workplace/hooks";
 
 export const useCompanyDetailViewModel = () => {
-  const navgigate = useNavigate();
+  const navigate = useNavigate();
   const { companyId } = useParams();
   const { showToast } = useToast();
 
   const { company, fetchCompany, loading } = useCompanyDetail();
-  const { deletingId, handleDelete, handleUpdate } = useCompanyActions();
+  const { deletingId, handleDelete: deleteCompanyAction, handleUpdate } = useCompanyActions();
   const [showAddModal, setShowAddModal] = useState(false);
   const { handleCreate } = useWorkplaceActions();
 
@@ -25,7 +25,7 @@ export const useCompanyDetailViewModel = () => {
 
     startEdit,
     cancelEdit,
-    handleEditChange,
+    handleChange,
     setIsEditMode,
 
     validate,
@@ -35,9 +35,9 @@ export const useCompanyDetailViewModel = () => {
     if (companyId) fetchCompany(Number(companyId));
   }, [companyId, fetchCompany])
 
-  const backUrl = () => navgigate("/company");
+  const goBack = () => navigate("/company");
 
-  const saveEdit = async () => {
+  const handleSave = async () => {
     if (!companyId) return;
 
     if (!validate()) return;
@@ -54,36 +54,38 @@ export const useCompanyDetailViewModel = () => {
     }
   };
 
-  const deleteCompany = async () => {
+  const handleDelete = async () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
     
     if (!companyId) return;
 
-    const result = await handleDelete(Number(companyId));
+    const result = await deleteCompanyAction(Number(companyId));
     showToast(result.success ? "삭제에 성공했습니다." : "삭제에 실패했습니다.");
 
-    if (result.success) backUrl();
+    if (result.success) goBack();
   };
 
   return {
     company,
     loading,
     deletingId,
+
     showAddModal,
     setShowAddModal,
-    errors,
-    
+
     editForm,
+    errors,
     isEditMode,
+
     startEdit,
     cancelEdit,
-    handleEditChange,
+    handleChange,
 
-    backUrl,
-    saveEdit,
-    deleteCompany,
+    goBack,
+    handleSave,
+    handleDelete,
 
     handleCreate,
-    fetchCompany,
-  }
+    refreshCompany: fetchCompany,
+};
 }

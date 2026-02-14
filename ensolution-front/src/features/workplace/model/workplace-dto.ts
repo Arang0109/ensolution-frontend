@@ -1,5 +1,6 @@
-import type { Grade } from '@/shared/model/common-types';
-import type { StackResponse } from '@/features/stack/model/stack-types';
+import type { StackResponse } from '@stack/model';
+
+import type { Grade } from '@shared/model';
 
 export interface WorkplaceResponse {
   id: number;
@@ -10,13 +11,13 @@ export interface WorkplaceResponse {
   businessCategory: string;
   grade: Grade;
   remark: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface WorkplaceRegisterRequest {
-  name: string;
   companyId: number;
+  name: string;
   address: string;
   bizNumber: string;
   businessCategory: string;

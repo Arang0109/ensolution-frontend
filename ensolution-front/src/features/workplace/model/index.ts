@@ -1,1 +1,2 @@
-export * from './workplace-types';
+export * from './workplace-dto';
+export * from './workplace-form';

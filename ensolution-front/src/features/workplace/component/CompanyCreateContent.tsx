@@ -12,7 +12,7 @@ interface WorkplaceCreateFormProps {
   onSuccess: () => void;
 }
 
-export const WorkplaceCreateForm = ({ onClose, onSuccess, companyId }: WorkplaceCreateFormProps) => {
+export const CompanyCreateContent = ({ onClose, onSuccess, companyId }: WorkplaceCreateFormProps) => {
   const { form, isSubmitting, onChange, onSubmit } = useWorkplaceForm(companyId);
   const { showToast } = useToast();
 

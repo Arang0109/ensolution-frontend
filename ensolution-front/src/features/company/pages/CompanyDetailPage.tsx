@@ -2,7 +2,7 @@ import { DetailPageHeader } from "@widgets/detail-page-header";
 
 import { CompanyProfileSection, CompanyWorkplaceTableSection } from "@company/component";
 import { useCompanyDetailViewModel } from "@company/hooks";
-import { WorkplaceCreateModal } from "@workplace/ui";
+import { WorkplaceCreateModal } from "@workplace/component";
 
 import { FullPageLoader, EmptyState } from "@shared/ui";
 
@@ -17,15 +17,15 @@ export const CompanyDetailPage = () => {
 
     editForm,
 
-    backUrl,
+    goBack,
     startEdit,
     cancelEdit,
-    saveEdit,
-    deleteCompany,
-    handleEditChange,
+    handleSave,
+    handleDelete,
+    handleChange,
 
     setShowAddModal,
-    fetchCompany,
+    refreshCompany,
   } = useCompanyDetailViewModel();
 
   if (loading) {
@@ -37,7 +37,7 @@ export const CompanyDetailPage = () => {
       <EmptyState
         title="업체 정보를 찾을 수 없습니다."
         actionLabel="목록으로 돌아가기"
-        onAction={backUrl}
+        onAction={goBack}
       />
     );
   }
@@ -48,11 +48,11 @@ export const CompanyDetailPage = () => {
         title={company.company.name}
         isEditMode={isEditMode}
         isDeleting={deletingId === company.company.id}
-        onDelete={deleteCompany}
+        onSave={handleSave}
+        onDelete={handleDelete}
         onUpdate={startEdit}
-        onSave={saveEdit}
         onCancel={cancelEdit}
-        backUrl={backUrl}
+        backUrl={goBack}
       />
 
       <div className="grid grid-cols-1 gap-6">
@@ -60,7 +60,7 @@ export const CompanyDetailPage = () => {
           company={company.company}
           isEditMode={isEditMode}
           editForm={editForm}
-          onChange={handleEditChange}
+          onChange={handleChange}
           errors={errors}
         />
 
@@ -75,7 +75,7 @@ export const CompanyDetailPage = () => {
         <WorkplaceCreateModal
           companyId={company.company.id}
           onClose={() => setShowAddModal(false)}
-          onSuccess={() => fetchCompany(company.company.id)}
+          onSuccess={() => refreshCompany(company.company.id)}
         />
       )}
     </div>

@@ -3,7 +3,7 @@ import { FullPageLoader, EmptyState } from '@shared/ui';
 import {
   WorkplaceDetailCard,
   StackListCard
-} from '@workplace/ui';
+} from '@workplace/component';
 import { StackCreateModal } from '@stack/ui';
 
 import { useWorkplaceDetailPage } from '@workplace/hooks';

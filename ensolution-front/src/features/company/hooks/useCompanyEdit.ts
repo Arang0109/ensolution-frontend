@@ -32,7 +32,7 @@ export const useCompanyEdit = (company: CompanyDetailResponse | null) => {
     setErrors({});
   };
 
-  const handleEditChange = (
+  const handleChange = (
     name: keyof CompanyUpdateForm,
     value: string
   ) => {
@@ -65,7 +65,7 @@ export const useCompanyEdit = (company: CompanyDetailResponse | null) => {
 
     startEdit,
     cancelEdit,
-    handleEditChange,
+    handleChange,
     setIsEditMode,
 
     validate,

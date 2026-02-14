@@ -1,4 +1,4 @@
-import { WorkplaceListTable } from "@workplace/ui";
+import { WorkplaceListTable } from "@workplace/component";
 import type { WorkplaceResponse } from "@workplace/model";
 
 import { Button, SectionHeader, EmptyState } from "@shared/ui";

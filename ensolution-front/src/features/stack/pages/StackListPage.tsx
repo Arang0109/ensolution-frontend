@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useStacks } from '@stack/hooks';
 import { useSearch } from '@shared/lib';
 
-import { StackListCard } from '@workplace/ui';
+import { StackListCard } from '@workplace/component';
 
 export const StackListPage = () => {
   const { stacks, loading } = useStacks();

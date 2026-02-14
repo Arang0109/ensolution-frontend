@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { useToast } from "@app/providers/toast";
 import { getCompanies } from "@company/api/companyApi";
 
 import type { CompanyResponse } from "@company/model";
@@ -8,10 +7,11 @@ import type { CompanyResponse } from "@company/model";
 export const useCompanies = () => {
   const [companies, setCompanies] = useState<CompanyResponse[]>([]);
   const [loading, setLoading] = useState(false);
-  const { showToast } = useToast();
+  const [error, setError] = useState<string | null>(null);
 
   const fetchCompanies = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await getCompanies();
 
@@ -24,12 +24,12 @@ export const useCompanies = () => {
 
     } catch (error) {
       console.error(error);
-      showToast('업체 목록을 불러오지 못했습니다.', 'error');
+      setError('의뢰기관 목록을 불러오지 못했습니다.');
       setCompanies([]);
     } finally {
       setLoading(false);
     }
-  }, [showToast]);
+  }, []);
 
   useEffect(() => {
     fetchCompanies();
@@ -38,6 +38,7 @@ export const useCompanies = () => {
   return {
     companies,
     loading,
+    error,
     reload: fetchCompanies
   }
 }

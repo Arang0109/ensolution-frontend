@@ -1,5 +1,5 @@
 import { useWorkplaces } from "@workplace/hooks";
-import { WorkplaceListTable } from "@workplace/ui";
+import { WorkplaceListTable } from "@workplace/component";
 
 import { EmptyState } from "@shared/ui";
 
