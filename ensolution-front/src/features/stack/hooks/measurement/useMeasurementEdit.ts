@@ -4,7 +4,11 @@ import type { StackMeasurementUpdateForm, StackMeasurementResponse } from "@stac
 
 export const useMeasurementEdit = (stackMeasurement: StackMeasurementResponse | null) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editForm, setEditForm] = useState<StackMeasurementUpdateForm>(getDefaultStackMeasurementUpdateForm());
+  const [editForm, setEditForm] = useState<StackMeasurementUpdateForm>(() =>
+    stackMeasurement
+      ? { cycle: stackMeasurement.cycle, allowance: stackMeasurement.allowance }
+      : getDefaultStackMeasurementUpdateForm()
+  );
 
   const startEdit = () => {
     if (!stackMeasurement) return;
