@@ -1,9 +1,19 @@
-import type { WorkplaceCreateForm, WorkplaceRegisterRequest } from "@workplace/model";
+import type {
+  WorkplaceCreateForm, WorkplaceRegisterRequest,
+  WorkplaceUpdateForm, WorkplaceUpdateRequest
+} from "@workplace/model";
 import { stripBizNumber } from '@shared/lib';
 
 export const mapCreateFormToRequest = (
   form: WorkplaceCreateForm
 ): WorkplaceRegisterRequest => ({
+  ...form,
+  bizNumber: stripBizNumber(form.bizNumber),
+});
+
+export const mapUpdateFormToRequest = (
+  form: WorkplaceUpdateForm
+): WorkplaceUpdateRequest => ({
   ...form,
   bizNumber: stripBizNumber(form.bizNumber),
 });

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { useWorkplaceDetail, useWorkplaceActions, useWorkplaceEdit } from '@workplace/hooks';
-import { mapCreateFormToRequest } from '@workplace/model';
+import { mapUpdateFormToRequest } from '@workplace/model';
 
 import { useStackActions } from '@stack/hooks';
 
@@ -51,7 +51,7 @@ export const useWorkplaceDetailViewModel = () => {
 
     if (!validate()) return;
 
-    const payload = mapCreateFormToRequest(editForm);
+    const payload = mapUpdateFormToRequest(editForm);
     const result = await handleUpdate(Number(workplaceId), payload);
     
     if (result.success) {

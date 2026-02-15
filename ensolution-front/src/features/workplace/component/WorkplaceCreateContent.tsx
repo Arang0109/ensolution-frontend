@@ -36,8 +36,7 @@ export const WorkplaceCreateContent = ({ onClose, onSuccess, companyId }: Workpl
     } else {
       showToast(result?.message,'error');
     }
-  };
-
+  }
   return (
     <>
       <div className="flex justify-between items-center mb-6">
