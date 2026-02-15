@@ -1,6 +1,10 @@
-import { useStackForm } from "@stack/hooks";
-import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
+import { useToast } from "@app/providers/toast";
 
+import { useStackActions, useStackCreate } from "@stack/hooks";
+import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
+import { mapCreateFormToRequest } from "@stack/model";
+
+import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { GRADE_LABELS_OPTIONS } from "@shared/model";
 import { IconButton, Button, InputField, SelectField, TextAreaField } from "@shared/ui";
 import { X } from "lucide-react";
@@ -12,15 +16,26 @@ interface StackCreateFormProps {
   onSuccess: () => void;
 }
 
-export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreateFormProps) => {
-  const { form, isSubmitting, onChange, onSubmit } = useStackForm(workplaceId);
+export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCreateFormProps) => {
+  const { form, errors, onChange, validate } = useStackCreate(workplaceId);
+  const { handleCreate, creating } = useStackActions();
+  const { showToast } = useToast();
+
+  const preventSubmitOnEnter = usePreventSubmitOnEnter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const result = await onSubmit(e);
+    e.preventDefault();
+    if (!validate()) return;
+
+    const payload = mapCreateFormToRequest(form);
+    const result = await handleCreate(payload);
 
     if (result?.success) {
+      showToast('측정시설이 등록되었습니다.', 'success');
       onSuccess();
       onClose();
+    } else {
+      showToast(result?.message,'error');
     }
   };
 
@@ -36,7 +51,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
         />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} onKeyDown={preventSubmitOnEnter} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             label="측정시설명"
@@ -45,16 +60,16 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             value={form.name}
             onChange={(v) => onChange("name", v)}
             placeholder="측정시설명을 입력하세요"
-            disabled={isSubmitting}
+            helperText={errors.name}
+            disabled={creating}
           />
           <InputField
             label="SEMS번호"
-            required={true}
             name="semsNumber"
             value={form.semsNumber}
             onChange={(v) => onChange("semsNumber", v)}
             placeholder="SEMS 번호를 입력하세요"
-            disabled={isSubmitting}
+            disabled={creating}
           />
         </div>
 
@@ -65,8 +80,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             value={form.grade}
             placeholder="종별을 선택하세요"
             onChange={(v) => onChange("grade", v)}
-            required
-            disabled={isSubmitting}
+            disabled={creating}
             options={GRADE_LABELS_OPTIONS}
             getOptionLabel={(g) => g.label}
             getOptionValue={(g) => g.value}
@@ -78,7 +92,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             value={form.height}
             onChange={(v) => onChange("height", v)}
             placeholder="높이를 입력하세요"
-            disabled={isSubmitting}
+            disabled={creating}
           />
         </div>
 
@@ -89,8 +103,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             value={form.shape}
             placeholder="형태를 선택하세요"
             onChange={(v) => onChange("shape", v)}
-            required
-            disabled={isSubmitting}
+            disabled={creating}
             options={SHAPE_LABELS_OPTIONS}
             getOptionLabel={(g) => g.label}
             getOptionValue={(g) => g.value}
@@ -98,11 +111,10 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
           <SelectField
             label="방향"
             name="orientation"
-              value={form.orientation}
+            value={form.orientation}
             onChange={(v) => onChange("orientation", v)}
             placeholder="방향을 선택하세요"
-            required
-            disabled={isSubmitting}
+            disabled={creating}
             options={ORIENTATION_LABELS_OPTIONS}
             getOptionLabel={(g) => g.label}
             getOptionValue={(g) => g.value}
@@ -113,12 +125,13 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
         {form.shape === "CIRCULAR" ? (
           <InputField
             label="지름 (cm)"
+            type="number"
             name="diameter"
             value={form.horizontalLength}
             onChange={(v) => onChange("horizontalLength", v)}
             placeholder="지름을 입력하세요"
             required
-            disabled={isSubmitting}
+            disabled={creating}
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -129,8 +142,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
               value={form.horizontalLength}
               onChange={(v) => onChange("horizontalLength", v)}
               placeholder="가로길이를 입력하세요"
-              required
-              disabled={isSubmitting}
+              disabled={creating}
             />
 
             <InputField
@@ -140,8 +152,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
               value={form.verticalLength}
               onChange={(v) => onChange("verticalLength", v)}
               placeholder="세로길이를 입력하세요"
-              required
-              disabled={isSubmitting}
+              disabled={creating}
             />
 
           </div>
@@ -152,7 +163,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
           value={form.remark}
           onChange={(v) => onChange("remark", v)}
           placeholder="추가 정보를 입력하세요 (선택사항)"
-          disabled={isSubmitting}
+          disabled={creating}
         />
 
         <div className="flex gap-3 pt-4">
@@ -163,7 +174,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             size="md"
             width="full"
             type="button"
-            disabled={isSubmitting}
+            disabled={creating}
           />
           <Button
             label="추가"
@@ -171,7 +182,7 @@ export const StackCreateForm = ({ workplaceId, onClose, onSuccess }: StackCreate
             size="md"
             width="full"
             type="submit"
-            disabled={isSubmitting}
+            disabled={creating}
           />
         </div>
       </form>

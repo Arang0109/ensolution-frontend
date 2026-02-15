@@ -1,10 +1,10 @@
-import { axiosPrivate } from "@/shared/api";
-import type { ApiResponseMessage } from "@/shared/model";
+import { axiosPrivate } from "@shared/api";
+import type { ApiResponseMessage, FieldErrorResponse } from "@shared/model";
 import type { StackResponse, StackDetailResponse, StackRegisterRequest, StackUpdateRequest, StackMeasurementResponse } from "@stack/model";
 
 export const registerStack = async (
   data: StackRegisterRequest
-): Promise<ApiResponseMessage<void>> => {
+): Promise<ApiResponseMessage<FieldErrorResponse[]>> => {
   const res = await axiosPrivate.post("/stacks", data);
   return res.data;
 }

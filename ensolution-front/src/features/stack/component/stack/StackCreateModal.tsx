@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { StackCreateForm } from "@stack/component";
+import { StackCreateContent } from "@stack/component";
 
 interface StackCreateModalProps {
   workplaceId: number;
@@ -10,7 +10,7 @@ interface StackCreateModalProps {
 export const StackCreateModal = ({ workplaceId, onClose, onSuccess }: StackCreateModalProps) => {
   return (
     <Modal>
-      <StackCreateForm onClose={onClose} onSuccess={onSuccess} workplaceId={workplaceId} />
+      <StackCreateContent onClose={onClose} onSuccess={onSuccess} workplaceId={workplaceId} />
     </Modal>
   )
 

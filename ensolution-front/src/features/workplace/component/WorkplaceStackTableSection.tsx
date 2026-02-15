@@ -1,4 +1,4 @@
-import { StackListTable } from '@stack/component';
+import { StackTableSection } from '@stack/component';
 import type { StackResponse } from '@stack/model';
 
 import { Button, SectionHeader, EmptyState } from "@shared/ui";
@@ -36,7 +36,7 @@ export const WorkplaceStackTableSection = ({
       {stacks.length === 0 ? (
         <EmptyState title='등록된 측정시설이 없습니다.' />
       ) : (
-        <StackListTable stacks={stacks} />
+        <StackTableSection stacks={stacks} />
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import { useStacks } from '@stack/hooks';
 
-import { WorkplaceStackTableSection } from '@workplace/component';
+import { StackTableSection } from '@stack/component';
 
 import { EmptyState, FullPageLoader } from "@shared/ui";
 
@@ -30,7 +30,7 @@ export const StackListPage = () => {
         <EmptyState title='등록된 측정시설이 없습니다.'/>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          <WorkplaceStackTableSection stacks={stacks}/>
+          <StackTableSection stacks={stacks}/>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import type { PreventionResponse, StackMeasurementResponse } from '@stack/model';
+import type { PreventionDetailResponse, StackMeasurementResponse } from '@stack/model';
 
 import type { Shape, Orientation } from '@stack/model';
 import type { Grade } from '@shared/model';
@@ -46,6 +46,6 @@ export interface StackUpdateRequest {
 
 export interface StackDetailResponse {
   stack: StackResponse;
-  preventions: PreventionResponse[];
+  preventions: PreventionDetailResponse[];
   stackMeasurements: StackMeasurementResponse[];
 }

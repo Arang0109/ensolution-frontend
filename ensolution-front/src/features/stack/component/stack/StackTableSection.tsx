@@ -7,11 +7,11 @@ import { TableContainer } from "@shared/ui";
 import { GRADE_LABELS } from "@shared/model";
 import { formatHeight, formatLength } from "@shared/lib";
 
-interface StackListTableProps {
+interface StackTableSectionProps {
   stacks: StackResponse[];
 }
 
-export const StackListTable = ({ stacks }: StackListTableProps) => {
+export const StackTableSection = ({ stacks }: StackTableSectionProps) => {
 
   const navigate = useNavigate();
   

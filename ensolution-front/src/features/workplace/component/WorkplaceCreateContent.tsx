@@ -9,13 +9,13 @@ import { IconButton, Button, InputField, SelectField, TextAreaField } from "@sha
 import { X } from "lucide-react";
 import type { FormEvent } from "react";
 
-interface WorkplaceCreateFormProps {
+interface WorkplaceCreateContentProps {
   companyId: number;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const WorkplaceCreateContent = ({ onClose, onSuccess, companyId }: WorkplaceCreateFormProps) => {
+export const WorkplaceCreateContent = ({ onClose, onSuccess, companyId }: WorkplaceCreateContentProps) => {
   const { form, errors, onChange, validate } = useWorkplaceCreate(companyId);
   const { handleCreate, creating } = useWorkplaceActions();
   const { showToast } = useToast();
@@ -36,7 +36,8 @@ export const WorkplaceCreateContent = ({ onClose, onSuccess, companyId }: Workpl
     } else {
       showToast(result?.message,'error');
     }
-  }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-6">

@@ -2,7 +2,7 @@ import type { StackResponse, StackUpdateRequest } from '@stack/model';
 
 import { formatDateTime } from '@/shared/lib/formatter/dateFormatter';
 import { SHAPE_LABELS, SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
-import { GRADE_LABELS, GRADE_LABELS_OPTIONS } from "@shared/model";
+import { GRADE_LABELS, GRADE_LABELS_OPTIONS, type ValidationErrors } from "@shared/model";
 import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
 interface StackSidebarProps {
@@ -17,6 +17,7 @@ interface StackSidebarProps {
     name: keyof StackUpdateRequest,
     value: string
   ) => void;
+  errors: ValidationErrors
 }
 
 export const StackSidebar = ({
@@ -28,6 +29,7 @@ export const StackSidebar = ({
   isEditMode,
   editForm,
   onChange,
+  errors,
 }: StackSidebarProps) => {
 
   // 원형일 경우 true
@@ -47,6 +49,7 @@ export const StackSidebar = ({
                 required={true}
                 value={editForm.name}
                 onChange={(v) => onChange("name", v)}
+                helperText={errors.name}
               />
 
               {/* Sems 번호 */}
