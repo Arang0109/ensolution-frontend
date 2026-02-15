@@ -16,10 +16,10 @@ export const useStackActions = () => {
     try {
       const res = await registerStack(data);
       return {
-          success: res.status,
-          message: res.message,
-          data: res.data,
-        };
+        success: res.status,
+        message: res.message,
+        data: res.data,
+      };
 
     } finally {
       setCreating(false);

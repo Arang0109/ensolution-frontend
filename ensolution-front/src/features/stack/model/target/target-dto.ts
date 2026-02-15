@@ -8,17 +8,12 @@ export interface TargetResponse {
 }
 
 export interface TargetRegisterRequest {
-  preventionId: number;
   targetSubstance: string;
   removalEfficiency: string;
 }
 
 export interface TargetUpdateRequest {
-  targetSubstance: string;
-  removalEfficiency: string;
-}
-
-export interface TargetForm {
+  id: number | null;
   targetSubstance: string;
   removalEfficiency: string;
 }

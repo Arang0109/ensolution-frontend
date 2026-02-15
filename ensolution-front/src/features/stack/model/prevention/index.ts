@@ -1,3 +1,3 @@
 export * from './prevention-dto';
-export * from './facility-dto';
-export * from './target-dto';
+export * from './prevention-form';
+export * from './prevention-mapper';

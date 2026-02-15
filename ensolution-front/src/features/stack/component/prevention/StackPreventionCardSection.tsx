@@ -1,43 +1,43 @@
 import type { PreventionDetailResponse } from '@stack/model';
 
-import { Button } from '@shared/ui';
+import { Button, SectionHeader, EmptyState } from '@shared/ui';
 import { formatDate } from '@/shared/lib/formatter/dateFormatter';
 
-interface StackPreventionListCardProps {
+interface StackPreventionCardSectionProps {
   preventions: PreventionDetailResponse[];
   onAddPrevention: () => void;
   onPreventionClick: (prevention: PreventionDetailResponse) => void;
 }
 
-export const StackPreventionListCard = ({
+export const StackPreventionCardSection = ({
   preventions,
   onAddPrevention,
   onPreventionClick,
-}: StackPreventionListCardProps) => {
+}: StackPreventionCardSectionProps) => {
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-neutral-900">방지시설 목록</h2>
-        <Button
-          label="방지시설추가"
-          onClick={onAddPrevention}
-          variant="primary"
-          size="md"
-          type="button"
-        />
-      </div>
+    <div className="bg-white border border-slate-200 rounded-lg shadow-md">
+      <SectionHeader
+        title="측정물질 정보"
+        rightSlot={
+          <Button
+            label="측정항목추가"
+            onClick={onAddPrevention}
+            variant="primary"
+            size="md"
+            type="button"
+          />
+        }
+      />
 
       {preventions.length === 0 ? (
-        <div className="text-center py-8 bg-gray-50 rounded-lg">
-          <p className="text-gray-500">등록된 방지시설이 없습니다.</p>
-        </div>
+        <EmptyState title='등록된 방지시설이 없습니다.' />
       ) : (
         <div className="space-y-4">
           {preventions.map((preventionDetail) => (
             <div
               key={preventionDetail.prevention.id}
               onClick={() => onPreventionClick(preventionDetail)}
-              className="border border-slate-200 rounded-lg p-4 hover:shadow-md hover:border-neutral-400 transition-all cursor-pointer"
+              className="border border-slate-200 rounded-lg m-4 p-4 hover:shadow-md hover:border-neutral-400 transition-all cursor-pointer"
             >
               <div className="flex justify-between items-start mb-3">
                 <h3 className="font-semibold text-gray-800 text-lg">

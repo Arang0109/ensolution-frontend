@@ -1,3 +1,5 @@
+import type { StackMeasurementResponse } from "@stack/model";
+
 interface PollutantName {
   nameKr?: string;
   nameEn?: string;
@@ -16,3 +18,16 @@ export const formatPollutantName = ({
 
   return "";
 };
+
+export const formatAllowance = (
+  measurement: StackMeasurementResponse
+): string => {
+  if (measurement.allowance == null) return "-";
+
+  const unit =
+    measurement.pollutant.phase === "PARTICLE"
+      ? "mg/Sm³"
+      : "ppm";
+
+  return `${measurement.allowance} ${unit}`;
+}

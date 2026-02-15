@@ -1,11 +1,11 @@
 import type { StackResponse, StackUpdateRequest } from '@stack/model';
+import { SHAPE_LABELS, SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
 
 import { formatDateTime } from '@/shared/lib/formatter/dateFormatter';
-import { SHAPE_LABELS, SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
 import { GRADE_LABELS, GRADE_LABELS_OPTIONS, type ValidationErrors } from "@shared/model";
 import { SectionHeader, InputField, TextAreaField, SelectField } from '@shared/ui';
 
-interface StackSidebarProps {
+interface StackProfileSectionProps {
   stack: StackResponse;
   preventionCount: number;
   facilityCount: number;
@@ -20,7 +20,7 @@ interface StackSidebarProps {
   errors: ValidationErrors
 }
 
-export const StackSidebar = ({
+export const StackProfileSection = ({
   stack,
   preventionCount,
   facilityCount,
@@ -30,15 +30,14 @@ export const StackSidebar = ({
   editForm,
   onChange,
   errors,
-}: StackSidebarProps) => {
+}: StackProfileSectionProps) => {
 
   // 원형일 경우 true
   const isCircular = isEditMode ? editForm.shape === 'CIRCULAR' : stack.shape === 'CIRCULAR';
 
   return (
-    <div className="space-y-6">
+    <div className="bg-white border border-slate-200 rounded-lg shadow-md overflow-hidden">
       {/* 기본 정보 */}
-      <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">
         <SectionHeader title="기본정보" />
         <div className="space-y-4">
           {isEditMode ? (
@@ -208,7 +207,6 @@ export const StackSidebar = ({
             </>
           )}
         </div>
-      </div>
 
       {/* 통계 */}
       <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-md">

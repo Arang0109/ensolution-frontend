@@ -2,7 +2,7 @@ import { useToast } from "@app/providers/toast";
 
 import { useStackActions, useStackCreate } from "@stack/hooks";
 import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
-import { mapCreateFormToRequest } from "@stack/model";
+import { mapStackCreateFormToRequest } from "@stack/model";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { GRADE_LABELS_OPTIONS } from "@shared/model";
@@ -27,7 +27,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
     e.preventDefault();
     if (!validate()) return;
 
-    const payload = mapCreateFormToRequest(form);
+    const payload = mapStackCreateFormToRequest(form);
     const result = await handleCreate(payload);
 
     if (result?.success) {

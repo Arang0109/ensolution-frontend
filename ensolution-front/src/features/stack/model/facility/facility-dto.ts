@@ -1,6 +1,5 @@
 export interface FacilityResponse {
   id: number;
-  preventionId: number;
   name: string;
   fuelUsage: string;
   itemOutput: string;
@@ -13,7 +12,6 @@ export interface FacilityResponse {
 
 export interface FacilityRegisterRequest {
   name: string;
-  preventionId: number;
   fuelUsage: string;
   itemOutput: string;
   fuelInput: string;
@@ -22,15 +20,7 @@ export interface FacilityRegisterRequest {
 }
 
 export interface FacilityUpdateRequest {
-  name: string;
-  fuelUsage: string;
-  itemOutput: string;
-  fuelInput: string;
-  fuelType: string;
-  remark: string;
-}
-
-export interface FacilityForm {
+  id: number | null;
   name: string;
   fuelUsage: string;
   itemOutput: string;

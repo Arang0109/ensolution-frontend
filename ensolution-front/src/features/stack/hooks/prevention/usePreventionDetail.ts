@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
-import type { PreventionDetailResponse } from "@stack/model";
+
 import { getPrevention } from "@stack/api/preventionApi";
+
+import type { PreventionDetailResponse } from "@stack/model";
 
 export const usePreventionDetail = () => {
   const [prevention, setPrevention] = useState<PreventionDetailResponse | null>(null);
@@ -11,6 +13,9 @@ export const usePreventionDetail = () => {
     try {
       const { status, data } = await getPrevention(preventionId);
       setPrevention(status ? data : null);
+    } catch (error) {
+      console.error(error);
+      setPrevention(null);
     } finally {
       setLoading(false);
     }

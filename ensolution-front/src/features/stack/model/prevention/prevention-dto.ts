@@ -1,4 +1,7 @@
-import type { FacilityResponse, TargetResponse, FacilityRegisterRequest, TargetRegisterRequest } from '@stack/model';
+import type { 
+  FacilityResponse, FacilityRegisterRequest, FacilityUpdateRequest, 
+  TargetResponse, TargetRegisterRequest, TargetUpdateRequest
+} from '@stack/model';
 
 export interface PreventionResponse {
   id: number;
@@ -9,10 +12,10 @@ export interface PreventionResponse {
   modifiedAt: string;
 }
 
-export interface PreventionRegisterRequest {
-  prevention: PreventionRegister;
-  facilities: Omit<FacilityRegisterRequest, 'preventionId'>[];
-  targets: Omit<TargetRegisterRequest, 'preventionId'>[];
+export interface PreventionRegister {
+  name: string;
+  stackId: number;
+  remark: string;
 }
 
 export interface PreventionUpdate {
@@ -20,20 +23,20 @@ export interface PreventionUpdate {
   remark: string;
 }
 
+export interface PreventionRegisterRequest {
+  prevention: PreventionRegister;
+  facilities: FacilityRegisterRequest[];
+  targets: TargetRegisterRequest[];
+}
+
 export interface PreventionUpdateRequest {
   prevention: PreventionUpdate;
-  facilities: Omit<FacilityRegisterRequest, 'preventionId'>[];
-  targets: Omit<TargetRegisterRequest, 'preventionId'>[];
+  facilities: FacilityUpdateRequest[];
+  targets: TargetUpdateRequest[];
 }
 
 export interface PreventionDetailResponse {
   prevention: PreventionResponse;
   facilities: FacilityResponse[];
   targets: TargetResponse[];
-}
-
-export interface PreventionRegister {
-  name: string;
-  stackId: number;
-  remark: string;
 }

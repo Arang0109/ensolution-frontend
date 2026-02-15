@@ -4,9 +4,9 @@ import {
   PreventionCreateModal,
   PreventionEditModal,
   MeasurementCreateModal,
-  StackPreventionListCard,
-  StackMeasurementListCard,
-  StackSidebar,
+  StackPreventionCardSection,
+  StackMeasurementItemSection,
+  StackProfileSection,
 } from '@stack/component';
 
 import { useStackDetailViewModel } from '@stack/hooks';
@@ -118,13 +118,13 @@ export const StackDetailPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Content - Measurements Prominent */}
         <div className="lg:col-span-3 space-y-6">
-          <StackMeasurementListCard
+          <StackMeasurementItemSection
             measurements={stack.stackMeasurements}
             onAddMeasurement={handleAddMeasurement}
             onEditSuccess={() => refreshStack(stack.stack.id)}
           />
 
-          <StackPreventionListCard
+          <StackPreventionCardSection
             preventions={stack.preventions}
             onAddPrevention={handleAddPrevention}
             onPreventionClick={handlePreventionClick}
@@ -133,7 +133,7 @@ export const StackDetailPage = () => {
 
         {/* Sidebar - Stack Info + Stats */}
         <div className="lg:col-span-1">
-          <StackSidebar
+          <StackProfileSection
             stack={stack.stack}
             preventionCount={preventionCount}
             facilityCount={facilityCount}

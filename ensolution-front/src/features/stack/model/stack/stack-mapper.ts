@@ -3,13 +3,13 @@ import type {
   StackUpdateForm, StackUpdateRequest
 } from "@stack/model";
 
-export const mapCreateFormToRequest = (
+export const mapStackCreateFormToRequest = (
   form: StackCreateForm
 ): StackRegisterRequest => ({
   ...form,
 })
 
-export const mapUpdateFormToRequest = (
+export const mapStackUpdateFormToRequest = (
   form: StackUpdateForm
 ): StackUpdateRequest => ({
   ...form,
