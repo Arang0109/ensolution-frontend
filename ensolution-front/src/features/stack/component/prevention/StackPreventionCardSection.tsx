@@ -17,10 +17,10 @@ export const StackPreventionCardSection = ({
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-md">
       <SectionHeader
-        title="측정물질 정보"
+        title="방지시설 정보"
         rightSlot={
           <Button
-            label="측정항목추가"
+            label="방지시설추가"
             onClick={onAddPrevention}
             variant="primary"
             size="md"

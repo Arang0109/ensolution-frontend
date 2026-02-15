@@ -14,8 +14,7 @@ export const useStackDetailViewModel = () => {
   const { showToast } = useToast();
 
   const { stack, fetchStack, loading } = useStackDetail();
-  const { deletingId, handleUpdate, handleDelete: deleteStackAction } = useStackActions();
-  const { handleCreate } = useStackActions();
+  const { handleCreate, deletingId, handleUpdate, handleDelete: deleteStackAction } = useStackActions();
 
   const {
       isEditMode,

@@ -1,6 +1,6 @@
 import type { PollutantResponse } from "@pollutant/model";
 
-import type { Cycle } from "@shared/model";
+import type { Cycle } from "@stack/model";
 
 export interface StackMeasurementResponse {
   id: number;
@@ -14,7 +14,7 @@ export interface StackMeasurementResponse {
 
 export interface StackMeasurementCreateRequest {
   stackId: number;
-  pollutantId: number;
+  pollutantId: number | null;
   cycle: Cycle;
   allowance: string;
 }

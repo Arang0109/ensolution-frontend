@@ -7,8 +7,9 @@ import type {
 } from "@/features/stack/model/stack-measurement/stack-measurement-dto";
 
 export const registerStackMeasurement = async (
-  data: StackMeasurementCreateRequest
-): Promise<ApiResponseMessage<StackMeasurementResponse>> => {
+  data: StackMeasurementCreateRequest[]
+): Promise<ApiResponseMessage<StackMeasurementResponse[]>> => {
+  console.log(data);
   const res = await axiosPrivate.post("/stack-measurements", data);
   return res.data;
 };
