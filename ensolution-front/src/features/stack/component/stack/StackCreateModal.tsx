@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { StackCreateForm } from "@stack/ui";
+import { StackCreateForm } from "@stack/component";
 
 interface StackCreateModalProps {
   workplaceId: number;

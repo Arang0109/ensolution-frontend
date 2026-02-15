@@ -1,60 +1,36 @@
-import { useState } from 'react';
-
 import { useStacks } from '@stack/hooks';
-import { useSearch } from '@shared/lib';
 
 import { WorkplaceStackTableSection } from '@workplace/component';
 
+import { EmptyState, FullPageLoader } from "@shared/ui";
+
 export const StackListPage = () => {
-  const { stacks, loading } = useStacks();
-  const [showAddModal, setShowAddModal] = useState(false);
+  const { stacks, error, loading, reload } = useStacks();
 
-  const { searchTerm, filtered: filteredStacks } = useSearch(
-    stacks,
-    ['name', 'semsNumber']
-  );
+  const isEmpty = !error && stacks.length === 0;
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-gray-600">로딩 중...</div>
-      </div>
-    );
-  }
+  if (loading) return <FullPageLoader />;
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      {/* Stack List */}
-      {filteredStacks.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-500 text-lg">
-            {searchTerm ? '검색 결과가 없습니다.' : '등록된 측정 대상 시설이 없습니다.'}
-          </p>
-          {!searchTerm && (
-            <p className="text-gray-400 text-sm mt-2">시설 추가 버튼을 눌러 새로운 시설을 등록하세요.</p>
-          )}
-        </div>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">측정시설</h1>
+      </div>
+
+      <hr className="border-gray-200 mb-6" />
+
+      {error ? (
+        <EmptyState
+          title="목록을 불러오지 못했습니다."
+          actionLabel="다시 시도"
+          onAction={reload}
+        />
+      ) : isEmpty ? (
+        <EmptyState title='등록된 측정시설이 없습니다.'/>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          <WorkplaceStackTableSection 
-            stacks={filteredStacks}
-          />
-        </div>
-      )}
-
-      {/* Add Stack Modal - Placeholder */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 className="text-xl font-bold mb-4">시설 추가</h2>
-            <p className="text-gray-600 mb-4">시설 추가 폼이 여기에 구현됩니다.</p>
-            <button
-              onClick={() => setShowAddModal(false)}
-              className="w-full px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
-            >
-              닫기
-            </button>
-          </div>
+          <WorkplaceStackTableSection stacks={stacks}/>
         </div>
       )}
     </div>

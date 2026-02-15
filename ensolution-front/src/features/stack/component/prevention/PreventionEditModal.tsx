@@ -12,10 +12,10 @@ import {
   type FacilityRegisterRequest,
   type TargetUpdateRequest,
   type TargetRegisterRequest,
-  PREVENTION_TABS
 } from '@stack/model';
 
 import { X, Plus, Trash2 } from "lucide-react";
+import { PREVENTION_TABS } from "@shared/model";
 import { Button, IconButton, Tabs, InputField, TextAreaField } from '@/shared/ui';
 
 interface PreventionEditModalProps {

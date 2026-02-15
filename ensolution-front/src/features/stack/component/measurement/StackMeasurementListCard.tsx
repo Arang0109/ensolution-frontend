@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { StackMeasurementResponse } from '@stack/model';
 import { CYCLE_LABELS } from '@stack/model';
 import type { Cycle } from '@/shared/model';
-import { MeasurementEditModal } from '@stack/ui';
+import { MeasurementEditModal } from '@stack/component';
 import { Button, IconButton } from '@shared/ui';
 import { Pencil } from "lucide-react";
 

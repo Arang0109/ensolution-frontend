@@ -1,4 +1,4 @@
-import { StackListTable } from '@stack/ui';
+import { StackListTable } from '@stack/component';
 import type { StackResponse } from '@stack/model';
 
 import { Button, SectionHeader, EmptyState } from "@shared/ui";
