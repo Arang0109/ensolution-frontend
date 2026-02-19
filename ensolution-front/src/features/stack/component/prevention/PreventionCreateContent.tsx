@@ -120,18 +120,27 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
                   size="sm"
                   className="absolute top-2 right-2"
                 />
-
+                <InputField
+                  id="name"
+                  label="배출시설명"
+                  type="text"
+                  name="name"
+                  value={facility.name}
+                  onChange={(value) => onChangeFacility(index, "name", value)}
+                  placeholder="배출시설명을 입력하세요"
+                  disabled={creating}
+                  required
+                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InputField
-                    id="name"
-                    label="배출시설명"
+                    id="fuelType"
+                    label="연료종류"
                     type="text"
-                    name="name"
-                    value={facility.name}
-                    onChange={(value) => onChangeFacility(index, "name", value)}
-                    placeholder="배출시설명을 입력하세요"
+                    name="fuelType"
+                    value={facility.fuelType}
+                    onChange={(value) => onChangeFacility(index, "fuelType", value)}
+                    placeholder="연료종류를 입력하세요"
                     disabled={creating}
-                    required
                   />
                   <InputField
                     id="fuelUsage"
@@ -161,16 +170,6 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
                     value={facility.fuelInput}
                     onChange={(value) => onChangeFacility(index, "fuelInput", value)}
                     placeholder="제품투입량을 입력하세요"
-                    disabled={creating}
-                  />
-                  <InputField
-                    id="fuelType"
-                    label="연료종류"
-                    type="text"
-                    name="fuelType"
-                    value={facility.fuelType}
-                    onChange={(value) => onChangeFacility(index, "fuelType", value)}
-                    placeholder="연료종류를 입력하세요"
                     disabled={creating}
                   />
                 </div>
@@ -234,6 +233,7 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
                     placeholder="제거효율을 입력하세요"
                     min={0}
                     max={100}
+                    step={0.1}
                     disabled={creating}
                     required
                   />

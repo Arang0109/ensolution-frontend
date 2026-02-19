@@ -140,9 +140,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                   size="sm"
                   className="absolute top-2 right-2"
                 />
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputField
+                <InputField
                     id="name"
                     label="배출시설명"
                     type="text"
@@ -152,6 +150,17 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     placeholder="배출시설명을 입력하세요"
                     disabled={isSubmitting}
                     required
+                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <InputField
+                    id="fuelType"
+                    label="연료종류"
+                    type="text"
+                    name="fuelType"
+                    value={facility.fuelType}
+                    onChange={(value) => onChangeFacility(index, "fuelType", value)}
+                    placeholder="연료종류를 입력하세요"
+                    disabled={isSubmitting}
                   />
                   <InputField
                     id="fuelUsage"
@@ -181,16 +190,6 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     value={facility.fuelInput}
                     onChange={(value) => onChangeFacility(index, "fuelInput", value)}
                     placeholder="제품투입량을 입력하세요"
-                    disabled={isSubmitting}
-                  />
-                  <InputField
-                    id="fuelType"
-                    label="연료종류"
-                    type="text"
-                    name="fuelType"
-                    value={facility.fuelType}
-                    onChange={(value) => onChangeFacility(index, "fuelType", value)}
-                    placeholder="연료종류를 입력하세요"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -254,6 +253,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     placeholder="제거효율을 입력하세요"
                     min={0}
                     max={100}
+                    step={0.1}
                     disabled={isSubmitting}
                     required
                   />

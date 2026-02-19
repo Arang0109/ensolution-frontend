@@ -118,6 +118,10 @@ export const MeasurementEditContent = ({
             type="button"
             label="삭제"
             onClick={async () => {
+              if (!confirm('삭제 시 복구할 수 없습니다. 계속하시겠습니까?')) {
+                return;
+              }
+
               const result =
                 await handleDelete(measurement.id);
 

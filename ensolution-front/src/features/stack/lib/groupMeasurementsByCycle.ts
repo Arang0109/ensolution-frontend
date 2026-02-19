@@ -1,5 +1,5 @@
 import type { StackMeasurementResponse } from "@stack/model";
-import type { Cycle } from "@/shared/model";
+import type { Cycle } from "@stack/model";
 
 export interface MeasurementsByCycle {
   cycle: Cycle;
