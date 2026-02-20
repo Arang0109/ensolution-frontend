@@ -5,3 +5,11 @@ export const PREVENTION_TABS: { id: string; label: string }[] = [
 ];
 
 export const DEFAULT_PREVENTION_TAB = "PREVENTION";
+
+export const PLAN_DETAIL_TABS: { id: string; label: string }[] = [
+  { id: "PREINFO", label: '기초정보' },
+  { id: "MEASUREMENT", label: '측정정보' },
+  { id: "LAB", label: '실험정보' },
+];
+
+export const DEFAULT_PLAN_DETAIL_TAB = "PREINFO";

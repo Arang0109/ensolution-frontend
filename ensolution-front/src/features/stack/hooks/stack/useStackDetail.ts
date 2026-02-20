@@ -18,7 +18,7 @@ export const useStackDetail = () => {
       console.error(error);
       setStack(null);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }, []);
 
