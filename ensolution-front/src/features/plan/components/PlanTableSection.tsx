@@ -1,37 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import type { PlanTableView } from "@plan/model";
+import type { PlanTableResponse } from "@plan/model";
+
+import { MEASUREMENT_TYPE, PLAN_STATUS, PLAN_STATUS_COLORS } from "@plan/model";
 
 import { TableContainer } from "@shared/ui";
+import { formatDate } from "@shared/lib";
 
-interface PlanTableProps {
-  plans: PlanTableView[];
+interface PlanTableSectionProps {
+  plans: PlanTableResponse[];
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  MEASURING: "측정 중",
-  ANALYZING: "분석 중",
-  COMPLETED: "완료",
-  CANCELED: "취소",
-};
-
-const STATUS_COLORS: Record<string, string> = {
-  MEASURING: "bg-blue-100 text-blue-800",
-  ANALYZING: "bg-yellow-100 text-yellow-800",
-  COMPLETED: "bg-green-100 text-green-800",
-  CANCELED: "bg-gray-100 text-gray-800",
-};
-
-export const PlanListTable = ({ plans }: PlanTableProps) => {
+export const PlanTableSection = ({ plans }: PlanTableSectionProps) => {
   const navigate = useNavigate();
-
-  if (plans.length === 0) {
-    return (
-      <div className="text-center py-12 bg-gray-50 rounded-lg">
-        <p className="text-gray-500 text-lg">등록된 측정일정이 없습니다.</p>
-        <p className="text-gray-400 text-sm mt-2">일정 등록 버튼을 눌러 새로운 일정을 등록하세요.</p>
-      </div>
-    );
-  }
 
   return (
     <TableContainer>
@@ -74,11 +54,11 @@ export const PlanListTable = ({ plans }: PlanTableProps) => {
             className="hover:bg-gray-50 cursor-pointer transition-colors"
           >
             <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
-              {new Date(plan.measureDate).toLocaleDateString('ko-KR')}
+              {formatDate(plan.measureDate)}
             </td>
             <td className="px-3 py-2 whitespace-nowrap">
-              <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${STATUS_COLORS[plan.status]}`}>
-                {STATUS_LABELS[plan.status]}
+              <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${PLAN_STATUS_COLORS[plan.status]}`}>
+                {PLAN_STATUS[plan.status]}
               </span>
             </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
@@ -97,7 +77,7 @@ export const PlanListTable = ({ plans }: PlanTableProps) => {
               {plan.teamName}
             </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-              {plan.measurementType}
+              {MEASUREMENT_TYPE[plan.measurementType as keyof typeof MEASUREMENT_TYPE] ?? "-"}
             </td>
             <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
               {new Date(plan.createdAt).toLocaleDateString('ko-KR')}

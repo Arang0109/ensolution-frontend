@@ -29,10 +29,8 @@ export const useStackActions = () => {
   const handleUpdate = useCallback(
     async (stackId: number, data: StackUpdateRequest): Promise<ActionResult> => {
     setUpdatingId(stackId);
-
     try {
       const res = await patchStack(stackId, data);
-
       return {
         success: res.status,
         message: res.message,

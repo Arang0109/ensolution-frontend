@@ -22,3 +22,8 @@ export const getTeams = async (): Promise<ApiResponseMessage<TeamResponse[]>> =>
   const res = await axiosPrivate.get("/teams");
   return res.data;
 }
+
+export const getUsers = async (): Promise<ApiResponseMessage<UserResponse[]>> => {
+  const res = await axiosPrivate.get("/users/all");
+  return res.data;
+}

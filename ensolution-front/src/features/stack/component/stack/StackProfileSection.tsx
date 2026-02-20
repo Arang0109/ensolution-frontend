@@ -46,7 +46,7 @@ export const StackProfileSection = ({
               <InputField
                 label="시설명"
                 required={true}
-                value={editForm.name}
+                value={editForm.name ?? ""}
                 onChange={(v) => onChange("name", v)}
                 helperText={errors.name}
               />
@@ -55,7 +55,7 @@ export const StackProfileSection = ({
               <InputField
                 label="SEMS 번호"
                 required={true}
-                value={editForm.semsNumber}
+                value={editForm.semsNumber ?? ""}
                 onChange={(v) => onChange("name", v)}
               />
 
@@ -63,7 +63,7 @@ export const StackProfileSection = ({
               <SelectField
                 label='배출시설 규모'
                 name='grade'
-                value={editForm.grade}
+                value={editForm.grade ?? ""}
                 onChange={(v) => onChange("grade", v)}
                 options={GRADE_LABELS_OPTIONS}
                 getOptionLabel={(g) => g.label}
@@ -73,15 +73,15 @@ export const StackProfileSection = ({
               {/* 높이 */}
               <InputField
                 label="높이 (m)"
-                value={editForm.height}
-                onChange={(v) => onChange("name", v)}
+                value={editForm.height ?? ""}
+                onChange={(v) => onChange("height", v)}
               />
 
               {/* 형상 */}
               <SelectField
                 label='형상'
                 name='shape'
-                value={editForm.shape}
+                value={editForm.shape ?? ""}
                 onChange={(v) => onChange("shape", v)}
                 options={SHAPE_LABELS_OPTIONS}
                 getOptionLabel={(g) => g.label}
@@ -93,22 +93,22 @@ export const StackProfileSection = ({
                 <InputField
                   label="지름 (m)"
                   name="horizontalLength"
-                  value={editForm.horizontalLength}
-                  onChange={(v) => onChange("name", v)}
+                  value={editForm.horizontalLength ?? ""}
+                  onChange={(v) => onChange("horizontalLength", v)}
                 />
               ) : (
                 <>
                   <InputField
                     label="가로 (m)"
                     name="horizontalLength"
-                    value={editForm.horizontalLength}
-                    onChange={(v) => onChange("name", v)}
+                    value={editForm.horizontalLength ?? ""}
+                    onChange={(v) => onChange("horizontalLength", v)}
                   />
                   <InputField
                     label="세로 (m)"
                     name="verticalLength"
-                    value={editForm.verticalLength}
-                    onChange={(v) => onChange("name", v)}
+                    value={editForm.verticalLength ?? ""}
+                    onChange={(v) => onChange("verticalLength", v)}
                   />
                 </>
               )}
@@ -117,7 +117,7 @@ export const StackProfileSection = ({
               <SelectField
                 label='방향'
                 name='orientation'
-                value={editForm.orientation}
+                value={editForm.orientation ?? ""}
                 onChange={(v) => onChange("orientation", v)}
                 options={ORIENTATION_LABELS_OPTIONS}
                 getOptionLabel={(g) => g.label}
@@ -127,7 +127,7 @@ export const StackProfileSection = ({
               {/* 비고 */}
               <TextAreaField
                 label="비고"
-                value={editForm.remark}
+                value={editForm.remark ?? ""}
                 onChange={(v) => onChange("remark", v)}
               />
             </>
@@ -136,14 +136,14 @@ export const StackProfileSection = ({
               {/* 시설명 */}
               <InputField
                 label="시설명"
-                value={stack.name}
+                value={stack.name ?? ""}
                 readOnly
               />
 
               {/* Sems 번호 */}
               <InputField
                 label="SEMS 번호"
-                value={stack.semsNumber}
+                value={stack.semsNumber ?? ""}
                 readOnly
               />
 
@@ -156,7 +156,7 @@ export const StackProfileSection = ({
 
               <InputField
                 label="높이"
-                value={stack.height}
+                value={stack.height ?? ""}
                 readOnly
               />
 
@@ -164,19 +164,19 @@ export const StackProfileSection = ({
               {isCircular ? (
                 <InputField
                   label="지름"
-                  value={stack.horizontalLength}
+                  value={stack.horizontalLength ?? ""}
                   readOnly
                 />  
               ) : (
                 <>
                   <InputField
                     label="가로"
-                    value={stack.horizontalLength}
+                    value={stack.horizontalLength ?? ""}
                     readOnly
                   />  
                   <InputField
                     label="세로"
-                    value={stack.verticalLength}
+                    value={stack.verticalLength ?? ""}
                     readOnly
                   />  
                 </>

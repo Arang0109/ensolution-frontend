@@ -1,56 +1,63 @@
 import { useState, useCallback } from "react";
-import { deletePlan, patchPlan, patchPlanStatus } from "@plan/api/planApi";
-import type { PlanUpdateRequest, PlanStatusUpdateRequest } from "@plan/model";
+
+import { registerPlan, deletePlan, patchPlanStatus } from "@plan/api/planApi";
+import type { PlanRegisterRequest, PlanStatusUpdateRequest } from "@plan/model";
 
 export const usePlanActions = () => {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
 
-  const handleDelete = useCallback(async (planId: number) => {
-    if (!window.confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.")) {
-      return { success: false, message: "삭제가 취소되었습니다." };
-    }
-
-    setIsDeleting(true);
+  const handleCreate = useCallback(
+    async (data: PlanRegisterRequest) => {
+    setCreating(true);
     try {
-      const res = await deletePlan(planId);
-      return { success: res.status, message: res.message };
-    } catch {
-      return { success: false, message: "삭제 중 오류가 발생했습니다." };
-    } finally {
-      setIsDeleting(false);
-    }
-  }, []);
+      const res = await registerPlan(data);
+      return {
+        success: res.status,
+        message: res.message,
+        data: res.data,
+      };
 
-  const handleUpdate = useCallback(async (planId: number, data: PlanUpdateRequest) => {
-    setIsUpdating(true);
-    try {
-      const res = await patchPlan(planId, data);
-      return { success: res.status, message: res.message };
-    } catch {
-      return { success: false, message: "수정 중 오류가 발생했습니다." };
     } finally {
-      setIsUpdating(false);
+      setCreating(false);
     }
   }, []);
 
   const handleStatusUpdate = useCallback(async (planId: number, data: PlanStatusUpdateRequest) => {
-    setIsUpdating(true);
+    setUpdatingId(planId);
     try {
       const res = await patchPlanStatus(planId, data);
-      return { success: res.status, message: res.message };
-    } catch {
-      return { success: false, message: "상태 변경 중 오류가 발생했습니다." };
+      return {
+        success: res.status,
+        message: res.message,
+      };
+
     } finally {
-      setIsUpdating(false);
+      setUpdatingId(null);
+    }
+  }, []);
+
+  const handleDelete = useCallback(async (planId: number) => {
+    setDeletingId(planId);
+    try {
+      const res = await deletePlan(planId);
+      return {
+        success: res.status,
+        message: res.message,
+      };
+
+    } finally {
+      setDeletingId(null);
     }
   }, []);
 
   return {
-    isDeleting,
-    isUpdating,
+    creating,
+    updatingId,
+    deletingId,
+    handleCreate,
     handleDelete,
-    handleUpdate,
     handleStatusUpdate,
   };
 };

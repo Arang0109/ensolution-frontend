@@ -40,7 +40,7 @@ export const useStackDetailViewModel = () => {
 
     if (!validate()) return;
 
-    const payload = mapStackCreateFormToRequest(editForm)
+    const payload = mapStackCreateFormToRequest(editForm);
     const result = await handleUpdate(Number(stackId), payload);
     
     if (result.success) {

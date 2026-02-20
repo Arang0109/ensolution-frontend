@@ -1,43 +1,45 @@
-import { useNavigate } from "react-router-dom";
-
-import { usePlanForm } from "@plan/hooks";
-import { PlanRegisterForm } from "@plan/ui";
-
-import { useToast } from "@app/providers/toast";
+import { usePlanRegisterViewModel } from "@plan/hooks";
+import { PlanCreateContent } from "@plan/components";
 
 import { Button } from "@shared/ui";
 import { ChevronLeft } from 'lucide-react';
 
 export const PlanRegisterPage = () => {
-  const navigate = useNavigate();
-  const { showToast } = useToast();
   const {
     form,
-    isSubmitting,
+    errors,
+    reset,
     onChange,
-    onSubmit,
-    setFieldValue,
+    onMeasurementIdsChange,
+
+    creating,
+
+    companies,
     filteredWorkplaces,
-    filteredTeams,
     filteredStacks,
-    selectedStack,
-    handleWorkplaceChange,
-    loading,
-    loadingStacks,
-    availableMeasurements,
-    loadingMeasurements,
-  } = usePlanForm();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const result = await onSubmit(e);
+    teams,
+    users,
+    filteredParticleSampler,
+    filteredGasSampler,
+    filteredPitotTube,
+    filteredNozzle,
 
-    if (result?.success) {
-      showToast(result.message || "측정일정이 등록되었습니다.");
-      navigate("/plan");
-    } else {
-      showToast(result?.message ?? "등록 실패", "error");
-    }
-  };
+    stack,
+
+    selectedCompanyId,
+    selectedWorkplaceId,
+    selectedStackId,
+
+    handleSelectCompany,
+    handleSelectWorkplace,
+    handleSelectStack,
+    
+    handleSelectTeam,
+
+    goBack,
+    handleSubmit,
+  } = usePlanRegisterViewModel();
 
   return (
     <div className="px-6 max-w-7xl mx-auto">
@@ -48,27 +50,45 @@ export const PlanRegisterPage = () => {
             size="xl"
             variant="ghost"
             icon={<ChevronLeft />}
-            onClick={() => navigate(-1)}
+            onClick={goBack}
           />
         </div>
 
         {/* Form Card */}
         <div className="bg-white rounded-lg shadow-md p-8">
-          <PlanRegisterForm
+          <PlanCreateContent
             form={form}
-            isSubmitting={isSubmitting}
+            errors={errors}
+            reset={reset}
             onChange={onChange}
-            onSubmit={handleSubmit}
-            setFieldValue={setFieldValue}
+            onMeasurementIdsChange={onMeasurementIdsChange}
+
+            creating={creating}
+
+            companies={companies}
             filteredWorkplaces={filteredWorkplaces}
-            filteredTeams={filteredTeams}
             filteredStacks={filteredStacks}
-            selectedStack={selectedStack}
-            handleWorkplaceChange={handleWorkplaceChange}
-            loading={loading}
-            loadingStacks={loadingStacks}
-            availableMeasurements={availableMeasurements}
-            loadingMeasurements={loadingMeasurements}
+
+            teams={teams}
+            users={users}
+            filteredParticleSampler={filteredParticleSampler}
+            filteredGasSampler={filteredGasSampler}
+            filteredPitotTube={filteredPitotTube}
+            filteredNozzle={filteredNozzle}
+
+            stack={stack}
+
+            selectedCompanyId={selectedCompanyId}
+            selectedWorkplaceId={selectedWorkplaceId}
+            selectedStackId={selectedStackId}
+
+            handleSelectCompany={handleSelectCompany}
+            handleSelectWorkplace={handleSelectWorkplace}
+            handleSelectStack={handleSelectStack}
+            
+            handleSelectTeam={handleSelectTeam}
+
+            handleSubmit={handleSubmit}
           />
         </div>
 

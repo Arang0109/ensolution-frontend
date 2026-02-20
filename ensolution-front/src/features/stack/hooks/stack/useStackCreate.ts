@@ -21,9 +21,9 @@ export const useStackCreate = (workplaceId: number) => {
   };
 
   const validate = () => {
-    const validattionErrors = validateStack(form);
-    setErrors(validattionErrors);
-    return Object.keys(validattionErrors).length === 0;
+    const validationErrors = validateStack(form);
+    setErrors(validationErrors);
+    return Object.keys(validationErrors).length === 0;
   }
 
   return {
