@@ -5,11 +5,11 @@ import type { PlanCreateForm } from "@plan/model";
 
 import type { ValidationErrors } from "@shared/model";
 
-export const usePlanCreate = () => {
+export const usePlanCreateForm = () => {
   const [form, setForm] = useState<PlanCreateForm>(getDefaultPlanCreateForm());
   const [errors, setErrors] = useState<ValidationErrors>({});
 
-  const onChange = (
+  const updateField = (
     name: keyof PlanCreateForm,
     value: string | number | null,
   ) => {
@@ -24,7 +24,7 @@ export const usePlanCreate = () => {
     }));
   };
 
-  const onMeasurementIdsChange = (ids: number[]) => {
+  const setMeasurementIds = (ids: number[]) => {
     setForm(prev => ({
       ...prev,
       measurementIds: ids,
@@ -32,12 +32,12 @@ export const usePlanCreate = () => {
   };
 
 
-  const reset = () => {
+  const resetForm = () => {
     setForm(getDefaultPlanCreateForm());
     setErrors({});
   }
 
-  const validate = () => {
+  const validateForm = () => {
     const validationErrors: ValidationErrors = {};
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
@@ -46,9 +46,9 @@ export const usePlanCreate = () => {
   return {
     form,
     errors,
-    onChange,
-    onMeasurementIdsChange,
-    reset,
-    validate,
+    updateField,
+    setMeasurementIds,
+    resetForm,
+    validateForm,
   };
 }

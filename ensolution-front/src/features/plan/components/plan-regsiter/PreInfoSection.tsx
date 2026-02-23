@@ -44,8 +44,8 @@ export const PreInfoSection = ({
         <RadioGroupField
           name="measurementField"
           options={MEASUREMENT_FIELD_OPTIONS}
-          value={form.measureField}
-          onChange={(value) => onChange("measureField", value)}
+          value={form.measurementField}
+          onChange={(value) => onChange("measurementField", value)}
           disabled={creating}
         />
 

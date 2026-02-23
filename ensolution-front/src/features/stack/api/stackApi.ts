@@ -24,7 +24,7 @@ export const getStack = async (
 export const getStackMeasurementsByStack = async (
   stackId: number
 ): Promise<ApiResponseMessage<StackMeasurementResponse[]>> => {
-  const res = await axiosPrivate.get(`/stacks/${stackId}/stackMeasurements`);
+  const res = await axiosPrivate.get(`/stacks/${stackId}/measurements`);
   return res.data;
 }
 

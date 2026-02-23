@@ -1,7 +1,9 @@
 import type { Cycle } from "@stack/model";
 
 export interface PreInfoDocResponse {
+  referenceNumber: string;
   measureDate: string;
+  measurementField: string;
   measurementType: string;
   teamId: number;
   teamName: string;

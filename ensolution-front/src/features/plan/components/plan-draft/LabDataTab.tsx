@@ -1,4 +1,4 @@
-export const MeasurementTab = () => {
+export const LabDataTab = () => {
   return (
     <>
       <p>hi</p>

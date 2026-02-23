@@ -18,11 +18,12 @@ export const mapPlanCreateFormToRequest = (
       stackId: form.stackId,
       teamId: form.teamId,
       measureDate: form.measureDate,
-      measureField: form.measureField,
+      measurementField: form.measurementField,
       measurementType: form.measurementType,
       measurementIds: form.measurementIds,
     },
 
+    referenceNumber: "KGAR-26-01-",
     simplifiedMeasurement: form.simplifiedMeasurement,
     vehicleNumber: form.vehicleNumber,
     mentor: form.mentor,

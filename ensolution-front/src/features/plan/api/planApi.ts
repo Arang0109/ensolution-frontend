@@ -12,12 +12,12 @@ export const registerPlan = async (
   return res.data;
 }
 
-export const getPlans = async (): Promise<ApiResponseMessage<PlanTableResponse[]>> => {
+export const fetchPlans = async (): Promise<ApiResponseMessage<PlanTableResponse[]>> => {
   const res = await axiosPrivate.get("/plans");
   return res.data;
 }
 
-export const getPlan = async (
+export const fetchPlan = async (
   planId: number
 ): Promise<ApiResponseMessage<PlanDetailResponse>> => {
   const res = await axiosPrivate.get(`/plans/${planId}`);

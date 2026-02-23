@@ -5,7 +5,7 @@ export interface PlanRegister {
   stackId: number;
   teamId: number;
   measureDate: string;
-  measureField: MeasurementField; 
+  measurementField: MeasurementField; 
   measurementType: string;
   measurementIds: number[];
 };
@@ -13,6 +13,7 @@ export interface PlanRegister {
 export interface PlanRegisterRequest {
   plan: PlanRegister;
 
+  referenceNumber: string;
   simplifiedMeasurement: boolean;
   vehicleNumber: string;
   mentor: string;
@@ -28,7 +29,7 @@ export interface PlanResponse {
   id: number;
   stackId: number;
   teamId: number;
-  measureField: MeasurementField;
+  measurementField: MeasurementField;
   measureDate: string;
   measurementType: string;
   status: PlanStatus;
@@ -42,7 +43,7 @@ export interface PlanDetailResponse {
 
 export interface PlanTableResponse {
   id: number;
-  measureField: MeasurementField;
+  measurementField: MeasurementField;
   measureDate: string;
   measurementType: string;
 
@@ -66,7 +67,7 @@ export interface PlanMeasurementResponse {
 export interface PlanUpdateRequest {
   stackId: number;
   teamId: number;
-  measureField: MeasurementField;
+  measurementField: MeasurementField;
   measureDate: string;
   measurementType: string;
 }

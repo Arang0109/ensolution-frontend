@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { PreinfoTab, MeasurementTab, LabTab } from "@plan/components";
-import { usePlanDetailVM } from "@plan/hooks"
+import { PlanInfoTab, FieldDataTab, LabDataTab, EquipmentTab } from "@plan/components";
+import { usePlanDraftViewModel } from "@plan/hooks"
 
 import { Button, FullPageLoader, Tabs } from "@shared/ui";
 import { PLAN_DETAIL_TABS, DEFAULT_PLAN_DETAIL_TAB } from "@/shared/model";
@@ -11,13 +11,20 @@ export const PlanDetailPage = () => {
   const [activeTab, setActiveTab] = useState<string>(DEFAULT_PLAN_DETAIL_TAB);
 
   const {
-    // plan,
-    loading,
+    editForm,
+    isLoading,
+    stack,
 
     goBack,
-  } = usePlanDetailVM();
 
-  if (loading) {
+    handleSaveDraft,
+    handleDeleteDraft,
+    updatePreInfoField,
+    updateEquipmentField,
+    updateMeasurementItems,
+  } = usePlanDraftViewModel();
+
+  if (isLoading) {
     return (<FullPageLoader />);
   }
 
@@ -32,6 +39,12 @@ export const PlanDetailPage = () => {
           icon={<ChevronLeft />}
           onClick={goBack}
         />
+        <Button 
+          label="삭제"
+          size="xl"
+          variant="danger"
+          onClick={handleDeleteDraft}
+        />
         <Tabs
           tabs={PLAN_DETAIL_TABS}
           activeTab={activeTab}
@@ -39,9 +52,28 @@ export const PlanDetailPage = () => {
         />
         {/* Tab Content */}
         <div className="mt-6">
-          {activeTab === "PREINFO" && <PreinfoTab />}
-          {activeTab === "MEASUREMENT" && <MeasurementTab />}
-          {activeTab === "LAB" && <LabTab />}
+          {activeTab === "PREINFO" &&
+          <PlanInfoTab
+            preInfo={editForm.preInfo}
+            measurementItems={editForm.measurementItems}
+            stack={stack}
+            onChange={updatePreInfoField}
+            onMeasurementItemsChange={updateMeasurementItems}
+          />}
+          {activeTab === "EQUIPMENT" &&
+          <EquipmentTab
+            equipment={editForm.equipment}
+            onChange={updateEquipmentField}
+          />}
+          {activeTab === "MEASUREMENT" && <FieldDataTab />}
+          {activeTab === "LAB" && <LabDataTab />}
+        </div>
+
+        
+
+        {/* Actions */}
+        <div className="flex justify-end mt-6">
+          <Button label="임시저장" type="submit" variant="primary" onClick={() => handleSaveDraft()}/>
         </div>
       </div>
     </div>

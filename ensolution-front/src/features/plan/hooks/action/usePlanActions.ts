@@ -1,15 +1,16 @@
 import { useState, useCallback } from "react";
 
+import { measurementDraftUpdateRequest } from "@plan/api/measurementApi";
 import { registerPlan, deletePlan, patchPlanStatus } from "@plan/api/planApi";
-import type { PlanRegisterRequest, PlanStatusUpdateRequest } from "@plan/model";
+import type { DraftUpdateRequest, PlanRegisterRequest, PlanStatusUpdateRequest } from "@plan/model";
 
 export const usePlanActions = () => {
   const [creating, setCreating] = useState(false);
+  const [savingDraft, setSavingDraft] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
 
-  const handleCreate = useCallback(
-    async (data: PlanRegisterRequest) => {
+  const createPlan = async (data: PlanRegisterRequest) => {
     setCreating(true);
     try {
       const res = await registerPlan(data);
@@ -22,9 +23,28 @@ export const usePlanActions = () => {
     } finally {
       setCreating(false);
     }
-  }, []);
+  };
 
-  const handleStatusUpdate = useCallback(async (planId: number, data: PlanStatusUpdateRequest) => {
+  const saveDraft = useCallback(
+    async (
+      planId: number,
+      data: Partial<DraftUpdateRequest>
+    ) => {
+      setSavingDraft(true);
+      try {
+        const res = await measurementDraftUpdateRequest(planId, data);
+        return {
+            success: res.status,
+            message: res.message,
+            data: res.data,
+          };
+
+      } finally {
+        setSavingDraft(false);
+      }
+    }, []);
+
+  const updateDraftStatus = useCallback(async (planId: number, data: PlanStatusUpdateRequest) => {
     setUpdatingId(planId);
     try {
       const res = await patchPlanStatus(planId, data);
@@ -38,7 +58,7 @@ export const usePlanActions = () => {
     }
   }, []);
 
-  const handleDelete = useCallback(async (planId: number) => {
+  const deleteDraft = useCallback(async (planId: number) => {
     setDeletingId(planId);
     try {
       const res = await deletePlan(planId);
@@ -54,10 +74,13 @@ export const usePlanActions = () => {
 
   return {
     creating,
+    savingDraft,
     updatingId,
     deletingId,
-    handleCreate,
-    handleDelete,
-    handleStatusUpdate,
+
+    createPlan,
+    saveDraft,
+    updateDraftStatus,
+    deleteDraft,
   };
 };

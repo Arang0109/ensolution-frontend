@@ -1,6 +1,6 @@
 export const MEASUREMENT_TYPE = {
-  SELF: "자가측정용",
-  REFERENCE: "기타참고용",
+  SELF: "자가 측정용",
+  REFERENCE: "기타 참고용",
 }
 export type MeasurementType = keyof typeof MEASUREMENT_TYPE;
 

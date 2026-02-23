@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { mapPlanCreateFormToRequest } from '@plan/model';
-import { usePlanCreate, usePlanActions, usePlanRegisterData } from '@plan/hooks';
+import { usePlanCreateForm, usePlanActions, usePlanRegisterData } from '@plan/hooks';
 
 import { EquipType } from '@equipment/model';
 
@@ -22,19 +22,19 @@ export const usePlanRegisterViewModel = () => {
     stack, fetchStack,
     teams, users, equipments
   } = usePlanRegisterData();
-  const { form, errors, reset, onChange, onMeasurementIdsChange, validate } = usePlanCreate();
+  const { form, errors, resetForm, updateField, setMeasurementIds, validateForm } = usePlanCreateForm();
   const {
     creating,
-    handleCreate,
+    createPlan,
   } = usePlanActions();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    if (!validateForm()) return;
 
     const payload = mapPlanCreateFormToRequest(form);
-    const result = await handleCreate(payload);
+    const result = await createPlan(payload);
 
     if (result.success) {
       showToast("측정계획이 생성되었습니다.");
@@ -90,41 +90,41 @@ export const usePlanRegisterViewModel = () => {
     setCompanyId(id);
     setWorkplaceId(null);
     setStackId(null)
-    onChange("stackId", "");
+    updateField("stackId", "");
   };
 
   const handleSelectWorkplace = (id: number) => {
     setWorkplaceId(id);
     setStackId(null)
-    onChange("stackId", "");
+    updateField("stackId", "");
   };
 
   const handleSelectStack = (id: number) => {
     setStackId(id);
     fetchStack(id);
-    onChange("stackId", String(id));
+    updateField("stackId", String(id));
   };
 
   const handleSelectTeam = (teamId: number) => {
-    onChange("teamId", teamId);
+    updateField("teamId", teamId);
 
     const selectedTeam = teams.find((t) => t.id === teamId);
     if (selectedTeam) {
-      onChange("mentor", selectedTeam.mentor);
-      onChange("mentee", selectedTeam.mentee);
-      onChange("particleSamplerId", selectedTeam.particleSamplerId);
-      onChange("gasSamplerId", selectedTeam.gasSamplerId);
-      onChange("pitotTubeId", selectedTeam.pitotTubeId);
-      onChange("nozzleId", selectedTeam.nozzleId);
+      updateField("mentor", selectedTeam.mentor);
+      updateField("mentee", selectedTeam.mentee);
+      updateField("particleSamplerId", selectedTeam.particleSamplerId);
+      updateField("gasSamplerId", selectedTeam.gasSamplerId);
+      updateField("pitotTubeId", selectedTeam.pitotTubeId);
+      updateField("nozzleId", selectedTeam.nozzleId);
     }
   };
 
   return {
     form,
     errors,
-    reset,
-    onChange,
-    onMeasurementIdsChange,
+    resetForm,
+    updateField,
+    setMeasurementIds,
 
     creating,
 

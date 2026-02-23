@@ -8,9 +8,9 @@ export const PlanRegisterPage = () => {
   const {
     form,
     errors,
-    reset,
-    onChange,
-    onMeasurementIdsChange,
+    resetForm,
+    updateField,
+    setMeasurementIds,
 
     creating,
 
@@ -59,9 +59,9 @@ export const PlanRegisterPage = () => {
           <PlanCreateContent
             form={form}
             errors={errors}
-            reset={reset}
-            onChange={onChange}
-            onMeasurementIdsChange={onMeasurementIdsChange}
+            reset={resetForm}
+            onChange={updateField}
+            onMeasurementIdsChange={setMeasurementIds}
 
             creating={creating}
 

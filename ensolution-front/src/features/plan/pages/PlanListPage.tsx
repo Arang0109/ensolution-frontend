@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 
-import { usePlans } from "@plan/hooks";
+import { usePlanListQuery } from "@plan/hooks";
 import { PlanTableSection } from "@plan/components";
 
 import { Button, FullPageLoader, EmptyState } from "@shared/ui";
 
 export const PlanListPage = () => {
   const navigate = useNavigate();
-  const { plans, error, loading, reload } = usePlans();
+  const { plans, error, isLoading, reload } = usePlanListQuery();
 
   const isEmpty = !error && plans.length === 0;
 
-  if (loading) {
+  if (isLoading) {
     return (<FullPageLoader />);
   }
 

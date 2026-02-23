@@ -1,39 +1,40 @@
 import { useState, useEffect, useCallback } from "react";
 
 import type { PlanTableResponse } from "@plan/model";
-import { getPlans } from "@plan/api/planApi";
+import { fetchPlans } from "@plan/api/planApi";
 
-export const usePlans = () => {
+export const usePlanListQuery = () => {
   const [plans, setPlans] = useState<PlanTableResponse[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPlans = useCallback(async () => {
-    setLoading(true);
+  const refetchPlans = useCallback(async () => {
+    setIsLoading(true);
     try {
-      const res = await getPlans();
+      const res = await fetchPlans();
+      console.log(res);
       if (res.status && res.data) {
         setPlans(res.data);
       } else {
         setPlans([]);
       }
     } catch (error) {
-      console.error("Failed to load plans:", error);
+      console.error(error);
       setError('측정계획 목록을 불러오지 못했습니다.');
       setPlans([]);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    fetchPlans();
-  }, [fetchPlans]);
+    refetchPlans();
+  }, [refetchPlans]);
 
   return {
     plans,
     error,
-    loading,
-    reload: fetchPlans,
+    isLoading,
+    reload: refetchPlans,
   };
 };
