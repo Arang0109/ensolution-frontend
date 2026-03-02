@@ -16,7 +16,7 @@ interface StackSectionProps {
 
   filteredStacks: StackResponse[];
 
-  stack: StackDetailResponse | null;
+  stack: StackDetailResponse | undefined;
 
   selectedStackId: number | null;
 

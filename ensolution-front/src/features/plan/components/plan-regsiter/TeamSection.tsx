@@ -2,7 +2,7 @@ import type { PlanCreateForm } from "@plan/model";
 import type { TeamResponse } from "@/features/agency/model/agency-types";
 import type { UserResponse } from "@/features/auth/model";
 
-import { SelectField } from "@shared/ui";
+import { InputField, SelectField } from "@shared/ui";
 import type { EquipmentResponse } from "@/features/equipment/model";
 
 interface TeamSectionProps {
@@ -41,19 +41,32 @@ export const TeamSection = ({
       <h2 className="text-xl font-semibold mb-4 text-gray-900">출장인력 및 장비</h2>
       <div className="space-y-4">
         {/* 현장팀 선택 */}
-        <SelectField
-          id="team"
-          label="현장팀"
-          name="team"
-          options={teams}
-          getOptionLabel={(team) => team.name}
-          getOptionValue={(team) => team.id}
-          value={form.teamId}
-          onChange={(value) => onTeamChange(Number(value))}
-          disabled={creating}
-          required
-        />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="space-y-6">
+            <SelectField
+              id="team"
+              label="현장팀"
+              name="team"
+              options={teams}
+              getOptionLabel={(team) => team.name}
+              getOptionValue={(team) => team.id}
+              value={form.teamId}
+              onChange={(value) => onTeamChange(Number(value))}
+              disabled={creating}
+              required
+            />
+          </div>
+          <div className="space-y-6">
+            <InputField
+              id="vehicleNumber"
+              label="차량번호"
+              name="vehicleNumber"
+              value={form.vehicleNumber}
+              onChange={(value) => onChange("vehicleNumber", value)}
+              disabled={creating}
+              required
+            />
+          </div>
           <div className="space-y-6">
             <SelectField
               id="mentor"

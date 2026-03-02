@@ -12,7 +12,6 @@ export const usePlanListQuery = () => {
     setIsLoading(true);
     try {
       const res = await fetchPlans();
-      console.log(res);
       if (res.status && res.data) {
         setPlans(res.data);
       } else {

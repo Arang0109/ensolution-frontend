@@ -110,6 +110,7 @@ export const usePlanRegisterViewModel = () => {
 
     const selectedTeam = teams.find((t) => t.id === teamId);
     if (selectedTeam) {
+      updateField("vehicleNumber", selectedTeam.vehicleNumber);
       updateField("mentor", selectedTeam.mentor);
       updateField("mentee", selectedTeam.mentee);
       updateField("particleSamplerId", selectedTeam.particleSamplerId);

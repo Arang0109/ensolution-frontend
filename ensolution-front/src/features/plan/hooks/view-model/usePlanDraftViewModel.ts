@@ -3,31 +3,27 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToast } from "@app/providers/toast";
 
-import { useStackDetail } from '@stack/hooks';
-
-import { mapDraftFormToRequest } from '@plan/model';
-import { usePlanDetailQuery, usePlanActions, usePlanEditForm } from '@plan/hooks';
+import { mapDraftFormToRequest, type PlanDraftEditForm } from '@plan/model';
+import { usePlanDetailQuery, usePlanActions, usePlanDraftData } from '@plan/hooks';
 
 export const usePlanDraftViewModel = () => {
   const navigate = useNavigate();
   const goBack = () => {navigate("/plan")};
+  const { showToast } = useToast();
 
   const { planId } = useParams();
-  const { showToast } = useToast();
-  
   const { plan, isLoading } = usePlanDetailQuery(Number(planId));
-  const stackId = plan?.plan.stackId;
-  const { stack, fetchStack } = useStackDetail();
-  const { editForm, updatePreInfoField, updateEquipmentField, updateMeasurementItems, resetForm } = usePlanEditForm(plan);
+
+  const { stack, fetchStack } = usePlanDraftData();
   const { saveDraft, deleteDraft, deletingId } = usePlanActions();
 
   useEffect(() => {
-  if (stackId) {
-    fetchStack(stackId);
-  }
-}, [stackId, fetchStack]);
+    if (plan?.plan.stackId) {
+      fetchStack(plan.plan.stackId);
+    }
+  }, [plan?.plan.stackId, fetchStack]);
 
-  const handleSaveDraft = async () => {
+  const handleSaveDraft = async (editForm: PlanDraftEditForm) => {
 
     const payload = mapDraftFormToRequest(editForm);
     const result = await saveDraft(Number(planId), payload);
@@ -50,9 +46,8 @@ export const usePlanDraftViewModel = () => {
   }
 
   return {
-    plan,
     stack,
-    editForm,
+    plan,
     isLoading,
     deletingId,
 
@@ -60,10 +55,5 @@ export const usePlanDraftViewModel = () => {
 
     handleSaveDraft,
     handleDeleteDraft,
-    updatePreInfoField,
-    updateEquipmentField,
-    updateMeasurementItems,
-
-    resetForm,
   }
 }

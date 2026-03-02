@@ -4,7 +4,7 @@ import type { PlanDetailResponse } from "@plan/model"
 import { fetchPlan } from "@plan/api/planApi";
 
 export const usePlanDetailQuery = (planId: number) => {
-  const [plan, setPlan] = useState<PlanDetailResponse | null>(null);
+  const [plan, setPlan] = useState<PlanDetailResponse | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -13,11 +13,10 @@ export const usePlanDetailQuery = (planId: number) => {
     const load = async () => {
       setIsLoading(true);
       try {
-        const { status, data } = await fetchPlan(planId);
-        setPlan(status ? data : null);
+        const { data } = await fetchPlan(planId);
+        setPlan(data);
       } catch (error) {
         console.error(error);
-        setPlan(null);
       } finally {
         setIsLoading(false);
       }

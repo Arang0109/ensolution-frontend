@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToast } from "@app/providers/toast";
 
-import { useStackDetail, useStackActions, useStackEdit } from '@stack/hooks';
+import { useStackDetailQuery, useStackActions, useStackEditForm } from '@stack/hooks';
 import { mapStackCreateFormToRequest } from '@stack/model';
 
 export const useStackDetailViewModel = () => {
@@ -13,8 +13,8 @@ export const useStackDetailViewModel = () => {
   const { stackId } = useParams();
   const { showToast } = useToast();
 
-  const { stack, fetchStack, loading } = useStackDetail();
-  const { handleCreate, deletingId, handleUpdate, handleDelete: deleteStackAction } = useStackActions();
+  const { stack, fetchStack, loading } = useStackDetailQuery();
+  const { deletingId, updateStackProfile, deleteStackProfile } = useStackActions();
 
   const {
       isEditMode,
@@ -23,11 +23,11 @@ export const useStackDetailViewModel = () => {
   
       startEdit,
       cancelEdit,
-      handleChange,
+      updateField,
       setIsEditMode,
   
-      validate,
-    } = useStackEdit(stack);
+      validateForm,
+    } = useStackEditForm(stack);
 
   useEffect(() => {
     if (stackId) {
@@ -38,10 +38,10 @@ export const useStackDetailViewModel = () => {
   const handleSave = async () => {
     if (!stackId) return;
 
-    if (!validate()) return;
+    if (!validateForm()) return;
 
     const payload = mapStackCreateFormToRequest(editForm);
-    const result = await handleUpdate(Number(stackId), payload);
+    const result = await updateStackProfile(Number(stackId), payload);
     
     if (result.success) {
       showToast("수정에 성공했습니다.");
@@ -57,7 +57,7 @@ export const useStackDetailViewModel = () => {
     
     if (!stackId) return;
 
-    const result = await deleteStackAction(Number(stackId));
+    const result = await deleteStackProfile(Number(stackId));
     
     if (result.success) {
       showToast("삭제에 성공했습니다.");
@@ -78,13 +78,11 @@ export const useStackDetailViewModel = () => {
 
     startEdit,
     cancelEdit,
-    handleChange,
+    updateField,
 
     goBack,
     handleSave,
     handleDelete,
-
-    handleCreate,
     refreshStack: fetchStack,
   }
 }

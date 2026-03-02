@@ -6,7 +6,7 @@ import { validateStack } from "@stack/lib";
 
 import type { ValidationErrors } from "@shared/model";
 
-export const useStackEdit = (stack: StackDetailResponse | null) => {
+export const useStackEditForm = (stack: StackDetailResponse | undefined) => {
   const workplaceId = Number(stack?.stack.workplaceId);
 
   const [isEditMode, setIsEditMode] = useState(false);
@@ -38,7 +38,7 @@ export const useStackEdit = (stack: StackDetailResponse | null) => {
     setErrors({});
   };
 
-  const handleChange = (
+  const updateField = (
     name: keyof StackUpdateForm,
     value: string
   ) => {
@@ -54,7 +54,7 @@ export const useStackEdit = (stack: StackDetailResponse | null) => {
     });
   };
 
-  const validate = () => {
+  const validateForm = () => {
     const validationErrors = validateStack(editForm);
     setErrors(validationErrors);
 
@@ -68,9 +68,9 @@ export const useStackEdit = (stack: StackDetailResponse | null) => {
 
     startEdit,
     cancelEdit,
-    handleChange,
+    updateField,
     setIsEditMode,
 
-    validate,
+    validateForm,
   };
 }

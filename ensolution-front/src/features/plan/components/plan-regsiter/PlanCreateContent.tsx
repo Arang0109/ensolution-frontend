@@ -35,7 +35,7 @@ export interface PlanCreateContentProps {
   filteredPitotTube: EquipmentResponse[];
   filteredNozzle: EquipmentResponse[];
 
-  stack: StackDetailResponse | null;
+  stack: StackDetailResponse | undefined;
 
   selectedCompanyId: number | null;
   selectedWorkplaceId: number | null;

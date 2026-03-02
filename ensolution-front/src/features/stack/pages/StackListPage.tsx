@@ -1,11 +1,11 @@
-import { useStacks } from '@stack/hooks';
+import { useStackListQuery } from '@stack/hooks';
 
 import { StackTableSection } from '@stack/component';
 
 import { EmptyState, FullPageLoader } from "@shared/ui";
 
 export const StackListPage = () => {
-  const { stacks, error, loading, reload } = useStacks();
+  const { stacks, error, loading, reload } = useStackListQuery();
 
   const isEmpty = !error && stacks.length === 0;
 

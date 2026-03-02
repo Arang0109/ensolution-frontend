@@ -1,21 +1,10 @@
 import { useState } from "react";
 
-import type { PlanDetailResponse, PlanDraftEditForm, PreInfoEditForm, EquipmentEditForm } from "@plan/model";
+import type { PlanDetailResponse, PlanDraftEditForm, PreInfoEditForm, EquipmentEditForm, FieldDataEditForm } from "@plan/model";
 import { getDefaultPlanDraftEditForm } from "@plan/model";
 
-export const usePlanEditForm = (plan: PlanDetailResponse | null) => {
-  const [prevPlan, setPrevPlan] = useState<PlanDetailResponse | null>(null);
-  const [editForm, setEditForm] =
-    useState<PlanDraftEditForm>(getDefaultPlanDraftEditForm(plan));
-
-  // React 권장 패턴
-  // Render 중 plan 변경 감지 -> editForm 동기화
-  if (plan !== prevPlan) {
-    setPrevPlan(plan);
-    if (plan) {
-      setEditForm(getDefaultPlanDraftEditForm(plan));
-    }
-  }
+export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
+  const [editForm, setEditForm] = useState<PlanDraftEditForm>(getDefaultPlanDraftEditForm(plan));
     
   const updatePreInfoField = (
     name: keyof PreInfoEditForm,
@@ -43,10 +32,51 @@ export const usePlanEditForm = (plan: PlanDetailResponse | null) => {
     }));
   };
 
+  const updateFieldDataField = <
+    S extends keyof FieldDataEditForm,
+    K extends keyof FieldDataEditForm[S]
+  >(
+    section: S,
+    name: K,
+    value: string | null,
+    index?: number
+  ) => {
+    setEditForm(prev => {
+      const currentSection = prev.fieldData[section];
+      const currentField = currentSection[name];
+
+      if (index !== undefined && Array.isArray(currentField)) {
+        const newArr = [...(currentField as string[])];
+        newArr[index] = value ?? "";
+        return {
+          ...prev,
+          fieldData: {
+            ...prev.fieldData,
+            [section]: {
+              ...currentSection,
+              [name]: newArr,
+            },
+          },
+        };
+      }
+
+      return {
+        ...prev,
+        fieldData: {
+          ...prev.fieldData,
+          [section]: {
+            ...currentSection,
+            [name]: value,
+          },
+        },
+      };
+    });
+  };
+
   const updateMeasurementItems = (ids: number[]) => {
     setEditForm(prev => ({
       ...prev,
-      measurementItems: { pollutantIdList: ids },
+      measurementItems: { measurementItems: ids },
     }));
   };
 
@@ -60,6 +90,7 @@ export const usePlanEditForm = (plan: PlanDetailResponse | null) => {
     editForm,
     updatePreInfoField,
     updateEquipmentField,
+    updateFieldDataField,
     updateMeasurementItems,
     resetForm,
   };

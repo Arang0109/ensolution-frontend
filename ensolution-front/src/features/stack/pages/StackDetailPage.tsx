@@ -27,7 +27,7 @@ export const StackDetailPage = () => {
 
     startEdit,
     cancelEdit,
-    handleChange,
+    updateField,
 
     goBack,
     handleSave,
@@ -141,7 +141,7 @@ export const StackDetailPage = () => {
             measurementCount={measurementCount}
             isEditMode={isEditMode}
             editForm={editForm}
-            onChange={handleChange}
+            onChange={updateField}
             errors={errors}
           />
         </div>

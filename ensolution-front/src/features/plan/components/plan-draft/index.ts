@@ -1,3 +1,5 @@
+export * from './PlanDetailContent';
+
 export * from './PlanInfoTab';
 export * from './FieldDataTab';
 export * from './EquipmentTab';

@@ -1,29 +1,27 @@
-import { TableLabelCell } from "@shared/ui";
+import React from "react";
 
-export const TableEditableCell = ({
-  label,
+export const TableInputCell = ({
   value,
   onChange,
-  colSpan,
   placeholder,
+  colSpan,
+  unit,
 }: {
-  label: string;
   value: string;
   onChange: (v: string) => void;
-  colSpan?: number;
   placeholder?: string;
+  colSpan?: number;
+  unit?: React.ReactNode;
 }) => (
-  <>
-    <TableLabelCell>
-      {label}
-    </TableLabelCell>
-    <td colSpan={colSpan} className="border border-gray-200 bg-white">
+  <td colSpan={colSpan} className="border border-gray-200 bg-white">
+    <div className="flex items-center">
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder ?? "-"}
+        placeholder={placeholder ?? ""}
         className="w-full px-2 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400"
       />
-    </td>
-  </>
+      {unit && <span className="pr-2 sm:pr-4 text-xs text-gray-400 shrink-0">{unit}</span>}
+    </div>
+  </td>
 );

@@ -62,7 +62,7 @@ export const PlanTableSection = ({ plans }: PlanTableSectionProps) => {
               </span>
             </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-              {plan.measurements.join(", ")}
+              {plan.measurementItems.join(", ")}
             </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
               {plan.companyName}

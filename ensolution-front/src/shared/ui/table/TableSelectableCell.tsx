@@ -31,7 +31,7 @@ export const TableSelectableCell = ({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full pl-4 pr-10 py-2.5 text-sm text-gray-800 bg-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 cursor-pointer"
+          className="w-full pl-2 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-2.5 text-xs sm:text-sm text-gray-800 bg-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 cursor-pointer"
         >
           <option value="" disabled>
             {placeholder ?? "선택"}

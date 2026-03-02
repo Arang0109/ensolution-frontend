@@ -36,7 +36,7 @@ const mapDetailToForm = (detail: PreventionDetailResponse): PreventionBundleUpda
   })),
 });
 
-export const usePreventionEdit = (preventionDetail: PreventionDetailResponse) => {
+export const usePreventionEditForm = (preventionDetail: PreventionDetailResponse) => {
   const [form, setForm] = useState<PreventionBundleUpdateForm>(mapDetailToForm(preventionDetail));
   const [errors, setErrors] = useState<ValidationErrors>({});
 

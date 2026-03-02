@@ -1,6 +1,6 @@
 import { useToast } from "@app/providers/toast";
 
-import { useStackActions, useStackCreate } from "@stack/hooks";
+import { useStackActions, useStackCreateForm } from "@stack/hooks";
 import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
 import { mapStackCreateFormToRequest } from "@stack/model";
 
@@ -17,18 +17,18 @@ interface StackCreateFormProps {
 }
 
 export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCreateFormProps) => {
-  const { form, errors, onChange, validate } = useStackCreate(workplaceId);
-  const { handleCreate, creating } = useStackActions();
+  const { form, errors, updateField, validateForm } = useStackCreateForm(workplaceId);
+  const { createStackProfile, creating } = useStackActions();
   const { showToast } = useToast();
 
   const preventSubmitOnEnter = usePreventSubmitOnEnter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validateForm()) return;
 
     const payload = mapStackCreateFormToRequest(form);
-    const result = await handleCreate(payload);
+    const result = await createStackProfile(payload);
 
     if (result?.success) {
       showToast('측정시설이 등록되었습니다.', 'success');
@@ -58,7 +58,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             required={true}
             name="name"
             value={form.name}
-            onChange={(v) => onChange("name", v)}
+            onChange={(v) => updateField("name", v)}
             placeholder="측정시설명을 입력하세요"
             helperText={errors.name}
             disabled={creating}
@@ -67,7 +67,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             label="SEMS번호"
             name="semsNumber"
             value={form.semsNumber}
-            onChange={(v) => onChange("semsNumber", v)}
+            onChange={(v) => updateField("semsNumber", v)}
             placeholder="SEMS 번호를 입력하세요"
             disabled={creating}
           />
@@ -79,7 +79,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             name="grade"
             value={form.grade}
             placeholder="종별을 선택하세요"
-            onChange={(v) => onChange("grade", v)}
+            onChange={(v) => updateField("grade", v)}
             disabled={creating}
             options={GRADE_LABELS_OPTIONS}
             getOptionLabel={(g) => g.label}
@@ -90,7 +90,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             type="number"
             name="height"
             value={form.height}
-            onChange={(v) => onChange("height", v)}
+            onChange={(v) => updateField("height", v)}
             placeholder="높이를 입력하세요"
             disabled={creating}
           />
@@ -102,7 +102,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             name="shape"
             value={form.shape}
             placeholder="형태를 선택하세요"
-            onChange={(v) => onChange("shape", v)}
+            onChange={(v) => updateField("shape", v)}
             disabled={creating}
             options={SHAPE_LABELS_OPTIONS}
             getOptionLabel={(g) => g.label}
@@ -112,7 +112,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             label="방향"
             name="orientation"
             value={form.orientation}
-            onChange={(v) => onChange("orientation", v)}
+            onChange={(v) => updateField("orientation", v)}
             placeholder="방향을 선택하세요"
             disabled={creating}
             options={ORIENTATION_LABELS_OPTIONS}
@@ -128,7 +128,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             type="number"
             name="diameter"
             value={form.horizontalLength}
-            onChange={(v) => onChange("horizontalLength", v)}
+            onChange={(v) => updateField("horizontalLength", v)}
             placeholder="지름을 입력하세요"
             required
             disabled={creating}
@@ -140,7 +140,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
               type="number"
               name="horizontalLength"
               value={form.horizontalLength}
-              onChange={(v) => onChange("horizontalLength", v)}
+              onChange={(v) => updateField("horizontalLength", v)}
               placeholder="가로길이를 입력하세요"
               disabled={creating}
             />
@@ -150,7 +150,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
               type="number"
               name="verticalLength"
               value={form.verticalLength}
-              onChange={(v) => onChange("verticalLength", v)}
+              onChange={(v) => updateField("verticalLength", v)}
               placeholder="세로길이를 입력하세요"
               disabled={creating}
             />
@@ -161,7 +161,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
         <TextAreaField
           label="비고"
           value={form.remark}
-          onChange={(v) => onChange("remark", v)}
+          onChange={(v) => updateField("remark", v)}
           placeholder="추가 정보를 입력하세요 (선택사항)"
           disabled={creating}
         />

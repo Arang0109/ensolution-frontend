@@ -5,18 +5,17 @@ import { getStack } from "@stack/api/stackApi";
 import type { StackDetailResponse } from "@stack/model";
 
 
-export const useStackDetail = () => {
-  const [stack, setStack] = useState<StackDetailResponse | null>(null);
+export const useStackDetailQuery = () => {
+  const [stack, setStack] = useState<StackDetailResponse | undefined>();
   const [loading, setLoading] = useState(false);
 
   const fetchStack = useCallback(async (stackId: number) => {
     setLoading(true);
     try {
-      const { status, data } = await getStack(stackId);
-      setStack(status? data : null);
+      const { data } = await getStack(stackId);
+      setStack(data);
     } catch (error) {
       console.error(error);
-      setStack(null);
     } finally {
       setLoading(false);
     }

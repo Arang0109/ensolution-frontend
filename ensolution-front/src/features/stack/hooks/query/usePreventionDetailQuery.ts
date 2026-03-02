@@ -4,7 +4,7 @@ import { getPrevention } from "@stack/api/preventionApi";
 
 import type { PreventionDetailResponse } from "@stack/model";
 
-export const usePreventionDetail = () => {
+export const usePreventionDetailQuery = () => {
   const [prevention, setPrevention] = useState<PreventionDetailResponse | null>(null);
   const [loading, setLoading] = useState(false);
 

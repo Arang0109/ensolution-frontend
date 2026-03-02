@@ -1,7 +1,7 @@
 import { useToast } from "@app/providers/toast";
 
 import { mapStackMeasurementCreateFormToRequest } from "@stack/model";
-import { useMeasurementCreate, useMeasurementActions } from "@stack/hooks";
+import { useMeasurementCreateForm, useMeasurementActions } from "@stack/hooks";
 import { usePollutants } from "@pollutant/hooks";
 
 import { CYCLE_LABELS_OPTIONS } from "@stack/model";
@@ -21,7 +21,7 @@ export const MeasurementCreateContent = ({
   onClose,
   onSuccess,
 }: MeasurementCreateContentProps) => {
-  const { form, addMeasurement, removeMeasurement, onChange } = useMeasurementCreate(stackId);
+  const { form, addMeasurement, removeMeasurement, onChange } = useMeasurementCreateForm(stackId);
   const {
     creating,
     handleCreate,

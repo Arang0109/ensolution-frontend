@@ -6,11 +6,11 @@ import { validateStack } from "@stack/lib";
 
 import type { ValidationErrors } from "@shared/model";
 
-export const useStackCreate = (workplaceId: number) => {
+export const useStackCreateForm = (workplaceId: number) => {
   const [form, setForm] = useState<StackCreateForm>(getDefaultStackCreateForm(workplaceId));
   const [errors, setErrors] = useState<ValidationErrors>({});
 
-  const onChange = (
+  const updateField = (
     name: keyof StackCreateForm,
     value: string,
   ) => {
@@ -20,7 +20,7 @@ export const useStackCreate = (workplaceId: number) => {
     }));
   };
 
-  const validate = () => {
+  const validateForm = () => {
     const validationErrors = validateStack(form);
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
@@ -29,7 +29,7 @@ export const useStackCreate = (workplaceId: number) => {
   return {
     form,
     errors,
-    onChange,
-    validate,
+    updateField,
+    validateForm,
   };
 };

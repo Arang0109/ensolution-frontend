@@ -52,7 +52,7 @@ export interface PlanTableResponse {
   stackName: string;
   teamName: string;
 
-  measurements: string[];
+  measurementItems: string[];
 
   status: PlanStatus;
   createdAt: Date;

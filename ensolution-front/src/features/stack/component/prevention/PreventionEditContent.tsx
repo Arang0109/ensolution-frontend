@@ -4,7 +4,7 @@ import { X, Plus, Trash2 } from "lucide-react";
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 
 import { mapPreventionUpdateBundleFormToRequest } from "@stack/model";
-import { usePreventionEdit, usePreventionActions } from "@stack/hooks";
+import { usePreventionEditForm, usePreventionActions } from "@stack/hooks";
 
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
 
@@ -33,7 +33,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
     removeTarget,
 
     validate,
-  } = usePreventionEdit(preventionDetail);
+  } = usePreventionEditForm(preventionDetail);
   const { updating, deleting, handleUpdate, handleDelete } = usePreventionActions();
   const { showToast } = useToast();
 

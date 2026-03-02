@@ -10,7 +10,7 @@ export const useStackActions = () => {
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
 
-  const handleCreate = useCallback(
+  const createStackProfile = useCallback(
     async (data: StackRegisterRequest) => {
     setCreating(true);
     try {
@@ -26,7 +26,7 @@ export const useStackActions = () => {
     }
   }, []);
 
-  const handleUpdate = useCallback(
+  const updateStackProfile = useCallback(
     async (stackId: number, data: StackUpdateRequest): Promise<ActionResult> => {
     setUpdatingId(stackId);
     try {
@@ -41,7 +41,7 @@ export const useStackActions = () => {
     }
   }, []);
 
-  const handleDelete = useCallback(
+  const deleteStackProfile = useCallback(
     async (stackId: number) => {
     setDeletingId(stackId);
 
@@ -62,8 +62,8 @@ export const useStackActions = () => {
     creating,
     updatingId,
     deletingId,
-    handleCreate,
-    handleUpdate,
-    handleDelete,
+    createStackProfile,
+    updateStackProfile,
+    deleteStackProfile,
   };
 };

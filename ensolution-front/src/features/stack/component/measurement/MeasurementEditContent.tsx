@@ -1,6 +1,6 @@
 import { useToast } from "@app/providers/toast";
 
-import { useMeasurementActions, useMeasurementEdit } from "@stack/hooks";
+import { useMeasurementActions, useMeasurementEditForm } from "@stack/hooks";
 import type { StackMeasurementResponse } from "@stack/model";
 import { CYCLE_LABELS_OPTIONS, mapStackMeasurementUpdateFormToRequest } from "@stack/model";
 
@@ -22,7 +22,7 @@ export const MeasurementEditContent = ({
   const {
     editForm,
     handleChange,
-  } = useMeasurementEdit(measurement);
+  } = useMeasurementEditForm(measurement);
 
   const {
     updatingId,

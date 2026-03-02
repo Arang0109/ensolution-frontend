@@ -1,10 +1,12 @@
+import type { WeatherCondition, WindDirection } from "@plan/model";
+
 export interface WeatherDocResponse {
   pressure: WeatherPressureSnapshot;
 
-  weatherCondition: string;
+  weatherCondition: WeatherCondition;
   temperature: string;
   humidity: string;
-  windDirection: string;
+  windDirection: WindDirection;
   windSpeed: string;
 
   convertedPressure: string;

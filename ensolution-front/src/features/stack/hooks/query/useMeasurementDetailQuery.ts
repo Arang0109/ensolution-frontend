@@ -5,7 +5,7 @@ import { getStackMeasurement } from "@stack/api/stackMeasurementApi";
 import type { StackMeasurementResponse } from "@stack/model";
 
 
-export const useMeasurementDetail = () => {
+export const useMeasurementDetailQuery = () => {
   const [stackMeasurement, setStackMeasurement] = useState<StackMeasurementResponse | null>(null);
   const [loading, setLoading] = useState(false);
 

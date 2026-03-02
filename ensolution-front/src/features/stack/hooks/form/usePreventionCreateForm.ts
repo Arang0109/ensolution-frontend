@@ -15,7 +15,7 @@ import { validatePrevention } from "@stack/lib";
 
 import type { ValidationErrors } from "@shared/model";
 
-export const usePreventionCreate = (stackId: number) => {
+export const usePreventionCreateForm = (stackId: number) => {
   const [form, setForm] = useState<PreventionBundleCreateForm>(getDefaultPreventionBundleCreateForm(stackId));
   const [errors, setErrors] = useState<ValidationErrors>({});
 
