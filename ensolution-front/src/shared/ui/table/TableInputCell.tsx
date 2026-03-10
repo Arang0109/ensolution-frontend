@@ -19,9 +19,9 @@ export const TableInputCell = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder ?? ""}
-        className="w-full px-2 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400"
+        className="w-full px-2 py-2 sm:px-3 sm:py-2.5 text-xs sm:text-sm text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400"
       />
-      {unit && <span className="pr-2 sm:pr-4 text-xs text-gray-400 shrink-0">{unit}</span>}
+      {unit && <span className="pr-3 text-[9px] text-gray-400 shrink-0"><i>{unit}</i></span>}
     </div>
   </td>
 );

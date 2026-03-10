@@ -1,25 +1,27 @@
-import { TableInputCell } from "@shared/ui";
-import type { PreInfoEditForm, FieldDataEditForm } from "@plan/model";
-import { WIND_DIRECTION_LABELS_OPTIONS, WEATHER_CONDITION_LABELS_OPTIONS } from "@plan/model";
-
-import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
-import { weatherCalculator, moistureCalculator, exhaustGasCalculator, measurePointCaculator } from "@plan/util";
-
-import { TableLabelCell, TableResultCell, TableResultWithLabelCell, TableSelectableCell } from "@shared/ui";
+import type { TypedEquipmentResponse } from "@equipment/model";
+import type { PreInfoEditForm, FieldDataEditForm, MeasurementpointEditForm } from "@plan/model";
+import { useFieldDataCalculation } from "@plan/hooks";
+import {
+  WeatherSection, MoistureSection, ExhaustGasSection, StackProfileSection, MeasurementPointSection
+} from "@plan/components";
 
 interface FieldDataTabProps {
   preInfo: PreInfoEditForm;
   fieldData: FieldDataEditForm;
-  onChange: <
-    S extends keyof FieldDataEditForm,
-    K extends keyof FieldDataEditForm[S]
-  >(
-    section: S,
-    name: K,
-    value: string | null,
-    index?: number
-  ) => void;
+
   onPreInfoChange: (name: keyof PreInfoEditForm, value: string) => void;
+  onWeatherChange: (name: keyof FieldDataEditForm["weather"], value: string) => void;
+  onMoistureChange: (name: keyof FieldDataEditForm["moisture"], value: string) => void;
+  onExhaustGasChange: (name: keyof FieldDataEditForm["exhaustGas"], value: string, index: number) => void;
+  onMeasureDataChange: (name: keyof FieldDataEditForm["measureData"], value: string) => void;
+  onMeasurementPointChange: (index: number, name: keyof MeasurementpointEditForm, value: string) => void;
+
+  selectedPS?: TypedEquipmentResponse;
+  selectedGS?: TypedEquipmentResponse;
+  selectedPT?: TypedEquipmentResponse;
+  selectedNZ?: TypedEquipmentResponse;
+
+  isParticle: boolean;
 }
 
 // ─── 모바일 카드 스타일 상수 ────────────────────────────────────────
@@ -29,396 +31,110 @@ const desktopWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-
 export const FieldDataTab = ({
   preInfo,
   fieldData,
-  onChange,
-  onPreInfoChange
+  onPreInfoChange,
+  onWeatherChange,
+  onMoistureChange,
+  onExhaustGasChange,
+  onMeasureDataChange,
+  onMeasurementPointChange,
+  selectedPT,
+  selectedNZ,
+
+  isParticle,
 }: FieldDataTabProps) => {
-  const { atmosphericPressure } = weatherCalculator(fieldData.weather);
+
   const {
-    weightDiff,
-    tempAvg,
-    dryVolumeDiff,
-    pressureToMmHg,
-    pressureToInchH2O,
-    moistureRatio
-  } = moistureCalculator(fieldData);
-  const {
-    o2ConcentrationAvg,
-    co2ConcentrationAvg,
-    coConcentrationAvg,
-    n2ConcentrationAvg,
-    noxConcentrationAvg,
-    soxConcentrationAvg,
-    oxygenCorrectionFactor,
-    gasDensity,
-  } = exhaustGasCalculator(fieldData, preInfo, moistureRatio);
-  const {
-    area,
-    measurePointCnt,
-  } = measurePointCaculator(preInfo);
+    atmosphericPressure,
+    calcMoisture,
+    calcExhaustGas,
+    calcMeasurePoint,
+  } = useFieldDataCalculation(preInfo, fieldData, onMeasurementPointChange, selectedPT);
 
   return (
     <div className="space-y-6">
 
       {/* ── 기상정보 ─────────────────────────────────── */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">기상정보</h3>
+      <WeatherSection
+        mobileWrap={mobileWrap}
+        desktopWrap={desktopWrap}
 
-        {/* Mobile */}
-        <div className={mobileWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>대기압</TableLabelCell>
-                <TableInputCell value={fieldData.weather.pressure} onChange={(value) => onChange("weather", "pressure", value)} unit="Hpa" />
-                <TableResultCell colSpan={2} value={atmosphericPressure} unit="mmHg" />
-              </tr>
-              <tr>
-                <TableLabelCell>기온</TableLabelCell>
-                <TableInputCell value={fieldData.weather.temperature} onChange={(value) => onChange("weather", "temperature", value)} unit="°C" />
-                <TableLabelCell>습도</TableLabelCell>
-                <TableInputCell value={fieldData.weather.humidity} onChange={(value) => onChange("weather", "humidity", value)} unit="%" />
-              </tr>
-              <tr>
-                <TableSelectableCell colSpan={3} label="기상" value={fieldData.weather.weatherCondition} options={WEATHER_CONDITION_LABELS_OPTIONS} onChange={(value) => onChange("weather", "weatherCondition", value)} />
-              </tr>
-              <tr>
-                <TableSelectableCell label="풍향" value={fieldData.weather.windDirection} options={WIND_DIRECTION_LABELS_OPTIONS} onChange={(value) => onChange("weather", "windDirection", value)} />
-                <TableLabelCell>풍속</TableLabelCell>
-                <TableInputCell value={fieldData.weather.windSpeed} onChange={(value) => onChange("weather", "windSpeed", value)} unit="m/s" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        weather={fieldData.weather}
+        onChange={onWeatherChange}
 
-        {/* Desktop */}
-        <div className={desktopWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>대기압</TableLabelCell>
-                <TableInputCell value={fieldData.weather.pressure} onChange={(value) => onChange("weather", "pressure", value)} unit="Hpa" />
-                <TableResultCell value={atmosphericPressure} unit="mmHg" />
-                <TableLabelCell>기온</TableLabelCell>
-                <TableInputCell value={fieldData.weather.temperature} onChange={(value) => onChange("weather", "temperature", value)} unit="°C" />
-                <TableLabelCell>습도</TableLabelCell>
-                <TableInputCell value={fieldData.weather.humidity} onChange={(value) => onChange("weather", "humidity", value)} unit="%" />
-              </tr>
-              <tr>
-                <TableSelectableCell colSpan={2} label="기상" value={fieldData.weather.weatherCondition} options={WEATHER_CONDITION_LABELS_OPTIONS} onChange={(value) => onChange("weather", "weatherCondition", value)} />
-                <TableSelectableCell label="풍향" value={fieldData.weather.windDirection} options={WIND_DIRECTION_LABELS_OPTIONS} onChange={(value) => onChange("weather", "windDirection", value)} />
-                <TableLabelCell>풍속</TableLabelCell>
-                <TableInputCell value={fieldData.weather.windSpeed} onChange={(value) => onChange("weather", "windSpeed", value)} unit="m/s" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        atmosphericPressure={atmosphericPressure}
+      />
 
       {/* ── 수분량정보 ────────────────────────────────── */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">수분량정보</h3>
+      <MoistureSection
+        mobileWrap={mobileWrap}
+        desktopWrap={desktopWrap}
 
-        {/* Mobile */}
-        <div className={mobileWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>흡습병 무게</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.beforeWeight} onChange={(value) => onChange("moisture", "beforeWeight", value)} unit="g"/>
-                <TableInputCell value={fieldData.moisture.afterWeight} onChange={(value) => onChange("moisture", "afterWeight", value)} unit="g" />
-                <TableResultCell value={weightDiff} unit="g" />
-              </tr>
-              <tr>
-                <TableLabelCell>온도</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.inTemperature} onChange={(value) => onChange("moisture", "inTemperature", value)} unit="°C" />
-                <TableInputCell value={fieldData.moisture.outTemperature} onChange={(value) => onChange("moisture", "outTemperature", value)} unit="°C" />
-                <TableResultCell value={tempAvg} unit="°C" />
-              </tr>
-              <tr>
-                <TableLabelCell>게이지압</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.gasMeterGaugePressure} onChange={(value) => onChange("moisture", "gasMeterGaugePressure", value)} unit={<>mmH<sub>2</sub>O</>} />
-                <TableResultCell value={pressureToMmHg} unit="mmHg" />
-                <TableResultCell value={pressureToInchH2O} unit={<>inchH<sub>2</sub>O</>} />
-              </tr>
-              <tr>
-                <TableLabelCell>흡인량</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.beforeDryVolume} onChange={(value) => onChange("moisture", "beforeDryVolume", value)} unit="L" />
-                <TableInputCell value={fieldData.moisture.afterDryVolume} onChange={(value) => onChange("moisture", "afterDryVolume", value)} unit="L" />
-                <TableResultCell value={dryVolumeDiff} unit="L" />
-              </tr>
-              <tr>
-                <TableLabelCell>흡인유속</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.suctionVelocity} onChange={(value) => onChange("moisture", "suctionVelocity", value)} unit="m/s" />
-                <TableLabelCell>수분량(%)</TableLabelCell>
-                <TableResultCell value={moistureRatio} unit="%" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        moisture={fieldData.moisture}
+        onChange={onMoistureChange}
 
-        {/* Desktop */}
-        <div className={desktopWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>흡습병 무게</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.beforeWeight} onChange={(value) => onChange("moisture", "beforeWeight", value)} unit="g" />
-                <TableInputCell value={fieldData.moisture.afterWeight} onChange={(value) => onChange("moisture", "afterWeight", value)} unit="g" />
-                <TableResultCell value={weightDiff} unit="g" />
-                <TableLabelCell>가스미터 온도</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.inTemperature} onChange={(value) => onChange("moisture", "inTemperature", value)} unit="°C" />
-                <TableInputCell value={fieldData.moisture.outTemperature} onChange={(value) => onChange("moisture", "outTemperature", value)} unit="°C" />
-                <TableResultCell value={tempAvg} unit="°C" />
-              </tr>
-              <tr>
-                <TableLabelCell>가스미터 흡입량</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.beforeDryVolume} onChange={(value) => onChange("moisture", "beforeDryVolume", value)} unit="L" />
-                <TableInputCell value={fieldData.moisture.afterDryVolume} onChange={(value) => onChange("moisture", "afterDryVolume", value)} unit="L" />
-                <TableResultCell value={dryVolumeDiff} unit="L" />
-                <TableLabelCell>게이지압</TableLabelCell>
-                <TableInputCell value={fieldData.moisture.gasMeterGaugePressure} onChange={(value) => onChange("moisture", "gasMeterGaugePressure", value)} unit={<>mmH<sub>2</sub>O</>} />
-                <TableResultCell value={pressureToMmHg} unit="mmHg" />
-                <TableResultCell value={pressureToInchH2O} unit={<>inchH<sub>2</sub>O</>} />
-              </tr>
-              <tr>
-                <TableLabelCell>흡인유속</TableLabelCell>
-                <TableInputCell colSpan={3} value={fieldData.moisture.suctionVelocity} onChange={(value) => onChange("moisture", "suctionVelocity", value)} unit="m/s" />
-                <TableLabelCell>수분량</TableLabelCell>
-                <TableResultCell colSpan={3} value={moistureRatio} unit="%" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        weightDiff={calcMoisture.weightDiff}
+        tempAvg={calcMoisture.tempAvg}
+        dryVolumeDiff={calcMoisture.dryVolumeDiff}
+        pressureToMmHg={calcMoisture.pressureToMmHg}
+        pressureToInchH2O={calcMoisture.pressureToInchH2O}
+        
+        moistureRatio={calcMoisture.moistureRatio}
+      />
 
       {/* ── 배출가스정보 ──────────────────────────────── */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">배출가스정보</h3>
+      <ExhaustGasSection
+        mobileWrap={mobileWrap}
+        desktopWrap={desktopWrap}
 
-        {/* Mobile */}
-        <div className={mobileWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>O<sub>2</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.o2Concentration[0]} onChange={(value) => onChange("exhaustGas", "o2Concentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.o2Concentration[1]} onChange={(value) => onChange("exhaustGas", "o2Concentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.o2Concentration[2]} onChange={(value) => onChange("exhaustGas", "o2Concentration", value, 2)} unit="%" />
-                <TableResultCell value={o2ConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableLabelCell>CO<sub>2</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.co2Concentration[0]} onChange={(value) => onChange("exhaustGas", "co2Concentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.co2Concentration[1]} onChange={(value) => onChange("exhaustGas", "co2Concentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.co2Concentration[2]} onChange={(value) => onChange("exhaustGas", "co2Concentration", value, 2)} unit="%" />
-                <TableResultCell value={co2ConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableLabelCell>CO</TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.coConcentration[0]} onChange={(value) => onChange("exhaustGas", "coConcentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.coConcentration[1]} onChange={(value) => onChange("exhaustGas", "coConcentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.coConcentration[2]} onChange={(value) => onChange("exhaustGas", "coConcentration", value, 2)} unit="%" />
-                <TableResultCell value={coConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableLabelCell>NO<sub>x</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.noxConcentration[0]} onChange={(value) => onChange("exhaustGas", "noxConcentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.noxConcentration[1]} onChange={(value) => onChange("exhaustGas", "noxConcentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.noxConcentration[2]} onChange={(value) => onChange("exhaustGas", "noxConcentration", value, 2)} unit="%" />
-                <TableResultCell value={noxConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableLabelCell>SO<sub>x</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.soxConcentration[0]} onChange={(value) => onChange("exhaustGas", "soxConcentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.soxConcentration[1]} onChange={(value) => onChange("exhaustGas", "soxConcentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.soxConcentration[2]} onChange={(value) => onChange("exhaustGas", "soxConcentration", value, 2)} unit="%" />
-                <TableResultCell value={soxConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableResultWithLabelCell label={<>N<sub>2</sub></>} value={n2ConcentrationAvg} unit="%" />
-                <TableResultWithLabelCell colSpan={2} label="표준산소농도" value={preInfo.standardOxygen} unit="%" />
-                <TableResultWithLabelCell colSpan={2} label="산소보정계수" value={oxygenCorrectionFactor} unit="" />
-              </tr>
-              <tr>
-                <TableResultWithLabelCell colSpan={5} label="배가스밀도" value={gasDensity} unit="kg/Nm³" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        exhaustGas={fieldData.exhaustGas}
+        onChange={onExhaustGasChange}
 
-        {/* Desktop */}
-        <div className={desktopWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>O<sub>2</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.o2Concentration[0]} onChange={(value) => onChange("exhaustGas", "o2Concentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.o2Concentration[1]} onChange={(value) => onChange("exhaustGas", "o2Concentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.o2Concentration[2]} onChange={(value) => onChange("exhaustGas", "o2Concentration", value, 2)} unit="%" />
-                <TableResultCell value={o2ConcentrationAvg} unit="%" />
-                <TableLabelCell>CO<sub>2</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.co2Concentration[0]} onChange={(value) => onChange("exhaustGas", "co2Concentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.co2Concentration[1]} onChange={(value) => onChange("exhaustGas", "co2Concentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.co2Concentration[2]} onChange={(value) => onChange("exhaustGas", "co2Concentration", value, 2)} unit="%" />
-                <TableResultCell value={co2ConcentrationAvg} unit="%" />
-                <TableLabelCell>CO</TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.coConcentration[0]} onChange={(value) => onChange("exhaustGas", "coConcentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.coConcentration[1]} onChange={(value) => onChange("exhaustGas", "coConcentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.coConcentration[2]} onChange={(value) => onChange("exhaustGas", "coConcentration", value, 2)} unit="%" />
-                <TableResultCell value={coConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableLabelCell>N<sub>2</sub></TableLabelCell>
-                <TableResultCell colSpan={4} value={n2ConcentrationAvg} unit="%" />
-                <TableLabelCell>NO<sub>x</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.noxConcentration[0]} onChange={(value) => onChange("exhaustGas", "noxConcentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.noxConcentration[1]} onChange={(value) => onChange("exhaustGas", "noxConcentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.noxConcentration[2]} onChange={(value) => onChange("exhaustGas", "noxConcentration", value, 2)} unit="%" />
-                <TableResultCell value={noxConcentrationAvg} unit="%" />
-                <TableLabelCell>SO<sub>x</sub></TableLabelCell>
-                <TableInputCell value={fieldData.exhaustGas.soxConcentration[0]} onChange={(value) => onChange("exhaustGas", "soxConcentration", value, 0)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.soxConcentration[1]} onChange={(value) => onChange("exhaustGas", "soxConcentration", value, 1)} unit="%" />
-                <TableInputCell value={fieldData.exhaustGas.soxConcentration[2]} onChange={(value) => onChange("exhaustGas", "soxConcentration", value, 2)} unit="%" />
-                <TableResultCell value={soxConcentrationAvg} unit="%" />
-              </tr>
-              <tr>
-                <TableLabelCell>표준산소농도</TableLabelCell>
-                <TableResultCell colSpan={4} value={preInfo.standardOxygen} unit="%" />
-                <TableLabelCell>산소보정계수</TableLabelCell>
-                <TableResultCell colSpan={4} value={oxygenCorrectionFactor} unit="" />
-                <TableLabelCell>배가스밀도</TableLabelCell>
-                <TableResultCell colSpan={4} value={gasDensity} unit="kg/Nm³" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        standardOxygen={preInfo.standardOxygen}
 
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">시설정보</h3>
+        o2ConcentrationAvg={calcExhaustGas.o2ConcentrationAvg}
+        co2ConcentrationAvg={calcExhaustGas.co2ConcentrationAvg}
+        coConcentrationAvg={calcExhaustGas.coConcentrationAvg}
+        n2ConcentrationAvg={calcExhaustGas.n2ConcentrationAvg}
+        noxConcentrationAvg={calcExhaustGas.noxConcentrationAvg}
+        soxConcentrationAvg={calcExhaustGas.soxConcentrationAvg}
+        oxygenCorrectionFactor={calcExhaustGas.oxygenCorrectionFactor}
+        gasDensity={calcExhaustGas.gasDensity}
+      />
 
-        {/* Mobile */}
-        <div className={mobileWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>높이</TableLabelCell>
-                <TableInputCell colSpan={3} value={preInfo.height} onChange={(value) => onPreInfoChange("height", value)} unit="m" />
-              </tr>
-              <tr>
-                <TableSelectableCell
-                  label="형태" colSpan={3} value={preInfo.shape}
-                  options={SHAPE_LABELS_OPTIONS}
-                  onChange={(value) => {
-                    onPreInfoChange("shape", value);
-                    if (value === "CIRCULAR") onPreInfoChange("verticalLength", "");
-                  }}
-                />
-              </tr>
-              <tr>
-                {preInfo.shape === "CIRCULAR" ? (
-                  <>
-                    <TableLabelCell>지름</TableLabelCell>
-                    <TableInputCell colSpan={3} value={preInfo.horizontalLength} onChange={(value) => onPreInfoChange("horizontalLength", value)} unit="m" />
-                    
-                  </>
-                ) : (
-                  <>
-                    <TableLabelCell>가로</TableLabelCell>
-                    <TableInputCell value={preInfo.horizontalLength} onChange={(value) => onPreInfoChange("horizontalLength", value)} unit="m" />
-                    <TableLabelCell>세로</TableLabelCell>
-                    <TableInputCell value={preInfo.verticalLength} onChange={(value) => onPreInfoChange("verticalLength", value)} unit="m" />
-                  </>
-                )}
-              </tr>
-              <tr>
-                <TableSelectableCell
-                  colSpan={3}
-                  label="방향" value={preInfo.orientation}
-                  options={ORIENTATION_LABELS_OPTIONS}
-                  onChange={(value) => onPreInfoChange("orientation", value)}
-                />
-              </tr>
-              <tr>
-                <TableLabelCell>면적</TableLabelCell>
-                <TableResultCell value={area} unit="m³" />
-                <TableLabelCell>측정점</TableLabelCell>
-                <TableResultCell value={measurePointCnt} unit="지점" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <StackProfileSection
+        mobileWrap={mobileWrap}
+        desktopWrap={desktopWrap}
 
-        {/* Desktop */}
-        <div className={desktopWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>높이</TableLabelCell>
-                <TableInputCell value={preInfo.height} onChange={(value) => onPreInfoChange("height", value)} unit="m" />
-                <TableSelectableCell
-                  label="형태" value={preInfo.shape}
-                  options={SHAPE_LABELS_OPTIONS}
-                  onChange={(value) => {
-                    onPreInfoChange("shape", value);
-                    if (value === "CIRCULAR") onPreInfoChange("verticalLength", "");
-                  }}
-                />
-                {preInfo.shape === "CIRCULAR" ? (
-                  <>
-                    <TableLabelCell>지름</TableLabelCell>
-                    <TableInputCell value={preInfo.horizontalLength} onChange={(value) => onPreInfoChange("horizontalLength", value)} unit="m" />
-                    <TableLabelCell> </TableLabelCell>
-                    <TableLabelCell> </TableLabelCell>
-                  </>
-                ) : (
-                  <>
-                    <TableLabelCell>가로</TableLabelCell>
-                    <TableInputCell value={preInfo.horizontalLength} onChange={(value) => onPreInfoChange("horizontalLength", value)} unit="m" />
-                    <TableLabelCell>세로</TableLabelCell>
-                    <TableInputCell value={preInfo.verticalLength} onChange={(value) => onPreInfoChange("verticalLength", value)} unit="m" />
-                  </>
-                )}
-                <TableSelectableCell
-                  label="방향" value={preInfo.orientation}
-                  options={ORIENTATION_LABELS_OPTIONS}
-                  onChange={(value) => onPreInfoChange("orientation", value)}
-                />
-              </tr>
-              <tr>
-                <TableLabelCell>면적</TableLabelCell>
-                <TableResultCell colSpan={4} value={area} unit={<>m<sup>2</sup></>} />
-                <TableLabelCell>측정점</TableLabelCell>
-                <TableResultCell colSpan={4} value={measurePointCnt} unit="지점" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        preInfo={preInfo}
+        onChange={onPreInfoChange}
 
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">측정점정보</h3>
+        stackArea={calcMeasurePoint.area}
+        measurePointCnt={calcMeasurePoint.measurePointCnt}
+      />
 
-        {/* Desktop */}
-        <div className={desktopWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <TableLabelCell>배출가스온도</TableLabelCell>
-                <TableInputCell value={preInfo.height} onChange={(value) => onPreInfoChange("height", value)} unit="°C" />
-              </tr>
-              <tr>
-                <TableLabelCell>동압</TableLabelCell>
-                <TableInputCell value={preInfo.height} onChange={(value) => onPreInfoChange("height", value)} unit={<>mmH<sub>2</sub>O</>} />
-              </tr>
-              <tr>
-                <TableLabelCell>정압</TableLabelCell>
-                <TableInputCell value={preInfo.height} onChange={(value) => onPreInfoChange("height", value)} unit={<>mmH<sub>2</sub>O</>} />
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <MeasurementPointSection
+        fieldData={fieldData}
+        onChange={onMeasurementPointChange}
+        onMeasureDataChange={onMeasureDataChange}
+
+        measurePointLength={calcMeasurePoint.measurePointLength}
+        AvgGasTemp={calcMeasurePoint.AvgGasTemp}
+        AvgPd={calcMeasurePoint.AvgPd}
+        AvgPs={calcMeasurePoint.AvgPs}
+        avgInTemp={calcMeasurePoint.avgInTemp}
+        avgOutTemp={calcMeasurePoint.avgOutTemp}
+
+        standardDensity={calcMeasurePoint.standardDensity}
+        gasVelocity={calcMeasurePoint.gasVelocity}
+        pointVelocities={calcMeasurePoint.pointVelocities}
+        pitotTubeCoefficient={calcMeasurePoint.pitotTubeCoefficient}
+        quantity={calcMeasurePoint.quantity}
+        standardQuantity={calcMeasurePoint.standardQuantity}
+
+        selectedNZ={selectedNZ}
+
+        isParticle={isParticle}
+      />
     </div>
   );
 };

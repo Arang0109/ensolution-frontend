@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { PlanInfoTab, FieldDataTab, LabDataTab, EquipmentTab } from "@plan/components";
-import { usePlanDraftViewModel, usePlanEditForm } from "@plan/hooks"
+import { usePlanDraftViewModel, usePlanEditForm, useSelectedEquipments } from "@plan/hooks"
 
 import { Button, Tabs } from "@shared/ui";
 import { PLAN_DETAIL_TABS, DEFAULT_PLAN_DETAIL_TAB } from "@/shared/model";
@@ -21,10 +21,29 @@ export const PlanDetailContent = ({
     stack,
     goBack,
     handleSaveDraft,
-    handleDeleteDraft
+    handleDeleteDraft,
+    isParticle
   } = viewModel;
 
-  const { editForm, updatePreInfoField, updateEquipmentField, updateFieldDataField, updateMeasurementItems } = usePlanEditForm(plan);
+  const {
+    editForm,
+
+    updatePreInfoField,
+    updateEquipmentField,
+
+    updateWeatherField,
+    updateMoistureField,
+    updateExhaustGasField,
+
+    updateMeasureDataField,
+    updateMeasurementPointField,
+    updateMeasurementItems
+  } = usePlanEditForm(plan);
+
+  const {
+    particleSamplers, gasSamplers, pitotTubes, nozzles,
+    selectedPS, selectedGS, selectedPT, selectedNZ,
+  } = useSelectedEquipments(editForm.equipment);
 
   return (
     <div className="px-3 sm:px-6 max-w-7xl mx-auto">
@@ -62,13 +81,30 @@ export const PlanDetailContent = ({
           <EquipmentTab
             equipment={editForm.equipment}
             onChange={updateEquipmentField}
+            particleSamplers={particleSamplers}
+            gasSamplers={gasSamplers}
+            pitotTubes={pitotTubes}
+            nozzles={nozzles}
+            selectedPS={selectedPS}
+            selectedGS={selectedGS}
+            selectedPT={selectedPT}
+            selectedNZ={selectedNZ}
           />}
           {activeTab === "MEASUREMENT" &&
           <FieldDataTab
             preInfo={editForm.preInfo}
             fieldData={editForm.fieldData}
-            onChange={updateFieldDataField}
+            onWeatherChange={updateWeatherField}
+            onMoistureChange={updateMoistureField}
+            onExhaustGasChange={updateExhaustGasField}
             onPreInfoChange={updatePreInfoField}
+            onMeasureDataChange={updateMeasureDataField}
+            onMeasurementPointChange={updateMeasurementPointField}
+            selectedPS={selectedPS}
+            selectedGS={selectedGS}
+            selectedPT={selectedPT}
+            selectedNZ={selectedNZ}
+            isParticle={isParticle}
           />}
           {activeTab === "LAB" && <LabDataTab />}
         </div>

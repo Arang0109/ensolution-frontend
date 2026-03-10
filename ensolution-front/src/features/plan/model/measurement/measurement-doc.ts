@@ -2,7 +2,7 @@ import type {
   MeasurementStatus,
   PreInfoDocResponse, MeasurementEquipmentResponse, ClientDocResponse,
   WeatherDocResponse, MoistureDocResponse, ExhaustGasDocResponse,
-  MeasurementPointDocResponse, StackMeasurementDocResponse
+  MeasurementPointDocResponse, MeasureDataDocResponse, StackMeasurementDocResponse
 } from "@plan/model";
 import type { WeatherCondition, WindDirection } from "@plan/model";
 import type { Shape, Orientation } from "@stack/model";
@@ -14,9 +14,6 @@ export interface MeasurementDocResponse {
   planId: number;
   status: MeasurementStatus;
 
-  measurementPointCnt: number;
-  circularAxisCoords: number[];
-
   preInfo: PreInfoDocResponse;
   measurementItems: StackMeasurementDocResponse[];
   equipment: MeasurementEquipmentResponse;
@@ -26,10 +23,8 @@ export interface MeasurementDocResponse {
   moisture: MoistureDocResponse;
   exhaustGas: ExhaustGasDocResponse;
 
+  measureData: MeasureDataDocResponse;
   measurementPoints: MeasurementPointDocResponse[];
-
-  pitotTubeCoefficient: number;
-  quantity: number;
 
   createdAt: string;
   updatedAt: string;
@@ -49,6 +44,9 @@ export interface DraftUpdateRequest {
   weather: WeatherUpdateRequest;
   moisture: MoistureUpdateRequest;
   exhaustGas: ExhaustGasUpdateRequest;
+
+  measureData: MeasureDataUpdataRequest;
+  measurementPoints: MeasurementPointUpdateRequest[];
 }
 
 export interface PreInfoUpdateRequest {
@@ -134,4 +132,34 @@ export interface ExhaustGasUpdateRequest {
   coConcentration: string[];
   noxConcentration: string[];
   soxConcentration: string[];
+}
+
+export interface MeasurementPointUpdateRequest {
+  gasTemperature: string;
+  dynamicPressure: string;
+  staticPressure: string;
+
+  equipmentTemperature: EquipmentGasTemp;
+  equipmentVolume: EquipmentVolume;
+
+  measureTime: string;
+  vacuumGaugePressure: string;
+  finalImpingerTemperature: string;
+}
+
+export interface EquipmentGasTemp {
+  inletTemperature: string;
+  outletTemperature: string;
+}
+
+export interface EquipmentVolume {
+  beforeVolume: string;
+  afterVolume: string;
+}
+
+export interface MeasureDataUpdataRequest {
+  measurementPointCnt: string;
+  standardDesiredGasVolume: string;
+  measuringTime: string;
+  nozzleSize: string;
 }

@@ -6,4 +6,5 @@ export * from './client-doc';
 export * from './weather-doc';
 export * from './moisture-doc';
 export * from './exhaust-gas-doc';
+export * from './measure-data-doc';
 export * from './measurement-point-doc';

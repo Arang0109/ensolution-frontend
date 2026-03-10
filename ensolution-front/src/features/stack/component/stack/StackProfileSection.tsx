@@ -185,14 +185,14 @@ export const StackProfileSection = ({
               {/* 형상 */}
               <InputField
                 label="형상"
-                value={SHAPE_LABELS[editForm.shape] ?? '-'}
+                value={SHAPE_LABELS[stack.shape] ?? '-'}
                 readOnly
               />  
 
               {/* 방향 */}
               <InputField
                 label="방향"
-                value={ORIENTATION_LABELS[editForm.orientation] ?? '-'}
+                value={ORIENTATION_LABELS[stack.orientation] ?? '-'}
                 readOnly
               />  
 

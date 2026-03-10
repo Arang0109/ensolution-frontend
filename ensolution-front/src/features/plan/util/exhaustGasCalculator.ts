@@ -22,59 +22,81 @@ const soxConcentrationAvg = (exhaustGas: ExhaustGasEditForm) => {
 }
 
 const calcNitrogenAvg = (exhaustGas: ExhaustGasEditForm) => {
-  return (100 - Number(o2ConcentrationAvg(exhaustGas)) - Number(co2ConcentrationAvg(exhaustGas)) - Number(coConcentrationAvg((exhaustGas)))).toFixed(1);
-}
 
-const calcOxygenCorrectionFactor = (exhaustGas: ExhaustGasEditForm, standardOxygen: string) => {
-  if (!standardOxygen) {
-    return "-"; // 보정계수 없음
-  }
+  const o2 = o2ConcentrationAvg(exhaustGas);
+  const co2 = co2ConcentrationAvg(exhaustGas);
+  const co = coConcentrationAvg(exhaustGas);
+
+  if (o2 === null || co2 === null || co === null) return null;
+
+  return Number((100 - o2 - co2 - co).toFixed(1));
+};
+
+const calcOxygenCorrectionFactor = (
+  exhaustGas: ExhaustGasEditForm,
+  standardOxygen?: string
+) => {
+
+  if (!standardOxygen) return null;
 
   const std = Number(standardOxygen);
-  const o2AvgRaw = o2ConcentrationAvg(exhaustGas);
-  const o2 = Number(o2AvgRaw);
+  const o2 = o2ConcentrationAvg(exhaustGas);
 
-  if (!Number.isFinite(std) || !Number.isFinite(o2)) return "-";
+  if (!Number.isFinite(std) || o2 === null) return null;
 
-  const numerator = 21 - std;
   const denominator = 21 - o2;
 
-  if (denominator === 0) return "-";
-  if (o2 >= 21) return "-";
+  if (denominator === 0 || o2 >= 21) return null;
 
-  const factor = numerator / denominator;
+  const factor = (21 - std) / denominator;
 
-  if (!Number.isFinite(factor) || factor <= 0) return "-";
+  if (!Number.isFinite(factor) || factor <= 0) return null;
 
-  return factor.toFixed(1);
-}
+  return Number(factor.toFixed(1));
+};
 
 const calcGasDensity = (
-  o2Avg: string,
-  co2Avg: string,
-  n2Avg: string,
-  moistureRatio: string
+  o2Avg: number | null,
+  co2Avg: number | null,
+  n2Avg: number | null,
+  moistureRatio: number | null
 ) => {
-  const o2 = (32 / 22.4 * Number(o2Avg)) / 100;
-  const co2 = (44 / 22.4 * Number(co2Avg)) / 100;
-  const n2 = (28 / 22.4 * Number(n2Avg)) / 100;
+
+  if (
+    o2Avg === null ||
+    co2Avg === null ||
+    n2Avg === null ||
+    moistureRatio === null
+  ) {
+    return null;
+  }
+
+  const o2 = (32 / 22.4 * o2Avg) / 100;
+  const co2 = (44 / 22.4 * co2Avg) / 100;
+  const n2 = (28 / 22.4 * n2Avg) / 100;
 
   const dryGasDensity = o2 + co2 + n2;
 
-  const moisture = (18 / 22.4 * Number(moistureRatio)) / 100;
+  const moisture = (18 / 22.4 * moistureRatio) / 100;
 
-  return ((dryGasDensity * (100 - Number(moistureRatio)) / 100) + moisture).toFixed(2);
+  const density =
+    (dryGasDensity * (100 - moistureRatio) / 100) + moisture;
 
-}
+  return Number(density.toFixed(2));
+};
 
-export const exhaustGasCalculator = (fieldData: FieldDataEditForm, preInfo: PreInfoEditForm, moistureRatio: string) => {
+export const exhaustGasCalculator = (
+  fieldData: FieldDataEditForm,
+  preInfo: PreInfoEditForm,
+  moistureRatio: number | null
+) => {
+
   const e = fieldData.exhaustGas;
-  const stdO2 = preInfo.standardOxygen;
+
   const o2Avg = o2ConcentrationAvg(e);
   const co2Avg = co2ConcentrationAvg(e);
   const coAvg = coConcentrationAvg(e);
   const n2Avg = calcNitrogenAvg(e);
-
 
   return {
     o2ConcentrationAvg: o2Avg,
@@ -83,12 +105,7 @@ export const exhaustGasCalculator = (fieldData: FieldDataEditForm, preInfo: PreI
     n2ConcentrationAvg: n2Avg,
     noxConcentrationAvg: noxConcentrationAvg(e),
     soxConcentrationAvg: soxConcentrationAvg(e),
-    oxygenCorrectionFactor: calcOxygenCorrectionFactor(e, stdO2),
-    gasDensity: calcGasDensity(
-      o2Avg,
-      co2Avg,
-      n2Avg,
-      moistureRatio
-    )
+    oxygenCorrectionFactor: calcOxygenCorrectionFactor(e, preInfo.standardOxygen),
+    gasDensity: calcGasDensity(o2Avg, co2Avg, n2Avg, moistureRatio)
   };
 };

@@ -5,10 +5,10 @@ export interface MeasurementPointDocResponse {
 
   equipmentTemperature: EquipmentTemperatureSnapshot;
   equipmentVolume: EquipmentVolumeSnapshot;
-
-  measureTime: string;
+  
   vacuumGaugePressure: string;
   finalImpingerTemperature: string;
+  measureTime: string;
 
   gasVelocity: string;
   gasDensity: string;
@@ -18,6 +18,7 @@ export interface MeasurementPointDocResponse {
   kFactor: string;
   orificeDifferentialPressure: string;
   nozzleSize: string;
+  isokineticRatio: string;
 }
 
 export interface EquipmentTemperatureSnapshot {

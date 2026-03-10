@@ -1,5 +1,3 @@
-import { TableLabelCell } from "@shared/ui";
-
 const colSpanClass: Record<number, string> = {
   2: 'col-span-2',
   3: 'col-span-3',
@@ -8,14 +6,12 @@ const colSpanClass: Record<number, string> = {
 };
 
 export const TableSelectableCell = ({
-  label,
   value,
   onChange,
   options,
   colSpan,
   placeholder,
 }: {
-  label: string;
   value: string;
   onChange: (v: string) => void;
   options: { value: string | number; label: string }[];
@@ -23,9 +19,6 @@ export const TableSelectableCell = ({
   placeholder?: string;
 }) => (
   <>
-    <TableLabelCell>
-      {label}
-    </TableLabelCell>
     <td colSpan={colSpan} className={`border border-gray-200 bg-white${colSpan ? ` ${colSpanClass[colSpan] ?? ''}` : ''}`}>
       <div className="relative">
         <select

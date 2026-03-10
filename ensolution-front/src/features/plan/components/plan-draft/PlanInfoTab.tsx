@@ -7,7 +7,7 @@ import type { PreInfoEditForm, MeasurementItemEditForm } from "@plan/model";
 
 import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS, type StackDetailResponse } from "@stack/model";
 import { GRADE_LABELS_OPTIONS } from "@shared/model";
-import { MultiSelectField, TableEditableCell, TableSelectableCell} from "@shared/ui";
+import { MultiSelectField, TableEditableCell, TableSelectableCell, TableLabelCell } from "@shared/ui";
 
 interface PlanInfoTabProps {
   preInfo: PreInfoEditForm;
@@ -58,15 +58,18 @@ export const PlanInfoTab = ({
                 <TableEditableCell colSpan={3} label="측정일" value={preInfo.measureDate} onChange={(value) => onChange("measureDate", value)} />
               </tr>
               <tr>
-                <TableSelectableCell label="측정분야" value={preInfo.measurementField} onChange={(value) => onChange("measurementField", value)} options={MEASUREMENT_FIELD_OPTIONS} />
-                <TableSelectableCell label="측정용도" value={preInfo.measurementType} onChange={(value) => onChange("measurementType", value)} options={MEASUREMENT_TYPE_OPTIONS} />
+                <TableLabelCell>측정분야</TableLabelCell>
+                <TableSelectableCell value={preInfo.measurementField} onChange={(value) => onChange("measurementField", value)} options={MEASUREMENT_FIELD_OPTIONS} />
+                <TableLabelCell>측정용도</TableLabelCell>
+                <TableSelectableCell value={preInfo.measurementType} onChange={(value) => onChange("measurementType", value)} options={MEASUREMENT_TYPE_OPTIONS} />
               </tr>
               <tr>
                 <TableEditableCell label="채취자(사수)" value={preInfo.mentor} onChange={(value) => onChange("mentor", value)} />
                 <TableEditableCell label="채취자(부사수)" value={preInfo.mentee} onChange={(value) => onChange("mentee", value)} />
               </tr>
               <tr>
-                <TableSelectableCell label="측정팀" value={preInfo.teamName} onChange={(value) => onChange("teamName", value)} options={TEAM_TYPE_OPTIONS} />
+                <TableLabelCell>측정팀</TableLabelCell>
+                <TableSelectableCell value={preInfo.teamName} onChange={(value) => onChange("teamName", value)} options={TEAM_TYPE_OPTIONS} />
                 <TableEditableCell label="차량번호" value={preInfo.vehicleNumber} onChange={(value) => onChange("vehicleNumber", value)} />
               </tr>
             </tbody>
@@ -82,15 +85,18 @@ export const PlanInfoTab = ({
                 <TableEditableCell label="측정일" value={preInfo.measureDate} onChange={(value) => onChange("measureDate", value)} />
               </tr>
               <tr>
-                <TableSelectableCell label="측정분야" value={preInfo.measurementField} onChange={(value) => onChange("measurementField", value)} options={MEASUREMENT_FIELD_OPTIONS} />
-                <TableSelectableCell label="측정용도" value={preInfo.measurementType} onChange={(value) => onChange("measurementType", value)} options={MEASUREMENT_TYPE_OPTIONS} />
+                <TableLabelCell>측정분야</TableLabelCell>
+                <TableSelectableCell value={preInfo.measurementField} onChange={(value) => onChange("measurementField", value)} options={MEASUREMENT_FIELD_OPTIONS} />
+                <TableLabelCell>측정용도</TableLabelCell>
+                <TableSelectableCell value={preInfo.measurementType} onChange={(value) => onChange("measurementType", value)} options={MEASUREMENT_TYPE_OPTIONS} />
               </tr>
               <tr>
                 <TableEditableCell label="채취자(사수)" value={preInfo.mentor} onChange={(value) => onChange("mentor", value)} />
                 <TableEditableCell label="채취자(부사수)" value={preInfo.mentee} onChange={(value) => onChange("mentee", value)} />
               </tr>
               <tr>
-                <TableSelectableCell label="측정팀" value={preInfo.teamName} onChange={(value) => onChange("teamName", value)} options={TEAM_TYPE_OPTIONS} />
+                <TableLabelCell>측정팀</TableLabelCell>
+                <TableSelectableCell value={preInfo.teamName} onChange={(value) => onChange("teamName", value)} options={TEAM_TYPE_OPTIONS} />
                 <TableEditableCell label="차량번호" value={preInfo.vehicleNumber} onChange={(value) => onChange("vehicleNumber", value)} colSpan={3} />
               </tr>
             </tbody>
@@ -124,7 +130,8 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableEditableCell label="업종" value={preInfo.businessCategory} onChange={(value) => onChange("businessCategory", value)} />
-                <TableSelectableCell label="사업장 종별" value={preInfo.workplaceGrade} onChange={(value) => onChange("workplaceGrade", value)} options={GRADE_LABELS_OPTIONS} />
+                <TableLabelCell>사업장 종별</TableLabelCell>
+                <TableSelectableCell value={preInfo.workplaceGrade} onChange={(value) => onChange("workplaceGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
             </tbody>
           </table>
@@ -148,7 +155,8 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableEditableCell label="업종" value={preInfo.businessCategory} onChange={(value) => onChange("businessCategory", value)} />
-                <TableSelectableCell label="사업장 종별" value={preInfo.workplaceGrade} onChange={(value) => onChange("workplaceGrade", value)} options={GRADE_LABELS_OPTIONS} />
+                <TableLabelCell>사업장 종별</TableLabelCell>
+                <TableSelectableCell value={preInfo.workplaceGrade} onChange={(value) => onChange("workplaceGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
             </tbody>
           </table>
@@ -171,10 +179,12 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableEditableCell label="측정공 높이 (m)" value={preInfo.height} onChange={(value) => onChange("height", value)} />
-                <TableSelectableCell label="측정시설 방향" value={preInfo.orientation} onChange={(value) => onChange("orientation", value)} options={ORIENTATION_LABELS_OPTIONS} />
+                <TableLabelCell>측정시설 방향</TableLabelCell>
+                <TableSelectableCell value={preInfo.orientation} onChange={(value) => onChange("orientation", value)} options={ORIENTATION_LABELS_OPTIONS} />
               </tr>
               <tr>
-                <TableSelectableCell label="측정시설 형태" value={preInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
+                <TableLabelCell>측정시설 형태</TableLabelCell>
+                <TableSelectableCell value={preInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
                 <TableEditableCell label="기준산소농도 (%)" value={preInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
               </tr>
               <tr>
@@ -182,7 +192,8 @@ export const PlanInfoTab = ({
                 <TableEditableCell label="세로 (m)" value={preInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
               </tr>
               <tr>
-                <TableSelectableCell colSpan={3} label="사업장 종별" value={preInfo.stackGrade} onChange={(value) => onChange("stackGrade", value)} options={GRADE_LABELS_OPTIONS} />
+                <TableLabelCell>사업장 종별</TableLabelCell>
+                <TableSelectableCell colSpan={3} value={preInfo.stackGrade} onChange={(value) => onChange("stackGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
             </tbody>
           </table>
@@ -198,10 +209,12 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableEditableCell label="측정공 높이 (m)" value={preInfo.height} onChange={(value) => onChange("height", value)} />
-                <TableSelectableCell label="측정시설 방향" value={preInfo.orientation} onChange={(value) => onChange("orientation", value)} options={ORIENTATION_LABELS_OPTIONS} />
+                <TableLabelCell>측정시설 방향</TableLabelCell>
+                <TableSelectableCell value={preInfo.orientation} onChange={(value) => onChange("orientation", value)} options={ORIENTATION_LABELS_OPTIONS} />
               </tr>
               <tr>
-                <TableSelectableCell label="측정시설 형태" value={preInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
+                <TableLabelCell>측정시설 형태</TableLabelCell>
+                <TableSelectableCell value={preInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
                 <TableEditableCell label="기준산소농도 (%)" value={preInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
               </tr>
               <tr>
@@ -209,7 +222,8 @@ export const PlanInfoTab = ({
                 <TableEditableCell label="세로 (m)" value={preInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
               </tr>
               <tr>
-                <TableSelectableCell colSpan={3} label="사업장 종별" value={preInfo.stackGrade} onChange={(value) => onChange("stackGrade", value)} options={GRADE_LABELS_OPTIONS} />
+                <TableLabelCell>사업장 종별</TableLabelCell>
+                <TableSelectableCell colSpan={3} value={preInfo.stackGrade} onChange={(value) => onChange("stackGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
             </tbody>
           </table>

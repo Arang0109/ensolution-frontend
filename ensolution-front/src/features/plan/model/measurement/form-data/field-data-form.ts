@@ -4,7 +4,28 @@ export interface FieldDataEditForm {
   weather: WeatherEditForm;
   moisture: MoistureEditForm;
   exhaustGas: ExhaustGasEditForm;
- 
+
+  measureData: MeasureDataEditForm;
+  measurementPoints: MeasurementpointEditForm[];
+}
+
+export interface MeasureDataEditForm {
+  measurementPointCnt: string;
+  standardDesiredGasVolume: string;
+  measuringTime: string;
+  nozzleSize: string;
+}
+
+export const getDefaultMeasureDataEditForm = (
+  plan: PlanDetailResponse | undefined
+): MeasureDataEditForm => {
+  
+  return {
+    measurementPointCnt: plan?.measurementInfo.measureData.measurementPointCnt ?? "",
+    standardDesiredGasVolume: plan?.measurementInfo.measureData.standardDesiredGasVolume ?? "",
+    measuringTime: plan?.measurementInfo.measureData.measuringTime ?? "",
+    nozzleSize: plan?.measurementInfo.measureData.nozzleSize ?? "",
+  }
 }
 
 //////////////////////////////////////////////////
@@ -16,10 +37,16 @@ export const getDefaultFieldDataEditForm = (
   const moisture = getDefaultMoistureEditForm(plan);
   const exhaustGas = getDefaultExhaustGasEditForm(plan);
 
+  const measureData = getDefaultMeasureDataEditForm(plan);
+  const measurementPoints = getDefaultMeasurementpointEditForm(plan);
+
   return {
     weather: weather,
     moisture: moisture,
     exhaustGas: exhaustGas,
+
+    measureData: measureData,
+    measurementPoints: measurementPoints,
   }
 }
 
@@ -100,3 +127,68 @@ export const getDefaultExhaustGasEditForm = (
     soxConcentration: exhaustGas?.soxConcentration ?? ["0", "0", "0"],
   }
 }
+
+export interface MeasurementpointEditForm {
+  gasTemperature: string;
+  dynamicPressure: string;
+  staticPressure: string;
+
+  inEquipmentTemperature: string;
+  outEquipmentTemperature: string;
+  beforeEquipmentVolume: string;
+  afterEquipmentVolume: string;
+  measureTime: string;
+
+  vacuumGaugePressure: string;
+  finalImpingerTemperature: string;
+}
+
+const createEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
+  gasTemperature: "",
+  dynamicPressure: "",
+  staticPressure: "",
+
+  inEquipmentTemperature: "",
+  outEquipmentTemperature: "",
+  beforeEquipmentVolume: "",
+  afterEquipmentVolume: "",
+  measureTime: "",
+
+  vacuumGaugePressure: "",
+  finalImpingerTemperature: "",
+});
+
+export const getDefaultMeasurementpointEditForm = (
+  plan: PlanDetailResponse | undefined
+): MeasurementpointEditForm[] => {
+  const measurementPoints = plan?.measurementInfo.measurementPoints ?? [];
+  const measurementPointCnt = Number(plan?.measurementInfo.measureData.measurementPointCnt);
+
+  const mapped = measurementPoints.map((mp) => ({
+    gasTemperature: mp?.gasTemperature ?? "",
+    dynamicPressure: mp?.dynamicPressure ?? "",
+    staticPressure: mp?.staticPressure ?? "",
+
+
+    inEquipmentTemperature: mp?.equipmentTemperature?.inletTemperature ?? "",
+    outEquipmentTemperature: mp?.equipmentTemperature?.outletTemperature ?? "",
+    beforeEquipmentVolume: mp?.equipmentVolume?.beforeVolume ?? "",
+    afterEquipmentVolume: mp?.equipmentVolume?.afterVolume ?? "",
+    measureTime: mp?.measureTime ?? "",
+
+    vacuumGaugePressure: mp?.vacuumGaugePressure ?? "",
+    finalImpingerTemperature: mp?.finalImpingerTemperature ?? "",
+  }));
+
+  if (measurementPointCnt <= mapped.length) {
+    return mapped.slice(0, measurementPointCnt);
+  }
+
+  return [
+    ...mapped,
+    ...Array.from(
+      { length: measurementPointCnt - mapped.length },
+      createEmptyMeasurementPoint
+    ),
+  ];
+};

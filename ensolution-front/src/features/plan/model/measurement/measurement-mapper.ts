@@ -83,5 +83,32 @@ export const mapDraftFormToRequest = (
     coConcentration: form.fieldData.exhaustGas.coConcentration,
     noxConcentration: form.fieldData.exhaustGas.noxConcentration,
     soxConcentration: form.fieldData.exhaustGas.soxConcentration
-  }
+  },
+
+  measureData: {
+    measurementPointCnt: form.fieldData.measureData.measurementPointCnt,
+    standardDesiredGasVolume: form.fieldData.measureData.standardDesiredGasVolume,
+    measuringTime: form.fieldData.measureData.measuringTime,
+    nozzleSize: form.fieldData.measureData.nozzleSize,
+  },
+
+  measurementPoints: form.fieldData.measurementPoints.map((mp) => ({
+    gasTemperature: mp.gasTemperature,
+    dynamicPressure: mp.dynamicPressure,
+    staticPressure: mp.staticPressure,
+
+    equipmentTemperature: {
+      inletTemperature: mp.inEquipmentTemperature,
+      outletTemperature: mp.outEquipmentTemperature,
+    },
+
+    equipmentVolume: {
+      beforeVolume: mp.beforeEquipmentVolume,
+      afterVolume: mp.afterEquipmentVolume,
+    },
+
+    measureTime: mp.measureTime,
+    vacuumGaugePressure: mp.vacuumGaugePressure,
+    finalImpingerTemperature: mp.finalImpingerTemperature,
+  }))
 });

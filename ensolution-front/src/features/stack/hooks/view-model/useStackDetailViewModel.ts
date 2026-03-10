@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { useStackDetailQuery, useStackActions, useStackEditForm } from '@stack/hooks';
-import { mapStackCreateFormToRequest } from '@stack/model';
+import { mapStackUpdateFormToRequest } from '@stack/model';
 
 export const useStackDetailViewModel = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const useStackDetailViewModel = () => {
 
     if (!validateForm()) return;
 
-    const payload = mapStackCreateFormToRequest(editForm);
+    const payload = mapStackUpdateFormToRequest(editForm);
     const result = await updateStackProfile(Number(stackId), payload);
     
     if (result.success) {

@@ -1,31 +1,32 @@
-import { useEquipments } from '@equipment/hooks';
-import { EquipType, PITOT_TUBE_OPTIONS } from '@equipment/model';
-import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from '@equipment/model';
+import { PITOT_TUBE_OPTIONS } from '@equipment/model';
+import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec, TypedEquipmentResponse } from '@equipment/model';
 import type { EquipmentEditForm } from '@plan/model';
-import { TableReadonlyCell, TableSelectableCell } from '@shared/ui';
+import { TableLabelCell, TableReadonlyCell, TableSelectableCell } from '@shared/ui';
 
 interface EquipmentTabProps {
   equipment: EquipmentEditForm;
   onChange: (name: keyof EquipmentEditForm, value: string) => void;
+
+  particleSamplers: TypedEquipmentResponse[];
+  gasSamplers: TypedEquipmentResponse[];
+  pitotTubes: TypedEquipmentResponse[];
+  nozzles: TypedEquipmentResponse[];
+
+  selectedPS: TypedEquipmentResponse | undefined;
+  selectedGS: TypedEquipmentResponse | undefined;
+  selectedPT: TypedEquipmentResponse | undefined;
+  selectedNZ: TypedEquipmentResponse | undefined;
 }
 
 const mobileSectionWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden";
 const desktopSectionWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
 
-export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
-  const { equipments } = useEquipments();
-
-  const particleSamplers = equipments.filter(e => e.type === EquipType.PARTICLE_SAMPLER);
-  const gasSamplers = equipments.filter(e => e.type === EquipType.GAS_SAMPLER);
-  const pitotTubes = equipments.filter(e => e.type === EquipType.PITOT_TUBE);
-  const nozzles = equipments.filter(e => e.type === EquipType.NOZZLE);
-
-  const selectedPS = particleSamplers.find(e => e.id === equipment.particleSamplerId);
-  const selectedGS = gasSamplers.find(e => e.id === equipment.gasSamplerId);
-  const selectedPT = pitotTubes.find(e => e.id === equipment.pitotTubeId);
-  const selectedNZ = nozzles.find(e => e.id === equipment.nozzleId);
-
-  const toOptions = (equips: typeof equipments) =>
+export const EquipmentTab = ({
+  equipment, onChange,
+  particleSamplers, gasSamplers, pitotTubes, nozzles,
+  selectedPS, selectedGS, selectedPT, selectedNZ,
+}: EquipmentTabProps) => {
+  const toOptions = (equips: TypedEquipmentResponse[]) =>
     equips.map(e => ({
       value: e.id,
       label: e.alias ? `${e.alias} (${e.managementNumber})` : e.managementNumber,
@@ -46,8 +47,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm">
             <tbody>
               <tr>
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.particleSamplerId ?? ""}
                   onChange={v => onChange("particleSamplerId", v)}
                   options={toOptions(particleSamplers)}
@@ -86,8 +87,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm block sm:table">
             <tbody className="block sm:table-row-group">
               <tr className="grid grid-cols-[8rem_1fr_8rem_1fr_8rem_1fr] sm:table-row">
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.particleSamplerId ?? ""}
                   onChange={v => onChange("particleSamplerId", v)}
                   options={toOptions(particleSamplers)}
@@ -124,8 +125,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm">
             <tbody>
               <tr>
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.gasSamplerId ?? ""}
                   onChange={v => onChange("gasSamplerId", v)}
                   options={toOptions(gasSamplers)}
@@ -158,8 +159,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm block sm:table">
             <tbody className="block sm:table-row-group">
               <tr className="grid grid-cols-[8rem_1fr] sm:table-row">
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.gasSamplerId ?? ""}
                   onChange={v => onChange("gasSamplerId", v)}
                   options={toOptions(gasSamplers)}
@@ -194,8 +195,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm">
             <tbody>
               <tr>
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.pitotTubeId ?? ""}
                   onChange={v => onChange("pitotTubeId", v)}
                   options={toOptions(pitotTubes)}
@@ -230,8 +231,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm block sm:table">
             <tbody className="block sm:table-row-group">
               <tr className="grid grid-cols-[8rem_1fr] sm:table-row">
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.pitotTubeId ?? ""}
                   onChange={v => onChange("pitotTubeId", v)}
                   options={toOptions(pitotTubes)}
@@ -269,8 +270,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm">
             <tbody>
               <tr>
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.nozzleId ?? ""}
                   onChange={v => onChange("nozzleId", v)}
                   options={toOptions(nozzles)}
@@ -302,8 +303,8 @@ export const EquipmentTab = ({ equipment, onChange }: EquipmentTabProps) => {
           <table className="w-full border-collapse text-sm block sm:table">
             <tbody className="block sm:table-row-group">
               <tr className="grid grid-cols-[8rem_1fr] sm:table-row">
+                <TableLabelCell>장비 선택</TableLabelCell>
                 <TableSelectableCell
-                  label="장비 선택"
                   value={equipment.nozzleId ?? ""}
                   onChange={v => onChange("nozzleId", v)}
                   options={toOptions(nozzles)}

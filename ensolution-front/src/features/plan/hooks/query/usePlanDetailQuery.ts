@@ -5,7 +5,7 @@ import { fetchPlan } from "@plan/api/planApi";
 
 export const usePlanDetailQuery = (planId: number) => {
   const [plan, setPlan] = useState<PlanDetailResponse | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);;
 
   useEffect(() => {
     if (!planId) return;
