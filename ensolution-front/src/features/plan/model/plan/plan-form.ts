@@ -2,13 +2,13 @@
 import {
   getDefaultPreInfoEditForm,
   getDefaultEquipmentEditForm,
-  getDefaultMeasurementItemEditForm,
-  getDefaultFieldDataEditForm
+  getDefaultMeasurementItemsEditForm,
+  getDefaultMeasurementSheetsEditForm
 } from '@plan/model';
 import type {
   MeasurementField, PlanDetailResponse,
-  PreInfoEditForm, EquipmentEditForm,
-  MeasurementItemEditForm, FieldDataEditForm
+  PlanInfoEditForm, EquipmentEditForm,
+  MeasurementItemEditForm, MeasurementSheetEditForm
 } from '@plan/model';
 
 export const DEFAULT_MEASUREMENT_FIELD: MeasurementField = "AIR";
@@ -20,10 +20,9 @@ export interface PlanCreateForm {
   measureDate: string;
   measurementField: MeasurementField;
   measurementType: string;
-  measurementIds: number[];
+  measurementItemIds: number[];
 
   referenceNumber: string;
-  simplifiedMeasurement: boolean;
   vehicleNumber: string;
   mentor: string;
   mentee: string;
@@ -40,10 +39,9 @@ export const getDefaultPlanCreateForm = (): PlanCreateForm => ({
   measureDate: today,
   measurementField: DEFAULT_MEASUREMENT_FIELD,
   measurementType: "",
-  measurementIds: [],
+  measurementItemIds: [],
 
   referenceNumber: "",
-  simplifiedMeasurement: true,
   vehicleNumber: "",
   mentor: "",
   mentee: "",
@@ -55,10 +53,10 @@ export const getDefaultPlanCreateForm = (): PlanCreateForm => ({
 });
 
 export interface PlanDraftEditForm {
-  preInfo: PreInfoEditForm;
+  planInfo: PlanInfoEditForm;
   equipment: EquipmentEditForm;
-  measurementItems: MeasurementItemEditForm;
-  fieldData: FieldDataEditForm;
+  measurementItems: MeasurementItemEditForm[];
+  sheets: MeasurementSheetEditForm[];
 
   // 추후 추가할 것!
   // labData: LabDataEditForm;
@@ -67,16 +65,15 @@ export interface PlanDraftEditForm {
 export const getDefaultPlanDraftEditForm = (
   plan: PlanDetailResponse | undefined
 ): PlanDraftEditForm => {
-  const preInfo = getDefaultPreInfoEditForm(plan);
+  const planInfo = getDefaultPreInfoEditForm(plan);
   const equipment = getDefaultEquipmentEditForm(plan);
-  const measurementItems = getDefaultMeasurementItemEditForm(plan);
-  const fieldData = getDefaultFieldDataEditForm(plan);
+  const measurementItems = getDefaultMeasurementItemsEditForm(plan);
+  const sheets = getDefaultMeasurementSheetsEditForm(plan);
 
   return {
-    preInfo: preInfo,
+    planInfo: planInfo,
     equipment: equipment,
     measurementItems: measurementItems,
-
-    fieldData: fieldData,
+    sheets: sheets,
   }
 }

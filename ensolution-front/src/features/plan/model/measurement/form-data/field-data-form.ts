@@ -1,54 +1,50 @@
-import type { WeatherCondition, WindDirection, PlanDetailResponse } from '@plan/model';
+import type { WeatherCondition, WindDirection, PlanDetailResponse, MeasurementSheetDocResponse, Category } from '@plan/model';
 
-export interface FieldDataEditForm {
+export interface MeasurementSheetEditForm {
+  category: Category;
+  referenceNumber: string;
+
   weather: WeatherEditForm;
   moisture: MoistureEditForm;
   exhaustGas: ExhaustGasEditForm;
 
-  measureData: MeasureDataEditForm;
   measurementPoints: MeasurementpointEditForm[];
-}
 
-export interface MeasureDataEditForm {
-  measurementPointCnt: string;
-  standardDesiredGasVolume: string;
-  measuringTime: string;
+  quantity: string;
+  pitotTubeCoefficient: string;
   nozzleSize: string;
-}
 
-export const getDefaultMeasureDataEditForm = (
-  plan: PlanDetailResponse | undefined
-): MeasureDataEditForm => {
-  
-  return {
-    measurementPointCnt: plan?.measurementInfo.measureData.measurementPointCnt ?? "",
-    standardDesiredGasVolume: plan?.measurementInfo.measureData.standardDesiredGasVolume ?? "",
-    measuringTime: plan?.measurementInfo.measureData.measuringTime ?? "",
-    nozzleSize: plan?.measurementInfo.measureData.nozzleSize ?? "",
-  }
+  startTime: string;
+  endTime: string;
 }
 
 //////////////////////////////////////////////////
 
-export const getDefaultFieldDataEditForm = (
+export const getDefaultMeasurementSheetsEditForm = (
   plan: PlanDetailResponse | undefined
-): FieldDataEditForm => {
-  const weather = getDefaultWeatherEditForm(plan);
-  const moisture = getDefaultMoistureEditForm(plan);
-  const exhaustGas = getDefaultExhaustGasEditForm(plan);
+): MeasurementSheetEditForm[] => {
 
-  const measureData = getDefaultMeasureDataEditForm(plan);
-  const measurementPoints = getDefaultMeasurementpointEditForm(plan);
+  const measurementSheets = plan?.measurementInfo?.sheets ?? [];
+  const measurementPointCnt = Number(plan?.measurementInfo?.measurementPointCnt ?? 1);
 
-  return {
-    weather: weather,
-    moisture: moisture,
-    exhaustGas: exhaustGas,
+  return measurementSheets.map((sheet) => ({
+    category: sheet.category ?? "OTHER",
+    referenceNumber: sheet.referenceNumber ?? "",
 
-    measureData: measureData,
-    measurementPoints: measurementPoints,
-  }
-}
+    weather: getDefaultWeatherEditForm(sheet),
+    moisture: getDefaultMoistureEditForm(sheet),
+    exhaustGas: getDefaultExhaustGasEditForm(sheet),
+
+    measurementPoints: getDefaultMeasurementpointEditForm(sheet, measurementPointCnt),
+
+    quantity: sheet.quantity ?? "",
+    pitotTubeCoefficient: sheet.pitotTubeCoefficient ?? "",
+    nozzleSize: sheet.nozzleSize ?? "",
+
+    startTime: sheet.startTime ?? "",
+    endTime: sheet.endTime ?? "",
+  }));
+};
 
 export interface WeatherEditForm {
   pressure: string;
@@ -61,9 +57,9 @@ export interface WeatherEditForm {
 }
 
 export const getDefaultWeatherEditForm = (
-  plan: PlanDetailResponse | undefined
+  sheet: MeasurementSheetDocResponse | undefined
 ): WeatherEditForm => {
-  const weather = plan?.measurementInfo.weather;
+  const weather = sheet?.weather;
 
   return {
     pressure: weather?.pressure.pressure ?? "",
@@ -89,9 +85,9 @@ export interface MoistureEditForm {
 }
 
 export const getDefaultMoistureEditForm = (
-  plan: PlanDetailResponse | undefined
+  sheet: MeasurementSheetDocResponse | undefined
 ): MoistureEditForm => {
-  const moisture = plan?.measurementInfo.moisture;
+  const moisture = sheet?.moisture;
 
   return {
     beforeWeight: moisture?.weight.before ?? "263.25",
@@ -115,9 +111,9 @@ export interface ExhaustGasEditForm {
 }
 
 export const getDefaultExhaustGasEditForm = (
-  plan: PlanDetailResponse | undefined
+  sheet: MeasurementSheetDocResponse | undefined
 ): ExhaustGasEditForm => {
-  const exhaustGas = plan?.measurementInfo.exhaustGas;
+  const exhaustGas = sheet?.exhaustGas;
 
   return {
     o2Concentration: exhaustGas?.o2Concentration ?? ["20.9", "20.9", "20.9"],
@@ -159,10 +155,10 @@ const createEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
 });
 
 export const getDefaultMeasurementpointEditForm = (
-  plan: PlanDetailResponse | undefined
+  sheet: MeasurementSheetDocResponse | undefined,
+  measurementPointCnt: number
 ): MeasurementpointEditForm[] => {
-  const measurementPoints = plan?.measurementInfo.measurementPoints ?? [];
-  const measurementPointCnt = Number(plan?.measurementInfo.measureData.measurementPointCnt);
+  const measurementPoints = sheet?.measurementPoints ?? [];
 
   const mapped = measurementPoints.map((mp) => ({
     gasTemperature: mp?.gasTemperature ?? "",

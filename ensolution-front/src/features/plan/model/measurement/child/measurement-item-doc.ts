@@ -1,17 +1,18 @@
 import type { Cycle } from "@stack/model";
 
-export interface StackMeasurementDocResponse {
+export interface MeasurementItemDocResponse {
   stackMeasurementId: number;
   pollutantId: number;
   pollutantNameKr: string;
   pollutantNameEn: string;
   method: string;
-  equipmentName: string;
-  testMethodName: string;
+  testEquipment: string;
+  testMethod: string;
   samplingTime: string;
   samplingVolume: string;
-  startTime: string;
-  endTime: string;
   cycle: Cycle;
   allowance: string;
+  
+  startTime: string;
+  endTime: string;
 }

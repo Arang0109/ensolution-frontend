@@ -1,4 +1,4 @@
-import type { FieldDataEditForm } from "@/features/plan/model"
+import type { ExhaustGasEditForm } from "@plan/model";
 
 import {
   TableLabelCell, TableInputCell, TableResultCell, TableResultWithLabelCell
@@ -9,8 +9,8 @@ interface ExhaustGasSectionProps {
   mobileWrap: string;
   desktopWrap: string;
 
-  exhaustGas: FieldDataEditForm["exhaustGas"],
-  onChange: (name: keyof FieldDataEditForm["exhaustGas"], value: string, index: number) => void;
+  exhaustGas: ExhaustGasEditForm;
+  onChange: (name: keyof ExhaustGasEditForm, value: string, index: number) => void;
 
   standardOxygen: string;
 

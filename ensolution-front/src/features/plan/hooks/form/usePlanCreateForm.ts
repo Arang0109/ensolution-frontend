@@ -24,10 +24,11 @@ export const usePlanCreateForm = () => {
     }));
   };
 
-  const setMeasurementIds = (ids: number[]) => {
+  const setMeasurementItems = (items: number[]) => {
+    console.log(items);
     setForm(prev => ({
       ...prev,
-      measurementIds: ids,
+      measurementItemIds: items,
     }));
   };
 
@@ -47,7 +48,7 @@ export const usePlanCreateForm = () => {
     form,
     errors,
     updateField,
-    setMeasurementIds,
+    setMeasurementItems,
     resetForm,
     validateForm,
   };

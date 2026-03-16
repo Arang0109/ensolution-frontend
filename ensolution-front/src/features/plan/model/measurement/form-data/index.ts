@@ -1,2 +1,2 @@
-export * from './pre-info-form';
+export * from './plan-info-form';
 export * from './field-data-form';

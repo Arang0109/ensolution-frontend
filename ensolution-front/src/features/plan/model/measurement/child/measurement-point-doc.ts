@@ -17,7 +17,6 @@ export interface MeasurementPointDocResponse {
 
   kFactor: string;
   orificeDifferentialPressure: string;
-  nozzleSize: string;
   isokineticRatio: string;
 }
 

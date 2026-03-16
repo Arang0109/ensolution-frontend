@@ -5,110 +5,130 @@ import type {
 export const mapDraftFormToRequest = (
   form: PlanDraftEditForm
 ): DraftUpdateRequest => ({
-  preInfo: {
-    referenceNumber: form.preInfo.referenceNumber,
-    measureDate: form.preInfo.measureDate,
-    measurementField: form.preInfo.measurementField,
-    measurementType: form.preInfo.measurementType,
-    teamName: form.preInfo.teamName,
-    vehicleNumber: form.preInfo.vehicleNumber,
-    mentor: form.preInfo.mentor,
-    mentee: form.preInfo.mentee,
-  },
+  referenceNumber: form.planInfo.referenceNumber,
+  measureDate: form.planInfo.measureDate,
+  receivedDate: form.planInfo.receivedDate,
+  analysisDate: form.planInfo.analysisDate,
+  measurementField: form.planInfo.measurementField,
+  measurementType: form.planInfo.measurementType,
+  teamName: form.planInfo.teamName,
+  vehicleNumber: form.planInfo.vehicleNumber,
+  mentor: form.planInfo.mentor,
+  mentee: form.planInfo.mentee,
 
   client: {
     company: {
-      companyName: form.preInfo.companyName,
-      workplaceName: form.preInfo.workplaceName,
-      ceoName: form.preInfo.ceoName,
-      address: form.preInfo.address,
-      bizNumber: form.preInfo.bizNumber,
-      manager: form.preInfo.manager,
-      businessCategory: form.preInfo.businessCategory,
-      grade: form.preInfo.workplaceGrade,
+      companyName: form.planInfo.companyName,
+      workplaceName: form.planInfo.workplaceName,
+      ceoName: form.planInfo.ceoName,
+      address: form.planInfo.address,
+      bizNumber: form.planInfo.bizNumber,
+      manager: form.planInfo.manager,
+      businessCategory: form.planInfo.businessCategory,
+      grade: form.planInfo.workplaceGrade,
     },
     stack: {
-      name: form.preInfo.stackName,
-      semsNumber: form.preInfo.semsNumber,
-      height: form.preInfo.height,
-      horizontalLength: form.preInfo.horizontalLength,
-      verticalLength: form.preInfo.verticalLength,
-      shape: form.preInfo.shape,
-      orientation: form.preInfo.orientation,
-      standardOxygen: form.preInfo.standardOxygen,
-      grade: form.preInfo.stackGrade,
+      name: form.planInfo.stackName,
+      semsNumber: form.planInfo.semsNumber,
+      height: form.planInfo.height,
+      horizontalLength: form.planInfo.horizontalLength,
+      verticalLength: form.planInfo.verticalLength,
+      shape: form.planInfo.shape,
+      orientation: form.planInfo.orientation,
+      standardOxygen: form.planInfo.standardOxygen,
+      grade: form.planInfo.stackGrade,
     },
   },
-
-  measurementItems: form.measurementItems.measurementItems,
 
   particleSamplerId: form.equipment.particleSamplerId,
   gasSamplerId: form.equipment.gasSamplerId,
   pitotTubeId: form.equipment.pitotTubeId,
   nozzleId: form.equipment.nozzleId,
 
-  weather: {
-    pressure: {
-      pressure: form.fieldData.weather.pressure,
-      unit: form.fieldData.weather.unit
-    },
-    weatherCondition: form.fieldData.weather.weatherCondition,
-    temperature: form.fieldData.weather.temperature,
-    humidity: form.fieldData.weather.humidity,
-    windDirection: form.fieldData.weather.windDirection,
-    windSpeed: form.fieldData.weather.windSpeed
-  },
+  measurementItems: form.measurementItems.map((m) => ({
+    stackMeasurementId: m.stackMeasurementId,
+    pollutantId: m.pollutantId,
+    pollutantNameKr: m.pollutantNameKr,
+    pollutantNameEn: m.pollutantNameEn,
+    method: m.method,
+    testEquipment: m.testEquipment,
+    testMethod: m.testEquipment,
+    samplingTime: m.samplingTime,
+    samplingVolume: m.samplingVolume,
+    cycle: m.cycle,
+    allowance: m.allowance,
 
-  moisture: {
-    weight: {
-      before: form.fieldData.moisture.beforeWeight,
-      after: form.fieldData.moisture.afterWeight
-    },
-    gasMeterTemperature: {
-      in: form.fieldData.moisture.inTemperature,
-      out: form.fieldData.moisture.outTemperature
-    },
-    dryGasVolume: {
-      before: form.fieldData.moisture.beforeDryVolume,
-      after: form.fieldData.moisture.afterDryVolume
-    },
+    startTime: m.startTime,
+    endTime: m.endTime,
+  })),
 
-    suctionVelocity: form.fieldData.moisture.suctionVelocity,
-    gasMeterGaugePressure: form.fieldData.moisture.gasMeterGaugePressure
-  },
+  sheets: form.sheets.map((sheet) => ({
+    category: sheet.category,
+    referenceNumber: sheet.referenceNumber,
 
-  exhaustGas: {
-    o2Concentration: form.fieldData.exhaustGas.o2Concentration,
-    co2Concentration: form.fieldData.exhaustGas.co2Concentration,
-    coConcentration: form.fieldData.exhaustGas.coConcentration,
-    noxConcentration: form.fieldData.exhaustGas.noxConcentration,
-    soxConcentration: form.fieldData.exhaustGas.soxConcentration
-  },
-
-  measureData: {
-    measurementPointCnt: form.fieldData.measureData.measurementPointCnt,
-    standardDesiredGasVolume: form.fieldData.measureData.standardDesiredGasVolume,
-    measuringTime: form.fieldData.measureData.measuringTime,
-    nozzleSize: form.fieldData.measureData.nozzleSize,
-  },
-
-  measurementPoints: form.fieldData.measurementPoints.map((mp) => ({
-    gasTemperature: mp.gasTemperature,
-    dynamicPressure: mp.dynamicPressure,
-    staticPressure: mp.staticPressure,
-
-    equipmentTemperature: {
-      inletTemperature: mp.inEquipmentTemperature,
-      outletTemperature: mp.outEquipmentTemperature,
+    weather: {
+      pressure: {
+        pressure: sheet.weather.pressure,
+        unit: sheet.weather.unit
+      },
+      weatherCondition: sheet.weather.weatherCondition,
+      temperature: sheet.weather.temperature,
+      humidity: sheet.weather.humidity,
+      windDirection: sheet.weather.windDirection,
+      windSpeed: sheet.weather.windSpeed
     },
 
-    equipmentVolume: {
-      beforeVolume: mp.beforeEquipmentVolume,
-      afterVolume: mp.afterEquipmentVolume,
+    moisture: {
+      weight: {
+        before: sheet.moisture.beforeWeight,
+        after: sheet.moisture.afterWeight
+      },
+      gasMeterTemperature: {
+        in: sheet.moisture.inTemperature,
+        out: sheet.moisture.outTemperature
+      },
+      dryGasVolume: {
+        before: sheet.moisture.beforeDryVolume,
+        after: sheet.moisture.afterDryVolume
+      },
+
+      suctionVelocity: sheet.moisture.suctionVelocity,
+      gasMeterGaugePressure: sheet.moisture.gasMeterGaugePressure
     },
 
-    measureTime: mp.measureTime,
-    vacuumGaugePressure: mp.vacuumGaugePressure,
-    finalImpingerTemperature: mp.finalImpingerTemperature,
+    exhaustGas: {
+      o2Concentration: sheet.exhaustGas.o2Concentration,
+      co2Concentration: sheet.exhaustGas.co2Concentration,
+      coConcentration: sheet.exhaustGas.coConcentration,
+      noxConcentration: sheet.exhaustGas.noxConcentration,
+      soxConcentration: sheet.exhaustGas.soxConcentration
+    },
+
+    measurementPoints: sheet.measurementPoints.map((mp) => ({
+      gasTemperature: mp.gasTemperature,
+      dynamicPressure: mp.dynamicPressure,
+      staticPressure: mp.staticPressure,
+
+      equipmentTemperature: {
+        inletTemperature: mp.inEquipmentTemperature,
+        outletTemperature: mp.outEquipmentTemperature,
+      },
+
+      equipmentVolume: {
+        beforeVolume: mp.beforeEquipmentVolume,
+        afterVolume: mp.afterEquipmentVolume,
+      },
+
+      measureTime: mp.measureTime,
+      vacuumGaugePressure: mp.vacuumGaugePressure,
+      finalImpingerTemperature: mp.finalImpingerTemperature,
+    })),
+
+    quantity: sheet.quantity,
+    pitotTubeCoefficient: sheet.pitotTubeCoefficient,
+    nozzleSize: sheet.nozzleSize,
+
+    startTime: sheet.startTime,
+    endTime: sheet.endTime
   }))
 });

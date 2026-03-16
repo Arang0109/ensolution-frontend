@@ -1,20 +1,18 @@
-import type { StackMeasurementResponse } from "@stack/model";
 import type { MeasurementField, PlanStatus, MeasurementDocResponse } from "@plan/model";
 
 export interface PlanRegister {
   stackId: number;
   teamId: number;
-  measureDate: string;
   measurementField: MeasurementField; 
+  measureDate: string;
   measurementType: string;
-  measurementIds: number[];
+  measurementItemIds: number[];
 };
 
 export interface PlanRegisterRequest {
   plan: PlanRegister;
 
   referenceNumber: string;
-  simplifiedMeasurement: boolean;
   vehicleNumber: string;
   mentor: string;
   mentee: string;
@@ -27,12 +25,14 @@ export interface PlanRegisterRequest {
 
 export interface PlanResponse {
   id: number;
+  status: PlanStatus;
+
   stackId: number;
   teamId: number;
   measurementField: MeasurementField;
   measureDate: string;
   measurementType: string;
-  status: PlanStatus;
+
   createdAt: Date;
 }
 
@@ -43,6 +43,8 @@ export interface PlanDetailResponse {
 
 export interface PlanTableResponse {
   id: number;
+
+  status: PlanStatus;
   measurementField: MeasurementField;
   measureDate: string;
   measurementType: string;
@@ -53,15 +55,7 @@ export interface PlanTableResponse {
   teamName: string;
 
   measurementItems: string[];
-
-  status: PlanStatus;
   createdAt: Date;
-}
-
-export interface PlanMeasurementResponse {
-  id: number;
-  planId: number;
-  stackMeasurement: StackMeasurementResponse;
 }
 
 export interface PlanUpdateRequest {
@@ -74,8 +68,4 @@ export interface PlanUpdateRequest {
 
 export interface PlanStatusUpdateRequest {
   status: PlanStatus;
-}
-
-export interface MeasurementItemsUpdateRequest {
-  stackMeasurementId: number;
 }

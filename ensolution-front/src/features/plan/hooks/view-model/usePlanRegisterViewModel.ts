@@ -22,7 +22,7 @@ export const usePlanRegisterViewModel = () => {
     stack, fetchStack,
     teams, users, equipments
   } = usePlanRegisterData();
-  const { form, errors, resetForm, updateField, setMeasurementIds, validateForm } = usePlanCreateForm();
+  const { form, errors, resetForm, updateField, setMeasurementItems, validateForm } = usePlanCreateForm();
   const {
     creating,
     createPlan,
@@ -125,7 +125,7 @@ export const usePlanRegisterViewModel = () => {
     errors,
     resetForm,
     updateField,
-    setMeasurementIds,
+    setMeasurementItems,
 
     creating,
 

@@ -1,22 +1,48 @@
-import type { Shape, Orientation } from '@stack/model';
+import type { Shape, Orientation, Cycle } from '@stack/model';
+import type { MeasurementField, MeasurementType, PlanDetailResponse } from '@plan/model';
 
 import type { Grade } from '@shared/model';
 
-import type { PlanDetailResponse } from '@plan/model';
-
 export interface MeasurementItemEditForm {
-  measurementItems: number[];
+  stackMeasurementId: number;
+  pollutantId: number;
+
+  pollutantNameKr: string;
+  pollutantNameEn: string;
+  method: string;
+  testEquipment: string;
+  testMethod: string;
+  samplingTime: string;
+  samplingVolume: string;
+  cycle: Cycle;
+  allowance: string;
+
+  startTime: string;
+  endTime: string;
 }
 
-export const getDefaultMeasurementItemEditForm = (
+export const getDefaultMeasurementItemsEditForm = (
   plan: PlanDetailResponse | undefined
-): MeasurementItemEditForm => {
-  const measurements = plan?.measurementInfo?.measurementItems ?? [];
+): MeasurementItemEditForm[] => {
+  const measurementItems = plan?.measurementInfo?.measurementItems ?? [];
 
-  return {
-    measurementItems: measurements.map(m => m.stackMeasurementId),
-  }
-}
+  return measurementItems.map((m) => ({
+    stackMeasurementId: m.stackMeasurementId,
+    pollutantId: m.pollutantId,
+    pollutantNameKr: m.pollutantNameKr,
+    pollutantNameEn: m.pollutantNameEn,
+    method: m.method,
+    testEquipment: m.testEquipment,
+    testMethod: m.testMethod,
+    samplingTime: m.samplingTime,
+    samplingVolume: m.samplingVolume,
+    cycle: m.cycle,
+    allowance: m.allowance,
+
+    startTime: m.startTime,
+    endTime: m.endTime,
+  }));
+};
 
 export interface EquipmentEditForm {
   particleSamplerId: string | null;
@@ -38,15 +64,17 @@ export const getDefaultEquipmentEditForm = (
   }
 }
 
-export interface PreInfoEditForm {
+export interface PlanInfoEditForm {
   referenceNumber: string;
   measureDate: string;
-  measurementField: string;
-  measurementType: string;
+  receivedDate: string;
+  analysisDate: string;
+  measurementField: MeasurementField;
+  measurementType: MeasurementType;
   teamName: string;
+  vehicleNumber: string;
   mentor: string;
   mentee: string;
-  vehicleNumber: string;
 
   companyName: string;
   workplaceName: string;
@@ -70,20 +98,22 @@ export interface PreInfoEditForm {
 
 export const getDefaultPreInfoEditForm = (
   plan: PlanDetailResponse | undefined
-): PreInfoEditForm => {
-  const preInfo = plan?.measurementInfo.preInfo;
+): PlanInfoEditForm => {
+  const measurementInfo = plan?.measurementInfo;
   const company = plan?.measurementInfo.client.company;
   const stack = plan?.measurementInfo.client.stack;
 
   return {
-    referenceNumber: preInfo?.referenceNumber ?? "",
-    measureDate: preInfo?.measureDate ?? "",
-    measurementField: preInfo?.measurementField ?? "",
-    measurementType: preInfo?.measurementType ?? "",
-    teamName: preInfo?.teamName ?? "",
-    mentor: preInfo?.mentor ?? "",
-    mentee: preInfo?.mentee ?? "",
-    vehicleNumber: preInfo?.vehicleNumber ?? "",
+    referenceNumber: measurementInfo?.referenceNumber ?? "",
+    measureDate: measurementInfo?.measureDate ?? "",
+    receivedDate: measurementInfo?.receivedDate ?? "",
+    analysisDate: measurementInfo?.analysisDate ?? "",
+    measurementField: measurementInfo?.measurementField ?? "AIR",
+    measurementType: measurementInfo?.measurementType ?? "SELF",
+    teamName: measurementInfo?.teamName ?? "",
+    mentor: measurementInfo?.mentor ?? "",
+    mentee: measurementInfo?.mentee ?? "",
+    vehicleNumber: measurementInfo?.vehicleNumber ?? "",
 
     companyName: company?.companyName ?? "",
     workplaceName: company?.workplaceName ?? "",

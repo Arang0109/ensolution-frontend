@@ -20,7 +20,7 @@ export interface PlanCreateContentProps {
     name: keyof PlanCreateForm,
     value: string | number |  null
   ) => void;
-  onMeasurementIdsChange: (ids: number[]) => void;
+  onMeasurementItemsChange: (ids: number[]) => void;
 
   creating: boolean;
 
@@ -52,7 +52,7 @@ export interface PlanCreateContentProps {
 export const PlanCreateContent = ({
   form,
   onChange,
-  onMeasurementIdsChange,
+  onMeasurementItemsChange,
 
   creating,
 
@@ -104,7 +104,7 @@ export const PlanCreateContent = ({
             form={form}
             creating={creating}
             onChange={onChange}
-            onMeasurementIdsChange={onMeasurementIdsChange}
+            onMeasurementItemsChange={onMeasurementItemsChange}
             filteredStacks={filteredStacks}
             selectedStackId={selectedStackId}
             onStackChange={handleSelectStack}

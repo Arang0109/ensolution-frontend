@@ -1,6 +1,4 @@
-import type {
-  FieldDataEditForm
-} from "@plan/model";
+import type { MoistureEditForm } from "@plan/model";
 
 import {
   TableLabelCell, TableInputCell, TableResultCell
@@ -12,8 +10,8 @@ interface MoistureSectionProps {
   mobileWrap: string;
   desktopWrap: string;
 
-  moisture: FieldDataEditForm['moisture'];
-  onChange: (name: keyof FieldDataEditForm["moisture"], value: string) => void;
+  moisture: MoistureEditForm;
+  onChange: (name: keyof MoistureEditForm, value: string) => void;
 
   weightDiff: number | null;
   tempAvg: number | null;

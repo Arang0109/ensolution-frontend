@@ -1,4 +1,4 @@
-import type { PreInfoEditForm } from "@plan/model"
+import type { PlanInfoEditForm } from "@plan/model"
 
 import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
 
@@ -9,8 +9,8 @@ interface StackProfileSectionProps {
   mobileWrap: string;
   desktopWrap: string;
 
-  preInfo: PreInfoEditForm;
-  onChange: (name: keyof PreInfoEditForm, value: string) => void;
+  planInfo: PlanInfoEditForm;
+  onChange: (name: keyof PlanInfoEditForm, value: string) => void;
 
   stackArea: number | null;
   measurePointCnt: number;
@@ -20,7 +20,7 @@ export const StackProfileSection = ({
   mobileWrap,
   desktopWrap,
 
-  preInfo,
+  planInfo: preInfo,
   onChange,
 
   stackArea,

@@ -1,22 +1,22 @@
-import type { FieldDataEditForm, MeasureDataEditForm, MeasurementpointEditForm } from "@plan/model";
+import type { MeasurementpointEditForm } from "@plan/model";
 import { TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell } from "@shared/ui";
 import type { NozzleSpec, TypedEquipmentResponse } from "@equipment/model";
+import { useState } from "react";
 
 interface ParticleSectionProps {
-  fieldData: FieldDataEditForm;
+  measurementPoints: MeasurementpointEditForm[];
   onChange: (index: number, name: keyof MeasurementpointEditForm, value: string) => void;
-  onMeasureDataChange: (name: keyof MeasureDataEditForm, value: string) => void;
-  selectedNZ?: TypedEquipmentResponse
+  selectedNZ?: TypedEquipmentResponse;
 }
 
 export const ParticleSection = ({
-  fieldData,
+  measurementPoints,
   onChange,
-  onMeasureDataChange,
   selectedNZ,
 }: ParticleSectionProps) => {
 
-  const measurementPoints = fieldData.measurementPoints;
+  const [standardDesiredGasVolume, setStandardDesiredGasVolume] = useState("");
+  const [measuringTime, setMeasuringTime] = useState("");
 
   const nozzleSizeOptions =
   ((selectedNZ?.spec as NozzleSpec | undefined)?.diameters ?? []).map(d => ({
@@ -29,10 +29,8 @@ export const ParticleSection = ({
       <tr>
         <TableLabelCell><i>V<sub>std-desired</sub></i></TableLabelCell>
         <TableInputCell
-          value={fieldData.measureData.standardDesiredGasVolume}
-          onChange={(value) =>
-            onMeasureDataChange("standardDesiredGasVolume", value)
-          }
+          value={standardDesiredGasVolume}
+          onChange={setStandardDesiredGasVolume}
           colSpan={3}
           unit={<>S<sub>m</sub><sup>3</sup></>}
         />
@@ -40,10 +38,8 @@ export const ParticleSection = ({
       <tr>
         <TableLabelCell><i>θ</i></TableLabelCell>
         <TableInputCell
-          value={fieldData.measureData.measuringTime}
-          onChange={(value) =>
-            onMeasureDataChange("measuringTime", value)
-          }
+          value={measuringTime}
+          onChange={setMeasuringTime}
           colSpan={3}
           unit={<>min</>}
         />

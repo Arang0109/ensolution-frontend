@@ -10,7 +10,7 @@ export const PlanRegisterPage = () => {
     errors,
     resetForm,
     updateField,
-    setMeasurementIds,
+    setMeasurementItems,
 
     creating,
 
@@ -61,7 +61,7 @@ export const PlanRegisterPage = () => {
             errors={errors}
             reset={resetForm}
             onChange={updateField}
-            onMeasurementIdsChange={setMeasurementIds}
+            onMeasurementItemsChange={setMeasurementItems}
 
             creating={creating}
 

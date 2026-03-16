@@ -1,63 +1,66 @@
 import type {
-  MeasurementStatus,
-  PreInfoDocResponse, MeasurementEquipmentResponse, ClientDocResponse,
-  WeatherDocResponse, MoistureDocResponse, ExhaustGasDocResponse,
-  MeasurementPointDocResponse, MeasureDataDocResponse, StackMeasurementDocResponse
+  MeasurementEquipmentResponse,ClientDocResponse,
+  MeasurementSheetDocResponse, MeasurementItemDocResponse,
+  MeasurementField,
+  MeasurementType,
+  PlanStatus
 } from "@plan/model";
 import type { WeatherCondition, WindDirection } from "@plan/model";
-import type { Shape, Orientation } from "@stack/model";
+import type { Shape, Orientation, Cycle } from "@stack/model";
 import type { Grade } from "@shared/model";
 
 export interface MeasurementDocResponse {
   id: string;
 
   planId: number;
-  status: MeasurementStatus;
+  teamId: number;
 
-  preInfo: PreInfoDocResponse;
-  measurementItems: StackMeasurementDocResponse[];
-  equipment: MeasurementEquipmentResponse;
+  status: PlanStatus;
+  referenceNumber: string;
+  measureDate: string;
+  receivedDate: string;
+  analysisDate: string;
+  measurementField: MeasurementField;
+  measurementType: MeasurementType;
+  teamName: string;
+  vehicleNumber: string;
+  mentor: string;
+  mentee: string;
+
   client: ClientDocResponse;
+  equipment: MeasurementEquipmentResponse;
+  measurementItems: MeasurementItemDocResponse[];
 
-  weather: WeatherDocResponse;
-  moisture: MoistureDocResponse;
-  exhaustGas: ExhaustGasDocResponse;
+  sheets: MeasurementSheetDocResponse[];
 
-  measureData: MeasureDataDocResponse;
-  measurementPoints: MeasurementPointDocResponse[];
+  measurementPointCnt: number;
 
   createdAt: string;
   updatedAt: string;
 }
 
 export interface DraftUpdateRequest {
-  preInfo: PreInfoUpdateRequest;
+  referenceNumber: string;
+  measureDate: Date;
+  receivedDate: Date;
+  analysisDate: Date;
+  measurementField: MeasurementField;
+  measurementType: MeasurementType;
+  teamName: string;
+  vehicleNumber: string;
+  mentor: string;
+  mentee: string;
+
   client: ClientUpdateRequest;
-  
-  measurementItems: number[];
 
   particleSamplerId: string | null;
   gasSamplerId: string | null;
   pitotTubeId: string | null;
   nozzleId: string | null;
 
-  weather: WeatherUpdateRequest;
-  moisture: MoistureUpdateRequest;
-  exhaustGas: ExhaustGasUpdateRequest;
+  measurementItems: MeasurementItemUpdateRequest[];
 
-  measureData: MeasureDataUpdataRequest;
-  measurementPoints: MeasurementPointUpdateRequest[];
-}
-
-export interface PreInfoUpdateRequest {
-  referenceNumber: string;
-  measureDate: string;
-  measurementField: string;
-  measurementType: string;
-  teamName: string;
-  vehicleNumber: string;
-  mentor: string;
-  mentee: string;
+  sheets: MeasurementSheetUpdateRequest[];
 }
 
 export interface ClientUpdateRequest {
@@ -86,6 +89,41 @@ export interface StackUpdateRequest {
   orientation: Orientation;
   standardOxygen: string;
   grade: Grade;
+}
+
+export interface MeasurementItemUpdateRequest {
+  stackMeasurementId: number;
+  pollutantId: number;
+  pollutantNameKr: string;
+  pollutantNameEn: string;
+  method: string;
+  testEquipment: string;
+  testMethod: string;
+  samplingTime: string;
+  samplingVolume: string;
+  cycle: Cycle;
+  allowance: string;
+
+  startTime: string;
+  endTime: string;
+}
+
+export interface MeasurementSheetUpdateRequest {
+  category: string;
+  referenceNumber: string;
+
+  weather: WeatherUpdateRequest;
+  moisture: MoistureUpdateRequest;
+  exhaustGas: ExhaustGasUpdateRequest;
+
+  measurementPoints: MeasurementPointUpdateRequest[];
+
+  quantity: string;
+  pitotTubeCoefficient: string;
+  nozzleSize: string;
+
+  startTime: string;
+  endTime: string;
 }
 
 export interface WeatherUpdateRequest {
@@ -155,11 +193,4 @@ export interface EquipmentGasTemp {
 export interface EquipmentVolume {
   beforeVolume: string;
   afterVolume: string;
-}
-
-export interface MeasureDataUpdataRequest {
-  measurementPointCnt: string;
-  standardDesiredGasVolume: string;
-  measuringTime: string;
-  nozzleSize: string;
 }

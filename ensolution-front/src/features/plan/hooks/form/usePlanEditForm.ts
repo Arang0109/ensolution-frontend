@@ -1,8 +1,20 @@
 import { useState } from "react";
 
-import type { PlanDetailResponse, PlanDraftEditForm, PreInfoEditForm, EquipmentEditForm, FieldDataEditForm, MeasurementpointEditForm } from "@plan/model";
-import { getDefaultPlanDraftEditForm } from "@plan/model";
+import type {
+  PlanDetailResponse, PlanDraftEditForm,
+  PlanInfoEditForm, EquipmentEditForm,
+  MeasurementpointEditForm, MeasurementItemEditForm,
+  MeasurementSheetEditForm,
+  WeatherEditForm, MoistureEditForm, ExhaustGasEditForm,
+} from "@plan/model";
+import {
+  getDefaultPlanDraftEditForm,
+  getDefaultWeatherEditForm,
+  getDefaultMoistureEditForm,
+  getDefaultExhaustGasEditForm,
+} from "@plan/model";
 import { calcMeasurePointCnt } from "@plan/util";
+import type { StackMeasurementResponse } from "@stack/model";
 
 const getEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
   gasTemperature: "",
@@ -12,7 +24,6 @@ const getEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
   outEquipmentTemperature: "",
   beforeEquipmentVolume: "",
   afterEquipmentVolume: "",
-
   measureTime: "",
   vacuumGaugePressure: "",
   finalImpingerTemperature: "",
@@ -32,24 +43,26 @@ const syncMeasurementPoints = (
 export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
   const [editForm, setEditForm] = useState<PlanDraftEditForm>(getDefaultPlanDraftEditForm(plan));
 
-  const updatePreInfoField = (
-    name: keyof PreInfoEditForm,
+  const updatePlanInfoField = (
+    name: keyof PlanInfoEditForm,
     value: string
   ) => {
     setEditForm(prev => {
-      const nextPreInfo = { ...prev.preInfo, [name]: value };
-      const measurePointCnt = calcMeasurePointCnt(nextPreInfo);
-      const syncedPoints = syncMeasurementPoints(
-        prev.fieldData.measurementPoints,
-        Math.ceil(measurePointCnt / 4)
-      );
+      const nextPlanInfo = { ...prev.planInfo, [name]: value };
+      const measurePointCnt = calcMeasurePointCnt({
+        shape: nextPlanInfo.shape,
+        horizontalLength: nextPlanInfo.horizontalLength,
+        verticalLength: nextPlanInfo.verticalLength,
+      });
+      const pointCount = Math.ceil(measurePointCnt / 4);
+      const syncedSheets = prev.sheets.map(sheet => ({
+        ...sheet,
+        measurementPoints: syncMeasurementPoints(sheet.measurementPoints, pointCount),
+      }));
       return {
         ...prev,
-        preInfo: nextPreInfo,
-        fieldData: {
-          ...prev.fieldData,
-          measurementPoints: syncedPoints,
-        },
+        planInfo: nextPlanInfo,
+        sheets: syncedSheets,
       };
     });
   };
@@ -67,107 +80,140 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
     }));
   };
 
-  const updateFieldDataField = <
-    S extends keyof FieldDataEditForm,
-    K extends keyof FieldDataEditForm[S]
-  >(
-    section: S,
+  const updateSheetField = <K extends keyof MeasurementSheetEditForm>(
+    sheetIndex: number,
     name: K,
-    value: string | null,
-    index?: number
+    value: MeasurementSheetEditForm[K]
   ) => {
     setEditForm(prev => {
-      const currentSection = prev.fieldData[section];
-      const currentField = currentSection[name];
-
-      if (index !== undefined && Array.isArray(currentField)) {
-        const newArr = [...(currentField as string[])];
-        newArr[index] = value ?? "";
-        return {
-          ...prev,
-          fieldData: {
-            ...prev.fieldData,
-            [section]: {
-              ...currentSection,
-              [name]: newArr,
-            },
-          },
-        };
-      }
-
-      return {
-        ...prev,
-        fieldData: {
-          ...prev.fieldData,
-          [section]: {
-            ...currentSection,
-            [name]: value,
-          },
-        },
-      };
+      const updatedSheets = prev.sheets.map((sheet, i) =>
+        i === sheetIndex ? { ...sheet, [name]: value } : sheet
+      );
+      return { ...prev, sheets: updatedSheets };
     });
   };
 
-  const updateWeatherField = <
-    K extends keyof FieldDataEditForm["weather"]
-  >(
-    name: K,
+  const updateWeatherField = (
+    sheetIndex: number,
+    name: keyof WeatherEditForm,
     value: string | null
   ) => {
-    updateFieldDataField("weather", name, value);
-  }
+    setEditForm(prev => {
+      const updatedSheets = prev.sheets.map((sheet, i) =>
+        i === sheetIndex
+          ? { ...sheet, weather: { ...sheet.weather, [name]: value } }
+          : sheet
+      );
+      return { ...prev, sheets: updatedSheets };
+    });
+  };
 
-  const updateMoistureField = <
-    K extends keyof FieldDataEditForm["moisture"]
-  >(
-    name: K,
+  const updateMoistureField = (
+    sheetIndex: number,
+    name: keyof MoistureEditForm,
     value: string | null
   ) => {
-    updateFieldDataField("moisture", name, value);
-  }
+    setEditForm(prev => {
+      const updatedSheets = prev.sheets.map((sheet, i) =>
+        i === sheetIndex
+          ? { ...sheet, moisture: { ...sheet.moisture, [name]: value } }
+          : sheet
+      );
+      return { ...prev, sheets: updatedSheets };
+    });
+  };
 
-  const updateExhaustGasField = <
-    K extends keyof FieldDataEditForm["exhaustGas"]
-  >(
-    name: K,
+  const updateExhaustGasField = (
+    sheetIndex: number,
+    name: keyof ExhaustGasEditForm,
     value: string | null,
     index: number
   ) => {
-    updateFieldDataField("exhaustGas", name, value, index);
-  }
-
-  const updateMeasureDataField = <
-    K extends keyof FieldDataEditForm["measureData"]
-  >(
-    name: K,
-    value: string | null
-  ) => {
-    updateFieldDataField("measureData", name, value);
-  }
+    setEditForm(prev => {
+      const updatedSheets = prev.sheets.map((sheet, i) => {
+        if (i !== sheetIndex) return sheet;
+        const currentArr = sheet.exhaustGas[name] as string[];
+        const newArr = [...currentArr];
+        newArr[index] = value ?? "";
+        return { ...sheet, exhaustGas: { ...sheet.exhaustGas, [name]: newArr } };
+      });
+      return { ...prev, sheets: updatedSheets };
+    });
+  };
 
   const updateMeasurementPointField = (
-    index: number,
+    sheetIndex: number,
+    pointIndex: number,
     name: keyof MeasurementpointEditForm,
     value: string
   ) => {
     setEditForm(prev => {
-      const updatedPoints = prev.fieldData.measurementPoints.map((pt, i) =>
-        i === index ? { ...pt, [name]: value } : pt
-      );
-      return {
-        ...prev,
-        fieldData: {
-          ...prev.fieldData,
-          measurementPoints: updatedPoints,
-        },
-      };
+      const updatedSheets = prev.sheets.map((sheet, i) => {
+        if (i !== sheetIndex) return sheet;
+        const updatedPoints = sheet.measurementPoints.map((pt, j) =>
+          j === pointIndex ? { ...pt, [name]: value } : pt
+        );
+        return { ...sheet, measurementPoints: updatedPoints };
+      });
+      return { ...prev, sheets: updatedSheets };
     });
   };
 
-  const updateMeasurementItems = (ids: number[]) => {
+  const updateMeasurementItems = (selected: StackMeasurementResponse[]) => {
+    setEditForm(prev => {
+      const kept = prev.measurementItems.filter(item =>
+        selected.some(sm => sm.id === item.stackMeasurementId)
+      );
+      const keptIds = kept.map(item => item.stackMeasurementId);
+      const newItems: MeasurementItemEditForm[] = selected
+        .filter(sm => !keptIds.includes(sm.id))
+        .map(sm => ({
+          stackMeasurementId: sm.id,
+          pollutantId: sm.pollutant.id,
+          pollutantNameKr: sm.pollutant.nameKr,
+          pollutantNameEn: sm.pollutant.nameEn,
+          method: sm.pollutant.method,
+          testEquipment: sm.pollutant.equipmentName,
+          testMethod: sm.pollutant.testMethodName,
+          samplingTime: sm.pollutant.samplingTime,
+          samplingVolume: sm.pollutant.samplingVolume,
+          cycle: sm.cycle,
+          allowance: sm.allowance,
+          startTime: "",
+          endTime: "",
+        }));
+      return { ...prev, measurementItems: [...kept, ...newItems] };
+    });
+  };
+
+  const addSheet = () => {
+    setEditForm(prev => {
+      const pointCount = Math.ceil(calcMeasurePointCnt({
+        shape: prev.planInfo.shape,
+        horizontalLength: prev.planInfo.horizontalLength,
+        verticalLength: prev.planInfo.verticalLength,
+      }) / 4) || 1;
+      const newSheet: MeasurementSheetEditForm = {
+        category: "OTHER",
+        referenceNumber: "",
+        weather: getDefaultWeatherEditForm(undefined),
+        moisture: getDefaultMoistureEditForm(undefined),
+        exhaustGas: getDefaultExhaustGasEditForm(undefined),
+        measurementPoints: Array.from({ length: pointCount }, getEmptyMeasurementPoint),
+        quantity: "",
+        pitotTubeCoefficient: "",
+        nozzleSize: "",
+        startTime: "",
+        endTime: "",
+      };
+      return { ...prev, sheets: [...prev.sheets, newSheet] };
+    });
+  };
+
+  const removeSheet = (index: number) => {
     setEditForm(prev => ({
       ...prev,
-      measurementItems: { measurementItems: ids },
+      sheets: prev.sheets.filter((_, i) => i !== index),
     }));
   };
 
@@ -179,17 +225,16 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
 
   return {
     editForm,
-    updatePreInfoField,
+    updatePlanInfoField,
     updateEquipmentField,
-
-    updateFieldDataField,
+    updateSheetField,
     updateWeatherField,
     updateMoistureField,
     updateExhaustGasField,
-
-    updateMeasureDataField,
     updateMeasurementPointField,
     updateMeasurementItems,
+    addSheet,
+    removeSheet,
     resetForm,
   };
 };

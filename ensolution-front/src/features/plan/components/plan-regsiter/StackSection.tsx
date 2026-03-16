@@ -12,7 +12,7 @@ interface StackSectionProps {
     value: string
   ) => void;
 
-  onMeasurementIdsChange: (ids: number[]) => void;
+  onMeasurementItemsChange: (items: number[]) => void;
 
   filteredStacks: StackResponse[];
 
@@ -28,7 +28,7 @@ export const StackSection = ({
   creating,
 
   filteredStacks,
-  onMeasurementIdsChange,
+  onMeasurementItemsChange,
 
   stack,
 
@@ -36,6 +36,12 @@ export const StackSection = ({
 
   onStackChange,
 }: StackSectionProps) => {
+
+  const handleMeasurementChange = (ids: number[]) => {
+    if (!stack) return;
+
+    onMeasurementItemsChange(ids);
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
@@ -63,8 +69,8 @@ export const StackSection = ({
             options={stack.stackMeasurements}
             getOptionLabel={(s) => s.pollutant.nameKr}
             getOptionValue={(s) => s.id}
-            value={form.measurementIds}
-            onChange={onMeasurementIdsChange}
+            value={form.measurementItemIds}
+            onChange={handleMeasurementChange}
             disabled={creating}
           />
         </>

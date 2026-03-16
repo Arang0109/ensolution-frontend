@@ -1,20 +1,24 @@
 import type { TypedEquipmentResponse } from "@equipment/model";
-import type { PreInfoEditForm, FieldDataEditForm, MeasurementpointEditForm } from "@plan/model";
+import type {
+  PlanInfoEditForm, MeasurementSheetEditForm,
+  WeatherEditForm, MoistureEditForm, ExhaustGasEditForm, MeasurementpointEditForm
+} from "@plan/model";
 import { useFieldDataCalculation } from "@plan/hooks";
 import {
-  WeatherSection, MoistureSection, ExhaustGasSection, StackProfileSection, MeasurementPointSection
+  WeatherSection, MoistureSection, ExhaustGasSection, StackProfileSection, MeasurementPointSection,
+  ReportInfoSection
 } from "@plan/components";
 
-interface FieldDataTabProps {
-  preInfo: PreInfoEditForm;
-  fieldData: FieldDataEditForm;
+export interface FieldDataTabProps {
+  planInfo: PlanInfoEditForm;
+  sheet: MeasurementSheetEditForm;
 
-  onPreInfoChange: (name: keyof PreInfoEditForm, value: string) => void;
-  onWeatherChange: (name: keyof FieldDataEditForm["weather"], value: string) => void;
-  onMoistureChange: (name: keyof FieldDataEditForm["moisture"], value: string) => void;
-  onExhaustGasChange: (name: keyof FieldDataEditForm["exhaustGas"], value: string, index: number) => void;
-  onMeasureDataChange: (name: keyof FieldDataEditForm["measureData"], value: string) => void;
-  onMeasurementPointChange: (index: number, name: keyof MeasurementpointEditForm, value: string) => void;
+  onPlanInfoChange: (name: keyof PlanInfoEditForm, value: string) => void;
+  onSheetInfoChange: (name: keyof MeasurementSheetEditForm, value: string) => void;
+  onWeatherChange: (name: keyof WeatherEditForm, value: string | null) => void;
+  onMoistureChange: (name: keyof MoistureEditForm, value: string | null) => void;
+  onExhaustGasChange: (name: keyof ExhaustGasEditForm, value: string | null, index: number) => void;
+  onMeasurementPointChange: (pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
 
   selectedPS?: TypedEquipmentResponse;
   selectedGS?: TypedEquipmentResponse;
@@ -29,13 +33,13 @@ const mobileWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden"
 const desktopWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
 
 export const FieldDataTab = ({
-  preInfo,
-  fieldData,
-  onPreInfoChange,
+  planInfo,
+  sheet,
+  onPlanInfoChange,
+  onSheetInfoChange,
   onWeatherChange,
   onMoistureChange,
   onExhaustGasChange,
-  onMeasureDataChange,
   onMeasurementPointChange,
   selectedPT,
   selectedNZ,
@@ -48,17 +52,26 @@ export const FieldDataTab = ({
     calcMoisture,
     calcExhaustGas,
     calcMeasurePoint,
-  } = useFieldDataCalculation(preInfo, fieldData, onMeasurementPointChange, selectedPT);
+  } = useFieldDataCalculation(planInfo, sheet, selectedPT);
 
   return (
     <div className="space-y-6">
+
+      {/* ── 분류 ──────────────────────────────────────── */}
+      <ReportInfoSection
+        mobileWrap={mobileWrap}
+        desktopWrap={desktopWrap}
+
+        sheet={sheet}
+        onChange={onSheetInfoChange}
+      />
 
       {/* ── 기상정보 ─────────────────────────────────── */}
       <WeatherSection
         mobileWrap={mobileWrap}
         desktopWrap={desktopWrap}
 
-        weather={fieldData.weather}
+        weather={sheet.weather}
         onChange={onWeatherChange}
 
         atmosphericPressure={atmosphericPressure}
@@ -69,7 +82,7 @@ export const FieldDataTab = ({
         mobileWrap={mobileWrap}
         desktopWrap={desktopWrap}
 
-        moisture={fieldData.moisture}
+        moisture={sheet.moisture}
         onChange={onMoistureChange}
 
         weightDiff={calcMoisture.weightDiff}
@@ -77,7 +90,7 @@ export const FieldDataTab = ({
         dryVolumeDiff={calcMoisture.dryVolumeDiff}
         pressureToMmHg={calcMoisture.pressureToMmHg}
         pressureToInchH2O={calcMoisture.pressureToInchH2O}
-        
+
         moistureRatio={calcMoisture.moistureRatio}
       />
 
@@ -86,10 +99,10 @@ export const FieldDataTab = ({
         mobileWrap={mobileWrap}
         desktopWrap={desktopWrap}
 
-        exhaustGas={fieldData.exhaustGas}
+        exhaustGas={sheet.exhaustGas}
         onChange={onExhaustGasChange}
 
-        standardOxygen={preInfo.standardOxygen}
+        standardOxygen={planInfo.standardOxygen}
 
         o2ConcentrationAvg={calcExhaustGas.o2ConcentrationAvg}
         co2ConcentrationAvg={calcExhaustGas.co2ConcentrationAvg}
@@ -105,17 +118,16 @@ export const FieldDataTab = ({
         mobileWrap={mobileWrap}
         desktopWrap={desktopWrap}
 
-        preInfo={preInfo}
-        onChange={onPreInfoChange}
+        planInfo={planInfo}
+        onChange={onPlanInfoChange}
 
         stackArea={calcMeasurePoint.area}
         measurePointCnt={calcMeasurePoint.measurePointCnt}
       />
 
       <MeasurementPointSection
-        fieldData={fieldData}
+        sheet={sheet}
         onChange={onMeasurementPointChange}
-        onMeasureDataChange={onMeasureDataChange}
 
         measurePointLength={calcMeasurePoint.measurePointLength}
         AvgGasTemp={calcMeasurePoint.AvgGasTemp}

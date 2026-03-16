@@ -1,13 +1,12 @@
-import type { FieldDataEditForm, MeasurementpointEditForm } from "@plan/model";
+import type { MeasurementSheetEditForm, MeasurementpointEditForm } from "@plan/model";
 import { TableInputCell, TableLabelCell, TableResultCell } from "@shared/ui";
 import { ParticleSection } from "@plan/components";
 import type { TypedEquipmentResponse } from "@equipment/model";
 import { display } from "@shared/lib";
 
 interface MeasurementPointSection {
-  fieldData: FieldDataEditForm;
+  sheet: MeasurementSheetEditForm;
   onChange: (index: number, name: keyof MeasurementpointEditForm, value: string) => void;
-  onMeasureDataChange: (name: keyof FieldDataEditForm["measureData"], value: string) => void;
 
   measurePointLength: string[];
   AvgGasTemp: number | null;
@@ -29,9 +28,8 @@ interface MeasurementPointSection {
 }
 
 export const MeasurementPointSection = ({
-  fieldData,
+  sheet,
   onChange,
-  onMeasureDataChange,
 
   measurePointLength,
   AvgGasTemp,
@@ -49,7 +47,7 @@ export const MeasurementPointSection = ({
 
   isParticle,
 }: MeasurementPointSection) => {
-  const measurementPoints = fieldData.measurementPoints;
+  const measurementPoints = sheet.measurementPoints;
 
   return (
     <>
@@ -144,9 +142,8 @@ export const MeasurementPointSection = ({
               </tr>
               {isParticle ?
               <ParticleSection
-                fieldData={fieldData}
+                measurementPoints={sheet.measurementPoints}
                 onChange={onChange}
-                onMeasureDataChange={onMeasureDataChange}
                 selectedNZ={selectedNZ}
               />
                : 

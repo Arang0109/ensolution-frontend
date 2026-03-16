@@ -13,21 +13,23 @@ export const mapPlanCreateFormToRequest = (
     throw new Error("teamId is required");
   }
 
+  const ids = form.measurementItemIds;
+
   return {
     plan: {
       stackId: form.stackId,
       teamId: form.teamId,
-      measureDate: form.measureDate,
       measurementField: form.measurementField,
+      measureDate: form.measureDate,
       measurementType: form.measurementType,
-      measurementIds: form.measurementIds,
+      measurementItemIds: ids,
     },
 
     referenceNumber: "KGAR-26-01-",
-    simplifiedMeasurement: form.simplifiedMeasurement,
     vehicleNumber: form.vehicleNumber,
     mentor: form.mentor,
     mentee: form.mentee,
+    
     particleSamplerId: form.particleSamplerId,
     gasSamplerId: form.gasSamplerId,
     pitotTubeId: form.pitotTubeId,

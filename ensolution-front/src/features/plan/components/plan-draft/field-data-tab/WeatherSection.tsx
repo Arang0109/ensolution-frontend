@@ -1,6 +1,4 @@
-import type {
-  FieldDataEditForm
-} from "@plan/model";
+import type { WeatherEditForm } from "@plan/model";
 import {
   WEATHER_CONDITION_LABELS_OPTIONS, WIND_DIRECTION_LABELS_OPTIONS
 } from "@plan/model";
@@ -13,8 +11,8 @@ interface WeatherSectionProps {
   mobileWrap: string;
   desktopWrap: string;
 
-  weather: FieldDataEditForm['weather'];
-  onChange: (name: keyof FieldDataEditForm["weather"], value: string) => void;
+  weather: WeatherEditForm;
+  onChange: (name: keyof WeatherEditForm, value: string) => void;
   atmosphericPressure: number;
 }
 
