@@ -13,6 +13,9 @@ export const useCompanyDetail = () => {
     try {
       const { status, data } = await getCompany(companyId);
       setCompany(status ? data : null);
+    } catch (error) {
+      console.error(error);
+      setCompany(null);
     } finally {
       setLoading(false);
     }

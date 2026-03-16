@@ -1,1 +1,1 @@
-export { PollutantPage } from "./PollutantPage";
+export { PollutantListPage } from "./PollutantListPage";

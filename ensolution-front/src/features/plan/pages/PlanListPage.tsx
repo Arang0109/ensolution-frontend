@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom";
 
-import { usePlans } from "@plan/hooks";
-import { PlanTable } from "@plan/components";
+import { usePlanListQuery } from "@plan/hooks";
+import { PlanTableSection } from "@plan/components";
 
-import { Button, FullPageLoader } from "@shared/ui";
+import { Button, FullPageLoader, EmptyState } from "@shared/ui";
 
 export const PlanListPage = () => {
   const navigate = useNavigate();
-  const { plans, loading } = usePlans();
+  const { plans, error, isLoading, reload } = usePlanListQuery();
 
-  if (loading) {
+  const isEmpty = !error && plans.length === 0;
+
+  if (isLoading) {
     return (<FullPageLoader />);
   }
 
@@ -25,7 +27,19 @@ export const PlanListPage = () => {
       </div>
 
       {/* Plan Table */}
-      <PlanTable plans={plans} />
+      {error ? (
+        <EmptyState
+          title="목록을 불러오지 못했습니다."
+          actionLabel="다시 시도"
+          onAction={reload}
+        />
+      ) : isEmpty ? (
+        <EmptyState title='등록된 측정시설이 없습니다.'/>
+      ) : (
+        <div className="grid grid-cols-1 gap-4">
+          <PlanTableSection plans={plans}/>
+        </div>
+      )}
     </div>
   );
 };

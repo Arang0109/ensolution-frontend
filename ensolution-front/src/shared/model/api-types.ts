@@ -3,3 +3,8 @@ export interface ApiResponseMessage<T> {
   message: string;
   data: T;
 }
+
+export interface FieldErrorResponse {
+  field: string;
+  message: string;
+}

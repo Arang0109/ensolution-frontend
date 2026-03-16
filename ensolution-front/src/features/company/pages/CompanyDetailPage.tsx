@@ -1,8 +1,8 @@
 import { DetailPageHeader } from "@widgets/detail-page-header";
 
-import { CompanyDetailCard, WorkplaceListCard } from "@company/ui";
-import { useCompanyDetailPage } from "@company/hooks";
-import { WorkplaceCreateModal } from "@workplace/ui";
+import { CompanyProfileSection, CompanyWorkplaceTableSection } from "@company/component";
+import { useCompanyDetailViewModel } from "@company/hooks";
+import { WorkplaceCreateModal } from "@workplace/component";
 
 import { FullPageLoader, EmptyState } from "@shared/ui";
 
@@ -10,22 +10,23 @@ export const CompanyDetailPage = () => {
   const {
     company,
     loading,
-    isDeleting,
+    deletingId,
     isEditMode,
     showAddModal,
+    errors,
 
     editForm,
 
-    backUrl,
+    goBack,
     startEdit,
     cancelEdit,
-    saveEdit,
-    deleteCompany,
-    handleEditChange,
+    handleSave,
+    handleDelete,
+    handleChange,
 
     setShowAddModal,
-    fetchCompany,
-  } = useCompanyDetailPage();
+    refreshCompany,
+  } = useCompanyDetailViewModel();
 
   if (loading) {
     return <FullPageLoader message="업체 정보를 불러오는 중입니다..." />;
@@ -36,7 +37,7 @@ export const CompanyDetailPage = () => {
       <EmptyState
         title="업체 정보를 찾을 수 없습니다."
         actionLabel="목록으로 돌아가기"
-        onAction={backUrl}
+        onAction={goBack}
       />
     );
   }
@@ -46,23 +47,24 @@ export const CompanyDetailPage = () => {
       <DetailPageHeader
         title={company.company.name}
         isEditMode={isEditMode}
-        isDeleting={isDeleting}
-        onDelete={deleteCompany}
+        isDeleting={deletingId === company.company.id}
+        onSave={handleSave}
+        onDelete={handleDelete}
         onUpdate={startEdit}
-        onSave={saveEdit}
         onCancel={cancelEdit}
-        backUrl={backUrl}
+        backUrl={goBack}
       />
 
       <div className="grid grid-cols-1 gap-6">
-        <CompanyDetailCard
+        <CompanyProfileSection
           company={company.company}
           isEditMode={isEditMode}
           editForm={editForm}
-          onChange={handleEditChange}
+          onChange={handleChange}
+          errors={errors}
         />
 
-        <WorkplaceListCard
+        <CompanyWorkplaceTableSection
           workplaces={company.workplaces}
           isEditMode={isEditMode}
           onClick={() => setShowAddModal(true)}
@@ -73,7 +75,7 @@ export const CompanyDetailPage = () => {
         <WorkplaceCreateModal
           companyId={company.company.id}
           onClose={() => setShowAddModal(false)}
-          onSuccess={() => fetchCompany(company.company.id)}
+          onSuccess={() => refreshCompany(company.company.id)}
         />
       )}
     </div>

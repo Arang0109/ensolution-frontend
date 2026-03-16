@@ -1,79 +1,75 @@
-import { useState } from "react";
-import type {
-  PollutantRegisterRequest,
-  PollutantUpdateRequest,
-} from "@/features/pollutant/model/pollutant-types";
-import {
-  registerPollutant,
-  patchPollutant,
-  deletePollutant,
-} from "@pollutant/api/pollutantApi";
+import { useState, useCallback } from "react";
 
-export const usePollutantActions = (onSuccess?: () => void) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+import { registerPollutant, patchPollutant, deletePollutant } from "@pollutant/api/pollutantApi";
+import type { PollutantRegisterRequest, PollutantUpdateRequest } from "@pollutant/model";
 
-  const handleCreate = async (
-    data: PollutantRegisterRequest
-  ): Promise<boolean> => {
-    setIsSubmitting(true);
+import type { ActionResult } from "@shared/model";
+
+export const usePollutantActions = () => {
+  const [creating, setCreating] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
+
+  const handleCreate = useCallback(
+    async (data: PollutantRegisterRequest) => {
+    setCreating(true);
     try {
       const res = await registerPollutant(data);
-      if (res.status) {
-        onSuccess?.();
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error("Failed to create pollutant:", error);
-      return false;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+      return {
+          success: res.status,
+          message: res.message,
+        };
 
-  const handleUpdate = async (
-    pollutantId: number,
-    data: PollutantUpdateRequest
-  ): Promise<boolean> => {
-    setIsSubmitting(true);
-    try {
-      const res = await patchPollutant(pollutantId, data);
-      if (res.status) {
-        onSuccess?.();
-        return true;
+      } finally {
+        setCreating(false);
       }
-      return false;
-    } catch (error) {
-      console.error("Failed to update pollutant:", error);
-      return false;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    []
+  );
 
-  const handleDelete = async (pollutantId: number): Promise<boolean> => {
-    setIsDeleting(true);
+  const handleDelete = useCallback(async (workplaceId: number) => {
+    setDeletingId(workplaceId);
+
     try {
-      const res = await deletePollutant(pollutantId);
-      if (res.status) {
-        onSuccess?.();
-        return true;
+      const res = await deletePollutant(workplaceId);
+
+      return {
+          success: res.status,
+          message: res.message,
+        };
+
+      } finally {
+        setDeletingId(null);
       }
-      return false;
-    } catch (error) {
-      console.error("Failed to delete pollutant:", error);
-      return false;
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+    },
+    []
+  );
+
+  const handleUpdate = useCallback(
+    async (workplaceId: number, data: PollutantUpdateRequest): Promise<ActionResult> => {
+      setUpdatingId(workplaceId);
+
+      try {
+        const res = await patchPollutant(workplaceId, data);
+
+        return {
+          success: res.status,
+          message: res.message,
+        };
+
+      } finally {
+        setUpdatingId(null);
+      }
+    },
+    []
+  );
 
   return {
+    creating,
+    deletingId,
+    updatingId,
     handleCreate,
     handleUpdate,
     handleDelete,
-    isSubmitting,
-    isDeleting,
   };
 };

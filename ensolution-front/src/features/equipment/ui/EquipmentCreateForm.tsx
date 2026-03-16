@@ -131,6 +131,8 @@ export const EquipmentCreateForm = ({
           name="type"
           value={form.type}
           options={EQUIP_TYPE_OPTIONS}
+          getOptionLabel={(v) => v.label}
+          getOptionValue={(v) => v.value}
           onChange={(value) => onChange("type", value, "text")}
           disabled={isSubmitting}
           required

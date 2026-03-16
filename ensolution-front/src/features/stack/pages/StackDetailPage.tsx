@@ -4,12 +4,12 @@ import {
   PreventionCreateModal,
   PreventionEditModal,
   MeasurementCreateModal,
-  StackPreventionListCard,
-  StackMeasurementListCard,
-  StackSidebar,
-} from '@stack/ui';
+  StackPreventionCardSection,
+  StackMeasurementItemSection,
+  StackProfileSection,
+} from '@stack/component';
 
-import { useStackDetailPage } from '@stack/hooks';
+import { useStackDetailViewModel } from '@stack/hooks';
 
 import { DetailPageHeader } from '@widgets/detail-page-header';
 import { FullPageLoader, EmptyState } from '@shared/ui';
@@ -18,21 +18,23 @@ import type { PreventionDetailResponse } from '@stack/model';
 export const StackDetailPage = () => {
   const {
     stack,
-    fetchStack,
-
-    handleEditChange,
-    handleUpdateClick,
-    handleDeleteClick,
-    handleSaveEdit,
-    handleCancelEdit,
-
-    isEditMode,
-    isDeleting,
-
     loading,
+    deletingId,
+
     editForm,
-    backUrl,
-  } = useStackDetailPage();
+    errors,
+    isEditMode,
+
+    startEdit,
+    cancelEdit,
+    updateField,
+
+    goBack,
+    handleSave,
+    handleDelete,
+
+    refreshStack,
+  } = useStackDetailViewModel();
 
   const [showPreventionAddModal, setShowPreventionAddModal] = useState(false);
   const [showMeasurementAddModal, setShowMeasurementAddModal] = useState(false);
@@ -61,7 +63,7 @@ export const StackDetailPage = () => {
 
   const handlePreventionEditSuccess = () => {
     if (stack?.stack.id) {
-      fetchStack(Number(stack?.stack.id));
+      refreshStack(stack.stack.id);
     }
     setSelectedPrevention(null);
   };
@@ -76,13 +78,13 @@ export const StackDetailPage = () => {
 
   const handleMeasurementAddSuccess = () => {
     if (stack?.stack.id) {
-      fetchStack(Number(stack?.stack.id));
+      refreshStack(stack.stack.id);
     }
   };
 
   const handlePreventionAddSuccess = () => {
     if (stack?.stack.id) {
-      fetchStack(Number(stack?.stack.id));
+      refreshStack(stack.stack.id);
     }
   }
 
@@ -95,7 +97,7 @@ export const StackDetailPage = () => {
       <EmptyState
         title="측정시설 정보를 찾을 수 없습니다."
         actionLabel="목록으로 돌아가기"
-        onAction={backUrl}
+        onAction={goBack}
       />
     );
   }
@@ -105,24 +107,24 @@ export const StackDetailPage = () => {
       <DetailPageHeader
         title={stack.stack.name}
         isEditMode={isEditMode}
-        isDeleting={isDeleting}
-        onDelete={handleDeleteClick}
-        onUpdate={handleUpdateClick}
-        onCancel={handleCancelEdit}
-        onSave={handleSaveEdit}
-        backUrl={backUrl}
+        isDeleting={deletingId === stack.stack.id}
+        onSave={handleSave}
+        onDelete={handleDelete}
+        onUpdate={startEdit}
+        onCancel={cancelEdit}
+        backUrl={goBack}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Content - Measurements Prominent */}
         <div className="lg:col-span-3 space-y-6">
-          <StackMeasurementListCard
+          <StackMeasurementItemSection
             measurements={stack.stackMeasurements}
             onAddMeasurement={handleAddMeasurement}
-            onEditSuccess={() => fetchStack(Number(stack?.stack.id))}
+            onEditSuccess={() => refreshStack(stack.stack.id)}
           />
 
-          <StackPreventionListCard
+          <StackPreventionCardSection
             preventions={stack.preventions}
             onAddPrevention={handleAddPrevention}
             onPreventionClick={handlePreventionClick}
@@ -131,7 +133,7 @@ export const StackDetailPage = () => {
 
         {/* Sidebar - Stack Info + Stats */}
         <div className="lg:col-span-1">
-          <StackSidebar
+          <StackProfileSection
             stack={stack.stack}
             preventionCount={preventionCount}
             facilityCount={facilityCount}
@@ -139,7 +141,8 @@ export const StackDetailPage = () => {
             measurementCount={measurementCount}
             isEditMode={isEditMode}
             editForm={editForm}
-            onChange={handleEditChange}
+            onChange={updateField}
+            errors={errors}
           />
         </div>
       </div>

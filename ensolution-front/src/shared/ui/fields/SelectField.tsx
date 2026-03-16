@@ -1,52 +1,60 @@
 import { FieldWrapper } from "./FieldWrapper";
+import Select from "react-select";
 
-interface SelectOption<T = string> {
-  value: T;
-  label: string;
-}
-
-interface SelectFieldProps<T = string> {
+interface SelectFieldProps<T, V extends string | number> {
   id?: string;
   label?: string;
-  value: T | "";
+
+  value: V | null;
   name?: string;
-  options: readonly SelectOption<T>[];
-  
-  onChange: (value: T) => void;
+  placeholder?: string;
+
+  options: readonly T[];
+
+  getOptionLabel: (option: T) => string;
+  getOptionValue: (option: T) => V;
+
+  onChange: (value: V) => void;
 
   disabled?: boolean;
   required?: boolean;
 }
 
-export const SelectField = <T extends string | number>({
+
+export const SelectField = <T, V extends string | number>({
   id,
   label,
   value,
   name,
+  placeholder,
   options,
+  getOptionLabel,
+  getOptionValue,
   onChange,
   disabled,
   required,
-}: SelectFieldProps<T>) => {
+}: SelectFieldProps<T, V>) => {
     
+  const mappedOptions = options.map(o => ({
+    value: getOptionValue(o),
+    label: getOptionLabel(o),
+  }));
+
+  const selectedOption =
+    mappedOptions.find(opt => opt.value === value) ?? null;
+
   return (
-    <FieldWrapper label={label} required={required}>
-      <select
-        id={id}
-        value={value}
+    <FieldWrapper label={label} required={required} id={id}>
+      <Select
+        inputId={id}
         name={name}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.value as T)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg
-                   focus:outline-none focus:ring-2 focus:ring-primary-500"
-      >
-        <option value="">선택하세요</option>
-        {options.map((opt) => (
-          <option key={String(opt.value)} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
+        options={mappedOptions}
+        value={selectedOption}
+        isDisabled={disabled}
+        placeholder={placeholder}
+        onChange={(opt) => opt && onChange(opt.value)}
+        className="text-sm"
+      />
     </FieldWrapper>
-  )
+  );
 };

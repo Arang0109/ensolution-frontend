@@ -1,83 +1,94 @@
-import { useNavigate } from "react-router-dom";
+import { usePlanRegisterViewModel } from "@plan/hooks";
+import { PlanCreateContent } from "@plan/components";
 
-import { usePlanForm } from "@plan/hooks";
-import { PlanRegisterForm } from "@plan/ui";
-
-import { useToast } from "@app/providers/toast";
+import { Button } from "@shared/ui";
+import { ChevronLeft } from 'lucide-react';
 
 export const PlanRegisterPage = () => {
-  const navigate = useNavigate();
-  const { showToast } = useToast();
   const {
     form,
-    isSubmitting,
-    onChange,
-    onSubmit,
-    setFieldValue,
+    errors,
+    resetForm,
+    updateField,
+    setMeasurementItems,
+
+    creating,
+
+    companies,
     filteredWorkplaces,
-    filteredTeams,
     filteredStacks,
-    selectedStack,
-    handleWorkplaceChange,
-    loading,
-    loadingStacks,
-    availableMeasurements,
-    loadingMeasurements,
-  } = usePlanForm();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const result = await onSubmit(e);
+    teams,
+    users,
+    filteredParticleSampler,
+    filteredGasSampler,
+    filteredPitotTube,
+    filteredNozzle,
 
-    if (result?.success) {
-      showToast(result.message || "측정일정이 등록되었습니다.");
-      navigate("/plan");
-    } else {
-      showToast(result?.message ?? "등록 실패", "error");
-    }
-  };
+    stack,
+
+    selectedCompanyId,
+    selectedWorkplaceId,
+    selectedStackId,
+
+    handleSelectCompany,
+    handleSelectWorkplace,
+    handleSelectStack,
+    
+    handleSelectTeam,
+
+    goBack,
+    handleSubmit,
+  } = usePlanRegisterViewModel();
 
   return (
     <div className="px-6 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-              disabled={isSubmitting}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">측정일정 등록</h1>
-          </div>
-          <p className="text-gray-600 ml-9">새로운 측정일정을 등록합니다.</p>
+        <div className="mb-4">
+          <Button 
+            label="뒤로가기"
+            size="xl"
+            variant="ghost"
+            icon={<ChevronLeft />}
+            onClick={goBack}
+          />
         </div>
 
         {/* Form Card */}
         <div className="bg-white rounded-lg shadow-md p-8">
-          <PlanRegisterForm
+          <PlanCreateContent
             form={form}
-            isSubmitting={isSubmitting}
-            onChange={onChange}
-            onSubmit={handleSubmit}
-            setFieldValue={setFieldValue}
+            errors={errors}
+            reset={resetForm}
+            onChange={updateField}
+            onMeasurementItemsChange={setMeasurementItems}
+
+            creating={creating}
+
+            companies={companies}
             filteredWorkplaces={filteredWorkplaces}
-            filteredTeams={filteredTeams}
             filteredStacks={filteredStacks}
-            selectedStack={selectedStack}
-            handleWorkplaceChange={handleWorkplaceChange}
-            loading={loading}
-            loadingStacks={loadingStacks}
-            availableMeasurements={availableMeasurements}
-            loadingMeasurements={loadingMeasurements}
+
+            teams={teams}
+            users={users}
+            filteredParticleSampler={filteredParticleSampler}
+            filteredGasSampler={filteredGasSampler}
+            filteredPitotTube={filteredPitotTube}
+            filteredNozzle={filteredNozzle}
+
+            stack={stack}
+
+            selectedCompanyId={selectedCompanyId}
+            selectedWorkplaceId={selectedWorkplaceId}
+            selectedStackId={selectedStackId}
+
+            handleSelectCompany={handleSelectCompany}
+            handleSelectWorkplace={handleSelectWorkplace}
+            handleSelectStack={handleSelectStack}
+            
+            handleSelectTeam={handleSelectTeam}
+
+            handleSubmit={handleSubmit}
           />
         </div>
 

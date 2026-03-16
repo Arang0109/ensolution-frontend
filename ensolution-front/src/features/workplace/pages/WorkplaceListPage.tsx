@@ -1,18 +1,14 @@
 import { useWorkplaces } from "@workplace/hooks";
-import { WorkplaceListTable } from "@workplace/ui";
+import { WorkplaceTableSection } from "@workplace/component";
 
-import { EmptyState } from "@shared/ui";
+import { EmptyState, FullPageLoader } from "@shared/ui";
 
 export const WorkplaceListPage = () => {
-  const { workplaces, loading } = useWorkplaces();
+  const { workplaces, error, loading, reload } = useWorkplaces();
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-gray-600">로딩 중...</div>
-      </div>
-    );
-  }
+  const isEmpty = !error && workplaces.length === 0;
+  
+  if (loading) return <FullPageLoader />;
 
   return (
     <div className="px-6 max-w-7xl mx-auto">
@@ -23,11 +19,16 @@ export const WorkplaceListPage = () => {
 
       <hr className="border-gray-200 mb-6" />
 
-      {/* Workplace List */}
-      {workplaces.length === 0 ? (
+      {error ? (
+      <EmptyState
+        title="목록을 불러오지 못했습니다."
+        actionLabel="다시 시도"
+        onAction={reload}
+      />
+      ) : isEmpty ? (
         <EmptyState title="등록된 사업장이 없습니다." />
       ) : (
-        <WorkplaceListTable workplaces={workplaces} />
+        <WorkplaceTableSection workplaces={workplaces} />
       )}
     </div>
   );

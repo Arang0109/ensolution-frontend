@@ -1,3 +1,4 @@
 export * from './api-types';
 export * from './common-types';
-export * from "./constants";
+export * from './tab-types';
+export * from './grade';
