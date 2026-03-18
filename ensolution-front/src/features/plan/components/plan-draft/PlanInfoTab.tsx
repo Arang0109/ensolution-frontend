@@ -5,7 +5,7 @@ import {
 } from "@plan/model";
 import type { PlanInfoEditForm, MeasurementItemEditForm } from "@plan/model";
 
-import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS, type StackDetailResponse, type StackMeasurementResponse } from "@stack/model";
+import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS, type StackDetailResponse, type StackMeasurementResponse } from "@/entities/stack/model";
 import { GRADE_LABELS_OPTIONS } from "@shared/model";
 import { MultiSelectField, TableEditableCell, TableSelectableCell, TableLabelCell } from "@shared/ui";
 

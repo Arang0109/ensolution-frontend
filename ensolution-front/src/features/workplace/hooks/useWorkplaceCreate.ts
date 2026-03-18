@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { getDefaultWorkplaceCreateForm } from "@workplace/model";
-import type { WorkplaceCreateForm } from "@workplace/model";
+import { getDefaultWorkplaceCreateForm } from "@entities/workplace/model";
+import type { WorkplaceCreateForm } from "@entities/workplace/model";
 import { validateWorkplace } from "@workplace/lib";
 
 import type { ValidationErrors } from "@shared/model";

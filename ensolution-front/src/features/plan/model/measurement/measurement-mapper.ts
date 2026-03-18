@@ -57,9 +57,6 @@ export const mapDraftFormToRequest = (
     samplingVolume: m.samplingVolume,
     cycle: m.cycle,
     allowance: m.allowance,
-
-    startTime: m.startTime,
-    endTime: m.endTime,
   })),
 
   sheets: form.sheets.map((sheet) => ({
@@ -122,6 +119,19 @@ export const mapDraftFormToRequest = (
       measureTime: mp.measureTime,
       vacuumGaugePressure: mp.vacuumGaugePressure,
       finalImpingerTemperature: mp.finalImpingerTemperature,
+    })),
+
+    samples: sheet.samples.map((sheet) => ({
+      startTime: sheet.startTime,
+      endTime: sheet.endTime,
+      suctionQuantity: sheet.suctionQuantity,
+      gasMeterGaugePressure: sheet.gasMeterGaugePressure,
+      inTemperature: sheet.inTemperature,
+      outTemperature: sheet.outTemperature,
+      beforeVolume: sheet.beforeVolume,
+      afterVolume: sheet.afterVolume,
+      blankSampleNumber: sheet.blankSampleNumber,
+      sampleNumber: sheet.sampleNumber
     })),
 
     quantity: sheet.quantity,

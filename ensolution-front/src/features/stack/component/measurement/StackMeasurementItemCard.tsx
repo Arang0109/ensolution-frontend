@@ -1,4 +1,4 @@
-import type { StackMeasurementResponse } from "@stack/model";
+import type { StackMeasurementResponse } from "@/entities/stack/model";
 import { IconButton } from "@shared/ui";
 import { Pencil } from "lucide-react";
 import { formatAllowance } from "@shared/lib";
@@ -25,17 +25,14 @@ export const StackMeasurementItemCard = ({
 
       <div className="space-y-2">
         <div>
-          <p className="font-bold text-neutral-900 text-sm leading-tight">
+          <p className="font-bold text-neutral-900 text-[10px] md:text-ms leading-tight truncate">
             {measurement.pollutant.nameKr}
-            {measurement.pollutant.nameEn && (
-              <span> [ {measurement.pollutant.nameEn} ]</span>
-            )}
           </p>
         </div>
 
         <div className="pt-2 border-t border-slate-300">
-          <p className="text-xs text-gray-600">허용기준</p>
-          <p className="font-semibold text-primary-700">
+          <p className="text-[10px] md:text-xs text-gray-600">허용기준</p>
+          <p className="text-[9px] md:text-ms font-semibold text-primary-700">
             {formatAllowance(measurement)}
           </p>
         </div>

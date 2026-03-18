@@ -1,4 +1,4 @@
-import type { Cycle } from "@stack/model";
+import type { Cycle } from "@/entities/stack/model";
 
 export interface MeasurementItemDocResponse {
   stackMeasurementId: number;
@@ -12,6 +12,14 @@ export interface MeasurementItemDocResponse {
   samplingVolume: string;
   cycle: Cycle;
   allowance: string;
+  suctionQuantity: string;
+  gasMeterGaugePressure: string;
+  inTemperature: string;
+  outTemperature: string;
+  beforeVolume: string;
+  afterVolume: string;
+  blankSampleNumber: string;
+  sampleNumber: string;
   
   startTime: string;
   endTime: string;

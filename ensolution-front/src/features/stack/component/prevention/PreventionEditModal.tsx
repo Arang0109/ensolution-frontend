@@ -1,7 +1,7 @@
 import { Modal } from "@shared/ui";
 import { PreventionEditContent } from "@stack/component";
 
-import type { PreventionDetailResponse } from "@stack/model";
+import type { PreventionDetailResponse } from "@/entities/stack/model";
 
 interface EditPreventionModalProps {
   preventionDetail: PreventionDetailResponse;

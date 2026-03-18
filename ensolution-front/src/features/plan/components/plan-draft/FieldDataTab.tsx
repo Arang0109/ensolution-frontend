@@ -1,17 +1,21 @@
 import type { TypedEquipmentResponse } from "@equipment/model";
 import type {
   PlanInfoEditForm, MeasurementSheetEditForm,
-  WeatherEditForm, MoistureEditForm, ExhaustGasEditForm, MeasurementpointEditForm
+  WeatherEditForm, MoistureEditForm, ExhaustGasEditForm, MeasurementpointEditForm,
+  MeasurementItemEditForm, SampleEditForm,
 } from "@plan/model";
 import { useFieldDataCalculation } from "@plan/hooks";
 import {
   WeatherSection, MoistureSection, ExhaustGasSection, StackProfileSection, MeasurementPointSection,
-  ReportInfoSection
+  ReportInfoSection,
+  SampleInfoSection
 } from "@plan/components";
 
 export interface FieldDataTabProps {
   planInfo: PlanInfoEditForm;
   sheet: MeasurementSheetEditForm;
+  allSheets: MeasurementSheetEditForm[];
+  measurementItems: MeasurementItemEditForm[];
 
   onPlanInfoChange: (name: keyof PlanInfoEditForm, value: string) => void;
   onSheetInfoChange: (name: keyof MeasurementSheetEditForm, value: string) => void;
@@ -19,6 +23,8 @@ export interface FieldDataTabProps {
   onMoistureChange: (name: keyof MoistureEditForm, value: string | null) => void;
   onExhaustGasChange: (name: keyof ExhaustGasEditForm, value: string | null, index: number) => void;
   onMeasurementPointChange: (pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
+  onSampleItemsChange: (primaryItemId: number | null, concurrentItemIds: number[]) => void;
+  onSampleChange: (sampleIndex: number, name: keyof SampleEditForm, value: string) => void;
 
   selectedPS?: TypedEquipmentResponse;
   selectedGS?: TypedEquipmentResponse;
@@ -35,12 +41,16 @@ const desktopWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-
 export const FieldDataTab = ({
   planInfo,
   sheet,
+  allSheets,
+  measurementItems,
   onPlanInfoChange,
   onSheetInfoChange,
   onWeatherChange,
   onMoistureChange,
   onExhaustGasChange,
   onMeasurementPointChange,
+  onSampleItemsChange,
+  onSampleChange,
   selectedPT,
   selectedNZ,
 
@@ -64,6 +74,15 @@ export const FieldDataTab = ({
 
         sheet={sheet}
         onChange={onSheetInfoChange}
+      />
+
+      {/* ── 시료 정보 ──────────────────────────────────────── */}
+      <SampleInfoSection
+        sheet={sheet}
+        allSheets={allSheets}
+        measurementItems={measurementItems}
+        onSampleItemsChange={onSampleItemsChange}
+        onSampleChange={onSampleChange}
       />
 
       {/* ── 기상정보 ─────────────────────────────────── */}

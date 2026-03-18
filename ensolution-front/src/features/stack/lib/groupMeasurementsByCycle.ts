@@ -1,5 +1,5 @@
-import type { StackMeasurementResponse } from "@stack/model";
-import type { Cycle } from "@stack/model";
+import type { StackMeasurementResponse } from "@/entities/stack/model";
+import type { Cycle } from "@/entities/stack/model";
 
 export interface MeasurementsByCycle {
   cycle: Cycle;

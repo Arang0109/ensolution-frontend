@@ -1,4 +1,4 @@
-import type { Orientation, Shape } from "@stack/model";
+import type { Orientation, Shape } from "@/entities/stack/model";
 import type { Grade } from "@shared/model";
 
 export interface ClientDocResponse {

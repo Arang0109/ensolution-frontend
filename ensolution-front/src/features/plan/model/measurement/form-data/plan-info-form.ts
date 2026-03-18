@@ -1,4 +1,4 @@
-import type { Shape, Orientation, Cycle } from '@stack/model';
+import type { Shape, Orientation, Cycle } from '@/entities/stack/model';
 import type { MeasurementField, MeasurementType, PlanDetailResponse } from '@plan/model';
 
 import type { Grade } from '@shared/model';
@@ -16,9 +16,6 @@ export interface MeasurementItemEditForm {
   samplingVolume: string;
   cycle: Cycle;
   allowance: string;
-
-  startTime: string;
-  endTime: string;
 }
 
 export const getDefaultMeasurementItemsEditForm = (
@@ -41,6 +38,14 @@ export const getDefaultMeasurementItemsEditForm = (
 
     startTime: m.startTime,
     endTime: m.endTime,
+    suctionQuantity: m.suctionQuantity,
+    gasMeterGaugePressure: m.gasMeterGaugePressure,
+    inTemperature: m.inTemperature,
+    outTemperature: m.outTemperature,
+    beforeVolume: m.beforeVolume,
+    afterVolume: m.afterVolume,
+    blankSampleNumber: m.blankSampleNumber,
+    sampleNumber: m.sampleNumber
   }));
 };
 

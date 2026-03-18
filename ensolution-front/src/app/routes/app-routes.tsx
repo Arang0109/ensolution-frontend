@@ -1,24 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
 import { PublicRoute, ProtectedRoute } from '.';
-import { MainLayout } from '../layouts';
+import { Layout } from '@shared/ui/layouts';
 
-import { LoginPage, UserProfilePage } from '@auth/pages/index';
-
-import { HomePage } from '@home/pages/index';
+import { LoginPage } from '@pages/login';
+import { Dashboard } from '@pages/dashboard';
+import { ProfilePage } from "@pages/profile";
 
 import { EquipmentListPage } from '@/features/equipment/pages';
 import { TeamListPage } from '@agency/pages';
 
-import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
-import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
+import { CompanyPage, CompanyDetailPage } from '@pages/company';
+import { WorkplacePage, WorkplaceDetailPage } from '@pages/workplace';
 
-import { StackListPage, StackDetailPage } from '@stack/pages/index';
+import { StackPage, StackDetailPage } from '@pages/stack';
 import { PollutantListPage } from '@pollutant/pages/index';
 
 import { PlanListPage, PlanRegisterPage, PlanDetailPage } from "@plan/pages";
-
-import { TestPage } from "@/shared/test/test-page";
 
 export const AppRoutes = () => (
   <BrowserRouter>
@@ -28,25 +26,23 @@ export const AppRoutes = () => (
           <LoginPage />
         </PublicRoute>
         } />
-      
-      <Route path="/test" element= {< TestPage/>}/>
 
       <Route
         element={
           <ProtectedRoute>
-            <MainLayout />
+            <Layout />
           </ProtectedRoute>
         }
       >
-        <Route path="/dashboard" element={<HomePage />} />
-        <Route path="/me" element={<UserProfilePage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/me" element={<ProfilePage />} />
 
         {/* 측정대행 의뢰업체 */}
-        <Route path="/company" element={<CompanyListPage />} />
+        <Route path="/company" element={<CompanyPage />} />
         <Route path="/company/:companyId" element={<CompanyDetailPage />} />
-        <Route path="/workplace" element={<WorkplaceListPage />} />
+        <Route path="/workplace" element={<WorkplacePage />} />
         <Route path="/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
-        <Route path="/stack" element={<StackListPage />} />
+        <Route path="/stack" element={<StackPage />} />
         <Route path="/stack/:stackId" element={<StackDetailPage />} />
 
         <Route path="/equipment" element={<EquipmentListPage />} />

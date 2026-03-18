@@ -3,12 +3,12 @@ import { X, Plus, Trash2 } from "lucide-react";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 
-import { mapPreventionUpdateBundleFormToRequest } from "@stack/model";
+import { mapPreventionUpdateBundleFormToRequest } from "@/entities/stack/model";
 import { usePreventionEditForm, usePreventionActions } from "@stack/hooks";
 
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
 
-import type { PreventionDetailResponse } from "@stack/model";
+import type { PreventionDetailResponse } from "@/entities/stack/model";
 
 interface PreventionEditContentProps {
   preventionDetail: PreventionDetailResponse;
@@ -77,7 +77,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">방지시설 수정</h2>
+        <h2 className="text-base md:text-2xl font-bold text-gray-800">방지시설 수정</h2>
         <IconButton
           icon={<X/>}
           title="닫기"
@@ -91,7 +91,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
       <form onSubmit={handleSubmit} onKeyDown={preventSubmitOnEnter} className="space-y-6">
         {/* 방지시설 정보 */}
         <div className="border-b pb-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">방지시설 정보</h3>
+          <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-4">방지시설 정보</h3>
           <div className="space-y-4">
             <InputField
               id="name"
@@ -103,7 +103,6 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
               placeholder="방지시설명을 입력하세요"
               disabled={isSubmitting}
               helperText={errors.preventionName}
-              required
             />
             <TextAreaField
               label="비고"
@@ -149,7 +148,6 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     onChange={(value) => onChangeFacility(index, "name", value)}
                     placeholder="배출시설명을 입력하세요"
                     disabled={isSubmitting}
-                    required
                   />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InputField
@@ -241,7 +239,6 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     onChange={(value) => onChangeTarget(index, "targetSubstance", value)}
                     placeholder="제거대상물질을 입력하세요"
                     disabled={isSubmitting}
-                    required
                   />
                   <InputField
                     id="removalEfficiency"
@@ -255,7 +252,6 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     max={100}
                     step={0.1}
                     disabled={isSubmitting}
-                    required
                   />
                 </div>
               </div>

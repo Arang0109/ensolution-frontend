@@ -1,4 +1,4 @@
-import { FieldWrapper } from "./FieldWrapper";
+import { Input } from "@material-tailwind/react";
 
 interface InputFieldProps<T = string> {
   id?: string;
@@ -13,7 +13,6 @@ interface InputFieldProps<T = string> {
 
   disabled?: boolean;
   readOnly?: boolean;
-  required?: boolean;
 
   min?: number;
   max?: number;
@@ -32,39 +31,34 @@ export const InputField = <T extends string | number>({
   placeholder,
   disabled = false,
   readOnly = false,
-  required,
   min,
   max,
   step,
   helperText,
 }: InputFieldProps<T>) => {
   return (
-    <FieldWrapper id={id} label={label} required={required}>
-      <input
+    <div className="w-full md:p-3">
+      <Input
+        id={id}
+        label={label ? `${label}` : undefined}
+        value={String(value)}
+        onChange={(e) => onChange?.(e.target.value as T)}
         type={type}
-        value={value}
         name={name}
         placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
+        disabled={disabled || readOnly}
         min={min}
         max={max}
         step={step}
-        onChange={(e) => onChange?.(e.target.value as T)}
-        className={`
-          w-full px-3 py-2 rounded-lg border
-          text-sm
-          ${readOnly ? "bg-gray-100 text-gray-600" : "bg-white"}
-          ${disabled ? "opacity-50 cursor-not-allowed" : ""}
-          focus:outline-none focus:ring-2 focus:ring-primary-500
-        `}
+        error={!!helperText}
+        className={readOnly ? "!bg-gray-100 !text-gray-600" : ""}
+        containerProps={{ className: "!min-w-0 w-full" }}
+        crossOrigin={undefined}
       />
 
       {helperText && (
-        <p className="mt-1 text-xs text-red-500">
-          {helperText}
-        </p>
+        <p className="mt-1 text-xs text-red-500">{helperText}</p>
       )}
-    </FieldWrapper>
+    </div>
   );
 };

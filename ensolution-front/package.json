@@ -10,12 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.9",
     "@radix-ui/react-select": "^2.2.6",
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.13.2",
     "dayjs": "^1.11.19",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-router": "^7.9.6",
     "react-router-dom": "^7.9.6",
@@ -25,8 +26,8 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.22",
     "baseline-browser-mapping": "^2.9.19",

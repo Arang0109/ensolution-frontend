@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 
-import { getPrevention } from "@stack/api/preventionApi";
+import { getPrevention } from "@/entities/stack/api/preventionApi";
 
-import type { PreventionDetailResponse } from "@stack/model";
+import type { PreventionDetailResponse } from "@/entities/stack/model";
 
 export const usePreventionDetailQuery = () => {
   const [prevention, setPrevention] = useState<PreventionDetailResponse | null>(null);

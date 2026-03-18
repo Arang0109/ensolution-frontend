@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { getDefaultStackMeasurementCreateForm } from "@stack/model";
-import type { StackMeasurementCreateForm } from "@stack/model";
+import { getDefaultStackMeasurementCreateForm } from "@/entities/stack/model";
+import type { StackMeasurementCreateForm } from "@/entities/stack/model";
 
 export const useMeasurementCreateForm = (stackId: number) => {
   // pollutant ID 초기값 : null

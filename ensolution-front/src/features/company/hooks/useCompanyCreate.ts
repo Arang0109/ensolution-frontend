@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import {
   getDefaultCompanyCreateForm
-} from "@company/model";
-import type { CompanyCreateForm } from "@company/model";
+} from "@entities/company/model";
+import type { CompanyCreateForm } from "@entities/company/model";
 import { validateCompany } from "@company/lib";
 
 import type { ValidationErrors } from "@shared/model";

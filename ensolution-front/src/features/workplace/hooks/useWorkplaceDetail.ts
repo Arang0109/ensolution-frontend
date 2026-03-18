@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 
-import { getWorkplace } from "@workplace/api/workplaceApi";
+import { getWorkplace } from "@/entities/workplace/api/workplaceApi";
 
-import type { WorkplaceDetailResponse } from "@workplace/model";
+import type { WorkplaceDetailResponse } from "@entities/workplace/model";
 
 export const useWorkplaceDetail = () => {
   const [workplace, setWorkplace] = useState<WorkplaceDetailResponse | null>(null);

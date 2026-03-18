@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 
-import { getStackMeasurement } from "@stack/api/stackMeasurementApi";
+import { getStackMeasurement } from "@/entities/stack/api/stackMeasurementApi";
 
-import type { StackMeasurementResponse } from "@stack/model";
+import type { StackMeasurementResponse } from "@/entities/stack/model";
 
 
 export const useMeasurementDetailQuery = () => {

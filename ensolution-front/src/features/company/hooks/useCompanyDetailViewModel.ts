@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { useToast } from "@app/providers/toast";
 
 import { useCompanyDetail, useCompanyActions, useCompanyEdit } from "@company/hooks";
-import { mapUpdateFormToRequest } from "@company/model";
+import { mapUpdateFormToRequest } from "@entities/company/model";
 
 import { useWorkplaceActions } from "@workplace/hooks";
 

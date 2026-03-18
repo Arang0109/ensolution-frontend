@@ -4,13 +4,13 @@ import {
   getDefaultPreventionBundleCreateForm,
   getDefaultFacilityCreateForm,
   getDefaultTargetCreateForm
- } from "@stack/model";
+ } from "@/entities/stack/model";
 import type {
   PreventionCreateForm,
   FacilityCreateForm,
   TargetCreateForm,
   PreventionBundleCreateForm
-} from "@stack/model";
+} from "@/entities/stack/model";
 import { validatePrevention } from "@stack/lib";
 
 import type { ValidationErrors } from "@shared/model";

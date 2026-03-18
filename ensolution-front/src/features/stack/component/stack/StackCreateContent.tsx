@@ -1,8 +1,8 @@
 import { useToast } from "@app/providers/toast";
 
 import { useStackActions, useStackCreateForm } from "@stack/hooks";
-import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
-import { mapStackCreateFormToRequest } from "@stack/model";
+import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@/entities/stack/model";
+import { mapStackCreateFormToRequest } from "@/entities/stack/model";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { GRADE_LABELS_OPTIONS } from "@shared/model";
@@ -42,7 +42,7 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">측정시설 추가</h2>
+        <h2 className="text-base md:text-2xl font-bold text-gray-800">측정시설 추가</h2>
         <IconButton
           icon={<X />}
           title="닫기"
@@ -55,7 +55,6 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             label="측정시설명"
-            required={true}
             name="name"
             value={form.name}
             onChange={(v) => updateField("name", v)}
@@ -130,7 +129,6 @@ export const StackCreateContent = ({ workplaceId, onClose, onSuccess }: StackCre
             value={form.horizontalLength}
             onChange={(v) => updateField("horizontalLength", v)}
             placeholder="지름을 입력하세요"
-            required
             disabled={creating}
           />
         ) : (

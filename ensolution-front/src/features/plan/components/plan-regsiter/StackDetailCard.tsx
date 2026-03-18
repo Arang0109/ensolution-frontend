@@ -1,5 +1,5 @@
-import { SHAPE_LABELS, ORIENTATION_LABELS } from "@stack/model";
-import type { StackDetailResponse } from "@stack/model";
+import { SHAPE_LABELS, ORIENTATION_LABELS } from "@/entities/stack/model";
+import type { StackDetailResponse } from "@/entities/stack/model";
 
 import { GRADE_LABELS } from "@shared/model";
 

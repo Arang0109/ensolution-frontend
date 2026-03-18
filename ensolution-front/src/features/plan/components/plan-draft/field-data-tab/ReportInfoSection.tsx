@@ -19,7 +19,7 @@ export const ReportInfoSection = ({
 
   sheet,
   onChange
-}: ReportInfoSectionProps) => {{
+}: ReportInfoSectionProps) => {
   return (
     <section>
       <h3 className="text-sm font-semibold text-gray-700 mb-2">기록지정보</h3>
@@ -39,6 +39,14 @@ export const ReportInfoSection = ({
                 value={sheet.category} 
                 options={CATEGORY_OPTIONS} 
                 onChange={(value) => onChange("category", value)} 
+              />
+            </tr>
+            <tr>
+              <TableLabelCell>측정시작</TableLabelCell>
+              <TableInputCell
+                value=""
+                type="time"
+                onChange={(value) => console.log(value)}
               />
             </tr>
           </tbody>
@@ -67,4 +75,4 @@ export const ReportInfoSection = ({
       </div>
     </section>
   )
-}}
+}

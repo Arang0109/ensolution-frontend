@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@app/providers/auth";
 
 import axios, { AxiosError } from "axios";
-import { loginApi } from "@auth/api/authApi";
+import { loginApi } from "@/entities/auth/api/authApi";
 
 import type { ApiResponseMessage } from "@/shared/model";
 import { useToast } from "@app/providers/toast";
 
-import type { LoginRequest } from "@auth/model";
+import type { LoginRequest } from "@entities/auth/model";
 
 export function useLoginForm() {
   const navigate = useNavigate();

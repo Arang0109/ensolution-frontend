@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import { getCompany } from "@company/api/companyApi";
+import { getCompany } from "@/entities/company/api/companyApi";
 
 import type { CompanyDetailResponse } from "@company/model";
 

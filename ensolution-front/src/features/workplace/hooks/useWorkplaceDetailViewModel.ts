@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { useWorkplaceDetail, useWorkplaceActions, useWorkplaceEdit } from '@workplace/hooks';
-import { mapUpdateFormToRequest } from '@workplace/model';
+import { mapUpdateFormToRequest } from '@entities/workplace/model';
 
 import { useStackActions } from '@stack/hooks';
 
@@ -20,7 +20,7 @@ export const useWorkplaceDetailViewModel = () => {
   const { workplace, fetchWorkplace, loading } = useWorkplaceDetail();
   const { deletingId, handleDelete: deleteWorkplaceAction, handleUpdate } = useWorkplaceActions();
   const [showAddModal, setShowAddModal] = useState(false);
-  const { handleCreate } = useStackActions();
+  const { createStackProfile } = useStackActions();
 
   const {
     isEditMode,
@@ -99,7 +99,7 @@ export const useWorkplaceDetailViewModel = () => {
     handleSave,
     handleDelete,
 
-    handleCreate,
+    createStackProfile,
     refreshWorkplace: fetchWorkplace,
 
     searchTerm, setSearchTerm, filtered: filteredStacks

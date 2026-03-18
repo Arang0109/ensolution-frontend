@@ -1,4 +1,4 @@
-import type { PreventionBundleCreateForm, PreventionBundleUpdateForm } from "@stack/model";
+import type { PreventionBundleCreateForm, PreventionBundleUpdateForm } from "@/entities/stack/model";
 
 import type { ValidationErrors } from "@shared/model";
 

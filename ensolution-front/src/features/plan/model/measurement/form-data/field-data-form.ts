@@ -4,11 +4,15 @@ export interface MeasurementSheetEditForm {
   category: Category;
   referenceNumber: string;
 
+  primaryItemId: number | null;
+  concurrentItemIds: number[];
+
   weather: WeatherEditForm;
   moisture: MoistureEditForm;
   exhaustGas: ExhaustGasEditForm;
 
   measurementPoints: MeasurementpointEditForm[];
+  samples: SampleEditForm[];
 
   quantity: string;
   pitotTubeCoefficient: string;
@@ -31,11 +35,15 @@ export const getDefaultMeasurementSheetsEditForm = (
     category: sheet.category ?? "OTHER",
     referenceNumber: sheet.referenceNumber ?? "",
 
+    primaryItemId: null,
+    concurrentItemIds: [],
+
     weather: getDefaultWeatherEditForm(sheet),
     moisture: getDefaultMoistureEditForm(sheet),
     exhaustGas: getDefaultExhaustGasEditForm(sheet),
 
     measurementPoints: getDefaultMeasurementpointEditForm(sheet, measurementPointCnt),
+    samples: getDefaultSamplesEditForm(sheet),
 
     quantity: sheet.quantity ?? "",
     pitotTubeCoefficient: sheet.pitotTubeCoefficient ?? "",
@@ -187,4 +195,38 @@ export const getDefaultMeasurementpointEditForm = (
       createEmptyMeasurementPoint
     ),
   ];
+};
+
+export interface SampleEditForm {
+  startTime: string;
+  endTime: string;
+  suctionQuantity: string;
+  gasMeterGaugePressure: string;
+  inTemperature: string;
+  outTemperature: string;
+  beforeVolume: string;
+  afterVolume: string;
+  blankSampleNumber: string;
+  sampleNumber: string;
+  samplingVolume: string;
+}
+
+export const getDefaultSamplesEditForm = (
+  sheet: MeasurementSheetDocResponse | undefined
+): SampleEditForm[] => {
+  const samples = sheet?.samples ?? [];
+
+  return samples.map((s) => ({
+    startTime: s?.startTime ?? "",
+    endTime: s?.endTime ?? "",
+    suctionQuantity: s?.suctionQuantity ?? "",
+    gasMeterGaugePressure: s?.gasMeterGaugePressure ?? "",
+    inTemperature: s?.inTemperature ?? "",
+    outTemperature: s?.outTemperature ?? "",
+    beforeVolume: s?.beforeVolume ?? "",
+    afterVolume: s?.afterVolume ?? "",
+    blankSampleNumber: s?.blankSampleNumber ?? "",
+    sampleNumber: s?.sampleNumber ?? "",
+    samplingVolume: s?.samplingVolume ?? "",
+  }));
 };

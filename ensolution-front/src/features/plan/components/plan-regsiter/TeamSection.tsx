@@ -1,6 +1,6 @@
 import type { PlanCreateForm } from "@plan/model";
 import type { TeamResponse } from "@/features/agency/model/agency-types";
-import type { UserResponse } from "@/features/auth/model";
+import type { UserResponse } from "@/entities/user/model";
 
 import { InputField, SelectField } from "@shared/ui";
 import type { EquipmentResponse } from "@/features/equipment/model";

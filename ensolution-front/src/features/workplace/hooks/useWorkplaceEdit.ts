@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { getDefaultWorkplaceUpdateForm } from "@workplace/model";
-import type { WorkplaceDetailResponse, WorkplaceUpdateForm } from "@workplace/model";
+import { getDefaultWorkplaceUpdateForm } from "@entities/workplace/model";
+import type { WorkplaceDetailResponse, WorkplaceUpdateForm } from "@entities/workplace/model";
 import { validateWorkplace } from "@workplace/lib";
 
 import type { ValidationErrors } from "@shared/model";

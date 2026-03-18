@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
-import { registerStackMeasurement, patchStackMeasurement, deleteStackMeasurement } from "@stack/api";
-import type { StackMeasurementCreateRequest, StackMeasurementUpdateRequest } from "@stack/model";
+import { registerStackMeasurement, patchStackMeasurement, deleteStackMeasurement } from "@/entities/stack/api";
+import type { StackMeasurementCreateRequest, StackMeasurementUpdateRequest } from "@/entities/stack/model";
 
 import type { ActionResult } from "@shared/model";
 

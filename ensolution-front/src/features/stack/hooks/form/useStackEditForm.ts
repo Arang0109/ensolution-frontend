@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { getDefaultStackUpdateForm } from "@stack/model";
-import type { StackDetailResponse, StackUpdateForm } from "@stack/model";
+import { getDefaultStackUpdateForm } from "@/entities/stack/model";
+import type { StackDetailResponse, StackUpdateForm } from "@/entities/stack/model";
 import { validateStack } from "@stack/lib";
 
 import type { ValidationErrors } from "@shared/model";
