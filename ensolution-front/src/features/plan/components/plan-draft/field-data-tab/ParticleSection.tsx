@@ -1,6 +1,6 @@
 import type { MeasurementpointEditForm } from "@plan/model";
 import { TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell } from "@shared/ui";
-import type { NozzleSpec, TypedEquipmentResponse } from "@equipment/model";
+import type { NozzleSpec, TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import { useState } from "react";
 
 interface ParticleSectionProps {

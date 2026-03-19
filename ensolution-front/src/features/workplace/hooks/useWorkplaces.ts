@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { getWorkplaces } from "@workplace/api/workplaceApi";
-
-import type { WorkplaceResponse } from "@workplace/model";
+import { getWorkplaces } from "@entities/workplace/api/workplaceApi";
+import type { WorkplaceResponse } from "@entities/workplace/model";
 
 export const useWorkplaces = () => {
   const [workplaces, setWorkplaces] = useState<WorkplaceResponse[]>([]);

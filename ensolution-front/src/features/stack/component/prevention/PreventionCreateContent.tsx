@@ -3,7 +3,7 @@ import { X, Plus, Trash2 } from "lucide-react";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 
-import { mapPreventionCreateBundleFormToRequest } from "@stack/model";
+import { mapPreventionCreateBundleFormToRequest } from "@/entities/stack/model";
 import { usePreventionActions, usePreventionCreateForm } from "@stack/hooks";
 
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
@@ -57,7 +57,7 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">방지시설 추가</h2>
+        <h2 className="text-base md:text-2xl font-bold text-gray-800">방지시설 추가</h2>
         <IconButton 
           icon={<X/>}
           title="닫기"
@@ -71,7 +71,7 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
       <form onSubmit={handleSubmit} onKeyDown={preventSubmitOnEnter} className="space-y-6">
         {/* 방지시설 정보 */}
         <div className="border-b pb-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">방지시설 정보</h3>
+          <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-4">방지시설 정보</h3>
           <div className="space-y-4">
             <InputField
               id="name"
@@ -83,7 +83,6 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
               placeholder="방지시설명을 입력하세요"
               disabled={creating}
               helperText={errors.preventionName}
-              required
             />
             <TextAreaField
               label="비고"
@@ -98,7 +97,7 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
         {/* 배출시설 정보 */}
         <div className="border-b pb-4">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">배출시설</h3>
+            <h3 className="text-base md:text-lg font-semibold text-gray-800">배출시설</h3>
             <Button
               type="button"
               label="배출시설 추가"
@@ -112,14 +111,16 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
           <div className="space-y-4">
             {form.facilities.map((facility, index) => (
               <div key={index} className="border rounded-lg p-4 bg-gray-50 relative">
-                <IconButton
-                  icon={<Trash2/>}
-                  title="삭제"
-                  variant="danger"
-                  onClick={() => removeFacility(index)}
-                  size="sm"
-                  className="absolute top-2 right-2"
-                />
+                <div className="mb-4">
+                  <IconButton
+                    icon={<Trash2/>}
+                    title="삭제"
+                    variant="danger"
+                    onClick={() => removeFacility(index)}
+                    size="sm"
+                    className="absolute top-2 right-2"
+                  />
+                </div>
                 <InputField
                   id="name"
                   label="배출시설명"
@@ -129,9 +130,8 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
                   onChange={(value) => onChangeFacility(index, "name", value)}
                   placeholder="배출시설명을 입력하세요"
                   disabled={creating}
-                  required
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                   <InputField
                     id="fuelType"
                     label="연료종류"
@@ -188,7 +188,7 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
         {/* 제거대상물질 정보 */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">제거대상물질</h3>
+            <h3 className="text-base md:text-lg font-semibold text-gray-800">제거대상물질</h3>
             <Button
               type="button"
               label="제거대상물질 추가"
@@ -202,14 +202,16 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
           <div className="space-y-3">
             {form.targets.map((target, index) => (
               <div key={index} className="border rounded-lg p-4 bg-gray-50 relative">
-                <IconButton
-                  icon={<Trash2/>}
-                  title="삭제"
-                  variant="danger"
-                  onClick={() => removeTarget(index)}
-                  size="sm"
-                  className="absolute top-2 right-2"
-                />
+                <div className="mb-4">
+                  <IconButton
+                    icon={<Trash2/>}
+                    title="삭제"
+                    variant="danger"
+                    onClick={() => removeTarget(index)}
+                    size="sm"
+                    className="absolute top-2 right-2"
+                  />
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InputField
@@ -221,7 +223,6 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
                     onChange={(value) => onChangeTarget(index, "targetSubstance", value)}
                     placeholder="제거대상물질을 입력하세요"
                     disabled={creating}
-                    required
                   />
                   <InputField
                     id="removalEfficiency"
@@ -235,7 +236,6 @@ export const PreventionCreateContent = ({ stackId, onClose, onSuccess }: Prevent
                     max={100}
                     step={0.1}
                     disabled={creating}
-                    required
                   />
                 </div>
               </div>

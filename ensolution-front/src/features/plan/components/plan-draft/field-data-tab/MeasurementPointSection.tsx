@@ -1,7 +1,7 @@
 import type { MeasurementSheetEditForm, MeasurementpointEditForm } from "@plan/model";
 import { TableInputCell, TableLabelCell, TableResultCell } from "@shared/ui";
 import { ParticleSection } from "@plan/components";
-import type { TypedEquipmentResponse } from "@equipment/model";
+import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import { display } from "@shared/lib";
 
 interface MeasurementPointSection {

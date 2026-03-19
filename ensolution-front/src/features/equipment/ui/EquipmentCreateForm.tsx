@@ -1,8 +1,8 @@
 import { useToast } from "@app/providers/toast";
 
-import { EquipType, EQUIP_TYPE_OPTIONS } from '@equipment/model';
+import { EquipType, EQUIP_TYPE_OPTIONS } from '@/entities/agency/equipment/model';
 import { useEquipmentForm } from "@equipment/hooks";
-import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from '@equipment/model';
+import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from '@/entities/agency/equipment/model';
 import {
   ParticleSamplerSpecForm,
   GasSamplerSpecForm,

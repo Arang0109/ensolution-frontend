@@ -40,6 +40,8 @@ export const PlanDetailContent = ({
 
     updateMeasurementPointField,
     updateMeasurementItems,
+    updateSheetSampleItems,
+    updateSampleField,
     addSheet,
     removeSheet,
   } = usePlanEditForm(plan);
@@ -151,6 +153,8 @@ export const PlanDetailContent = ({
                 <FieldDataTab
                   key={activeSheetIndex}
                   sheet={editForm.sheets[activeSheetIndex]}
+                  allSheets={editForm.sheets}
+                  measurementItems={editForm.measurementItems}
                   planInfo={editForm.planInfo}
                   onPlanInfoChange={updatePlanInfoField}
                   onSheetInfoChange={(name, value) => updateSheetField(activeSheetIndex, name, value)}
@@ -158,6 +162,8 @@ export const PlanDetailContent = ({
                   onMoistureChange={(name, value) => updateMoistureField(activeSheetIndex, name, value)}
                   onExhaustGasChange={(name, value, index) => updateExhaustGasField(activeSheetIndex, name, value, index)}
                   onMeasurementPointChange={(pointIndex, name, value) => updateMeasurementPointField(activeSheetIndex, pointIndex, name, value)}
+                  onSampleItemsChange={(primary, concurrent) => updateSheetSampleItems(activeSheetIndex, primary, concurrent)}
+                  onSampleChange={(sampleIndex, name, value) => updateSampleField(activeSheetIndex, sampleIndex, name, value)}
                   selectedPS={selectedPS}
                   selectedGS={selectedGS}
                   selectedPT={selectedPT}

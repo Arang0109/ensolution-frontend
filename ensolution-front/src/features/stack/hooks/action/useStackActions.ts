@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { registerStack, patchStack, deleteStack } from '@stack/api/stackApi';
-import type { StackRegisterRequest, StackUpdateRequest } from '@stack/model';
+import { registerStack, patchStack, deleteStack } from '@/entities/stack/api/stackApi';
+import type { StackRegisterRequest, StackUpdateRequest } from '@/entities/stack/model';
 
 import type { ActionResult } from "@shared/model";
 

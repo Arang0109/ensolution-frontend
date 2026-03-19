@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 
 import { useToast } from "@app/providers/toast";
-import { getEquipments } from "@equipment/api/EquipmentApi";
+import { getEquipments } from "@/entities/agency/equipment/api/EquipmentApi";
 
-import type { TypedEquipmentResponse } from "@equipment/model";
+import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 
 export const useEquipments = () => {
   const [equipments, setEquipments] = useState<TypedEquipmentResponse[]>([]);

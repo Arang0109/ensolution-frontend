@@ -1,10 +1,10 @@
 import { useToast } from "@app/providers/toast";
 
-import { mapStackMeasurementCreateFormToRequest } from "@stack/model";
+import { mapStackMeasurementCreateFormToRequest } from "@/entities/stack/model";
 import { useMeasurementCreateForm, useMeasurementActions } from "@stack/hooks";
 import { usePollutants } from "@pollutant/hooks";
 
-import { CYCLE_LABELS_OPTIONS } from "@stack/model";
+import { CYCLE_LABELS_OPTIONS } from "@/entities/stack/model";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { X, Trash2 } from "lucide-react";
@@ -51,7 +51,7 @@ export const MeasurementCreateContent = ({
       <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">측정물질 추가</h2>
+          <h2 className="text-base md:text-2xl font-bold text-gray-800">측정물질 추가</h2>
           <IconButton
             icon={<X />}
             title="닫기"

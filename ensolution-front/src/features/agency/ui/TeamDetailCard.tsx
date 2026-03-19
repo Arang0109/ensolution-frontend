@@ -1,5 +1,5 @@
-import type { TeamResponse } from "@agency/model";
-import type { EquipmentResponse } from "@equipment/model";
+import type { TeamResponse } from "@entities/agency/team/model";
+import type { EquipmentResponse } from "@/entities/agency/equipment/model";
 import { TeamEquipmentTable } from "./TeamEquipmentTable";
 
 import { Button } from "@shared/ui";
@@ -19,8 +19,8 @@ export const TeamDetailCard = ({
 }: TeamDetailCardProps) => {
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-start gap-4">
-        <h4 className="font-semibold text-gray-800 mb-3">시료채취장비</h4>
+      <div className="flex justify-between items-start gap-4 mt-4">
+        <h4 className="font-semibold text-xs md:text-sm text-gray-800 mb-3">{team.name} 시료채취장비</h4>
 
         <div className="flex gap-2">
           <Button label="수정" onClick={onEdit} />

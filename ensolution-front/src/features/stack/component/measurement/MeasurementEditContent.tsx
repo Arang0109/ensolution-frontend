@@ -1,8 +1,8 @@
 import { useToast } from "@app/providers/toast";
 
 import { useMeasurementActions, useMeasurementEditForm } from "@stack/hooks";
-import type { StackMeasurementResponse } from "@stack/model";
-import { CYCLE_LABELS_OPTIONS, mapStackMeasurementUpdateFormToRequest } from "@stack/model";
+import type { StackMeasurementResponse } from "@/entities/stack/model";
+import { CYCLE_LABELS_OPTIONS, mapStackMeasurementUpdateFormToRequest } from "@/entities/stack/model";
 
 import { IconButton, Button, InputField, SelectField } from "@shared/ui";
 import { X } from "lucide-react";
@@ -58,7 +58,7 @@ export const MeasurementEditContent = ({
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-base md:text-2xl font-bold text-gray-800">
           측정물질 수정
         </h2>
         <IconButton

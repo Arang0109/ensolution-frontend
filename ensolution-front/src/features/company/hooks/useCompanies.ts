@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { getCompanies } from "@company/api/companyApi";
+import { getCompanies } from "@/entities/company/api/companyApi";
 
-import type { CompanyResponse } from "@company/model";
+import type { CompanyResponse } from "@entities/company/model";
 
 export const useCompanies = () => {
   const [companies, setCompanies] = useState<CompanyResponse[]>([]);

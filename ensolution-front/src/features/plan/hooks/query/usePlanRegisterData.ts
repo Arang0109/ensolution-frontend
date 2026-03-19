@@ -2,7 +2,7 @@ import { useCompanies } from "@company/hooks";
 import { useWorkplaces } from "@workplace/hooks";
 import { useStackListQuery, useStackDetailQuery } from "@stack/hooks";
 import { useTeams } from "@agency/hooks";
-import { useUsers } from "@auth/hooks";
+import { useUsers } from "@user/hooks";
 import { useEquipments } from "@equipment/hooks";
 
 export const usePlanRegisterData = () => {

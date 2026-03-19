@@ -6,8 +6,10 @@ export const TableInputCell = ({
   placeholder,
   colSpan,
   unit,
+  type,
 }: {
   value: string;
+  type?: React.HTMLInputTypeAttribute;
   onChange: (v: string) => void;
   placeholder?: string;
   colSpan?: number;
@@ -17,6 +19,7 @@ export const TableInputCell = ({
     <div className="flex items-center">
       <input
         value={value}
+        type={type}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder ?? ""}
         className="w-full px-2 py-2 sm:px-3 sm:py-2.5 text-xs sm:text-sm text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400"

@@ -3,14 +3,14 @@ import { useState } from "react";
 import {
   getDefaultFacilityUpdateForm,
   getDefaultTargetUpdateForm,
-} from "@stack/model";
+} from "@/entities/stack/model";
 import type {
   PreventionDetailResponse,
   PreventionUpdateForm,
   FacilityUpdateForm,
   TargetUpdateForm,
   PreventionBundleUpdateForm,
-} from "@stack/model";
+} from "@/entities/stack/model";
 import { validatePrevention } from "@stack/lib";
 
 import type { ValidationErrors } from "@shared/model";

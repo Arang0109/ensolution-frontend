@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { useStackDetailQuery, useStackActions, useStackEditForm } from '@stack/hooks';
-import { mapStackUpdateFormToRequest } from '@stack/model';
+import { mapStackUpdateFormToRequest } from '@/entities/stack/model';
 
 export const useStackDetailViewModel = () => {
   const navigate = useNavigate();

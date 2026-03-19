@@ -1,5 +1,5 @@
 import type { PlanInfoEditForm, MeasurementSheetEditForm } from "@plan/model";
-import type { TypedEquipmentResponse } from "@equipment/model";
+import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 
 import { weatherCalculator, moistureCalculator, exhaustGasCalculator, measurePointCaculator } from "@plan/util";
 

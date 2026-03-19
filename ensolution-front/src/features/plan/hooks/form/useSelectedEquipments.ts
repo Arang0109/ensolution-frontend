@@ -1,5 +1,5 @@
 import { useEquipments } from "@equipment/hooks";
-import { EquipType } from "@equipment/model";
+import { EquipType } from "@/entities/agency/equipment/model";
 
 import type { EquipmentEditForm } from "@plan/model";
 

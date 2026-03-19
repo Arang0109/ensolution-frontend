@@ -1,6 +1,6 @@
 import type { PlanInfoEditForm } from "@plan/model"
 
-import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@stack/model";
+import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@/entities/stack/model";
 
 import { TableInputCell, TableLabelCell, TableResultCell, TableSelectableCell } from "@shared/ui";
 import { display } from "@shared/lib";
@@ -77,7 +77,7 @@ export const StackProfileSection = ({
               </tr>
               <tr>
                 <TableLabelCell>면적</TableLabelCell>
-                <TableResultCell value={display(stackArea)} unit="m³" />
+                <TableResultCell value={display(stackArea)} unit={<>m<sup>2</sup></>} />
                 <TableLabelCell>측정점</TableLabelCell>
                 <TableResultCell value={display(measurePointCnt)} unit="지점" />
               </tr>

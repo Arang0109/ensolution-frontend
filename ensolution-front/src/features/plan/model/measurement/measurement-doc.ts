@@ -6,7 +6,7 @@ import type {
   PlanStatus
 } from "@plan/model";
 import type { WeatherCondition, WindDirection } from "@plan/model";
-import type { Shape, Orientation, Cycle } from "@stack/model";
+import type { Shape, Orientation, Cycle } from "@/entities/stack/model";
 import type { Grade } from "@shared/model";
 
 export interface MeasurementDocResponse {
@@ -41,9 +41,9 @@ export interface MeasurementDocResponse {
 
 export interface DraftUpdateRequest {
   referenceNumber: string;
-  measureDate: Date;
-  receivedDate: Date;
-  analysisDate: Date;
+  measureDate: string;
+  receivedDate: string;
+  analysisDate: string;
   measurementField: MeasurementField;
   measurementType: MeasurementType;
   teamName: string;
@@ -103,9 +103,6 @@ export interface MeasurementItemUpdateRequest {
   samplingVolume: string;
   cycle: Cycle;
   allowance: string;
-
-  startTime: string;
-  endTime: string;
 }
 
 export interface MeasurementSheetUpdateRequest {

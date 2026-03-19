@@ -11,11 +11,13 @@ const SIZE_CLASSES: Record<ComponentSize, string> = {
 interface ModalProps {
   children: React.ReactNode;
   size?: ComponentSize;
+  onClose?: () => void;
 }
 
-export const Modal = ({ children, size = "md" }: ModalProps) => (
+export const Modal = ({ children, size = "md", onClose }: ModalProps) => (
   <div
     className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+    onClick={onClose}
   >
     <div
       className={`

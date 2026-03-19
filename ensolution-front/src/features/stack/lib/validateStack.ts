@@ -1,4 +1,4 @@
-import type { StackCreateForm, StackUpdateForm } from "@stack/model";
+import type { StackCreateForm, StackUpdateForm } from "@/entities/stack/model";
 
 import type { ValidationErrors } from "@shared/model";
 

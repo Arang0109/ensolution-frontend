@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { getDefaultCompanyUpdateForm } from "@company/model";
-import type { CompanyDetailResponse, CompanyUpdateForm } from "@company/model";
+import { getDefaultCompanyUpdateForm } from "@entities/company/model";
+import type { CompanyDetailResponse, CompanyUpdateForm } from "@entities/company/model";
 import { validateCompany } from "@company/lib";
 
 import type { ValidationErrors } from "@shared/model";

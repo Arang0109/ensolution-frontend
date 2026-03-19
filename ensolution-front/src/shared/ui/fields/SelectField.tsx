@@ -1,5 +1,4 @@
-import { FieldWrapper } from "./FieldWrapper";
-import Select from "react-select";
+import { Select, Option } from "@material-tailwind/react";
 
 interface SelectFieldProps<T, V extends string | number> {
   id?: string;
@@ -20,41 +19,47 @@ interface SelectFieldProps<T, V extends string | number> {
   required?: boolean;
 }
 
-
 export const SelectField = <T, V extends string | number>({
   id,
   label,
   value,
-  name,
   placeholder,
   options,
   getOptionLabel,
   getOptionValue,
   onChange,
   disabled,
-  required,
 }: SelectFieldProps<T, V>) => {
-    
-  const mappedOptions = options.map(o => ({
-    value: getOptionValue(o),
-    label: getOptionLabel(o),
-  }));
-
-  const selectedOption =
-    mappedOptions.find(opt => opt.value === value) ?? null;
+  const handleChange = (val: string | undefined) => {
+    if (val === undefined) return;
+    const matched = options.find(
+      (o) => String(getOptionValue(o)) === val
+    );
+    if (matched !== undefined) onChange(getOptionValue(matched));
+  };
 
   return (
-    <FieldWrapper label={label} required={required} id={id}>
+    <div className="w-full md:p-3">
       <Select
-        inputId={id}
-        name={name}
-        options={mappedOptions}
-        value={selectedOption}
-        isDisabled={disabled}
+        key={options.length > 0 ? "loaded" : "empty"}
+        id={id}
+        label={label}
+        value={value !== null ? String(value) : ""}
+        onChange={handleChange}
+        disabled={disabled}
         placeholder={placeholder}
-        onChange={(opt) => opt && onChange(opt.value)}
-        className="text-sm"
-      />
-    </FieldWrapper>
+        containerProps={{ className: "!min-w-0 w-full" }}
+        className="text-xs md:text-sm"
+      >
+        {options.map((o) => {
+          const val = getOptionValue(o);
+          return (
+            <Option key={String(val)} value={String(val)} className="text-xs md:text-sm py-3 md:py-2">
+              {getOptionLabel(o)}
+            </Option>
+          );
+        })}
+      </Select>
+    </div>
   );
 };

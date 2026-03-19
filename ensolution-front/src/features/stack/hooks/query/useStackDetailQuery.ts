@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 
-import { getStack } from "@stack/api/stackApi";
+import { getStack } from "@/entities/stack/api/stackApi";
 
-import type { StackDetailResponse } from "@stack/model";
+import type { StackDetailResponse } from "@/entities/stack/model";
 
 
 export const useStackDetailQuery = () => {

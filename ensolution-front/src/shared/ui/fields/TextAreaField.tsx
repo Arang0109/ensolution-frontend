@@ -1,4 +1,4 @@
-import { FieldWrapper } from "./FieldWrapper";
+import { Textarea } from "@material-tailwind/react";
 
 interface TextAreaFieldProps {
   label?: string;
@@ -18,32 +18,26 @@ export const TextAreaField = ({
   label,
   value,
   onChange,
-  placeholder,
   rows = 3,
   disabled = false,
   readOnly = false,
   helperText,
 }: TextAreaFieldProps) => {
   return (
-    <FieldWrapper label={label}>
-      <textarea
+    <div className="w-full md:p-3">
+      <Textarea
+        label={label}
         value={value}
-        placeholder={placeholder}
         rows={rows}
         disabled={disabled}
         readOnly={readOnly}
         onChange={(e) => onChange?.(e.target.value)}
-        className={`
-          w-full px-3 py-2 rounded-lg border text-sm
-          ${readOnly ? "bg-gray-100 text-gray-600" : "bg-white"}
-          disabled:opacity-50 disabled:cursor-not-allowed
-          focus:outline-none focus:ring-2 focus:ring-primary-500
-          resize-y
-        `}
+        className={readOnly ? "!bg-gray-100 !text-gray-600" : ""}
+        containerProps={{ className: "!min-w-0 w-full" }}
       />
       {helperText && (
         <p className="mt-1 text-xs text-gray-500">{helperText}</p>
       )}
-    </FieldWrapper>
+    </div>
   );
 };

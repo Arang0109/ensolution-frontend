@@ -1,24 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
 import { PublicRoute, ProtectedRoute } from '.';
-import { MainLayout } from '../layouts';
+import { Layout } from '@shared/ui/layouts';
 
-import { LoginPage, UserProfilePage } from '@auth/pages/index';
+import { LoginPage } from '@pages/login';
+import { Dashboard } from '@pages/dashboard';
+import { ProfilePage } from "@pages/profile";
 
-import { HomePage } from '@home/pages/index';
+import { TeamPage, EquipmentPage } from '@pages/agency';
 
-import { EquipmentListPage } from '@/features/equipment/pages';
-import { TeamListPage } from '@agency/pages';
+import { CompanyPage, CompanyDetailPage } from '@pages/company';
+import { WorkplacePage, WorkplaceDetailPage } from '@pages/workplace';
 
-import { CompanyListPage, CompanyDetailPage } from '@company/pages/index';
-import { WorkplaceListPage, WorkplaceDetailPage } from '@workplace/pages/index';
-
-import { StackListPage, StackDetailPage } from '@stack/pages/index';
+import { StackPage, StackDetailPage } from '@pages/stack';
 import { PollutantListPage } from '@pollutant/pages/index';
 
-import { PlanListPage, PlanRegisterPage, PlanDetailPage } from "@plan/pages";
-
-import { TestPage } from "@/shared/test/test-page";
+import { PlanPage, PlanRegisterPage, PlanDetailPage } from "@pages/plan";
 
 export const AppRoutes = () => (
   <BrowserRouter>
@@ -28,35 +25,33 @@ export const AppRoutes = () => (
           <LoginPage />
         </PublicRoute>
         } />
-      
-      <Route path="/test" element= {< TestPage/>}/>
 
       <Route
         element={
           <ProtectedRoute>
-            <MainLayout />
+            <Layout />
           </ProtectedRoute>
         }
       >
-        <Route path="/dashboard" element={<HomePage />} />
-        <Route path="/me" element={<UserProfilePage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/me" element={<ProfilePage />} />
 
         {/* 측정대행 의뢰업체 */}
-        <Route path="/company" element={<CompanyListPage />} />
+        <Route path="/company" element={<CompanyPage />} />
         <Route path="/company/:companyId" element={<CompanyDetailPage />} />
-        <Route path="/workplace" element={<WorkplaceListPage />} />
+        <Route path="/workplace" element={<WorkplacePage />} />
         <Route path="/workplace/:workplaceId" element={<WorkplaceDetailPage />} />
-        <Route path="/stack" element={<StackListPage />} />
+        <Route path="/stack" element={<StackPage />} />
         <Route path="/stack/:stackId" element={<StackDetailPage />} />
 
-        <Route path="/equipment" element={<EquipmentListPage />} />
-        <Route path="/team" element={<TeamListPage />} />
+        <Route path="/equipment" element={<EquipmentPage />} />
+        <Route path="/team" element={<TeamPage />} />
 
         {/* 실험실 */}
-        <Route path="/lab/pollutant" element={<PollutantListPage />} />
+        <Route path="/pollutant" element={<PollutantListPage />} />
 
         {/* 측정일정 */}
-        <Route path="/plan" element={<PlanListPage />} />
+        <Route path="/plan" element={<PlanPage />} />
         <Route path="/plan/add" element={<PlanRegisterPage />} />
         <Route path="/plan/:planId" element={<PlanDetailPage />} />
       </Route>

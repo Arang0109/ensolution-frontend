@@ -1,5 +1,5 @@
-import type { EquipType, ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from "@equipment/model";
-import { EquipType as EquipTypeConst } from "@equipment/model";
+import type { EquipType, ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from "@/entities/agency/equipment/model";
+import { EquipType as EquipTypeConst } from "@/entities/agency/equipment/model";
 import {
   ParticleSamplerSpecForm,
   GasSamplerSpecForm,

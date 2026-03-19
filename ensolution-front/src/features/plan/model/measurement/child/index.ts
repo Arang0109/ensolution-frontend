@@ -7,4 +7,3 @@ export * from './measurement-sheet-doc';
 export * from './weather-doc';
 export * from './moisture-doc';
 export * from './exhaust-gas-doc';
-export * from './measurement-point-doc';

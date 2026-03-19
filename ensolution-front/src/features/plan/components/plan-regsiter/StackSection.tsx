@@ -1,4 +1,4 @@
-import type { StackDetailResponse, StackResponse } from "@stack/model";
+import type { StackDetailResponse, StackResponse } from "@/entities/stack/model";
 import type { PlanCreateForm } from "@plan/model"
 import { StackDetailCard } from "@plan/components";
 

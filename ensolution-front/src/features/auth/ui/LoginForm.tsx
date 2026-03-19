@@ -1,4 +1,4 @@
-import type { LoginRequest } from "@auth/model";
+import type { LoginRequest } from "@entities/auth/model";
 
 import { Button } from "@shared/ui";
 

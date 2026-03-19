@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import { registerCompany, deleteCompany, patchCompany } from "@company/api/companyApi";
+import { registerCompany, deleteCompany, patchCompany } from "@/entities/company/api/companyApi";
 import type { CompanyRegisterRequest, CompanyUpdateRequest } from "@company/model";
 
 import type { ActionResult } from "@shared/model";

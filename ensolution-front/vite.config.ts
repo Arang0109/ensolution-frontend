@@ -7,14 +7,19 @@ export default defineConfig({
     react(),
   ],
   resolve: {
+    dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@app': path.resolve(__dirname, './src/app'),
+      '@entities': path.resolve(__dirname, './src/entities'),
       '@common': path.resolve(__dirname, './src/common'),
+      '@pages': path.resolve(__dirname, './src/pages'),
       '@shared': path.resolve(__dirname, './src/shared'),
       '@widgets': path.resolve(__dirname, './src/widgets'),
+      
       '@home': path.resolve(__dirname, './src/features/home'),
       '@auth': path.resolve(__dirname, './src/features/auth'),
+      '@user': path.resolve(__dirname, './src/features/user'),
       '@agency': path.resolve(__dirname, './src/features/agency'),
       '@company': path.resolve(__dirname, './src/features/company'),
       '@workplace': path.resolve(__dirname, './src/features/workplace'),

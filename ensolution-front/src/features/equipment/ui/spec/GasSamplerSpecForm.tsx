@@ -1,4 +1,4 @@
-import type { GasSamplerSpec } from "@equipment/model";
+import type { GasSamplerSpec } from "@/entities/agency/equipment/model";
 
 import { InputField } from "@shared/ui";
 import type { FieldType } from "@shared/model";

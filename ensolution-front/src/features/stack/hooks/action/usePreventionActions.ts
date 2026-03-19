@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { registerPrevention, patchPrevention, deletePrevention } from '@stack/api';
-import type { PreventionRegisterRequest, PreventionUpdateRequest } from '@stack/model';
+import { registerPrevention, patchPrevention, deletePrevention } from '@/entities/stack/api';
+import type { PreventionRegisterRequest, PreventionUpdateRequest } from '@/entities/stack/model';
 
 export const usePreventionActions = () => {
   const [creating, setCreating] = useState(false);

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-import type { StackResponse } from "@stack/model";
-import { getStacks } from "@stack/api/stackApi";
+import type { StackResponse } from "@/entities/stack/model";
+import { getStacks } from "@/entities/stack/api/stackApi";
 
 export const useStackListQuery = () => {
   const [stacks, setStacks] = useState<StackResponse[]>([]);

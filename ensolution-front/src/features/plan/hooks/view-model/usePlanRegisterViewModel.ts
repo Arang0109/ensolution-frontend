@@ -6,7 +6,7 @@ import { useToast } from "@app/providers/toast";
 import { mapPlanCreateFormToRequest } from '@plan/model';
 import { usePlanCreateForm, usePlanActions, usePlanRegisterData } from '@plan/hooks';
 
-import { EquipType } from '@equipment/model';
+import { EquipType } from '@/entities/agency/equipment/model';
 
 export const usePlanRegisterViewModel = () => {
   const navigate = useNavigate();

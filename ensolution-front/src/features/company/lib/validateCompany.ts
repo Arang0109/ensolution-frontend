@@ -1,4 +1,4 @@
-import type { CompanyCreateForm, CompanyUpdateForm } from "@company/model";
+import type { CompanyCreateForm, CompanyUpdateForm } from "@entities/company/model";
 
 import { stripBizNumber } from "@/shared/lib";
 import type { ValidationErrors } from "@shared/model";

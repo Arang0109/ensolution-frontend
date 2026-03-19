@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { registerWorkplace, patchWorkplace, deleteWorkplace } from '@workplace/api/workplaceApi';
-import type { WorkplaceRegisterRequest, WorkplaceUpdateRequest } from '@workplace/model';
+import { registerWorkplace, patchWorkplace, deleteWorkplace } from '@/entities/workplace/api/workplaceApi';
+import type { WorkplaceRegisterRequest, WorkplaceUpdateRequest } from '@entities/workplace/model';
 
 import type { ActionResult } from "@shared/model";
 

@@ -6,6 +6,7 @@ import type {
   MeasurementpointEditForm, MeasurementItemEditForm,
   MeasurementSheetEditForm,
   WeatherEditForm, MoistureEditForm, ExhaustGasEditForm,
+  SampleEditForm,
 } from "@plan/model";
 import {
   getDefaultPlanDraftEditForm,
@@ -14,7 +15,21 @@ import {
   getDefaultExhaustGasEditForm,
 } from "@plan/model";
 import { calcMeasurePointCnt } from "@plan/util";
-import type { StackMeasurementResponse } from "@stack/model";
+import type { StackMeasurementResponse } from "@/entities/stack/model";
+
+const createEmptySample = (): SampleEditForm => ({
+  startTime: "",
+  endTime: "",
+  suctionQuantity: "",
+  gasMeterGaugePressure: "",
+  inTemperature: "",
+  outTemperature: "",
+  beforeVolume: "",
+  afterVolume: "",
+  blankSampleNumber: "",
+  sampleNumber: "",
+  samplingVolume: "",
+});
 
 const getEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
   gasTemperature: "",
@@ -159,6 +174,58 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
     });
   };
 
+  const updateSheetSampleItems = (
+    sheetIndex: number,
+    primaryItemId: number | null,
+    concurrentItemIds: number[]
+  ) => {
+    setEditForm(prev => ({
+      ...prev,
+      sheets: prev.sheets.map((sheet, i) => {
+        if (i !== sheetIndex) return sheet;
+        const newCount = (primaryItemId !== null ? 1 : 0) + concurrentItemIds.length;
+        const current = sheet.samples ?? [];
+        const samples = Array.from({ length: newCount }, (_, j) =>
+          j < current.length ? current[j] : createEmptySample()
+        );
+        return { ...sheet, primaryItemId, concurrentItemIds, samples };
+      }),
+    }));
+  };
+
+  const updateSampleField = (
+    sheetIndex: number,
+    sampleIndex: number,
+    name: keyof SampleEditForm,
+    value: string
+  ) => {
+    setEditForm(prev => ({
+      ...prev,
+      sheets: prev.sheets.map((sheet, i) => {
+        if (i !== sheetIndex) return sheet;
+        const updatedSamples = sheet.samples.map((s, j) =>
+          j === sampleIndex ? { ...s, [name]: value } : s
+        );
+        return { ...sheet, samples: updatedSamples };
+      }),
+    }));
+  };
+
+  const updateMeasurementItemField = (
+    stackMeasurementId: number,
+    name: keyof MeasurementItemEditForm,
+    value: string
+  ) => {
+    setEditForm(prev => ({
+      ...prev,
+      measurementItems: prev.measurementItems.map(item =>
+        item.stackMeasurementId === stackMeasurementId
+          ? { ...item, [name]: value }
+          : item
+      ),
+    }));
+  };
+
   const updateMeasurementItems = (selected: StackMeasurementResponse[]) => {
     setEditForm(prev => {
       const kept = prev.measurementItems.filter(item =>
@@ -196,10 +263,13 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
       const newSheet: MeasurementSheetEditForm = {
         category: "OTHER",
         referenceNumber: "",
+        primaryItemId: null,
+        concurrentItemIds: [],
         weather: getDefaultWeatherEditForm(undefined),
         moisture: getDefaultMoistureEditForm(undefined),
         exhaustGas: getDefaultExhaustGasEditForm(undefined),
         measurementPoints: Array.from({ length: pointCount }, getEmptyMeasurementPoint),
+        samples: [],
         quantity: "",
         pitotTubeCoefficient: "",
         nozzleSize: "",
@@ -233,6 +303,9 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
     updateExhaustGasField,
     updateMeasurementPointField,
     updateMeasurementItems,
+    updateSheetSampleItems,
+    updateSampleField,
+    updateMeasurementItemField,
     addSheet,
     removeSheet,
     resetForm,

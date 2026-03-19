@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { registerTeam } from "@agency/api/AgencyApi";
+import { registerTeam } from "@/entities/agency/team/api/AgencyApi";
 
-import type { TeamRegisterRequest } from "@agency/model";
+import type { TeamRegisterRequest } from "@entities/agency/team/model";
 
 const getDefaultForm = (): TeamRegisterRequest => ({
   name: "",

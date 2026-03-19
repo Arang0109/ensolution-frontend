@@ -1,4 +1,4 @@
-import type { StackMeasurementResponse } from "@stack/model";
+import type { StackMeasurementResponse } from "@/entities/stack/model";
 
 interface PollutantName {
   nameKr?: string;

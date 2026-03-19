@@ -1,6 +1,6 @@
 import type { CompanyResponse } from "@company/model";
 import type { WorkplaceResponse } from "@workplace/model";
-import type { StackDetailResponse, StackResponse } from "@stack/model";
+import type { StackDetailResponse, StackResponse } from "@/entities/stack/model";
 
 import { PreInfoSection, StackSection, TeamSection } from "@plan/components";
 import type { PlanCreateForm } from "@plan/model";
@@ -8,9 +8,9 @@ import type { PlanCreateForm } from "@plan/model";
 import { Button } from "@shared/ui";
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import type { ValidationErrors } from "@shared/model";
-import type { TeamResponse } from "@/features/agency/model";
-import type { UserResponse } from "@/features/auth/model";
-import type { EquipmentResponse } from "@/features/equipment/model";
+import type { TeamResponse } from "@/entities/agency/model";
+import type { UserResponse } from "@/entities/user/model";
+import type { EquipmentResponse } from "@/entities/agency/equipment/model";
 
 export interface PlanCreateContentProps {
   form: PlanCreateForm;

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { getDefaultStackMeasurementUpdateForm } from "@stack/model";
-import type { StackMeasurementUpdateForm, StackMeasurementResponse } from "@stack/model";
+import { getDefaultStackMeasurementUpdateForm } from "@/entities/stack/model";
+import type { StackMeasurementUpdateForm, StackMeasurementResponse } from "@/entities/stack/model";
 
 export const useMeasurementEditForm = (stackMeasurement: StackMeasurementResponse | null) => {
   const [isEditMode, setIsEditMode] = useState(false);
