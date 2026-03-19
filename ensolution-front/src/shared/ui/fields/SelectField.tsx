@@ -41,6 +41,7 @@ export const SelectField = <T, V extends string | number>({
   return (
     <div className="w-full md:p-3">
       <Select
+        key={options.length > 0 ? "loaded" : "empty"}
         id={id}
         label={label}
         value={value !== null ? String(value) : ""}
@@ -48,11 +49,12 @@ export const SelectField = <T, V extends string | number>({
         disabled={disabled}
         placeholder={placeholder}
         containerProps={{ className: "!min-w-0 w-full" }}
+        className="text-xs md:text-sm"
       >
         {options.map((o) => {
           const val = getOptionValue(o);
           return (
-            <Option key={String(val)} value={String(val)}>
+            <Option key={String(val)} value={String(val)} className="text-xs md:text-sm py-3 md:py-2">
               {getOptionLabel(o)}
             </Option>
           );

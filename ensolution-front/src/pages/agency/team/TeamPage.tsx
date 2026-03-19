@@ -1,27 +1,20 @@
 import { useState } from 'react';
 
-import { Button } from '@shared/ui';
 import { useTeams } from '@agency/hooks/useTeams';
 import { TeamCreateModal, TeamEditModal } from '@agency/ui';
-import { deleteTeam } from '@agency/api/AgencyApi';
+import { deleteTeam } from '@entities/agency/team/api/AgencyApi';
 import { useToast } from '@app/providers/toast';
 import { TeamTable } from '@agency/ui';
 
-import type { TeamResponse } from '@agency/model';
+import type { TeamResponse } from '@entities/agency/team/model';
 
-import { FullPageLoader } from '@shared/ui';
+import { Button, Breadcrumbs, FullPageLoader } from '@shared/ui';
 
-export const TeamListPage = () => {
+export const TeamPage = () => {
   const { teams, loading, refetch } = useTeams();
   const { showToast } = useToast();
   const [showAddModal, setShowAddModal] = useState(false);
   const [editTeam, setEditTeam] = useState<TeamResponse | null>(null);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-
-  const handleRowClick = (teamId: number) => {
-    setExpandedId(expandedId === teamId ? null : teamId);
-  };
-
   const handleEdit = (team: TeamResponse) => {
     setEditTeam(team);
   };
@@ -46,14 +39,25 @@ export const TeamListPage = () => {
     return <FullPageLoader />;
   }
 
+  const breadcrumbsContents = [
+    {title: "대시보드", path: "/dashboard"},
+    {title: "측정장비", path: "/equipment"},
+  ]
+
   return (
     <div className="px-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">팀 관리</h1>
+      <div className="mb-6 flex flex-col md:flex-row items-center justify-between gap-2">
+        <Breadcrumbs
+          contents={breadcrumbsContents}
+        />
+
         <Button
           label="팀 추가"
           onClick={() => setShowAddModal(true)}
+          variant="primary"
+          size="md"
+          type="button"
         />
       </div>
 
@@ -71,8 +75,6 @@ export const TeamListPage = () => {
         ) : (
           <TeamTable
             teams={teams}
-            expandedId={expandedId}
-            onRowClick={handleRowClick}
             onEdit={handleEdit}
             onDelete={handleDelete}
           />

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-import { patchEquipment } from "@equipment/api/EquipmentApi";
-import { EquipType } from "@equipment/model";
+import { patchEquipment } from "@/entities/agency/equipment/api/EquipmentApi";
+import { EquipType } from "@/entities/agency/equipment/model";
 
 import type { FieldType } from "@shared/model";
 
-import type { EquipmentResponse, EquipmentUpdateRequest, EquipmentSpecMap, PitotTubeSpec, NozzleSpec } from "@equipment/model";
+import type { EquipmentResponse, EquipmentUpdateRequest, EquipmentSpecMap, PitotTubeSpec, NozzleSpec } from "@/entities/agency/equipment/model";
 
 const getDefaultSpec = (type: EquipType): EquipmentSpecMap[EquipType] => {
   switch (type) {

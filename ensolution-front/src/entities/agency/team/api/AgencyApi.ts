@@ -3,7 +3,7 @@ import { axiosPrivate } from "@/shared/api";
 import type { ApiResponseMessage } from "@/shared/model";
 import type {
   TeamResponse, TeamRegisterRequest, TeamUpdateRequest
-} from "@/features/agency/model/agency-types";
+} from "@entities/agency/team/model/agency-types";
 
 /////
 

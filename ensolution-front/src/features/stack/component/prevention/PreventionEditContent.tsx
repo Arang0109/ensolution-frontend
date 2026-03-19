@@ -117,7 +117,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
         {/* 배출시설 정보 */}
         <div className="border-b pb-4">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">배출시설</h3>
+            <h3 className="text-base md:text-lg font-semibold text-gray-800">배출시설</h3>
             <Button
               type="button"
               label="배출시설 추가"
@@ -139,7 +139,8 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                   size="sm"
                   className="absolute top-2 right-2"
                 />
-                <InputField
+                <div className="my-4">
+                  <InputField
                     id="name"
                     label="배출시설명"
                     type="text"
@@ -149,6 +150,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     placeholder="배출시설명을 입력하세요"
                     disabled={isSubmitting}
                   />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InputField
                     id="fuelType"
@@ -191,13 +193,16 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                     disabled={isSubmitting}
                   />
                 </div>
-                <TextAreaField
+                <div className="my-4">
+                  <TextAreaField
                     label="비고"
                     value={facility.remark}
                     onChange={(value) => onChangeFacility(index, "remark", value)}
                     placeholder="추가 정보를 입력하세요 (선택사항)"
                     disabled={isSubmitting}
                   />
+                </div>
+                
               </div>
             ))}
           </div>
@@ -206,7 +211,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
         {/* 제거대상물질 정보 */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">제거대상물질</h3>
+            <h3 className="text-base md:text-lg font-semibold text-gray-800">제거대상물질</h3>
             <Button
               type="button"
               label="제거대상물질 추가"
@@ -229,7 +234,7 @@ export const PreventionEditContent = ({ preventionDetail, onClose, onSuccess }: 
                   className="absolute top-2 right-2"
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <InputField
                     id="targetSubstance"
                     label="제거대상물질"

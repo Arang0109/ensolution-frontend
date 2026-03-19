@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import type { UserResponse } from "@/entities/user/model";
-import type { TeamResponse } from "@agency/model";
+import type { TeamResponse } from "@/entities/agency/model";
 
 import { Button, InputField } from "@shared/ui";
 

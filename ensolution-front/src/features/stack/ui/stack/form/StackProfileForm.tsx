@@ -43,7 +43,7 @@ export const StackProfileForm = ({
             <InputField
               label="SEMS 번호"
               value={editForm.semsNumber ?? ""}
-              onChange={(v) => onChange("name", v)}
+              onChange={(v) => onChange("semsNumber", v)}
             />
 
             {/* 배출시설 규모 */}

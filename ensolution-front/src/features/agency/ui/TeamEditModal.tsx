@@ -1,7 +1,7 @@
 import { Modal } from '@shared/ui';
 import { TeamEditForm } from '@agency/ui';
 
-import type { TeamResponse } from '@agency/model';
+import type { TeamResponse } from '@entities/agency/team/model';
 
 interface TeamEditModalProps {
   team: TeamResponse;

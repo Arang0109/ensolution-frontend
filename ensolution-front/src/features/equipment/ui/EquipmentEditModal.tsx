@@ -1,7 +1,7 @@
 import { Modal } from "@shared/ui";
 import { EquipmentEditForm } from "@equipment/ui";
 
-import type { EquipmentResponse } from "@equipment/model";
+import type { EquipmentResponse } from "@/entities/agency/equipment/model";
 
 interface EquipmentEditModalProps {
   equipment: EquipmentResponse;

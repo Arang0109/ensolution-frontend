@@ -1,5 +1,5 @@
-import type { PitotTubeSpec } from "@equipment/model";
-import { PITOT_TUBE_OPTIONS } from "@equipment/model";
+import type { PitotTubeSpec } from "@/entities/agency/equipment/model";
+import { PITOT_TUBE_OPTIONS } from "@/entities/agency/equipment/model";
 
 import { InputField, SelectField, Button, IconButton } from "@shared/ui";
 import type { FieldType } from "@shared/model";

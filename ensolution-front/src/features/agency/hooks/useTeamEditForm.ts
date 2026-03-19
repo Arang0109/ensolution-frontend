@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { patchTeam } from "@agency/api/AgencyApi";
+import { patchTeam } from "@entities/agency/team/api/AgencyApi";
 
-import type { TeamResponse, TeamUpdateRequest } from "@agency/model";
+import type { TeamResponse, TeamUpdateRequest } from "@entities/agency/team/model";
 
 export const useTeamEditForm = (team: TeamResponse | null) => {
   const [form, setForm] = useState<TeamUpdateRequest | null>(null);

@@ -53,6 +53,11 @@ export const MENU_ITEMS: MenuItem[] = [
         label: "장비 관리",
         path: "/equipment",
       },
+      {
+        key: "pollutant",
+        label: "측정물질 관리",
+        path: "/pollutant",
+      },
     ],
   },
 

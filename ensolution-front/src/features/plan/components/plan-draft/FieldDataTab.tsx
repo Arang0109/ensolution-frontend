@@ -1,4 +1,4 @@
-import type { TypedEquipmentResponse } from "@equipment/model";
+import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import type {
   PlanInfoEditForm, MeasurementSheetEditForm,
   WeatherEditForm, MoistureEditForm, ExhaustGasEditForm, MeasurementpointEditForm,

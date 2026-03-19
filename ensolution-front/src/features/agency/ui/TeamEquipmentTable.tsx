@@ -1,6 +1,8 @@
+import { Fragment } from "react/jsx-runtime";
+
 import { TableContainer } from "@shared/ui";
-import type { TeamResponse } from "@agency/model";
-import type { EquipmentResponse } from "@equipment/model";
+import type { TeamResponse } from "@entities/agency/team/model";
+import type { EquipmentResponse } from "@/entities/agency/equipment/model";
 
 interface TeamEquipmentTableProps {
   team: TeamResponse;
@@ -9,59 +11,62 @@ interface TeamEquipmentTableProps {
 
 export const TeamEquipmentTable = ({ team, getEquipment }: TeamEquipmentTableProps) => {  
   
+  const tableHeaderRows = [
+    {title: "-"},
+    {title: "별칭"},
+    {title: "관리번호"},
+    {title: "모델명"},
+    {title: "S/N"},
+  ];
+
   const equipmentRows = [
     { label: "입자상 시료채취장비", id: team.particleSamplerId },
     { label: "가스상 시료채취장비", id: team.gasSamplerId },
     { label: "피토우관", id: team.pitotTubeId },
     { label: "노즐", id: team.nozzleId },
   ];
+
+  const tdClassName = `
+    px-1 py-2
+    whitespace-nowrap
+    text-center
+    text-xs md:text-sm
+    text-gray-600`
   
   return (
     <TableContainer>
-      <thead className="bg-gray-50">
-        <tr className="bg-slate-100">
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            관리번호
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            별칭
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            모델명
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            S/N
-          </th>
+      <thead>
+        <tr className="bg-gray-300">
+          {tableHeaderRows.map((row) => {
+            return (
+              <Fragment key={row.title}>
+                <th className="
+                  text-center font-medium
+                text-gray-800 uppercase tracking-wider
+                  py-2 md:py-3
+                  text-xs md:text-sm">
+                  {row.title}
+                </th>
+              </Fragment>
+            )
+          })}
         </tr>
       </thead>
 
       <tbody className="bg-white divide-y divide-gray-200">
         {equipmentRows.map(({ label, id }) => {
-          const equipment = id ? getEquipment(id) : undefined;
+          const eq = id ? getEquipment(id) : undefined;
 
           return (
             <tr key={label}>
-              <th
-                scope="row"
-                className="px-6 py-4 text-sm font-medium text-gray-900 bg-slate-100"
-              >
+              <th className={tdClassName}>
                 {label}
               </th>
-              <td className="px-6 py-4 text-sm">
-                {equipment?.managementNumber ?? ""}
-              </td>
-              <td className="px-6 py-4 text-sm">
-                {equipment?.alias ?? ""}
-              </td>
-              <td className="px-6 py-4 text-sm">
-                {equipment?.modelName ?? ""}
-              </td>
-              <td className="px-6 py-4 text-sm">
-                {equipment?.serialNumber ?? ""}
-              </td>
+
+              <td className={tdClassName}>{eq?.alias ?? "-"}</td>
+              <td className={tdClassName}>{eq?.managementNumber ?? "-"}</td>
+              <td className={tdClassName}>{eq?.modelName ?? "-"}</td>
+              <td className={tdClassName}>{eq?.serialNumber ?? "-"}</td>
             </tr>
           );
         })}

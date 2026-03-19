@@ -1,14 +1,15 @@
 import { useState, useMemo } from 'react';
 
-import { Button, Tabs } from '@shared/ui';
 import { useEquipments } from '@equipment/hooks/useEquipments';
 import { EquipmentCreateModal, EquipmentEditModal, EquipmentTable } from '@equipment/ui';
-import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from '@equipment/model';
+import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from '@entities/agency/equipment/model';
 import type {
   EquipmentResponse,
-} from '@equipment/model';
+} from '@entities/agency/equipment/model';
 
-export const EquipmentListPage = () => {
+import { Button, Tabs, Breadcrumbs } from '@shared/ui';
+
+export const EquipmentPage = () => {
   const { equipments, loading, refetch } = useEquipments();
   const [showAddModal, setShowAddModal] = useState(false);
   const [editEquipment, setEditEquipment] = useState<EquipmentResponse | null>(null);
@@ -35,12 +36,26 @@ export const EquipmentListPage = () => {
     );
   }
 
+  const breadcrumbsContents = [
+    {title: "대시보드", path: "/dashboard"},
+    {title: "측정장비", path: "/equipment"},
+  ]
+
   return (
     <div className="px-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">장비 관리</h1>
-        <Button label="장비 추가" onClick={() => setShowAddModal(true)} />
+      <div className="mb-6 flex flex-col md:flex-row items-center justify-between gap-2">
+        <Breadcrumbs
+          contents={breadcrumbsContents}
+        />
+
+        <Button
+          label="장비 추가"
+          onClick={() => setShowAddModal(true)}
+          variant="primary"
+          size="md"
+          type="button"
+        />
       </div>
 
       {/* Tabs */}

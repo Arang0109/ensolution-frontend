@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { usePlanListQuery } from "@plan/hooks";
 import { PlanTableSection } from "@plan/components";
 
-import { Button, FullPageLoader, EmptyState } from "@shared/ui";
+import { Button, FullPageLoader, EmptyState, Breadcrumbs } from "@shared/ui";
 
-export const PlanListPage = () => {
+export const PlanPage = () => {
   const navigate = useNavigate();
   const { plans, error, isLoading, reload } = usePlanListQuery();
 
@@ -15,11 +15,18 @@ export const PlanListPage = () => {
     return (<FullPageLoader />);
   }
 
+  const breadcrumbsContents = [
+    {title: "대시보드", path: "/dashboard"},
+    {title: "측정계획", path: "/plan"},
+  ]
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">측정일정 관리</h1>
+        <Breadcrumbs
+          contents={breadcrumbsContents}
+        />
         <Button
            onClick={() => navigate("/plan/add")}
            label="일정 등록"

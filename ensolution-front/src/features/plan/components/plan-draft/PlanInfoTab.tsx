@@ -1,5 +1,5 @@
 
-import { TEAM_TYPE_OPTIONS } from "@agency/model";
+import { TEAM_TYPE_OPTIONS } from "@entities/agency/team/model";
 import {
   MEASUREMENT_TYPE_OPTIONS, MEASUREMENT_FIELD_OPTIONS
 } from "@plan/model";

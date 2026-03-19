@@ -1,4 +1,4 @@
-import type { NozzleSpec } from "@equipment/model";
+import type { NozzleSpec } from "@/entities/agency/equipment/model";
 
 import { InputField, Button, IconButton } from "@shared/ui";
 import { Plus, X } from "lucide-react";

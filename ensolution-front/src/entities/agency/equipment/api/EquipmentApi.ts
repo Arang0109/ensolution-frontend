@@ -8,7 +8,7 @@ import type {
   EquipmentUpdateRequest,
   EquipmentSpecMap,
   EquipType
-} from "@equipment/model";
+} from "@/entities/agency/equipment/model";
 
 export const registerEquipment = async <T extends keyof EquipmentSpecMap>(
   data: EquipmentRegisterRequest<T>

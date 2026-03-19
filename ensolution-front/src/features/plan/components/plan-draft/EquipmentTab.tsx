@@ -1,5 +1,5 @@
-import { PITOT_TUBE_OPTIONS } from '@equipment/model';
-import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec, TypedEquipmentResponse } from '@equipment/model';
+import { PITOT_TUBE_OPTIONS } from '@/entities/agency/equipment/model';
+import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec, TypedEquipmentResponse } from '@/entities/agency/equipment/model';
 import type { EquipmentEditForm } from '@plan/model';
 import { TableLabelCell, TableReadonlyCell, TableSelectableCell } from '@shared/ui';
 

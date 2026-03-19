@@ -1,7 +1,7 @@
 import { useTeamEditForm } from '@agency/hooks';
-import type { TeamResponse } from '@agency/model';
+import type { TeamResponse } from '@entities/agency/team/model';
 
-import { EquipType } from '@equipment/model';
+import { EquipType } from '@/entities/agency/equipment/model';
 import { useEquipments } from '@equipment/hooks';
 
 import { useToast } from "@app/providers/toast";
@@ -82,7 +82,7 @@ export const TeamEditForm = ({
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">팀 수정</h2>
+        <h2 className="text-base md:text-2xl font-bold text-gray-800">팀 수정</h2>
         <IconButton
           icon={<X />}
           size='md'
@@ -92,38 +92,39 @@ export const TeamEditForm = ({
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* 팀 이름 */}
-        <InputField
-          label='팀명'
-          name="name"
-          value={form.name}
-          onChange={(value) => onChange("name", value)}
-          disabled={isSubmitting}
-          required
-        />
-        <InputField
-          label='차량번호'
-          name="vehicleNumber"
-          value={form.vehicleNumber}
-          onChange={(value) => onChange("vehicleNumber", value)}
-          disabled={isSubmitting}
-          required
-        />
-        <InputField
-          label='사수'
-          name="mentor"
-          value={form.mentor}
-          onChange={(value) => onChange("mentor", value)}
-          disabled={isSubmitting}
-          required
-        />
-        <InputField
-          label='부사수'
-          name="mentee"
-          value={form.mentee}
-          onChange={(value) => onChange("mentee", value)}
-          disabled={isSubmitting}
-          required
-        />
+        <div className='grid grid-cols-2 gap-4 md:gap-0'>
+          <InputField
+            label='팀명'
+            name="name"
+            value={form.name}
+            onChange={(value) => onChange("name", value)}
+            disabled={isSubmitting}
+          />
+          <InputField
+            label='차량번호'
+            name="vehicleNumber"
+            value={form.vehicleNumber}
+            onChange={(value) => onChange("vehicleNumber", value)}
+            disabled={isSubmitting}
+          />
+        </div>
+        <div className='grid grid-cols-2 gap-4 md:gap-0'>
+          <InputField
+            label='사수'
+            name="mentor"
+            value={form.mentor}
+            onChange={(value) => onChange("mentor", value)}
+            disabled={isSubmitting}
+          />
+          <InputField
+            label='부사수'
+            name="mentee"
+            value={form.mentee}
+            onChange={(value) => onChange("mentee", value)}
+            disabled={isSubmitting}
+          />
+        </div>
+        
 
         {/* 장비 선택 섹션 */}
         <div className="space-y-4 pt-4 border-t">

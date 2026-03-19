@@ -47,6 +47,7 @@ export const StackDetailPage = () => {
     openPrevention,
     closePrevention,
     closeMeasurementCreateModal,
+    closePreventionCreateModal,
 
     onPreventionEditSuccess,
     onMeasurementAddSuccess,
@@ -140,7 +141,7 @@ export const StackDetailPage = () => {
       {showPreventionAddModal && stack?.stack.id && (
         <PreventionCreateModal
           stackId={Number(stack?.stack.id)}
-          onClose={closePrevention}
+          onClose={closePreventionCreateModal}
           onSuccess={onPreventionAddSuccess}
         />
       )}

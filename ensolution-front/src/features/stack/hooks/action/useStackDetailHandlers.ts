@@ -14,6 +14,26 @@ export const useStackDetailHandlers = ({
   const [showPreventionAddModal, setShowPreventionAddModal] = useState(false);
   const [showMeasurementAddModal, setShowMeasurementAddModal] = useState(false);
 
+  const onAddMeasurement = () => {
+    setShowMeasurementAddModal(true);
+  };
+
+  const closeMeasurementCreateModal = () => {
+    setShowMeasurementAddModal(false);
+  };
+
+  const onMeasurementAddSuccess = () => {
+    refresh(stackId);
+  };
+
+  const onAddPrevention = () => {
+    setShowPreventionAddModal(true);
+  };
+
+  const closePreventionCreateModal = () => {
+    setShowPreventionAddModal(false);
+  };
+
   const openPrevention = (p: PreventionDetailResponse) => {
     setSelectedPrevention(p);
   };
@@ -22,25 +42,9 @@ export const useStackDetailHandlers = ({
     setSelectedPrevention(null);
   };
 
-  const closeMeasurementCreateModal = () => {
-    setShowMeasurementAddModal(false)
-  }
-
   const onPreventionEditSuccess = () => {
     refresh(stackId);
     closePrevention();
-  };
-
-  const onAddMeasurement = () => {
-    setShowMeasurementAddModal(true);
-  };
-
-  const onAddPrevention = () => {
-    setShowPreventionAddModal(true);
-  };
-
-  const onMeasurementAddSuccess = () => {
-    refresh(stackId);
   };
 
   const onPreventionAddSuccess = () => {
@@ -58,6 +62,7 @@ export const useStackDetailHandlers = ({
     openPrevention,
     closePrevention,
     closeMeasurementCreateModal,
+    closePreventionCreateModal,
 
     onPreventionEditSuccess,
     onMeasurementAddSuccess,

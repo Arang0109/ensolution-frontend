@@ -1,7 +1,7 @@
 import { useTeamForm } from '@agency/hooks';
 
 import { useEquipments } from '@equipment/hooks';
-import { EquipType } from '@equipment/model';
+import { EquipType } from '@entities/agency/equipment/model';
 
 import { useToast } from "@app/providers/toast";
 
@@ -94,7 +94,6 @@ export const TeamCreateForm = ({
           value={form.name}
           onChange={(value) => onChange("name", value)}
           disabled={isSubmitting}
-          required
         />
         <InputField
           label='차량번호'
@@ -102,7 +101,6 @@ export const TeamCreateForm = ({
           value={form.vehicleNumber}
           onChange={(value) => onChange("vehicleNumber", value)}
           disabled={isSubmitting}
-          required
         />
         <InputField
           label='사수'
@@ -110,7 +108,6 @@ export const TeamCreateForm = ({
           value={form.mentor}
           onChange={(value) => onChange("mentor", value)}
           disabled={isSubmitting}
-          required
         />
         <InputField
           label='부사수'
@@ -118,7 +115,6 @@ export const TeamCreateForm = ({
           value={form.mentee}
           onChange={(value) => onChange("mentee", value)}
           disabled={isSubmitting}
-          required
         />
 
         {/* 장비 선택 섹션 */}
