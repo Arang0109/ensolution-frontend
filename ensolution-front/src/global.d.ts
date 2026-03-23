@@ -10,6 +10,7 @@ type MTFixProps = {
 };
 
 declare module "@material-tailwind/react" {
+  interface RadioProps extends MTFixProps {}
   interface CardProps extends MTFixProps {}
   interface TypographyProps extends MTFixProps {}
   interface ListProps extends MTFixProps {}

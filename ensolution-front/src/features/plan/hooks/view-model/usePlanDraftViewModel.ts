@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToast } from "@app/providers/toast";
 
-import { mapDraftFormToRequest, type PlanDraftEditForm } from '@plan/model';
+import { mapDraftFormToRequest, type PlanDraftEditForm } from '@/entities/plan/model';
 import { usePlanDetailQuery, usePlanActions, usePlanDraftData } from '@plan/hooks';
 
 export const usePlanDraftViewModel = () => {

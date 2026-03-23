@@ -1,4 +1,4 @@
-import type { FieldDataEditForm, ExhaustGasEditForm, PreInfoEditForm } from "@plan/model";
+import type { FieldDataEditForm, ExhaustGasEditForm, PreInfoEditForm } from "@/entities/plan/model";
 import { calcArrayAvg } from "@plan/util";
 
 const o2ConcentrationAvg = (exhaustGas: ExhaustGasEditForm) => {

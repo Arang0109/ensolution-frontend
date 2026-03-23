@@ -1,4 +1,4 @@
-import type { FieldDataEditForm, MoistureEditForm } from "@plan/model";
+import type { FieldDataEditForm, MoistureEditForm } from "@/entities/plan/model";
 
 const toNumber = (v?: string) => {
   const n = Number(v);

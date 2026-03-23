@@ -1,4 +1,4 @@
-import type { WeatherEditForm } from "@plan/model";
+import type { WeatherEditForm } from "@/entities/plan/model";
 
 export const weatherCalculator = (weather: WeatherEditForm) => {
   const raw = String(weather.pressure ?? "").trim();

@@ -1,5 +1,5 @@
 import { calcSquareArea, calcCircleArea, calcArrayAvg } from "@plan/util";
-import type { FieldDataEditForm, PreInfoEditForm } from "@plan/model";
+import type { FieldDataEditForm, PreInfoEditForm } from "@/entities/plan/model";
 
 import type { PitotTubeSpec, TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 

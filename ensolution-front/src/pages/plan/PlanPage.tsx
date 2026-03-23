@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { usePlanListQuery } from "@plan/hooks";
-import { PlanTableSection } from "@plan/components";
+import { PlanTable, PlanTableMobile } from "@plan/ui";
 
 import { Button, FullPageLoader, EmptyState, Breadcrumbs } from "@shared/ui";
 
@@ -22,6 +22,7 @@ export const PlanPage = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
+      
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <Breadcrumbs
@@ -44,7 +45,17 @@ export const PlanPage = () => {
         <EmptyState title='등록된 측정시설이 없습니다.'/>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          <PlanTableSection plans={plans}/>
+          <>
+            {/* 데스크탑 전용 */}
+            <div className="hidden md:block">
+              <PlanTable plans={plans} />
+            </div>
+
+            {/* 모바일 전용 */}
+            <div className="block md:hidden">
+              <PlanTableMobile plans={plans} />
+            </div>
+          </>
         </div>
       )}
     </div>

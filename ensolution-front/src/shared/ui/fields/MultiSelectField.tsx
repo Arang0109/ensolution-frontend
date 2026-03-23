@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Checkbox, Chip } from "@material-tailwind/react";
 
 interface MultiSelectFieldProps<T, V extends string | number> {
@@ -38,20 +38,21 @@ export function MultiSelectField<T, V extends string | number>({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggle = (val: V) => {
+  const toggle = useCallback((val: V) => {
     if (value.includes(val)) {
       onChange(value.filter((v) => v !== val));
     } else {
       onChange([...value, val]);
     }
-  };
+  }, [value, onChange]);
 
-  const selectedLabels = options
-    .filter((o) => value.includes(getOptionValue(o)))
-    .map(getOptionLabel);
+  const selectedLabels = useMemo(
+    () => options.filter((o) => value.includes(getOptionValue(o))).map(getOptionLabel),
+    [options, value, getOptionValue, getOptionLabel]
+  );
 
   return (
-    <div className="md:p-3" ref={containerRef}>
+    <div className="relative md:p-3" ref={containerRef}>
       {label && (
         <label className="block text-xs font-medium text-gray-600 mb-1">
           {label}
@@ -79,7 +80,9 @@ export function MultiSelectField<T, V extends string | number>({
               key={lbl}
               value={lbl}
               size="sm"
-              className="rounded-full normal-case font-normal"
+              color="blue"
+              variant="ghost"
+              className="rounded-lg normal-case font-normal"
             />
           ))
         ) : (
@@ -109,14 +112,19 @@ export function MultiSelectField<T, V extends string | number>({
             return (
               <div
                 key={String(val)}
-                className="flex items-center px-2 hover:bg-blue-gray-50 cursor-pointer"
+                className="flex items-center text-xs md:text-sm px-2 hover:bg-blue-gray-50 cursor-pointer"
                 onClick={() => toggle(val)}
               >
                 <Checkbox
                   checked={value.includes(val)}
-                  onChange={() => toggle(val)}
+                  onChange={() => {}}
+                  onClick={(e) => e.stopPropagation()}
                   label={lbl}
-                  className="cursor-pointer"
+                  color="blue"
+                  className="
+                    h-4 w-4
+                    cursor-pointer
+                  "
                   crossOrigin={undefined}
                 />
               </div>

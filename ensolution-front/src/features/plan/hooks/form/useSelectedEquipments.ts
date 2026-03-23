@@ -1,7 +1,7 @@
 import { useEquipments } from "@equipment/hooks";
 import { EquipType } from "@/entities/agency/equipment/model";
 
-import type { EquipmentEditForm } from "@plan/model";
+import type { EquipmentEditForm } from "@/entities/plan/model";
 
 export const useSelectedEquipments = (equipment: EquipmentEditForm) => {
   const { equipments, loading } = useEquipments();

@@ -7,13 +7,13 @@ import type {
   MeasurementSheetEditForm,
   WeatherEditForm, MoistureEditForm, ExhaustGasEditForm,
   SampleEditForm,
-} from "@plan/model";
+} from "@/entities/plan/model";
 import {
   getDefaultPlanDraftEditForm,
   getDefaultWeatherEditForm,
   getDefaultMoistureEditForm,
   getDefaultExhaustGasEditForm,
-} from "@plan/model";
+} from "@/entities/plan/model";
 import { calcMeasurePointCnt } from "@plan/util";
 import type { StackMeasurementResponse } from "@/entities/stack/model";
 

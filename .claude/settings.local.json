@@ -13,7 +13,10 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(npx @iconify/json-tools@latest list-icons)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(node -e \"const r = require\\(''./node_modules/react/package.json''\\); console.log\\(''react:'', r.version\\)\")",
+      "Bash(node -e \"const r = require\\(''./node_modules/@types/react/package.json''\\); console.log\\(''@types/react:'', r.version\\)\")",
+      "Bash(node -e \"const pkg = require\\(''./node_modules/@material-tailwind/react/package.json''\\); console.log\\(pkg.version\\)\")"
     ],
     "deny": [],
     "ask": []

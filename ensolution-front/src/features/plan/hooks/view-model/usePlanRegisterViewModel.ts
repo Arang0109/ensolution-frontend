@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useToast } from "@app/providers/toast";
 
-import { mapPlanCreateFormToRequest } from '@plan/model';
+import { mapPlanCreateFormToRequest } from '@/entities/plan/model';
 import { usePlanCreateForm, usePlanActions, usePlanRegisterData } from '@plan/hooks';
 
 import { EquipType } from '@/entities/agency/equipment/model';
