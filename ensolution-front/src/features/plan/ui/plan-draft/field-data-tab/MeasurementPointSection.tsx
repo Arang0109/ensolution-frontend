@@ -2,6 +2,8 @@ import type { MeasurementSheetEditForm, MeasurementpointEditForm, ParticleSample
 import { TableInputCell, TableLabelCell, TableResultCell, SectionAccordion } from "@shared/ui";
 import { ParticleSection } from "@/features/plan/ui";
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
+import type { PointRecord } from "@shared/lib";
+import type { OrificeDpRecord } from "@plan/util";
 import { display } from "@shared/lib";
 
 interface MeasurementPointSection {
@@ -23,14 +25,11 @@ interface MeasurementPointSection {
     Vlc: number | null,
     samplingTime: number | null,
   }[];
-  orificeDpList: {
-    orificeDp: number | null,
-    kFactor: number | null,
-  }[];
+  orificeDpRecord: OrificeDpRecord;
 
-  standardGasDensityList: number[] | null;
+  gasDensityList: PointRecord;
   avgGasVelocity: number | null;
-  gasVelocityList: number[] | null;
+  gasVelocityList: PointRecord;
   pitotTubeCoefficient: number | null;
   quantity: number | null;
   standardQuantity: number | null;
@@ -52,9 +51,9 @@ export const MeasurementPointSection = ({
   avgOutTemp,
 
   recommendList,
-  orificeDpList,
+  orificeDpRecord,
 
-  standardGasDensityList,
+  gasDensityList,
   avgGasVelocity,
   gasVelocityList,
   pitotTubeCoefficient,
@@ -106,7 +105,7 @@ export const MeasurementPointSection = ({
                     unit="°C"
                   />
                 ))}
-                <TableResultCell value={display(AvgGasTemp)} unit="°K" />
+                <TableResultCell value={display(AvgGasTemp! - 273)} unit="°K" />
               </tr>
 
               <tr>
@@ -152,9 +151,9 @@ export const MeasurementPointSection = ({
                   avgOutTemp={avgOutTemp}
 
                   recommendList={recommendList}
-                  orificeDpList={orificeDpList}
+                  orificeDpRecord={orificeDpRecord}
 
-                  standardGasDensityList={standardGasDensityList}
+                  standardGasDensityList={gasDensityList}
                   avgGasVelocity={avgGasVelocity}
                   gasVelocityList={gasVelocityList}
                   pitotTubeCoefficient={pitotTubeCoefficient}

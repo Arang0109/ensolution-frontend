@@ -1,4 +1,12 @@
+import type { PointRecord } from "@shared/lib";
 import { calculator } from "@shared/lib";
+
+export type OrificeDpEntry = {
+  orificeDp: number | null;
+  kFactor: number | null;
+  isokineticRatio: number | null;
+};
+export type OrificeDpRecord = Record<number, OrificeDpEntry>;
 
 const convertFromSTP = (value: number, temperature: number, pressure: number): number => {
   return value * (temperature/273) * (760/pressure);
@@ -39,17 +47,16 @@ export const nozzleCalculator = (
   AvgPv: number | null,
   Md: number | null,
   selectedNozzle: number | null,
-  PgList: number[] | null,
-  TmList: number[] | null,
-  gasTemperatureList: number[] | null,
-  dynamicPressureList: number[] | null,
-  measurementPointCnt: number | null
+  PgRecord: PointRecord,
+  TmRecord: PointRecord,
+  gasTemperatureRecord: PointRecord,
+  dynamicPressureRecord: PointRecord,
 ) => {
   const { safeCalc, round, toNumber } = calculator;
 
   const nozzles = nozzleSizes.map(v => toNumber(v.diameter)).filter((v): v is number => v !== null);
 
-  // 1. Dn에 따른 orificeDp List 만들기
+  // 1. Dn에 따른 recommendNozzleList 만들기
   const recommendNozzleList: {
     nozzle: number,
     orificeDp: number | null,
@@ -79,35 +86,34 @@ export const nozzleCalculator = (
       samplingTime: null, });
   };
 
-  const orificeDpList: {
-    orificeDp: number | null,
-    kFactor: number | null,
-  }[] = [];
+  // 2. 측정점별 orificeDpRecord 만들기
+  const orificeDpRecord: OrificeDpRecord = {};
 
-  const cnt = measurementPointCnt?? 1;
+  Object.keys(gasTemperatureRecord).map(Number).forEach(i => {
+    const Tg_raw = gasTemperatureRecord[i];
+    const Tg = Tg_raw !== null ? Tg_raw + 273 : null;
+    const Tm_raw = TmRecord[i];
+    const Tm = Tm_raw !== null ? Tm_raw + 273 : null;
+    const Pg_i = PgRecord[i];
+    const Pv = dynamicPressureRecord[i];
 
-  for (let i = 0; i < cnt; i++) {
-    const Tg = safeCalc([gasTemperatureList], () => gasTemperatureList![i] + 273);
-    const Tm = safeCalc([TmList], () => TmList![i] + 273);
-    const Pg = safeCalc([PgList], () => PgList![i]);
-    const Pv = safeCalc([dynamicPressureList], () => dynamicPressureList![i]);
-
-    const kFactor = safeCalc([Cp, selectedNozzle, deltaH, Xw, Md, Mw, Tm, Tg, Pa, Pg], () =>
-      round(calcKFactor(Cp!, selectedNozzle!, deltaH!, Xw!, Md!, Mw!, Tm!, Tg!, Pa!, Pg!), 2)
+    const kFactor = safeCalc([Cp, selectedNozzle, deltaH, Xw, Md, Mw, Tm, Tg, Pa, Pg_i], () =>
+      round(calcKFactor(Cp!, selectedNozzle!, deltaH!, Xw!, Md!, Mw!, Tm!, Tg!, Pa!, Pg_i!), 2)
     );
 
     const orificeDp = safeCalc([kFactor, Pv], () =>
       round(kFactor! * Pv!, 2)
     );
 
-    orificeDpList.push({
-      orificeDp: orificeDp,
-      kFactor: kFactor,
-    })
-  }
+    orificeDpRecord[i] = {
+      orificeDp,
+      kFactor,
+      isokineticRatio: null,
+    };
+  });
 
   return {
     recommendNozzleList,
-    orificeDpList
+    orificeDpRecord,
   }
 }

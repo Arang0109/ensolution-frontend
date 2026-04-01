@@ -24,7 +24,7 @@ export const NozzleRecommendContent = ({ onClose, recommendList, sheet, onPartic
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const [rangeMin, setRangeMin] = useState(10);
-  const [rangeMax, setRangeMax] = useState(30);
+  const [rangeMax, setRangeMax] = useState(40);
 
   const filteredList = useMemo(
     () =>
@@ -63,8 +63,8 @@ export const NozzleRecommendContent = ({ onClose, recommendList, sheet, onPartic
                 <span className="text-[10px] text-gray-400 w-6 text-right">최소</span>
                 <input
                   type="range"
-                  min={1}
-                  max={10}
+                  min={0}
+                  max={60}
                   value={rangeMin}
                   onChange={(e) => {
                     const val = Number(e.target.value);
@@ -78,8 +78,8 @@ export const NozzleRecommendContent = ({ onClose, recommendList, sheet, onPartic
                 <span className="text-[10px] text-gray-400 w-6 text-right">최대</span>
                 <input
                   type="range"
-                  min={30}
-                  max={50}
+                  min={0}
+                  max={60}
                   value={rangeMax}
                   onChange={(e) => {
                     const val = Number(e.target.value);

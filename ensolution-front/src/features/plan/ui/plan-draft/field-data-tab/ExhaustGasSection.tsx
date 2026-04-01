@@ -21,7 +21,7 @@ interface ExhaustGasSectionProps {
   noxConcentrationAvg: number | null;
   soxConcentrationAvg: number | null;
   oxygenCorrectionFactor: number | null;
-  gasDensity: number | null;
+  standardGasDensity: number | null;
 }
 
 const O2Row = ({
@@ -130,7 +130,7 @@ export const ExhaustGasSection = ({
   noxConcentrationAvg,
   soxConcentrationAvg,
   oxygenCorrectionFactor,
-  gasDensity,
+  standardGasDensity,
 }: ExhaustGasSectionProps) => {
 
   return (
@@ -194,7 +194,7 @@ export const ExhaustGasSection = ({
             <tr>
               <TableResultCell value={standardOxygen} unit="%" />
               <TableResultCell value={display(oxygenCorrectionFactor)} unit="" />
-              <TableResultCell colSpan={2} value={display(gasDensity)} unit="kg/m³" />
+              <TableResultCell colSpan={2} value={display(standardGasDensity)} unit="kg/m³" />
             </tr>
           </tbody>
         </table>
@@ -238,7 +238,7 @@ export const ExhaustGasSection = ({
             <tr>
               <TableResultWithLabelCell colSpan={5} label="기준산소농도" value={standardOxygen} unit="%" />
               <TableResultWithLabelCell colSpan={5} label="산소보정계수" value={display(oxygenCorrectionFactor)} />
-              <TableResultWithLabelCell colSpan={5} label={<>표준상태 배출가스밀도 (<i>ρ</i>)</>} value={display(gasDensity)} unit="kg/Nm³" />
+              <TableResultWithLabelCell colSpan={5} label={<>표준상태 배출가스밀도 (<i>ρ</i>)</>} value={display(standardGasDensity)} unit="kg/Nm³" />
             </tr>
           </tbody>
         </table>

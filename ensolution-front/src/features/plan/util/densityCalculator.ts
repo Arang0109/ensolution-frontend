@@ -1,6 +1,7 @@
+import type { PointRecord } from "@shared/lib";
 import { calculator } from "@shared/lib";
 
-const convertToSTP = (value: number, temperature: number, pressure: number): number => {
+const convertFromSTP = (value: number, temperature: number, pressure: number): number => {
   return value * (273/temperature) * (pressure/760);
 }
 
@@ -31,8 +32,8 @@ export const densityCalculator = (
   co: number,
   n2: number,
 
-  gasTemperatureList: number[] | null,
-  PsList: number[] | null,
+  gasTemperatureRecord: PointRecord,
+  PsRecord: PointRecord,
   AvgTg: number | null,
   Pg: number | null,
   Pa: number | null,
@@ -41,23 +42,27 @@ export const densityCalculator = (
     round, safeCalc
   } = calculator;
 
-  const gasDensity = safeCalc([Xw], () =>
+  const standardGasDensity = safeCalc([Xw], () =>
     round(calcGasDensity(o2, co2, co, n2, Xw!), 2)
   );
 
-  const standardGasDensity = safeCalc([gasDensity, AvgTg, Pg], () => round(convertToSTP(gasDensity!, AvgTg!, Pg!), 3));
+  const gasDensity = safeCalc([standardGasDensity, AvgTg, Pg], () =>
+    round(convertFromSTP(standardGasDensity!, AvgTg!, Pg!), 3)
+  );
 
-  const standardGasDensityList = safeCalc([gasDensity, gasTemperatureList, PsList, Pa], () =>
-    gasTemperatureList!.map((Ts, i) => {
-      const Pg = round(Pa! + PsList![i], 2);
-      const Tg = 273 + Ts!;
-      return round(convertToSTP(gasDensity!, Tg!, Pg!), 3);
+  const gasDensityList: PointRecord = Object.fromEntries(
+    Object.entries(gasTemperatureRecord).map(([key, Ts]) => {
+      const Ps = PsRecord[Number(key)];
+      if (standardGasDensity === null || Pa === null || Ts === null || Ps === null) return [key, null];
+      const pg = round(Pa + Ps, 2);
+      const tg = 273 + Ts;
+      return [key, round(convertFromSTP(standardGasDensity, tg, pg), 3)];
     })
   );
 
   return {
     standardGasDensity,
     gasDensity,
-    standardGasDensityList
+    gasDensityList
   }
 }

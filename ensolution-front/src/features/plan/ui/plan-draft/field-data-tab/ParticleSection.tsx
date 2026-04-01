@@ -4,11 +4,12 @@ import { createPortal } from "react-dom";
 import type { MeasurementSheetEditForm, MeasurementpointEditForm, ParticleSampleEditForm } from "@/entities/plan/model";
 import type { NozzleSpec, TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 
-
 import {
-  TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell, TableActionCell 
+  TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell, TableActionCell
 } from "@shared/ui";
 
+import type { PointRecord } from "@shared/lib";
+import type { OrificeDpRecord } from "@plan/util";
 import { display } from "@shared/lib";
 import { Sparkles } from "lucide-react";
 import { NozzleRecommendModal } from "./nozzle-modal";
@@ -29,14 +30,11 @@ interface ParticleSectionProps {
     Vlc: number | null,
     samplingTime: number | null,
   }[];
-  orificeDpList: {
-    orificeDp: number | null,
-    kFactor: number | null,
-  }[];
+  orificeDpRecord: OrificeDpRecord;
 
-  standardGasDensityList: number[] | null;
+  standardGasDensityList: PointRecord;
   avgGasVelocity: number | null;
-  gasVelocityList: number[] | null;
+  gasVelocityList: PointRecord;
   pitotTubeCoefficient: number | null;
 
   selectedNZ?: TypedEquipmentResponse;
@@ -52,7 +50,7 @@ export const ParticleSection = ({
   avgOutTemp,
 
   recommendList,
-  orificeDpList,
+  orificeDpRecord,
 
   standardGasDensityList,
   gasVelocityList,
@@ -69,6 +67,10 @@ export const ParticleSection = ({
       label: `${d.diameter} cm`,
       value: String(d.diameter),
   }));
+
+  const orificeDpEntries = Object.entries(orificeDpRecord).sort(([a], [b]) => Number(a) - Number(b));
+  const gasDensityEntries = Object.entries(standardGasDensityList).sort(([a], [b]) => Number(a) - Number(b));
+  const gasVelocityEntries = Object.entries(gasVelocityList).sort(([a], [b]) => Number(a) - Number(b));
 
   return (
     <>
@@ -136,10 +138,10 @@ export const ParticleSection = ({
       </tr>
       <tr>
         <TableLabelCell>배출가스 밀도 (<i>ρ</i>)</TableLabelCell>
-        {standardGasDensityList?.map((gasDensity, index) => (
+        {gasDensityEntries.map(([key, value]) => (
           <TableResultCell
-            key={index}
-            value={display(gasDensity)}
+            key={key}
+            value={display(value)}
             unit={<i>kg/m³</i>}
           />
         ))}
@@ -147,10 +149,10 @@ export const ParticleSection = ({
       </tr>
       <tr>
         <TableLabelCell>배출가스 유속 (<i>V<sub>s</sub></i>)</TableLabelCell>
-        {gasVelocityList?.map((gasVelocity, index) => (
+        {gasVelocityEntries.map(([key, value]) => (
           <TableResultCell
-            key={index}
-            value={display(gasVelocity)}
+            key={key}
+            value={display(value)}
             unit={<i>m/s</i>}
           />
         ))}
@@ -158,10 +160,10 @@ export const ParticleSection = ({
       </tr>
       <tr>
         <TableLabelCell>오리피스 차압 (△<i>H</i>)</TableLabelCell>
-        {orificeDpList?.map((list, index) => (
+        {orificeDpEntries.map(([key, entry]) => (
           <TableResultCell
-            key={index}
-            value={display(list.orificeDp)}
+            key={key}
+            value={display(entry.orificeDp)}
             unit={<i>m/s</i>}
           />
         ))}
@@ -169,11 +171,64 @@ export const ParticleSection = ({
       </tr>
       <tr>
         <TableLabelCell>K Factor</TableLabelCell>
-        {orificeDpList?.map((list, index) => (
+        {orificeDpEntries.map(([key, entry]) => (
           <TableResultCell
-            key={index}
-            value={display(list.kFactor)}
+            key={key}
+            value={display(entry.kFactor)}
             unit={<i>m/s</i>}
+          />
+        ))}
+        <TableResultCell value="" />
+      </tr>
+      <tr>
+        <TableLabelCell>채취시간 (<i>P<sub>g</sub></i>)</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.samplingTime}
+            onChange={(value) =>
+              onChange(index, "samplingTime", value)
+            }
+            unit={<i>min</i>}
+          />
+        ))}
+      </tr>
+      <tr>
+        <TableLabelCell>흡입량 (전)</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.beforeVm}
+            onChange={(value) =>
+              onChange(index, "beforeVm", value)
+            }
+            unit={<i>°C</i>}
+          />
+        ))}
+      </tr>
+      <tr>
+        <TableLabelCell>흡입량 (후)</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.afterVm}
+            onChange={(value) =>
+              onChange(index, "afterVm", value)
+            }
+            unit={<i>°C</i>}
+          />
+        ))}
+      </tr>
+      <tr>
+        <TableLabelCell>등속흡입계수 (<i>I</i>)</TableLabelCell>
+        {orificeDpEntries.map(([key, entry]) => (
+          <TableResultCell
+            key={key}
+            value={display(entry.isokineticRatio)}
+            unit={<i>%</i>}
           />
         ))}
         <TableResultCell value="" />
@@ -187,7 +242,7 @@ export const ParticleSection = ({
           onParticleSampleChange={onParticleSampleChange}
           recommendList={recommendList}
         />, document.body)}
-          
+
     </>
     );
   };

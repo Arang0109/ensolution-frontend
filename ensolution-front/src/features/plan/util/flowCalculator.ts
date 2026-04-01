@@ -1,3 +1,4 @@
+import type { PointRecord } from "@shared/lib";
 import { calculator } from "@shared/lib";
 
 const calcGasVelocity = (
@@ -45,33 +46,34 @@ const calcStandardQuantity = (
 
 export const flowCalculator = (
   pitotTubeCoefficients: { coefficient: string; velocity: string }[],
-  dynamicPressureList: number[] | null,
-  standardGasDensity: number | null,
-  standardGasDensityList: number[] | null,
+  dynamicPressureRecord: PointRecord,
+  gasDensity: number | null,
+  gasDensityRecord: PointRecord,
   area: number | null,
-  gasTemperatureList: number[] | null,
-  PgList:  number[] | null,
+  gasTemperatureRecord: PointRecord,
+  PgRecord: PointRecord,
   Xw: number | null,
   AvgPv: number | null
 ) => {
-  const { safeCalc, round } = calculator;
+  const { safeCalc, round, validValues, calcAverage } = calculator;
 
-  const postGasVelocity = safeCalc([AvgPv, standardGasDensity], () =>
-    round(calcGasVelocity(0.84, AvgPv!, standardGasDensity!), 3)
+  const postGasVelocity = safeCalc([AvgPv, gasDensity], () =>
+    round(calcGasVelocity(0.84, AvgPv!, gasDensity!), 3)
   );
 
   const Cp = safeCalc([postGasVelocity], () =>
     findPitotTubeCoefficient(pitotTubeCoefficients, postGasVelocity!)
   );
 
-  const gasVelocity = safeCalc([Cp, AvgPv, standardGasDensity], () =>
-    round(calcGasVelocity(Cp!, AvgPv!, standardGasDensity!), 3)
+  const gasVelocity = safeCalc([Cp, AvgPv, gasDensity], () =>
+    round(calcGasVelocity(Cp!, AvgPv!, gasDensity!), 3)
   );
 
-  const VsList = safeCalc([Cp, dynamicPressureList, standardGasDensityList], () =>
-    standardGasDensityList!.map((standardGasDensity, i) => {
-      const Pv = dynamicPressureList![i];
-      return round(calcGasVelocity(Cp!, Pv!, standardGasDensity!), 3);
+  const VsList: PointRecord = Object.fromEntries(
+    Object.entries(gasDensityRecord).map(([key, gd]) => {
+      const Pv = dynamicPressureRecord[Number(key)];
+      if (Cp === null || gd === null || Pv === null) return [key, null];
+      return [key, round(calcGasVelocity(Cp, Pv, gd), 3)];
     })
   );
 
@@ -79,13 +81,11 @@ export const flowCalculator = (
     round(calcQuantity(area!, gasVelocity!), 1)
   );
 
-  const Pg = safeCalc([PgList], () =>
-    PgList!.reduce((acc, cur) => acc + cur, 0) / PgList!.length
-  )
+  const validPg = validValues(PgRecord);
+  const Pg = validPg.length ? validPg.reduce((acc, cur) => acc + cur, 0) / validPg.length : null;
 
-  const Tg = safeCalc([gasTemperatureList], () =>
-    gasTemperatureList!.reduce((acc, cur) => acc + cur, 0) / gasTemperatureList!.length
-  )
+  const validTg = validValues(gasTemperatureRecord);
+  const Tg = validTg.length ? calcAverage(validTg) : null;
 
   const standardQuantity = safeCalc([gasVelocity, Tg, Pg, Xw], () =>
     round(calcStandardQuantity(gasVelocity!, Tg!, Pg!, Xw!), 1)
