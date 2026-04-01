@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-import type { PlanTableResponse } from "@plan/model";
-import { fetchPlans } from "@plan/api/planApi";
+import type { PlanTableResponse } from "@/entities/plan/model";
+import { fetchPlans } from "@/entities/plan/api/planApi";
 
 export const usePlanListQuery = () => {
   const [plans, setPlans] = useState<PlanTableResponse[]>([]);

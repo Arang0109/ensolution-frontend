@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { getDefaultPlanCreateForm } from "@plan/model";
-import type { PlanCreateForm } from "@plan/model";
+import { getDefaultPlanCreateForm } from "@/entities/plan/model";
+import type { PlanCreateForm } from "@/entities/plan/model";
 
 import type { ValidationErrors } from "@shared/model";
 
@@ -25,7 +25,6 @@ export const usePlanCreateForm = () => {
   };
 
   const setMeasurementItems = (items: number[]) => {
-    console.log(items);
     setForm(prev => ({
       ...prev,
       measurementItemIds: items,

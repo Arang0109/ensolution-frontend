@@ -1,8 +1,9 @@
+import React from "react";
 import { Input } from "@material-tailwind/react";
 
 interface InputFieldProps<T = string> {
   id?: string;
-  label?: string;
+  label?: React.ReactNode;
 
   value: T;
   onChange?: (value: T) => void;
@@ -36,11 +37,21 @@ export const InputField = <T extends string | number>({
   step,
   helperText,
 }: InputFieldProps<T>) => {
+  const isStringLabel = typeof label === "string";
+
   return (
     <div className="w-full md:p-3">
+      {label && !isStringLabel && (
+        <label
+          htmlFor={id}
+          className="block mb-1 text-sm text-gray-600"
+        >
+          {label}
+        </label>
+      )}
       <Input
         id={id}
-        label={label ? `${label}` : undefined}
+        label={isStringLabel ? (label as string) : undefined}
         value={String(value)}
         onChange={(e) => onChange?.(e.target.value as T)}
         type={type}

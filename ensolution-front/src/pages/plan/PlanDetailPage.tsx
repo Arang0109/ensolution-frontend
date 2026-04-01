@@ -1,5 +1,5 @@
 import { usePlanDraftViewModel } from "@plan/hooks"
-import { PlanDetailContent } from "@plan/components";
+import { PlanDetailContent } from "@/features/plan/ui";
 
 import { FullPageLoader } from "@shared/ui";
 

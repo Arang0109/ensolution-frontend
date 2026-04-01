@@ -1,12 +1,9 @@
-import { FieldWrapper } from "@shared/ui";
-
 interface RadioOption<T extends string | number> {
   label: string;
   value: T;
 }
 
 interface RadioGroupFieldProps<T extends string | number> {
-  label?: string;
   value: T;
   options: RadioOption<T>[];
   onChange?: (value: T) => void;
@@ -16,31 +13,33 @@ interface RadioGroupFieldProps<T extends string | number> {
 }
 
 export const RadioGroupField = <T extends string | number>({
-  label,
   value,
   options,
   onChange,
-  name,
-  required,
-  disabled
+  disabled,
 }: RadioGroupFieldProps<T>) => {
   return (
-    <FieldWrapper label={label} required={required}>
-      <div className="flex gap-4">
-        {options.map(option => (
-          <label key={String(option.value)} className="flex items-center gap-2">
-            <input
-              type="radio"
-              name={name}
-              value={option.value}
-              checked={value === option.value}
-              disabled={disabled}
-              onChange={() => onChange?.(option.value)}
-            />
+    <div className="flex flex-wrap gap-1">
+      {options.map(option => {
+        const isSelected = value === option.value;
+        return (
+          <button
+            key={String(option.value)}
+            type="button"
+            onClick={() => !disabled && onChange?.(option.value)}
+            disabled={disabled}
+            className={[
+              "px-3 py-1.5 text-sm font-medium rounded border transition-colors",
+              isSelected
+                ? "bg-blue-600 border-blue-600 text-white"
+                : "bg-white border-gray-300 text-gray-600 hover:border-blue-400 hover:text-blue-600",
+              disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
+            ].join(" ")}
+          >
             {option.label}
-          </label>
-        ))}
-      </div>
-    </FieldWrapper>
+          </button>
+        );
+      })}
+    </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 
-import type { PlanDetailResponse } from "@plan/model"
-import { fetchPlan } from "@plan/api/planApi";
+import type { PlanDetailResponse } from "@/entities/plan/model"
+import { fetchPlan } from "@/entities/plan/api/planApi";
 
 export const usePlanDetailQuery = (planId: number) => {
   const [plan, setPlan] = useState<PlanDetailResponse | undefined>();

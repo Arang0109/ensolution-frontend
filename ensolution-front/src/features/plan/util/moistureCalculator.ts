@@ -1,110 +1,71 @@
-import type { FieldDataEditForm, MoistureEditForm } from "@plan/model";
+import type { MoistureEditForm } from "@/entities/plan/model";
+import { calculator } from "@shared/lib";
 
-const toNumber = (v?: string) => {
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
-};
+const convertToSTP = (value: number, temperature: number, pressure: number): number => {
+  return value * (273 / (273 + temperature)) * (pressure / 760);
+}
 
-const calcMoistureWeightDiff = (moisture: MoistureEditForm) => {
-  const before = toNumber(moisture.beforeWeight);
-  const after = toNumber(moisture.afterWeight);
+const calcWaterVolumeStp = (waterG: number) =>
+  (22.4 / 18) * waterG;
 
-  if (before === null || after === null) return null;
+const calcMoistureRatioPure = (
+  waterVolStp: number,
+  dryVolStp: number
+) =>
+  (waterVolStp / (dryVolStp + waterVolStp)) * 100;
 
-  return Number((after - before).toFixed(2));
-};
-
-const caclMoistureGasTemperatureAvg = (moisture: MoistureEditForm) => {
-  const inTemp = toNumber(moisture.inTemperature);
-  const outTemp = toNumber(moisture.outTemperature);
-
-  if (inTemp === null || outTemp === null) return null;
-
-  return Number(((inTemp + outTemp) / 2).toFixed(1));
-};
-
-const calcMoisturDryVolumeDiff = (moisture: MoistureEditForm) => {
-  const before = toNumber(moisture.beforeDryVolume);
-  const after = toNumber(moisture.afterDryVolume);
-  
-  if (before === null || after === null) return null;
-
-  return Number((after - before).toFixed(2));
-};
-
-const convertMoistureGaugePressureToMmHg = (moisture: MoistureEditForm) => {
-  const pressure = toNumber(moisture.gasMeterGaugePressure);
-  if (pressure === null) return null;
-
-  return Number((pressure * 760 / 10332).toFixed(3));
-};
-
-const convertMoistureGaugePressureToInchH2O = (moisture: MoistureEditForm) => {
-  const pressure = toNumber(moisture.gasMeterGaugePressure);
-  if (pressure === null) return null;
-
-  return Number((pressure / 25.4).toFixed(1));
-};
-
-const mmH2OToMmHg = (mmH2O: number) => mmH2O / 13.6;
-
-const calcMoistureRatio = (
+export const moistureCalculator = (
   moisture: MoistureEditForm,
-  atmosphericPressure: number,
-  gaugePressureMmH2O: boolean = true  // O55가 mmH2O면 true, mmHg면 false
+  atmosphericPressure: number | null,
+  gaugePressureMmHg: number | null,
 ) => {
-  const beforeW = toNumber(moisture.beforeWeight);
-  const afterW = toNumber(moisture.afterWeight);
-  const beforeV = toNumber(moisture.beforeDryVolume);
-  const afterV = toNumber(moisture.afterDryVolume);
-  const inTemp = toNumber(moisture.inTemperature);
-  const outTemp = toNumber(moisture.outTemperature);
-  const gaugeRaw = toNumber(moisture.gasMeterGaugePressure);
+  const {
+    safeCalc, toNumber, round, calcDelta, calcAverage
+  } = calculator;
 
-  if (
-    beforeW === null ||
-    afterW === null ||
-    beforeV === null ||
-    afterV === null ||
-    inTemp === null ||
-    outTemp === null ||
-    gaugeRaw === null
-  ) {
-    return null;
-  }
+  const m = moisture;
 
-  const waterG = afterW - beforeW;              // H50
-  const meterVol = afterV - beforeV;            // H58
-  const avgTempC = (inTemp + outTemp) / 2;      // H53
+  const beforeW = toNumber(m.beforeWeight);
+  const afterW = toNumber(m.afterWeight);
+  const beforeV = toNumber(m.beforeDryVolume);
+  const afterV = toNumber(m.afterDryVolume);
+  const inTemp = toNumber(m.inTemperature);
+  const outTemp = toNumber(m.outTemperature);
 
-  if (waterG <= 0 || meterVol <= 0) return 0;
+  const ma = safeCalc([beforeW, afterW], () =>
+    round(calcDelta(beforeW!, afterW!), 2)
+  );
 
-  // (22.4/18)*H50 : 물(g) -> 표준상태 수증기 부피(L)
-  const waterVolStp = (22.4 / 18) * waterG;
+  const Tm = safeCalc([inTemp, outTemp], () =>
+    round(calcAverage([inTemp!, outTemp!]), 1)
+  );
 
-  // O55 단위 처리: mmH2O면 mmHg로 변환, mmHg면 그대로
-  const gaugeMmHg = gaugePressureMmH2O ? mmH2OToMmHg(gaugeRaw) : gaugeRaw;
+  const Vm = safeCalc([beforeV, afterV], () =>
+    round(calcDelta(beforeV!, afterV!), 2)
+  );
 
-  // H58*(273/(273+H53))*((H20+O55)/760)
-  const dryVolStp =
-    meterVol *
-    (273 / (273 + avgTempC)) *
-    ((atmosphericPressure + gaugeMmHg) / 760);
+  const waterVolStp = safeCalc([ma], () =>
+    calcWaterVolumeStp(ma!)
+  );
 
-  const ratio = (waterVolStp / (dryVolStp + waterVolStp)) * 100;
+  const Pm = safeCalc([atmosphericPressure, gaugePressureMmHg], () =>
+    atmosphericPressure! + gaugePressureMmHg!
+  );
 
-  return Number(ratio.toFixed(2));
-};
+  const dryVolStp = safeCalc([Vm, Tm, Pm], () => 
+    convertToSTP(Vm!, Tm!, Pm!)
+  );
 
-export const moistureCalculator = (fieldData: FieldDataEditForm, atmosphericPressure: number) => {
-  const moisture = fieldData.moisture;
+  // 공정시험법 상 소수점 1자리까지 표기한다. (수정 必)
+  const Xw = safeCalc([waterVolStp, dryVolStp], () =>
+    round(calcMoistureRatioPure(waterVolStp!, dryVolStp!), 2)
+  );
 
   return {
-    weightDiff: calcMoistureWeightDiff(moisture),
-    tempAvg: caclMoistureGasTemperatureAvg(moisture),
-    dryVolumeDiff: calcMoisturDryVolumeDiff(moisture),
-    pressureToMmHg: convertMoistureGaugePressureToMmHg(moisture),
-    pressureToInchH2O: convertMoistureGaugePressureToInchH2O(moisture),
-    moistureRatio: calcMoistureRatio(moisture, atmosphericPressure)
+    ma,
+    Tm_g: Tm,
+    Vm_g: Vm,
+
+    Xw,
   };
 };

@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 
-import { measurementDraftUpdateRequest } from "@plan/api/measurementApi";
-import { registerPlan, deletePlan, patchPlanStatus } from "@plan/api/planApi";
-import type { DraftUpdateRequest, PlanRegisterRequest, PlanStatusUpdateRequest } from "@plan/model";
+import { measurementDraftUpdateRequest } from "@/entities/plan/api/measurementApi";
+import { registerPlan, deletePlan, patchPlanStatus } from "@/entities/plan/api/planApi";
+import type { DraftUpdateRequest, PlanRegisterRequest, PlanStatusUpdateRequest } from "@/entities/plan/model";
 
 export const usePlanActions = () => {
   const [creating, setCreating] = useState(false);
