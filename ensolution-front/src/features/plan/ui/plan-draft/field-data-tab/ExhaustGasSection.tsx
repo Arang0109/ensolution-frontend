@@ -1,7 +1,7 @@
 import type { ExhaustGasEditForm } from "@/entities/plan/model";
 
 import {
-  TableLabelCell, TableInputCell, TableResultCell, TableResultWithLabelCell
+  TableLabelCell, TableInputCell, TableResultCell, TableResultWithLabelCell, SectionAccordion
 } from "@shared/ui";
 import { display } from "@shared/lib";
 
@@ -35,9 +35,9 @@ const O2Row = ({
 }) => (
   <>
     <TableLabelCell>O<sub>2</sub> (%)</TableLabelCell>
-    <TableInputCell value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} />
-    <TableInputCell value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} />
-    <TableInputCell value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} />
+    <TableInputCell type="number" value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} />
+    <TableInputCell type="number" value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} />
     <TableResultCell value={display(o2ConcentrationAvg)} unit="%" />
   </>
 );
@@ -53,9 +53,9 @@ const CO2Row = ({
 }) => (
   <>
     <TableLabelCell>CO<sub>2</sub> (%)</TableLabelCell>
-    <TableInputCell value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} />
-    <TableInputCell value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} />
-    <TableInputCell value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} />
+    <TableInputCell type="number" value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} />
+    <TableInputCell type="number" value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} />
     <TableResultCell value={display(co2ConcentrationAvg)} unit="%" />
   </>
 );
@@ -71,9 +71,9 @@ const CORow = ({
 }) => (
   <>
     <TableLabelCell>CO (%)</TableLabelCell>
-    <TableInputCell value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} />
-    <TableInputCell value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} />
-    <TableInputCell value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} />
+    <TableInputCell type="number" value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} />
+    <TableInputCell type="number" value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} />
     <TableResultCell value={display((coConcentrationAvg))} unit="%" />
   </>
 );
@@ -89,9 +89,9 @@ const NoxRow = ({
 }) => (
   <>
     <TableLabelCell>NO<sub>X</sub> (ppm)</TableLabelCell>
-    <TableInputCell value={exhaustGas.noxConcentration[0]} onChange={(value) => onChange("noxConcentration", value, 0)} />
-    <TableInputCell value={exhaustGas.noxConcentration[1]} onChange={(value) => onChange("noxConcentration", value, 1)} />
-    <TableInputCell value={exhaustGas.noxConcentration[2]} onChange={(value) => onChange("noxConcentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.noxConcentration[0]} onChange={(value) => onChange("noxConcentration", value, 0)} />
+    <TableInputCell type="number" value={exhaustGas.noxConcentration[1]} onChange={(value) => onChange("noxConcentration", value, 1)} />
+    <TableInputCell type="number" value={exhaustGas.noxConcentration[2]} onChange={(value) => onChange("noxConcentration", value, 2)} />
     <TableResultCell value={display(noxConcentrationAvg)} unit="ppm" />
   </>
 );
@@ -107,9 +107,9 @@ const SoxRow = ({
 }) => (
   <>
     <TableLabelCell>SO<sub>X</sub> (ppm)</TableLabelCell>
-    <TableInputCell value={exhaustGas.soxConcentration[0]} onChange={(value) => onChange("soxConcentration", value, 0)} />
-    <TableInputCell value={exhaustGas.soxConcentration[1]} onChange={(value) => onChange("soxConcentration", value, 1)} />
-    <TableInputCell value={exhaustGas.soxConcentration[2]} onChange={(value) => onChange("soxConcentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.soxConcentration[0]} onChange={(value) => onChange("soxConcentration", value, 0)} />
+    <TableInputCell type="number" value={exhaustGas.soxConcentration[1]} onChange={(value) => onChange("soxConcentration", value, 1)} />
+    <TableInputCell type="number" value={exhaustGas.soxConcentration[2]} onChange={(value) => onChange("soxConcentration", value, 2)} />
     <TableResultCell value={display(soxConcentrationAvg)} unit="ppm" />
   </>
 );
@@ -134,109 +134,115 @@ export const ExhaustGasSection = ({
 }: ExhaustGasSectionProps) => {
 
   return (
-    <>
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">배출가스정보</h3>
+    <SectionAccordion title="Part 3. 배출가스정보">
+      {/* Mobile */}
+      <div className={mobileWrap}>
+        <table className="w-full table-fixed border-collapse text-sm">
+          <tbody>
+            <tr>
+            </tr>
+            <tr>
+              <TableLabelCell >O<sub>2</sub> (<i>%</i>)</TableLabelCell>
+              <TableInputCell type="number" value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} unit="%" />
+            </tr>
+            <tr>
+              <TableLabelCell>CO<sub>2</sub> (<i>%</i>)</TableLabelCell>
+              <TableInputCell type="number" value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} unit="%" />
+            </tr>
+            <tr>
+              <TableLabelCell>CO (<i>%</i>)</TableLabelCell>
+              <TableInputCell type="number" value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} unit="%" />
+            </tr>
+            <tr>
 
-        {/* Mobile */}
-        <div className={mobileWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <O2Row
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  o2ConcentrationAvg={o2ConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <CO2Row
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  co2ConcentrationAvg={co2ConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <CORow
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  coConcentrationAvg={coConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <NoxRow
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  noxConcentrationAvg={noxConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <SoxRow
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  soxConcentrationAvg={soxConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <TableResultWithLabelCell label={<>N<sub>2</sub></>} value={display(n2ConcentrationAvg)} unit="%" />
-                <TableResultWithLabelCell colSpan={2} label="표준산소농도" value={standardOxygen} unit="%" />
-                <TableResultWithLabelCell colSpan={2} label="산소보정계수" value={display(n2ConcentrationAvg)} unit="" />
-              </tr>
-              <tr>
-                <TableLabelCell><i>γ</i></TableLabelCell>
-                <TableResultCell colSpan={4} value={display(gasDensity)} unit="kg/m³" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            </tr>
+            <tr>
+              <TableResultWithLabelCell label={<>O<sub>2</sub> <i>avg</i></>} value={display(o2ConcentrationAvg)} unit="%" />
+              <TableResultWithLabelCell label={<>CO<sub>2</sub> <i>avg</i></>} value={display(co2ConcentrationAvg)} unit="%" />
+              <TableResultWithLabelCell label={<>CO <i>avg</i></>} value={display(coConcentrationAvg)} unit="%" />
+              <TableResultWithLabelCell label={<>N<sub>2</sub> <i>avg</i></>} value={display(n2ConcentrationAvg)} unit="%" />
+            </tr>
+            {/* <tr>
+              <TableLabelCell colSpan={4}>NO<sub>X</sub> (<i>ppm</i>)</TableLabelCell>
+            </tr>
+            <tr>
+              <TableInputCell value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("noxConcentration", value, 0)} unit="ppm" />
+              <TableInputCell value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("noxConcentration", value, 1)} unit="ppm" />
+              <TableInputCell value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("noxConcentration", value, 2)} unit="ppm" />
+              <TableResultCell value={display(noxConcentrationAvg)} unit="ppm" />
+            </tr>
+            <tr>
+              <TableLabelCell colSpan={4}>SO<sub>X</sub> (<i>ppm</i>)</TableLabelCell>
+            </tr>
+            <tr>
+              <TableInputCell value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("soxConcentration", value, 0)} unit="ppm" />
+              <TableInputCell value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("soxConcentration", value, 1)} unit="ppm" />
+              <TableInputCell value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("soxConcentration", value, 2)} unit="ppm" />
+              <TableResultCell value={display(soxConcentrationAvg)} unit="ppm" />
+            </tr> */}
+            <tr>
+              <TableLabelCell>기준산소농도</TableLabelCell>
+              <TableLabelCell>산소보정계수</TableLabelCell>
+              <TableLabelCell colSpan={2}>표준상태 배출가스 밀도 (<i>ρ</i>)</TableLabelCell>
+            </tr>
+            <tr>
+              <TableResultCell value={standardOxygen} unit="%" />
+              <TableResultCell value={display(oxygenCorrectionFactor)} unit="" />
+              <TableResultCell colSpan={2} value={display(gasDensity)} unit="kg/m³" />
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        {/* Desktop */}
-        <div className={desktopWrap}>
-          <table className="w-full table-fixed border-collapse text-sm">
-            <tbody>
-              <tr>
-                <O2Row
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  o2ConcentrationAvg={o2ConcentrationAvg}
-                />
-                <CO2Row
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  co2ConcentrationAvg={co2ConcentrationAvg}
-                />
-                <CORow
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  coConcentrationAvg={coConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <TableLabelCell>N<sub>2</sub></TableLabelCell>
-                <TableResultCell colSpan={4} value={display(n2ConcentrationAvg)} unit="%" />
-                <NoxRow
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  noxConcentrationAvg={noxConcentrationAvg}
-                />
-                <SoxRow
-                  exhaustGas={exhaustGas}
-                  onChange={onChange}
-                  soxConcentrationAvg={soxConcentrationAvg}
-                />
-              </tr>
-              <tr>
-                <TableLabelCell>표준산소농도</TableLabelCell>
-                <TableResultCell colSpan={4} value={standardOxygen} unit="%" />
-                <TableLabelCell>산소보정계수</TableLabelCell>
-                <TableResultCell colSpan={4} value={display(oxygenCorrectionFactor)} unit="" />
-                <TableLabelCell><i>γ</i></TableLabelCell>
-                <TableResultCell colSpan={4} value={display(gasDensity)} unit="kg/Nm³" />
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </>
+      {/* Desktop */}
+      <div className={desktopWrap}>
+        <table className="w-full table-fixed border-collapse text-sm">
+          <tbody>
+            <tr>
+              <O2Row
+                exhaustGas={exhaustGas}
+                onChange={onChange}
+                o2ConcentrationAvg={o2ConcentrationAvg}
+              />
+              <CO2Row
+                exhaustGas={exhaustGas}
+                onChange={onChange}
+                co2ConcentrationAvg={co2ConcentrationAvg}
+              />
+              <CORow
+                exhaustGas={exhaustGas}
+                onChange={onChange}
+                coConcentrationAvg={coConcentrationAvg}
+              />
+            </tr>
+            <tr>
+              <TableLabelCell>N<sub>2</sub></TableLabelCell>
+              <TableResultCell colSpan={4} value={display(n2ConcentrationAvg)} unit="%" />
+              <NoxRow
+                exhaustGas={exhaustGas}
+                onChange={onChange}
+                noxConcentrationAvg={noxConcentrationAvg}
+              />
+              <SoxRow
+                exhaustGas={exhaustGas}
+                onChange={onChange}
+                soxConcentrationAvg={soxConcentrationAvg}
+              />
+            </tr>
+            <tr>
+              <TableResultWithLabelCell colSpan={5} label="기준산소농도" value={standardOxygen} unit="%" />
+              <TableResultWithLabelCell colSpan={5} label="산소보정계수" value={display(oxygenCorrectionFactor)} />
+              <TableResultWithLabelCell colSpan={5} label={<>표준상태 배출가스밀도 (<i>ρ</i>)</>} value={display(gasDensity)} unit="kg/Nm³" />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </SectionAccordion>
   )
 }

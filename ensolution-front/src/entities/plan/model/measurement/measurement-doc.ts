@@ -27,6 +27,9 @@ export interface MeasurementDocResponse {
   mentor: string;
   mentee: string;
 
+  measureStartTime: string;
+  measureEndTime: string;
+
   client: ClientDocResponse;
   equipment: MeasurementEquipmentResponse;
   measurementItems: MeasurementItemDocResponse[];
@@ -50,6 +53,9 @@ export interface DraftUpdateRequest {
   vehicleNumber: string;
   mentor: string;
   mentee: string;
+
+  measureStartTime: string;
+  measureEndTime: string;
 
   client: ClientUpdateRequest;
 
@@ -114,13 +120,10 @@ export interface MeasurementSheetUpdateRequest {
   exhaustGas: ExhaustGasUpdateRequest;
 
   measurementPoints: MeasurementPointUpdateRequest[];
+  samples: SampleUpdateRequest[];
+  particleSample: ParticleSampleUpdateRequest;
 
   quantity: string;
-  pitotTubeCoefficient: string;
-  nozzleSize: string;
-
-  startTime: string;
-  endTime: string;
 }
 
 export interface WeatherUpdateRequest {
@@ -170,24 +173,53 @@ export interface ExhaustGasUpdateRequest {
 }
 
 export interface MeasurementPointUpdateRequest {
-  gasTemperature: string;
-  dynamicPressure: string;
-  staticPressure: string;
+  Ts: string;
+  Pv: string;
+  Ps: string;
 
   equipmentTemperature: EquipmentGasTemp;
   equipmentVolume: EquipmentVolume;
 
-  measureTime: string;
+  samplingTime: string;
   vacuumGaugePressure: string;
   finalImpingerTemperature: string;
 }
 
 export interface EquipmentGasTemp {
-  inletTemperature: string;
-  outletTemperature: string;
+  inTm: string;
+  outTm: string;
 }
 
 export interface EquipmentVolume {
+  beforeVm: string;
+  afterVm: string;
+}
+
+export interface SampleUpdateRequest {
+  startTime: string;
+  endTime: string;
+  suctionQuantity: string;
+  gasMeterGaugePressure: string;
+  inTemperature: string;
+  outTemperature: string;
   beforeVolume: string;
   afterVolume: string;
+  blankSampleNumber: string;
+  sampleNumber: string;
+  samplingVolume: string;
+}
+
+export interface ParticleSampleUpdateRequest {
+  Cp: string; // 피토우관 계수
+  nozzleSize: string; // 노즐 사이즈 (cm)
+
+  Vm: string;
+  samplingTime: string;
+
+  kFactor: string // K Factor
+  orificeDp: string // 오리피스 차압 (mmHg)
+  isokineticRatio: string // 등속흡입계수
+
+  samplingStartTime: string; // 입자상 물질 채취시작 시간
+  samplingEndTime: string; // 입자상 물질 채취종료 시간
 }

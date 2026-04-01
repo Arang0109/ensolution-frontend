@@ -19,7 +19,7 @@ export const TableSelectableCell = ({
   placeholder?: string;
 }) => (
   <>
-    <td colSpan={colSpan} className={`border border-gray-200 bg-white${colSpan ? ` ${colSpanClass[colSpan] ?? ''}` : ''}`}>
+    <td colSpan={colSpan} className={`border border-slate-200 bg-white${colSpan ? ` ${colSpanClass[colSpan] ?? ''}` : ''}`}>
       <div className="relative">
         <select
           value={value}

@@ -15,7 +15,7 @@ export const TableInputCell = ({
   colSpan?: number;
   unit?: React.ReactNode;
 }) => (
-  <td colSpan={colSpan} className="border border-gray-200 bg-white">
+  <td colSpan={colSpan} className="border border-slate-200 bg-white">
     <div className="flex items-center">
       <input
         value={value}

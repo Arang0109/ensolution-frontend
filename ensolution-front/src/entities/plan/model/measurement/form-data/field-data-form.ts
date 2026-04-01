@@ -13,13 +13,9 @@ export interface MeasurementSheetEditForm {
 
   measurementPoints: MeasurementpointEditForm[];
   samples: SampleEditForm[];
+  particleSample: ParticleSampleEditForm;
 
   quantity: string;
-  pitotTubeCoefficient: string;
-  nozzleSize: string;
-
-  startTime: string;
-  endTime: string;
 }
 
 //////////////////////////////////////////////////
@@ -44,13 +40,9 @@ export const getDefaultMeasurementSheetsEditForm = (
 
     measurementPoints: getDefaultMeasurementpointEditForm(sheet, measurementPointCnt),
     samples: getDefaultSamplesEditForm(sheet),
+    particleSample: getDefaultParticleSampleEditForm(sheet),
 
     quantity: sheet.quantity ?? "",
-    pitotTubeCoefficient: sheet.pitotTubeCoefficient ?? "",
-    nozzleSize: sheet.nozzleSize ?? "",
-
-    startTime: sheet.startTime ?? "",
-    endTime: sheet.endTime ?? "",
   }));
 };
 
@@ -133,33 +125,43 @@ export const getDefaultExhaustGasEditForm = (
 }
 
 export interface MeasurementpointEditForm {
-  gasTemperature: string;
-  dynamicPressure: string;
-  staticPressure: string;
+  Ts: string;
+  Pv: string;
+  Ps: string;
 
-  inEquipmentTemperature: string;
-  outEquipmentTemperature: string;
-  beforeEquipmentVolume: string;
-  afterEquipmentVolume: string;
-  measureTime: string;
+  inTm: string;
+  outTm: string;
+  beforeVm: string;
+  afterVm: string;
 
+  samplingTime: string;
   vacuumGaugePressure: string;
   finalImpingerTemperature: string;
+
+  Vlc: string;
+  kFactor: string;
+  orificeDp: string;
+  isokineticRatio: string;
 }
 
 const createEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
-  gasTemperature: "",
-  dynamicPressure: "",
-  staticPressure: "",
+  Ts: "",
+  Pv: "",
+  Ps: "",
 
-  inEquipmentTemperature: "",
-  outEquipmentTemperature: "",
-  beforeEquipmentVolume: "",
-  afterEquipmentVolume: "",
-  measureTime: "",
+  inTm: "",
+  outTm: "",
+  beforeVm: "",
+  afterVm: "",
 
+  samplingTime: "",
   vacuumGaugePressure: "",
   finalImpingerTemperature: "",
+
+  Vlc: "",
+  kFactor: "",
+  orificeDp: "",
+  isokineticRatio: "",
 });
 
 export const getDefaultMeasurementpointEditForm = (
@@ -169,19 +171,24 @@ export const getDefaultMeasurementpointEditForm = (
   const measurementPoints = sheet?.measurementPoints ?? [];
 
   const mapped = measurementPoints.map((mp) => ({
-    gasTemperature: mp?.gasTemperature ?? "",
-    dynamicPressure: mp?.dynamicPressure ?? "",
-    staticPressure: mp?.staticPressure ?? "",
+    Ts: mp?.Ts ?? "",
+    Pv: mp?.Pv ?? "",
+    Ps: mp?.Ps ?? "",
 
 
-    inEquipmentTemperature: mp?.equipmentTemperature?.inletTemperature ?? "",
-    outEquipmentTemperature: mp?.equipmentTemperature?.outletTemperature ?? "",
-    beforeEquipmentVolume: mp?.equipmentVolume?.beforeVolume ?? "",
-    afterEquipmentVolume: mp?.equipmentVolume?.afterVolume ?? "",
-    measureTime: mp?.measureTime ?? "",
+    inTm: mp?.equipmentTemperature?.inTm ?? "",
+    outTm: mp?.equipmentTemperature?.outTm ?? "",
+    beforeVm: mp?.equipmentVolume?.beforeVm ?? "",
+    afterVm: mp?.equipmentVolume?.afterVm ?? "",
 
+    samplingTime: mp?.samplingTime ?? "",
     vacuumGaugePressure: mp?.vacuumGaugePressure ?? "",
     finalImpingerTemperature: mp?.finalImpingerTemperature ?? "",
+
+    Vlc: mp?.Vlc ?? "",
+    kFactor: mp?.kFactor ?? "",
+    orificeDp: mp?.orificeDp ?? "",
+    isokineticRatio: mp?.isokineticRatio ?? "",
   }));
 
   if (measurementPointCnt <= mapped.length) {
@@ -230,3 +237,39 @@ export const getDefaultSamplesEditForm = (
     samplingVolume: s?.samplingVolume ?? "",
   }));
 };
+
+export interface ParticleSampleEditForm {
+  Vr: string;
+
+  Cp: string; // 피토우관 계수
+  nozzleSize: string; // 노즐 사이즈 (cm)
+
+  Vm: string;
+  samplingTime: string;
+
+  kFactor: string // K Factor
+  orificeDp: string // 오리피스 차압 (mmHg)
+  isokineticRatio: string // 등속흡입계수
+
+  samplingStartTime: string; // 입자상 물질 채취시작 시간
+  samplingEndTime: string; // 입자상 물질 채취종료 시간
+}
+
+export const getDefaultParticleSampleEditForm = (
+  sheet: MeasurementSheetDocResponse | undefined
+): ParticleSampleEditForm => {
+  const particleSample = sheet?.particleSample;
+
+  return {
+    Vr: "",
+    Cp: particleSample?.Cp ?? "",
+    nozzleSize: particleSample?.nozzleSize ?? "",
+    Vm: particleSample?.Vm ?? "",
+    samplingTime: particleSample?.samplingTime ?? "",
+    kFactor: particleSample?.kFactor ?? "",
+    orificeDp: particleSample?.orificeDp ?? "",
+    isokineticRatio: particleSample?.isokineticRatio ?? "",
+    samplingStartTime: particleSample?.samplingStartTime ?? "",
+    samplingEndTime: particleSample?.samplingEndTime ?? "",
+  }
+}

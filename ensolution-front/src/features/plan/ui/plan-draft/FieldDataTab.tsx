@@ -1,30 +1,31 @@
+import { useState } from "react";
+
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import type {
   PlanInfoEditForm, MeasurementSheetEditForm,
   WeatherEditForm, MoistureEditForm, ExhaustGasEditForm, MeasurementpointEditForm,
   MeasurementItemEditForm, SampleEditForm,
+  ParticleSampleEditForm,
 } from "@/entities/plan/model";
-import { useFieldDataCalculation } from "@plan/hooks";
-import {
-  WeatherSection, MoistureSection, ExhaustGasSection, StackProfileSection, MeasurementPointSection,
-  ReportInfoSection,
-  SampleInfoSection
-} from "@/features/plan/ui";
+import { SheetTab } from "@plan/ui";
+import { CATEGORY_LABELS } from "@/entities/plan/model";
+
+import { EditableTabs } from "@/shared/ui";
 
 export interface FieldDataTabProps {
   planInfo: PlanInfoEditForm;
-  sheet: MeasurementSheetEditForm;
   allSheets: MeasurementSheetEditForm[];
   measurementItems: MeasurementItemEditForm[];
 
-  onPlanInfoChange: (name: keyof PlanInfoEditForm, value: string) => void;
-  onSheetInfoChange: (name: keyof MeasurementSheetEditForm, value: string) => void;
-  onWeatherChange: (name: keyof WeatherEditForm, value: string | null) => void;
-  onMoistureChange: (name: keyof MoistureEditForm, value: string | null) => void;
-  onExhaustGasChange: (name: keyof ExhaustGasEditForm, value: string | null, index: number) => void;
-  onMeasurementPointChange: (pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
-  onSampleItemsChange: (primaryItemId: number | null, concurrentItemIds: number[]) => void;
-  onSampleChange: (sampleIndex: number, name: keyof SampleEditForm, value: string) => void;
+  updatePlanInfoField: (name: keyof PlanInfoEditForm, value: string) => void;
+  updateSheetField: (sheetIndex: number, name: keyof MeasurementSheetEditForm, value: string) => void;
+  updateWeatherField: (sheetIndex: number, name: keyof WeatherEditForm, value: string | null) => void;
+  updateMoistureField: (sheetIndex: number, name: keyof MoistureEditForm, value: string | null) => void;
+  updateExhaustGasField: (sheetIndex: number, name: keyof ExhaustGasEditForm, value: string | null, index: number) => void;
+  updateMeasurementPointField: (sheetIndex: number, pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
+  updateSheetSampleItems: (sheetIndex: number, primaryItemId: number | null, concurrentItemIds: number[]) => void;
+  updateSampleField: (sheetIndex: number, sampleIndex: number, name: keyof SampleEditForm, value: string) => void;
+  updateParticleField: (sheetIndex: number, name: keyof ParticleSampleEditForm, value: string | null) => void;
 
   selectedPS?: TypedEquipmentResponse;
   selectedGS?: TypedEquipmentResponse;
@@ -32,140 +33,117 @@ export interface FieldDataTabProps {
   selectedNZ?: TypedEquipmentResponse;
 
   isParticle: boolean;
-}
 
-// ─── 모바일 카드 스타일 상수 ────────────────────────────────────────
-const mobileWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden";
-const desktopWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
+  addSheet: () => void;
+  removeSheet: (index: number) => void;
+}
 
 export const FieldDataTab = ({
   planInfo,
-  sheet,
   allSheets,
   measurementItems,
-  onPlanInfoChange,
-  onSheetInfoChange,
-  onWeatherChange,
-  onMoistureChange,
-  onExhaustGasChange,
-  onMeasurementPointChange,
-  onSampleItemsChange,
-  onSampleChange,
+  updatePlanInfoField,
+  updateSheetField,
+  updateWeatherField,
+  updateMoistureField,
+  updateExhaustGasField,
+  updateMeasurementPointField,
+  updateSheetSampleItems,
+  updateSampleField,
+  updateParticleField,
+  selectedPS,
+  selectedGS,
   selectedPT,
   selectedNZ,
 
   isParticle,
-}: FieldDataTabProps) => {
 
-  const {
-    atmosphericPressure,
-    calcMoisture,
-    calcExhaustGas,
-    calcMeasurePoint,
-  } = useFieldDataCalculation(planInfo, sheet, selectedPT);
+  addSheet,
+  removeSheet,
+}: FieldDataTabProps) => {
+  const [activeSheetIndex, setActiveSheetIndex] = useState(0);
+  
+  const handleRemoveSheet = (index: number) => {
+    removeSheet(index);
+    if (activeSheetIndex >= allSheets.length - 1) {
+      setActiveSheetIndex(Math.max(0, allSheets.length - 2));
+    }
+  };
+
+  const handleAddSheet = () => {
+    addSheet();
+    setActiveSheetIndex(allSheets.length);
+  };
 
   return (
     <div className="space-y-6">
+      <section className="rounded-lg border border-gray-200 p-4">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-1 flex-1">
+            <label className="text-xs text-gray-500">측정시작시간</label>
+            <input
+              type="time"
+              value={planInfo.measureStartTime}
+              onChange={(e) => updatePlanInfoField("measureStartTime", e.target.value)}
+              className="w-full px-3 py-2 text-sm text-gray-800 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
+            />
+          </div>
+          <span className="text-gray-400 text-sm mt-5">~</span>
+          <div className="flex flex-col gap-1 flex-1">
+            <label className="text-xs text-gray-500">측정종료시간</label>
+            <input
+              type="time"
+              value={planInfo.measureEndTime}
+              onChange={(e) => updatePlanInfoField("measureEndTime", e.target.value)}
+              className="w-full px-3 py-2 text-sm text-gray-800 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
+            />
+          </div>
+        </div>
+      </section>
+
+      <div>
+        {/* 기록지 서브탭 */}
+        <EditableTabs
+          tabs={allSheets.map((sheet) => ({ label: CATEGORY_LABELS[sheet.category] ?? "가스상" }))}
+          activeIndex={activeSheetIndex}
+          onTabChange={setActiveSheetIndex}
+          onAddTab={handleAddSheet}
+          onRemoveTab={handleRemoveSheet}
+          addLabel="기록지 추가"
+        />
+
+        {/* 기록지 내용 */}
+        {allSheets.length === 0 ? (
+          <div className="text-center py-12 text-gray-400 text-sm">
+            기록지를 추가하세요
+          </div>
+        ) : (
+          <SheetTab
+            key={activeSheetIndex}
+            sheet={allSheets[activeSheetIndex]}
+            allSheets={allSheets}
+            measurementItems={measurementItems}
+            planInfo={planInfo}
+            onPlanInfoChange={updatePlanInfoField}
+            onSheetInfoChange={(name, value) => updateSheetField(activeSheetIndex, name, value)}
+            onWeatherChange={(name, value) => updateWeatherField(activeSheetIndex, name, value)}
+            onMoistureChange={(name, value) => updateMoistureField(activeSheetIndex, name, value)}
+            onExhaustGasChange={(name, value, index) => updateExhaustGasField(activeSheetIndex, name, value, index)}
+            onMeasurementPointChange={(pointIndex, name, value) => updateMeasurementPointField(activeSheetIndex, pointIndex, name, value)}
+            onSampleItemsChange={(primaryItemId, concurrentItemIds) => updateSheetSampleItems(activeSheetIndex, primaryItemId, concurrentItemIds)}
+            onSampleChange={(sampleIndex, name, value) => updateSampleField(activeSheetIndex, sampleIndex, name, value)}
+            onParticleSampleChange={(name, value) => updateParticleField(activeSheetIndex, name, value)}
+            selectedPS={selectedPS}
+            selectedGS={selectedGS}
+            selectedPT={selectedPT}
+            selectedNZ={selectedNZ}
+            isParticle={isParticle}
+          />
+        )}
+      </div>
 
       {/* ── 분류 ──────────────────────────────────────── */}
-      <ReportInfoSection
-        mobileWrap={mobileWrap}
-        desktopWrap={desktopWrap}
-
-        sheet={sheet}
-        onChange={onSheetInfoChange}
-      />
-
-      {/* ── 시료 정보 ──────────────────────────────────────── */}
-      <SampleInfoSection
-        sheet={sheet}
-        allSheets={allSheets}
-        measurementItems={measurementItems}
-        onSampleItemsChange={onSampleItemsChange}
-        onSampleChange={onSampleChange}
-      />
-
-      {/* ── 기상정보 ─────────────────────────────────── */}
-      <WeatherSection
-        mobileWrap={mobileWrap}
-        desktopWrap={desktopWrap}
-
-        weather={sheet.weather}
-        onChange={onWeatherChange}
-
-        atmosphericPressure={atmosphericPressure}
-      />
-
-      {/* ── 수분량정보 ────────────────────────────────── */}
-      <MoistureSection
-        mobileWrap={mobileWrap}
-        desktopWrap={desktopWrap}
-
-        moisture={sheet.moisture}
-        onChange={onMoistureChange}
-
-        weightDiff={calcMoisture.weightDiff}
-        tempAvg={calcMoisture.tempAvg}
-        dryVolumeDiff={calcMoisture.dryVolumeDiff}
-        pressureToMmHg={calcMoisture.pressureToMmHg}
-        pressureToInchH2O={calcMoisture.pressureToInchH2O}
-
-        moistureRatio={calcMoisture.moistureRatio}
-      />
-
-      {/* ── 배출가스정보 ──────────────────────────────── */}
-      <ExhaustGasSection
-        mobileWrap={mobileWrap}
-        desktopWrap={desktopWrap}
-
-        exhaustGas={sheet.exhaustGas}
-        onChange={onExhaustGasChange}
-
-        standardOxygen={planInfo.standardOxygen}
-
-        o2ConcentrationAvg={calcExhaustGas.o2ConcentrationAvg}
-        co2ConcentrationAvg={calcExhaustGas.co2ConcentrationAvg}
-        coConcentrationAvg={calcExhaustGas.coConcentrationAvg}
-        n2ConcentrationAvg={calcExhaustGas.n2ConcentrationAvg}
-        noxConcentrationAvg={calcExhaustGas.noxConcentrationAvg}
-        soxConcentrationAvg={calcExhaustGas.soxConcentrationAvg}
-        oxygenCorrectionFactor={calcExhaustGas.oxygenCorrectionFactor}
-        gasDensity={calcExhaustGas.gasDensity}
-      />
-
-      <StackProfileSection
-        mobileWrap={mobileWrap}
-        desktopWrap={desktopWrap}
-
-        planInfo={planInfo}
-        onChange={onPlanInfoChange}
-
-        stackArea={calcMeasurePoint.area}
-        measurePointCnt={calcMeasurePoint.measurePointCnt}
-      />
-
-      <MeasurementPointSection
-        sheet={sheet}
-        onChange={onMeasurementPointChange}
-
-        measurePointLength={calcMeasurePoint.measurePointLength}
-        AvgGasTemp={calcMeasurePoint.AvgGasTemp}
-        AvgPd={calcMeasurePoint.AvgPd}
-        AvgPs={calcMeasurePoint.AvgPs}
-        avgInTemp={calcMeasurePoint.avgInTemp}
-        avgOutTemp={calcMeasurePoint.avgOutTemp}
-
-        standardDensity={calcMeasurePoint.standardDensity}
-        gasVelocity={calcMeasurePoint.gasVelocity}
-        pointVelocities={calcMeasurePoint.pointVelocities}
-        pitotTubeCoefficient={calcMeasurePoint.pitotTubeCoefficient}
-        quantity={calcMeasurePoint.quantity}
-        standardQuantity={calcMeasurePoint.standardQuantity}
-
-        selectedNZ={selectedNZ}
-
-        isParticle={isParticle}
-      />
+      
     </div>
   );
 };

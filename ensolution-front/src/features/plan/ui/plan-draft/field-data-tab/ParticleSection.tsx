@@ -1,148 +1,193 @@
-import type { MeasurementpointEditForm } from "@/entities/plan/model";
-import { TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell } from "@shared/ui";
-import type { NozzleSpec, TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import { useState } from "react";
+import { createPortal } from "react-dom";
+
+import type { MeasurementSheetEditForm, MeasurementpointEditForm, ParticleSampleEditForm } from "@/entities/plan/model";
+import type { NozzleSpec, TypedEquipmentResponse } from "@/entities/agency/equipment/model";
+
+
+import {
+  TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell, TableActionCell 
+} from "@shared/ui";
+
+import { display } from "@shared/lib";
+import { Sparkles } from "lucide-react";
+import { NozzleRecommendModal } from "./nozzle-modal";
 
 interface ParticleSectionProps {
-  measurementPoints: MeasurementpointEditForm[];
+  sheet: MeasurementSheetEditForm;
   onChange: (index: number, name: keyof MeasurementpointEditForm, value: string) => void;
+  onSheetChange: (name: keyof MeasurementSheetEditForm, value: string) => void;
+  onParticleSampleChange: (name: keyof ParticleSampleEditForm, value: string | null) => void;
+
+  avgInTemp: number | null;
+  avgOutTemp: number | null;
+
+  recommendList: {
+    nozzle: number,
+    orificeDp: number | null,
+    Vm: number | null,
+    Vlc: number | null,
+    samplingTime: number | null,
+  }[];
+  orificeDpList: {
+    orificeDp: number | null,
+    kFactor: number | null,
+  }[];
+
+  standardGasDensityList: number[] | null;
+  avgGasVelocity: number | null;
+  gasVelocityList: number[] | null;
+  pitotTubeCoefficient: number | null;
+
   selectedNZ?: TypedEquipmentResponse;
 }
 
 export const ParticleSection = ({
-  measurementPoints,
+  sheet,
   onChange,
+  // onSheetChange,
+  onParticleSampleChange,
+
+  avgInTemp,
+  avgOutTemp,
+
+  recommendList,
+  orificeDpList,
+
+  standardGasDensityList,
+  gasVelocityList,
+  pitotTubeCoefficient,
+
   selectedNZ,
 }: ParticleSectionProps) => {
+  const [showAddModal, setShowAddModal] = useState(false);
 
-  const [standardDesiredGasVolume, setStandardDesiredGasVolume] = useState("");
-  const [measuringTime, setMeasuringTime] = useState("");
+  const measurementPoints = sheet.measurementPoints;
 
   const nozzleSizeOptions =
-  ((selectedNZ?.spec as NozzleSpec | undefined)?.diameters ?? []).map(d => ({
-    label: `${d.diameter} cm`,
-    value: String(d.diameter),
+    ((selectedNZ?.spec as NozzleSpec | undefined)?.diameters ?? []).map(d => ({
+      label: `${d.diameter} cm`,
+      value: String(d.diameter),
   }));
 
   return (
     <>
       <tr>
-        <TableLabelCell><i>V<sub>std-desired</sub></i></TableLabelCell>
-        <TableInputCell
-          value={standardDesiredGasVolume}
-          onChange={setStandardDesiredGasVolume}
-          colSpan={3}
-          unit={<>S<sub>m</sub><sup>3</sup></>}
-        />
+        <TableLabelCell>DGM 입구온도 (<i>P<sub>g</sub></i>)</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.inTm}
+            onChange={(value) =>
+              onChange(index, "inTm", value)
+            }
+            unit={<i>°C</i>}
+          />
+        ))}
+        <TableResultCell value={display(avgInTemp)} unit={<i>°C</i>} />
       </tr>
       <tr>
-        <TableLabelCell><i>θ</i></TableLabelCell>
-        <TableInputCell
-          value={measuringTime}
-          onChange={setMeasuringTime}
-          colSpan={3}
-          unit={<>min</>}
-        />
+        <TableLabelCell>DGM 출구온도 (<i>P<sub>g</sub></i>)</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.outTm}
+            onChange={(value) =>
+              onChange(index, "outTm", value)
+            }
+            unit={<i>°C</i>}
+          />
+        ))}
+        <TableResultCell value={display(avgOutTemp)} unit={<i>°C</i>} />
       </tr>
-
       <tr>
-        <TableLabelCell>노즐</TableLabelCell>
+        <TableLabelCell>노즐 추천</TableLabelCell>
+        <TableActionCell
+          colSpan={measurementPoints.length}
+        >
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="inline-flex items-center gap-1.5 rounded-md border border-blue-400 px-3 py-1.5 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-50 active:bg-blue-100">
+            <Sparkles size={13} strokeWidth={2} />
+            auto
+          </button>
+        </TableActionCell>
+        <TableResultCell value="" />
+      </tr>
+      <tr>
+        <TableLabelCell>노즐 사이즈</TableLabelCell>
         <TableSelectableCell
-          value=""
-          options={nozzleSizeOptions} 
-          colSpan={3}
-          onChange={(value) => console.log(value)} 
+          value={sheet.particleSample.nozzleSize}
+          options={nozzleSizeOptions}
+          colSpan={measurementPoints.length}
+          onChange={(value) => onParticleSampleChange("nozzleSize", value)}
+        />
+        <TableResultCell value="" />
+      </tr>
+      <tr>
+        <TableLabelCell>피토우관 계수 (<i>C<sub>P</sub></i>)</TableLabelCell>
+        <TableResultCell
+          value={display(pitotTubeCoefficient)}
+          colSpan={measurementPoints.length + 1}
+          unit="Sm³/hr"
         />
       </tr>
-      
       <tr>
-        <TableLabelCell>△H</TableLabelCell>
-        {measurementPoints.map((_, index) => (
+        <TableLabelCell>배출가스 밀도 (<i>ρ</i>)</TableLabelCell>
+        {standardGasDensityList?.map((gasDensity, index) => (
           <TableResultCell
             key={index}
-            value="re"
-            unit="kg/Sm³"
+            value={display(gasDensity)}
+            unit={<i>kg/m³</i>}
           />
         ))}
-        <TableResultCell value="re" unit="kg/Sm³" />
+        <TableResultCell value="" />
       </tr>
       <tr>
-        <TableLabelCell>K-factor</TableLabelCell>
-        {measurementPoints.map((_, index) => (
+        <TableLabelCell>배출가스 유속 (<i>V<sub>s</sub></i>)</TableLabelCell>
+        {gasVelocityList?.map((gasVelocity, index) => (
           <TableResultCell
             key={index}
-            value="re"
-            unit="kg/Sm³"
+            value={display(gasVelocity)}
+            unit={<i>m/s</i>}
           />
         ))}
-        <TableResultCell value="re" unit="kg/Sm³" />
+        <TableResultCell value="" />
       </tr>
       <tr>
-        <TableLabelCell><i>T<sub>m-In</sub></i></TableLabelCell>
-        {measurementPoints.map((mp, index) => (
-          <TableInputCell
-            key={index}
-            value={mp.inEquipmentTemperature}
-            onChange={(value) =>
-              onChange(index, "inEquipmentTemperature", value)
-            }
-            unit="°C"
-          />
-        ))}
-        <TableResultCell value="re" unit={<>mmH<sub>2</sub>O</>} />
-      </tr>
-      <tr>
-        <TableLabelCell><i>T<sub>m-Out</sub></i></TableLabelCell>
-        {measurementPoints.map((mp, index) => (
-          <TableInputCell
-            key={index}
-            value={mp.outEquipmentTemperature}
-            onChange={(value) =>
-              onChange(index, "outEquipmentTemperature", value)
-            }
-            unit="°C"
-          />
-        ))}
-        <TableResultCell value="re" unit={<>mmH<sub>2</sub>O</>} />
-      </tr>
-      <tr>
-        <TableLabelCell><i>T<sub>m-Avg</sub></i></TableLabelCell>
-        {measurementPoints.map((_, index) => (
+        <TableLabelCell>오리피스 차압 (△<i>H</i>)</TableLabelCell>
+        {orificeDpList?.map((list, index) => (
           <TableResultCell
             key={index}
-            value="re"
-            unit="kg/Sm³"
+            value={display(list.orificeDp)}
+            unit={<i>m/s</i>}
           />
         ))}
-        <TableResultCell value="re" unit="kg/Sm³" />
+        <TableResultCell value="" />
+      </tr>
+      <tr>
+        <TableLabelCell>K Factor</TableLabelCell>
+        {orificeDpList?.map((list, index) => (
+          <TableResultCell
+            key={index}
+            value={display(list.kFactor)}
+            unit={<i>m/s</i>}
+          />
+        ))}
+        <TableResultCell value="" />
       </tr>
 
-      <tr>
-        <TableLabelCell><i>V<sub>m</sub></i></TableLabelCell>
-        {measurementPoints.map((mp, index) => (
-          <TableInputCell
-            key={index}
-            value={mp.outEquipmentTemperature}
-            onChange={(value) =>
-              onChange(index, "outEquipmentTemperature", value)
-            }
-            unit="m³"
-          />
-        ))}
-        <TableResultCell value="re" unit={<>mmH<sub>2</sub>O</>} />
-      </tr>
-
-      <tr>
-        <TableLabelCell><i>I(%)</i></TableLabelCell>
-        {measurementPoints.map((_, index) => (
-          <TableResultCell
-            key={index}
-            value="re"
-            unit="kg/Sm³"
-          />
-        ))}
-        <TableResultCell value="re" unit="kg/Sm³" />
-      </tr>
+      {showAddModal && createPortal(
+        <NozzleRecommendModal
+          onClose={() => setShowAddModal(false)}
+          onSuccess={() => console.log("success")}
+          sheet={sheet}
+          onParticleSampleChange={onParticleSampleChange}
+          recommendList={recommendList}
+        />, document.body)}
+          
     </>
-  );
-}
+    );
+  };

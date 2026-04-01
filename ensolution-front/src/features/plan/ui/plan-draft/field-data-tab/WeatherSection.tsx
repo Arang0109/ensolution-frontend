@@ -2,9 +2,10 @@ import type { WeatherEditForm } from "@/entities/plan/model";
 import {
   WEATHER_CONDITION_LABELS_OPTIONS, WIND_DIRECTION_LABELS_OPTIONS
 } from "@/entities/plan/model";
+import { display } from "@shared/lib";
 
 import {
-  TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell
+  TableLabelCell, TableInputCell, TableResultCell, TableSelectableCell, SectionAccordion
 } from "@shared/ui";
 
 interface WeatherSectionProps {
@@ -13,163 +14,68 @@ interface WeatherSectionProps {
 
   weather: WeatherEditForm;
   onChange: (name: keyof WeatherEditForm, value: string) => void;
-  atmosphericPressure: number;
+  atmosphericPressure: number | null;
 }
-
-const PressureRow = ({
-  weather,
-  atmosphericPressure,
-  onChange,
-}: {
-  weather: WeatherSectionProps["weather"];
-  atmosphericPressure: number;
-  onChange: WeatherSectionProps["onChange"];
-}) => (
-  <>
-    <TableLabelCell>대기압</TableLabelCell>
-    <TableInputCell
-      colSpan={2}
-      value={weather.pressure}
-      onChange={(value) => onChange("pressure", value)}
-      unit="Hpa"
-    />
-    <TableResultCell value={atmosphericPressure.toFixed(1)} unit="mmHg" />
-  </>
-);
-
-const TemperatureRow = ({
-  weather,
-  onChange,
-}: {
-  weather: WeatherSectionProps["weather"];
-  onChange: WeatherSectionProps["onChange"];
-}) => (
-  <>
-    <TableLabelCell>기온</TableLabelCell>
-    <TableInputCell
-      value={weather.temperature}
-      onChange={(value) => onChange("temperature", value)}
-      unit="°C"
-    />
-  </>
-);
-
-const HumidityRow = ({
-  weather,
-  onChange,
-}: {
-  weather: WeatherSectionProps["weather"];
-  onChange: WeatherSectionProps["onChange"];
-}) => (
-  <>
-    <TableLabelCell>습도</TableLabelCell>
-    <TableInputCell
-      value={weather.humidity}
-      onChange={(value) => onChange("humidity", value)}
-      unit="%"
-    />
-  </>
-);
-
-const WeatherConditionRow = ({
-  weather,
-  onChange,
-}: {
-  weather: WeatherSectionProps["weather"];
-  onChange: WeatherSectionProps["onChange"];
-}) => (
-  <>
-    <TableLabelCell>기상</TableLabelCell>
-    <TableSelectableCell
-      colSpan={3}
-      value={weather.weatherCondition}
-      options={WEATHER_CONDITION_LABELS_OPTIONS}
-      onChange={(value) => onChange("weatherCondition", value)} />
-  </>
-);
-
-const WindDirectionRow = ({
-  weather,
-  onChange,
-}: {
-  weather: WeatherSectionProps["weather"];
-  onChange: WeatherSectionProps["onChange"];
-}) => (
-  <>
-    <TableLabelCell>풍향</TableLabelCell>
-    <TableSelectableCell
-      value={weather.windDirection} 
-      options={WIND_DIRECTION_LABELS_OPTIONS} 
-      onChange={(value) => onChange("windDirection", value)} 
-    />
-  </>
-);
-
-const WindSpeedRow = ({
-  weather,
-  onChange,
-}: {
-  weather: WeatherSectionProps["weather"];
-  onChange: WeatherSectionProps["onChange"];
-}) => (
-  <>
-    <TableLabelCell>풍속</TableLabelCell>
-    <TableInputCell
-      value={weather.windSpeed}
-      onChange={(value) => onChange("windSpeed", value)}
-      unit="m/s"
-    />
-  </>
-);
 
 export const WeatherSection = ({
   mobileWrap,
   desktopWrap,
-  
+
   weather,
   onChange,
   atmosphericPressure,
 }: WeatherSectionProps) => {
 
   return (
-    <section>
-      <h3 className="text-sm font-semibold text-gray-700 mb-2">기상정보</h3>
-
+    <SectionAccordion title="Part 1. 기상정보 입력">
       {/* Mobile */}
       <div className={mobileWrap}>
         <table className="w-full table-fixed border-collapse text-sm">
           <tbody>
             <tr>
-              <PressureRow
-                weather={weather}
-                atmosphericPressure={atmosphericPressure}
-                onChange={onChange}
-              />
+              <TableLabelCell colSpan={3}>대기압 (<i>Hpa</i>)</TableLabelCell>
+              <TableLabelCell>기상</TableLabelCell>
             </tr>
             <tr>
-              <TemperatureRow
-                weather={weather}
-                onChange={onChange}
+              <TableInputCell
+                colSpan={2}
+                type="number"
+                value={weather.pressure}
+                onChange={(value) => onChange("pressure", value)}
+                unit="Hpa"
               />
-              <HumidityRow
-                weather={weather}
-                onChange={onChange}
-              />
+              <TableResultCell value={display(atmosphericPressure)} unit="mmHg" />
+              <TableSelectableCell
+                value={weather.weatherCondition}
+                options={WEATHER_CONDITION_LABELS_OPTIONS}
+                onChange={(value) => onChange("weatherCondition", value)} />
             </tr>
             <tr>
-              <WeatherConditionRow
-                weather={weather}
-                onChange={onChange}
-              />
+              <TableLabelCell>기온 (<i>°C</i>)</TableLabelCell>
+              <TableLabelCell>습도 (<i>%</i>)</TableLabelCell>
+              <TableLabelCell>풍향</TableLabelCell>
+              <TableLabelCell>풍속 (<i>m/s</i>)</TableLabelCell>
             </tr>
             <tr>
-              <WindDirectionRow
-                weather={weather}
-                onChange={onChange}
-              />
-              <WindSpeedRow
-                weather={weather}
-                onChange={onChange}
+              <TableInputCell
+                type="number"
+                value={weather.temperature}
+                onChange={(value) => onChange("temperature", value)}
+                unit="°C"/>
+              <TableInputCell
+                type="number"
+                value={weather.humidity}
+                onChange={(value) => onChange("humidity", value)}
+                unit="%"/>
+              <TableSelectableCell
+                value={weather.windDirection}
+                options={WIND_DIRECTION_LABELS_OPTIONS}
+                onChange={(value) => onChange("windDirection", value)}/>
+              <TableInputCell
+                type="number"
+                value={weather.windSpeed}
+                onChange={(value) => onChange("windSpeed", value)}
+                unit="m/s"
               />
             </tr>
           </tbody>
@@ -181,37 +87,52 @@ export const WeatherSection = ({
         <table className="w-full table-fixed border-collapse text-sm">
           <tbody>
             <tr>
-              <PressureRow
-                weather={weather}
-                atmosphericPressure={atmosphericPressure}
-                onChange={onChange}
-              />
-              <TemperatureRow
-                weather={weather}
-                onChange={onChange}
-              />
-              <HumidityRow
-                weather={weather}
-                onChange={onChange}
-              />  
+              <TableLabelCell colSpan={2}>대기압 (<i>Hpa</i>)</TableLabelCell>
+              <TableLabelCell>기온 (<i>°C</i>)</TableLabelCell>
+              <TableLabelCell>습도 (<i>%</i>)</TableLabelCell>
+              <TableLabelCell>기상</TableLabelCell>
+              <TableLabelCell>풍향</TableLabelCell>
+              <TableLabelCell>풍속 (<i>m/s</i>)</TableLabelCell>
             </tr>
             <tr>
-              <WeatherConditionRow
-                weather={weather}
-                onChange={onChange}
+              <TableInputCell
+                type="number"
+                value={weather.pressure}
+                onChange={(value) => onChange("pressure", value)}
+                unit="Hpa"
               />
-              <WindDirectionRow
-                weather={weather}
-                onChange={onChange}
+              <TableResultCell value={display(atmosphericPressure)} unit="mmHg" />
+              <TableInputCell
+                type="number"
+                value={weather.temperature}
+                onChange={(value) => onChange("temperature", value)}
+                unit="°C"
               />
-              <WindSpeedRow
-                weather={weather}
-                onChange={onChange}
+              <TableInputCell
+                type="number"
+                value={weather.humidity}
+                onChange={(value) => onChange("humidity", value)}
+                unit="%"
+              />
+              <TableSelectableCell
+                value={weather.weatherCondition}
+                options={WEATHER_CONDITION_LABELS_OPTIONS}
+                onChange={(value) => onChange("weatherCondition", value)} />
+              <TableSelectableCell
+                value={weather.windDirection}
+                options={WIND_DIRECTION_LABELS_OPTIONS}
+                onChange={(value) => onChange("windDirection", value)}
+              />
+              <TableInputCell
+                type="number"
+                value={weather.windSpeed}
+                onChange={(value) => onChange("windSpeed", value)}
+                unit="m/s"
               />
             </tr>
           </tbody>
         </table>
       </div>
-    </section>
+    </SectionAccordion>
   )
 }

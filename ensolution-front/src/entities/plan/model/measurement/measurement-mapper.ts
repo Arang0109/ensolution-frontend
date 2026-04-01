@@ -15,6 +15,8 @@ export const mapDraftFormToRequest = (
   vehicleNumber: form.planInfo.vehicleNumber,
   mentor: form.planInfo.mentor,
   mentee: form.planInfo.mentee,
+  measureStartTime: form.planInfo.measureStartTime,
+  measureEndTime: form.planInfo.measureEndTime,
 
   client: {
     company: {
@@ -102,21 +104,21 @@ export const mapDraftFormToRequest = (
     },
 
     measurementPoints: sheet.measurementPoints.map((mp) => ({
-      gasTemperature: mp.gasTemperature,
-      dynamicPressure: mp.dynamicPressure,
-      staticPressure: mp.staticPressure,
+      Ts: mp.Ts,
+      Pv: mp.Pv,
+      Ps: mp.Ps,
 
       equipmentTemperature: {
-        inletTemperature: mp.inEquipmentTemperature,
-        outletTemperature: mp.outEquipmentTemperature,
+        inTm: mp.inTm,
+        outTm: mp.outTm,
       },
 
       equipmentVolume: {
-        beforeVolume: mp.beforeEquipmentVolume,
-        afterVolume: mp.afterEquipmentVolume,
+        beforeVm: mp.beforeVm,
+        afterVm: mp.afterVm,
       },
 
-      measureTime: mp.measureTime,
+      samplingTime: mp.samplingTime,
       vacuumGaugePressure: mp.vacuumGaugePressure,
       finalImpingerTemperature: mp.finalImpingerTemperature,
     })),
@@ -131,14 +133,22 @@ export const mapDraftFormToRequest = (
       beforeVolume: sheet.beforeVolume,
       afterVolume: sheet.afterVolume,
       blankSampleNumber: sheet.blankSampleNumber,
-      sampleNumber: sheet.sampleNumber
+      sampleNumber: sheet.sampleNumber,
+      samplingVolume: sheet.samplingVolume,
     })),
 
-    quantity: sheet.quantity,
-    pitotTubeCoefficient: sheet.pitotTubeCoefficient,
-    nozzleSize: sheet.nozzleSize,
+    particleSample: {
+      Cp: sheet.particleSample.Cp,
+      nozzleSize: sheet.particleSample.nozzleSize,
+      Vm: sheet.particleSample.Vm,
+      samplingTime: sheet.particleSample.samplingTime,
+      kFactor: sheet.particleSample.kFactor,
+      orificeDp: sheet.particleSample.orificeDp,
+      isokineticRatio: sheet.particleSample.isokineticRatio,
+      samplingStartTime: sheet.particleSample.samplingStartTime,
+      samplingEndTime: sheet.particleSample.samplingEndTime
+    },
 
-    startTime: sheet.startTime,
-    endTime: sheet.endTime
+    quantity: sheet.quantity
   }))
 });

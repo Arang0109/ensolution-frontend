@@ -42,4 +42,4 @@ export const formatArea = (value?: number | null) =>
 export const formatVolume = (value?: number | null) =>
   formatNumberWithUnit(value, "m3");
 
-export const display = (v: number | null) => v ?? "-";
+export const display = (v: number | null) => (v == null || isNaN(v)) ? "-" : v;

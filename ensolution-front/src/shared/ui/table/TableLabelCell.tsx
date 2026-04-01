@@ -1,7 +1,19 @@
-export const TableLabelCell = ({ children }: { children: React.ReactNode }) => (
+export const TableLabelCell = ({
+  children,
+  colSpan,
+}: {
+  children: React.ReactNode,
+  colSpan?: number
+ }) => (
   <th
     scope="row"
-    className="bg-gray-100 border border-gray-200 px-2 py-2 text-center text-[9px] sm:text-xs font-semibold text-gray-600 whitespace-nowrap w-16 sm:w-24"
+    colSpan={colSpan}
+    className={`
+      bg-slate-100 border border-slate-200
+      p-1 pr-3 md:p-2
+      text-right text-[9px] sm:text-xs
+      font-semibold text-slate-700 whitespace-nowrap
+    `}
   >
     {children}
   </th>

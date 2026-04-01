@@ -1,7 +1,6 @@
 export const SHAPE_LABELS = {
   CIRCULAR: '원형',
-  RECTANGULAR: '사각형',
-  OTHER: '기타',
+  RECTANGULAR: '사각형'
 } as const;
 export type Shape = keyof typeof SHAPE_LABELS;
 

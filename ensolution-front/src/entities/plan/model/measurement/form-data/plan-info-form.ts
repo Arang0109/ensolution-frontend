@@ -81,6 +81,9 @@ export interface PlanInfoEditForm {
   mentor: string;
   mentee: string;
 
+  measureStartTime: string;
+  measureEndTime: string;
+
   companyName: string;
   workplaceName: string;
   address: string;
@@ -116,9 +119,12 @@ export const getDefaultPreInfoEditForm = (
     measurementField: measurementInfo?.measurementField ?? "AIR",
     measurementType: measurementInfo?.measurementType ?? "SELF",
     teamName: measurementInfo?.teamName ?? "",
+    vehicleNumber: measurementInfo?.vehicleNumber ?? "",
     mentor: measurementInfo?.mentor ?? "",
     mentee: measurementInfo?.mentee ?? "",
-    vehicleNumber: measurementInfo?.vehicleNumber ?? "",
+
+    measureStartTime: measurementInfo?.measureStartTime ?? "",
+    measureEndTime: measurementInfo?.measureEndTime ?? "",
 
     companyName: company?.companyName ?? "",
     workplaceName: company?.workplaceName ?? "",

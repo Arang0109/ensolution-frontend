@@ -21,7 +21,10 @@ export const PlanTable = ({ plans }: PlanTableProps) => {
             측정일
           </th>
           <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
-            상태
+            팀
+          </th>
+          <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+            측정시설
           </th>
           <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
             측정항목
@@ -33,10 +36,7 @@ export const PlanTable = ({ plans }: PlanTableProps) => {
             사업장
           </th>
           <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
-            측정시설
-          </th>
-          <th className="px-3 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
-            팀
+            상태
           </th>
           <th className="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
             측정 종류
@@ -61,6 +61,12 @@ export const PlanTable = ({ plans }: PlanTableProps) => {
                 {PLAN_STATUS[plan.status]}
               </span>
             </td>
+            <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
+              {plan.teamName}
+            </td>
+            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+              {plan.stackName}
+            </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
               {plan.measurementItems.join(", ")}
             </td>
@@ -69,12 +75,6 @@ export const PlanTable = ({ plans }: PlanTableProps) => {
             </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
               {plan.workplaceName}
-            </td>
-            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-              {plan.stackName}
-            </td>
-            <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
-              {plan.teamName}
             </td>
             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
               {MEASUREMENT_TYPE[plan.measurementType as keyof typeof MEASUREMENT_TYPE] ?? "-"}

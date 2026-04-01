@@ -7,15 +7,19 @@ import type {
   MeasurementSheetEditForm,
   WeatherEditForm, MoistureEditForm, ExhaustGasEditForm,
   SampleEditForm,
+  ParticleSampleEditForm,
 } from "@/entities/plan/model";
 import {
   getDefaultPlanDraftEditForm,
   getDefaultWeatherEditForm,
   getDefaultMoistureEditForm,
   getDefaultExhaustGasEditForm,
+  getDefaultParticleSampleEditForm,
 } from "@/entities/plan/model";
-import { calcMeasurePointCnt } from "@plan/util";
+import { calcMeasurementPointCnt } from "@plan/util";
 import type { StackMeasurementResponse } from "@/entities/stack/model";
+
+import { calculator } from "@shared/lib";
 
 const createEmptySample = (): SampleEditForm => ({
   startTime: "",
@@ -32,16 +36,20 @@ const createEmptySample = (): SampleEditForm => ({
 });
 
 const getEmptyMeasurementPoint = (): MeasurementpointEditForm => ({
-  gasTemperature: "",
-  dynamicPressure: "",
-  staticPressure: "",
-  inEquipmentTemperature: "",
-  outEquipmentTemperature: "",
-  beforeEquipmentVolume: "",
-  afterEquipmentVolume: "",
-  measureTime: "",
+  Ts: "",
+  Pv: "",
+  Ps: "",
+  inTm: "",
+  outTm: "",
+  beforeVm: "",
+  afterVm: "",
+  samplingTime: "",
   vacuumGaugePressure: "",
   finalImpingerTemperature: "",
+  Vlc: "",
+  kFactor: "",
+  orificeDp: "",
+  isokineticRatio: "",
 });
 
 const syncMeasurementPoints = (
@@ -56,6 +64,8 @@ const syncMeasurementPoints = (
 };
 
 export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
+  const { toNumbers, safeCalc } = calculator;
+
   const [editForm, setEditForm] = useState<PlanDraftEditForm>(getDefaultPlanDraftEditForm(plan));
 
   const updatePlanInfoField = (
@@ -64,15 +74,17 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
   ) => {
     setEditForm(prev => {
       const nextPlanInfo = { ...prev.planInfo, [name]: value };
-      const measurePointCnt = calcMeasurePointCnt({
-        shape: nextPlanInfo.shape,
-        horizontalLength: nextPlanInfo.horizontalLength,
-        verticalLength: nextPlanInfo.verticalLength,
-      });
-      const pointCount = Math.ceil(measurePointCnt / 4);
+      const diameters = toNumbers([nextPlanInfo.horizontalLength, nextPlanInfo.verticalLength]);
+      
+      const measurePointCnt = safeCalc([diameters], () =>
+        calcMeasurementPointCnt(nextPlanInfo.shape, diameters!)
+      );
+      const pointCount = safeCalc([measurePointCnt], () =>
+        Math.ceil(measurePointCnt! / 4)
+      );
       const syncedSheets = prev.sheets.map(sheet => ({
         ...sheet,
-        measurementPoints: syncMeasurementPoints(sheet.measurementPoints, pointCount),
+        measurementPoints: syncMeasurementPoints(sheet.measurementPoints, pointCount?? 1),
       }));
       return {
         ...prev,
@@ -211,6 +223,21 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
     }));
   };
 
+  const updateParticleField = (
+    sheetIndex: number,
+    name: keyof ParticleSampleEditForm,
+    value: string | null
+  ) => {
+    setEditForm(prev => {
+      const updatedSheets = prev.sheets.map((sheet, i) =>
+        i === sheetIndex
+          ? { ...sheet, particleSample: { ...sheet.particleSample, [name]: value } }
+          : sheet
+      );
+      return { ...prev, sheets: updatedSheets };
+    });
+  };
+
   const updateMeasurementItemField = (
     stackMeasurementId: number,
     name: keyof MeasurementItemEditForm,
@@ -255,13 +282,15 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
 
   const addSheet = () => {
     setEditForm(prev => {
-      const pointCount = Math.ceil(calcMeasurePointCnt({
-        shape: prev.planInfo.shape,
-        horizontalLength: prev.planInfo.horizontalLength,
-        verticalLength: prev.planInfo.verticalLength,
-      }) / 4) || 1;
+      const diameters = toNumbers([prev.planInfo.horizontalLength, prev.planInfo.verticalLength]);
+      const measurePointCnt = safeCalc([diameters], () =>
+        calcMeasurementPointCnt(prev.planInfo.shape, diameters!)
+      );
+      const pointCount = safeCalc([measurePointCnt], () =>
+        Math.ceil(measurePointCnt! / 4)
+      ) ?? 1;
       const newSheet: MeasurementSheetEditForm = {
-        category: "OTHER",
+        category: "GAS",
         referenceNumber: "",
         primaryItemId: null,
         concurrentItemIds: [],
@@ -270,11 +299,8 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
         exhaustGas: getDefaultExhaustGasEditForm(undefined),
         measurementPoints: Array.from({ length: pointCount }, getEmptyMeasurementPoint),
         samples: [],
+        particleSample: getDefaultParticleSampleEditForm(undefined),
         quantity: "",
-        pitotTubeCoefficient: "",
-        nozzleSize: "",
-        startTime: "",
-        endTime: "",
       };
       return { ...prev, sheets: [...prev.sheets, newSheet] };
     });
@@ -305,6 +331,7 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
     updateMeasurementItems,
     updateSheetSampleItems,
     updateSampleField,
+    updateParticleField,
     updateMeasurementItemField,
     addSheet,
     removeSheet,

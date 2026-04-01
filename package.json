@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "lucide-react": "^0.563.0"
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.563.0",
+    "react-day-picker": "^9.14.0"
   }
 }

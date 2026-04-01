@@ -1,7 +1,7 @@
 import { PITOT_TUBE_OPTIONS } from '@/entities/agency/equipment/model';
 import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec, TypedEquipmentResponse } from '@/entities/agency/equipment/model';
 import type { EquipmentEditForm } from '@/entities/plan/model';
-import { TableLabelCell, TableReadonlyCell, TableSelectableCell } from '@shared/ui';
+import { TableLabelCell, TableReadonlyCell, TableSelectableCell, SectionAccordion } from '@shared/ui';
 
 interface EquipmentTabProps {
   equipment: EquipmentEditForm;
@@ -39,9 +39,7 @@ export const EquipmentTab = ({
     <div className="space-y-6">
 
       {/* 입자상 시료채취장비 */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">입자상 시료채취장비</h3>
-
+      <SectionAccordion title="1. 입자상 시료채취장비">
         {/* Mobile */}
         <div className={mobileSectionWrap}>
           <table className="w-full border-collapse text-sm">
@@ -115,12 +113,10 @@ export const EquipmentTab = ({
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionAccordion>
 
       {/* 가스상 시료채취장비 */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">가스상 시료채취장비</h3>
-
+      <SectionAccordion title="2. 가스상 시료채취장비">
         <div className={mobileSectionWrap}>
           <table className="w-full border-collapse text-sm">
             <tbody>
@@ -185,12 +181,9 @@ export const EquipmentTab = ({
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionAccordion>
 
-      {/* 피토우관 */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">피토우관</h3>
-
+      <SectionAccordion title="3. 피토우관">
         <div className={mobileSectionWrap}>
           <table className="w-full border-collapse text-sm">
             <tbody>
@@ -260,12 +253,10 @@ export const EquipmentTab = ({
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionAccordion>
 
       {/* 노즐 */}
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">노즐</h3>
-
+      <SectionAccordion title="4. 노즐">
         <div className={mobileSectionWrap}>
           <table className="w-full border-collapse text-sm">
             <tbody>
@@ -329,8 +320,7 @@ export const EquipmentTab = ({
             </tbody>
           </table>
         </div>
-      </section>
-
+      </SectionAccordion>
     </div>
   );
 };

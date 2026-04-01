@@ -14,7 +14,7 @@ export const usePlanDraftViewModel = () => {
   const { planId } = useParams();
   const { plan, isLoading } = usePlanDetailQuery(Number(planId));
 
-  const { stack, fetchStack } = usePlanDraftData();
+  const { stack, fetchStack, stackLoading } = usePlanDraftData();
   const { saveDraft, deleteDraft, deletingId } = usePlanActions();
 
   const isParticle = plan?.measurementInfo.measurementItems.some(
@@ -54,7 +54,7 @@ export const usePlanDraftViewModel = () => {
   return {
     stack,
     plan,
-    isLoading,
+    isLoading: isLoading || stackLoading,
     deletingId,
 
     goBack,

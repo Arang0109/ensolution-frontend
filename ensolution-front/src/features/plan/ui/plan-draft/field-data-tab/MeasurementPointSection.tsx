@@ -1,5 +1,5 @@
-import type { MeasurementSheetEditForm, MeasurementpointEditForm } from "@/entities/plan/model";
-import { TableInputCell, TableLabelCell, TableResultCell } from "@shared/ui";
+import type { MeasurementSheetEditForm, MeasurementpointEditForm, ParticleSampleEditForm } from "@/entities/plan/model";
+import { TableInputCell, TableLabelCell, TableResultCell, SectionAccordion } from "@shared/ui";
 import { ParticleSection } from "@/features/plan/ui";
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import { display } from "@shared/lib";
@@ -7,18 +7,30 @@ import { display } from "@shared/lib";
 interface MeasurementPointSection {
   sheet: MeasurementSheetEditForm;
   onChange: (index: number, name: keyof MeasurementpointEditForm, value: string) => void;
+  onSheetChange: (name: keyof MeasurementSheetEditForm, value: string) => void;
+  onParticleSampleChange: (name: keyof ParticleSampleEditForm, value: string | null) => void;
 
-  measurePointLength: string[];
   AvgGasTemp: number | null;
   AvgPd: number | null;
   AvgPs: number | null;
   avgInTemp: number | null;
   avgOutTemp: number | null;
 
-  pointVelocities: (number | null)[];
+  recommendList: {
+    nozzle: number,
+    orificeDp: number | null,
+    Vm: number | null,
+    Vlc: number | null,
+    samplingTime: number | null,
+  }[];
+  orificeDpList: {
+    orificeDp: number | null,
+    kFactor: number | null,
+  }[];
 
-  standardDensity: number | null;
-  gasVelocity: number | null;
+  standardGasDensityList: number[] | null;
+  avgGasVelocity: number | null;
+  gasVelocityList: number[] | null;
   pitotTubeCoefficient: number | null;
   quantity: number | null;
   standardQuantity: number | null;
@@ -30,15 +42,21 @@ interface MeasurementPointSection {
 export const MeasurementPointSection = ({
   sheet,
   onChange,
+  onSheetChange,
+  onParticleSampleChange,
 
-  measurePointLength,
   AvgGasTemp,
   AvgPd,
   AvgPs,
+  avgInTemp,
+  avgOutTemp,
 
-  pointVelocities,
+  recommendList,
+  orificeDpList,
 
-  gasVelocity,
+  standardGasDensityList,
+  avgGasVelocity,
+  gasVelocityList,
   pitotTubeCoefficient,
   quantity,
   standardQuantity,
@@ -50,48 +68,56 @@ export const MeasurementPointSection = ({
   const measurementPoints = sheet.measurementPoints;
 
   return (
-    <>
-      <section>
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">측정점정보</h3>
-
-        <div className="rounded-lg border border-gray-200 overflow-hidden">
-          <div className="overflow-x-auto">
+    <SectionAccordion title="Part 4. 측정점정보">
+      <div className="rounded-b-lg border border-t-0 border-gray-200 overflow-hidden">
+        <div className="overflow-x-auto">
           <table className="min-w-[540px] w-full table-fixed border-collapse text-sm">
+            <colgroup>
+              <col style={{ width: "120px" }} />
+              <col style={{ width: "100px" }} />
+              <col style={{ width: "100px" }} />
+              <col style={{ width: "100px" }} />
+              <col style={{ width: "100px" }} />
+              <col style={{ width: "100px" }} />
+              <col style={{ width: "100px" }} />
+            </colgroup>
             <tbody>
               <tr>
                 <TableLabelCell>측정점</TableLabelCell>
                 {measurementPoints.map((_, index) => (
                   <TableResultCell
                     key={index}
-                    value={`${index + 1} 지점 - ${measurePointLength[index]} cm`}
+                    value={`${index + 1} 지점`}
                   />
                 ))}
-                <TableResultCell value="Average" />
+                <TableResultCell value="평균" />
               </tr>
 
               <tr>
-                <TableLabelCell><i>T<sub>S</sub></i></TableLabelCell>
+                <TableLabelCell>배출가스온도 (<i>T<sub>S</sub></i>)</TableLabelCell>
                 {measurementPoints.map((mp, index) => (
                   <TableInputCell
                     key={index}
-                    value={mp.gasTemperature}
+                    type="number"
+                    value={mp.Ts}
                     onChange={(value) =>
-                      onChange(index, "gasTemperature", value)
+                      onChange(index, "Ts", value)
                     }
                     unit="°C"
                   />
                 ))}
-                <TableResultCell value={display(AvgGasTemp)} unit="°C" />
+                <TableResultCell value={display(AvgGasTemp)} unit="°K" />
               </tr>
 
               <tr>
-                <TableLabelCell>△<i>P</i></TableLabelCell>
+                <TableLabelCell>동압 (△<i>P</i>)</TableLabelCell>
                 {measurementPoints.map((mp, index) => (
                   <TableInputCell
                     key={index}
-                    value={mp.dynamicPressure}
+                    type="number"
+                    value={mp.Pv}
                     onChange={(value) =>
-                      onChange(index, "dynamicPressure", value)
+                      onChange(index, "Pv", value)
                     }
                     unit={<>mmH<sub>2</sub>O</>}
                   />
@@ -100,54 +126,41 @@ export const MeasurementPointSection = ({
               </tr>
 
               <tr>
-                <TableLabelCell><i>P<sub>g</sub></i></TableLabelCell>
+                <TableLabelCell>정압 (<i>P<sub>g</sub></i>)</TableLabelCell>
                 {measurementPoints.map((mp, index) => (
                   <TableInputCell
                     key={index}
-                    value={mp.staticPressure}
+                    type="number"
+                    value={mp.Ps}
                     onChange={(value) =>
-                      onChange(index, "staticPressure", value)
+                      onChange(index, "Ps", value)
                     }
                     unit={<>mmH<sub>2</sub>O</>}
                   />
                 ))}
                 <TableResultCell value={display(AvgPs)} unit={<>mmH<sub>2</sub>O</>} />
               </tr>
-
-              <tr>
-                <TableLabelCell><i>V<sub>s</sub></i></TableLabelCell>
-                {pointVelocities.map((v, index) => (
-                  <TableResultCell
-                    key={index}
-                    value={display(v)}
-                    unit="m/s"
-                  />
-                ))}
-                <TableResultCell value={display(gasVelocity)} unit="kg/Sm³" />
-              </tr>
-
-              <tr>
-                <TableLabelCell><i><span style={{ textDecoration: "overline" }}>V</span><sub>s</sub></i></TableLabelCell>
-                <TableResultCell
-                value={display(gasVelocity)}
-                colSpan={measurementPoints.length + 1}
-                unit="m/s" />
-              </tr>
-              <tr>
-                <TableLabelCell><i>C<sub>p</sub></i></TableLabelCell>
-                <TableResultCell
-                  value={display(pitotTubeCoefficient)}
-                  colSpan={measurementPoints.length + 1}
-                />
-              </tr>
               {isParticle ?
-              <ParticleSection
-                measurementPoints={sheet.measurementPoints}
-                onChange={onChange}
-                selectedNZ={selectedNZ}
-              />
-               : 
-              null}
+                <ParticleSection
+                  sheet={sheet}
+                  onChange={onChange}
+                  onSheetChange={onSheetChange}
+                  onParticleSampleChange={onParticleSampleChange}
+                  selectedNZ={selectedNZ}
+
+                  avgInTemp={avgInTemp}
+                  avgOutTemp={avgOutTemp}
+
+                  recommendList={recommendList}
+                  orificeDpList={orificeDpList}
+
+                  standardGasDensityList={standardGasDensityList}
+                  avgGasVelocity={avgGasVelocity}
+                  gasVelocityList={gasVelocityList}
+                  pitotTubeCoefficient={pitotTubeCoefficient}
+                />
+                :
+                null}
               <tr>
                 <TableLabelCell><i>Q</i></TableLabelCell>
                 <TableResultCell
@@ -163,12 +176,11 @@ export const MeasurementPointSection = ({
                   colSpan={measurementPoints.length + 1}
                   unit="Sm³/hr"
                 />
-              </tr>              
+              </tr>
             </tbody>
           </table>
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </SectionAccordion>
   )
 }
