@@ -1,7 +1,7 @@
 import type { PointRecord } from "@shared/lib";
 import { calculator } from "@shared/lib";
 
-const convertoHpaToMmHg = (value: number): number => {
+const convertHpaToMmHg = (value: number): number => {
   return (value * 760) / 1013.25;
 };
 
@@ -22,7 +22,7 @@ export const pressureCalculator = (
   const { safeCalc, round } = calculator;
 
   const Pa = safeCalc([atmosphericPressure], () =>
-    round(convertoHpaToMmHg(atmosphericPressure!), 1)
+    round(convertHpaToMmHg(atmosphericPressure!), 1)
   );
 
   const PsList: PointRecord = Object.fromEntries(
@@ -35,7 +35,7 @@ export const pressureCalculator = (
   const PgList: PointRecord = Object.fromEntries(
     Object.entries(PsList).map(([key, Ps]) => [
       key,
-      Pa !== null && Ps !== null ? Pa + Ps : null,
+      Pa !== null && Ps !== null ? round(Pa + Ps, 2) : null,
     ])
   );
 

@@ -32,8 +32,6 @@ export interface FieldDataTabProps {
   selectedPT?: TypedEquipmentResponse;
   selectedNZ?: TypedEquipmentResponse;
 
-  isParticle: boolean;
-
   addSheet: () => void;
   removeSheet: (index: number) => void;
 }
@@ -55,8 +53,6 @@ export const FieldDataTab = ({
   selectedGS,
   selectedPT,
   selectedNZ,
-
-  isParticle,
 
   addSheet,
   removeSheet,
@@ -80,7 +76,7 @@ export const FieldDataTab = ({
       <section className="rounded-lg border border-gray-200 p-4">
         <div className="flex items-center gap-3">
           <div className="flex flex-col gap-1 flex-1">
-            <label className="text-xs text-gray-500">측정시작시간</label>
+            <label className="text-xs text-gray-500">채취시작시간</label>
             <input
               type="time"
               value={planInfo.measureStartTime}
@@ -90,7 +86,7 @@ export const FieldDataTab = ({
           </div>
           <span className="text-gray-400 text-sm mt-5">~</span>
           <div className="flex flex-col gap-1 flex-1">
-            <label className="text-xs text-gray-500">측정종료시간</label>
+            <label className="text-xs text-gray-500">채취종료시간</label>
             <input
               type="time"
               value={planInfo.measureEndTime}
@@ -120,8 +116,8 @@ export const FieldDataTab = ({
         ) : (
           <SheetTab
             key={activeSheetIndex}
+            sheetIndex={activeSheetIndex}
             sheet={allSheets[activeSheetIndex]}
-            allSheets={allSheets}
             measurementItems={measurementItems}
             planInfo={planInfo}
             onPlanInfoChange={updatePlanInfoField}
@@ -137,7 +133,6 @@ export const FieldDataTab = ({
             selectedGS={selectedGS}
             selectedPT={selectedPT}
             selectedNZ={selectedNZ}
-            isParticle={isParticle}
           />
         )}
       </div>

@@ -16,7 +16,7 @@ const safeCalc = <T>(
 };
 
 const toNumber = (v: string): number | null => {
-  if (!v) return null;
+  if (v === null || v === undefined || v === "") return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : 0;
 };
@@ -26,7 +26,7 @@ const toNumbers = (values: string[]): number[] | null => {
 
   const result = values
     .map((v) => {
-      if (!v) return null;
+      if (v === null || v === undefined || v === "") return null;
       const n = Number(v);
       return Number.isFinite(n) ? n : null;
     })
@@ -39,7 +39,7 @@ const toNumbers = (values: string[]): number[] | null => {
 const toNumberRecord = (values: string[]): PointRecord => {
   return Object.fromEntries(
     values.map((v, i) => {
-      if (!v) return [i, null];
+      if (v === null || v === undefined || v === "") return [i, null];
       const n = Number(v);
       return [i, Number.isFinite(n) ? n : null];
     })
@@ -79,6 +79,14 @@ const calcAverage = (values: number[]): number => {
 const calcDelta = (before: number, after: number): number => 
   after - before;
 
+const calcAtmMmHg = (value: number): number => {
+  return (value * 760) / 1013.25;
+}
+
+const calcPsMmHg = (value: number): number => {
+  return value / 13.6;
+}
+
 export const calculator = {
   safeCalc,
   toNumber,
@@ -90,4 +98,7 @@ export const calculator = {
   calcArea,
   calcAverage,
   calcDelta,
+
+  calcAtmMmHg,
+  calcPsMmHg,
 }

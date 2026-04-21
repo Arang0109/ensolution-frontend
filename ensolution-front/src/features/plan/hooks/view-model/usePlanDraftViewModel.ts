@@ -17,13 +17,6 @@ export const usePlanDraftViewModel = () => {
   const { stack, fetchStack, stackLoading } = usePlanDraftData();
   const { saveDraft, deleteDraft, deletingId } = usePlanActions();
 
-  const isParticle = plan?.measurementInfo.measurementItems.some(
-    item =>
-      item.method === "DUST" ||
-      item.method === "HEAVY_METAL" ||
-      item.method === "MERCURY"
-  ) ?? false;
-
   useEffect(() => {
     if (plan?.plan.stackId) {
       fetchStack(plan.plan.stackId);
@@ -31,7 +24,9 @@ export const usePlanDraftViewModel = () => {
   }, [plan?.plan.stackId, fetchStack]);
 
   const handleSaveDraft = async (editForm: PlanDraftEditForm) => {
+    console.log("editForm: ", editForm)
     const payload = mapDraftFormToRequest(editForm);
+    console.log("payload: ", payload)
     const result = await saveDraft(Number(planId), payload);
 
     if (result.success) {
@@ -61,7 +56,5 @@ export const usePlanDraftViewModel = () => {
 
     handleSaveDraft,
     handleDeleteDraft,
-
-    isParticle,
   }
 }

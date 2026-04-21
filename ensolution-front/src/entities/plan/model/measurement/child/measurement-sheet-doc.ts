@@ -7,6 +7,9 @@ export interface MeasurementSheetDocResponse {
   category: Category;
   referenceNumber: string;
 
+  primaryItemId: number | null;
+  concurrentItemIds: number[];
+
   weather: WeatherDocResponse;
   moisture: MoistureDocResponse;
   exhaustGas: ExhaustGasDocResponse;
@@ -31,6 +34,9 @@ export interface ParticleSampleDocResponse {
 
   samplingStartTime: string; // 입자상 물질 채취시작 시간
   samplingEndTime: string; // 입자상 물질 채취종료 시간
+
+  thimbleFilter: string;
+  bgThimbleFilter: string;
 }
 
 export interface SampleDocResponse {

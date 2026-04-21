@@ -72,6 +72,31 @@ export const ParticleSection = ({
   const gasDensityEntries = Object.entries(standardGasDensityList).sort(([a], [b]) => Number(a) - Number(b));
   const gasVelocityEntries = Object.entries(gasVelocityList).sort(([a], [b]) => Number(a) - Number(b));
 
+  const calcEndTime = (startTime: string, totalMinutes: number): string => {
+    if (!startTime || totalMinutes <= 0) return "";
+    const [h, m] = startTime.split(":").map(Number);
+    const endTotal = h * 60 + m + totalMinutes;
+    return `${String(Math.floor(endTotal / 60) % 24).padStart(2, "0")}:${String(endTotal % 60).padStart(2, "0")}`;
+  };
+
+  const getTotalSamplingTime = (overrideIndex?: number, overrideValue?: string) =>
+    measurementPoints.reduce((sum, mp, i) => {
+      const t = Number(i === overrideIndex ? overrideValue : mp.samplingTime);
+      return sum + (isNaN(t) ? 0 : t);
+    }, 0);
+
+  const handleSamplingTimeChange = (index: number, value: string) => {
+    onChange(index, "samplingTime", value);
+    const endTime = calcEndTime(sheet.particleSample.samplingStartTime, getTotalSamplingTime(index, value));
+    if (endTime) onParticleSampleChange("samplingEndTime", endTime);
+  };
+
+  const handleStartTimeChange = (value: string) => {
+    onParticleSampleChange("samplingStartTime", value);
+    const endTime = calcEndTime(value, getTotalSamplingTime());
+    if (endTime) onParticleSampleChange("samplingEndTime", endTime);
+  };
+
   return (
     <>
       <tr>
@@ -87,7 +112,7 @@ export const ParticleSection = ({
             unit={<i>°C</i>}
           />
         ))}
-        <TableResultCell value={display(avgInTemp)} unit={<i>°C</i>} />
+        <TableResultCell value={display(avgInTemp, 1)} unit={<i>°C</i>} />
       </tr>
       <tr>
         <TableLabelCell>DGM 출구온도 (<i>P<sub>g</sub></i>)</TableLabelCell>
@@ -102,7 +127,7 @@ export const ParticleSection = ({
             unit={<i>°C</i>}
           />
         ))}
-        <TableResultCell value={display(avgOutTemp)} unit={<i>°C</i>} />
+        <TableResultCell value={display(avgOutTemp, 1)} unit={<i>°C</i>} />
       </tr>
       <tr>
         <TableLabelCell>노즐 추천</TableLabelCell>
@@ -181,15 +206,22 @@ export const ParticleSection = ({
         <TableResultCell value="" />
       </tr>
       <tr>
-        <TableLabelCell>채취시간 (<i>P<sub>g</sub></i>)</TableLabelCell>
+        <TableLabelCell>입자상물질 채취시작시간</TableLabelCell>
+        <TableInputCell
+          type="time"
+          value={sheet.particleSample.samplingStartTime}
+          onChange={handleStartTimeChange}
+        />
+        <TableResultCell colSpan={measurementPoints.length} value="" />
+      </tr>
+      <tr>
+        <TableLabelCell>채취시간</TableLabelCell>
         {measurementPoints.map((mp, index) => (
           <TableInputCell
             key={index}
             type="number"
             value={mp.samplingTime}
-            onChange={(value) =>
-              onChange(index, "samplingTime", value)
-            }
+            onChange={(value) => handleSamplingTimeChange(index, value)}
             unit={<i>min</i>}
           />
         ))}
@@ -232,6 +264,34 @@ export const ParticleSection = ({
           />
         ))}
         <TableResultCell value="" />
+      </tr>
+      <tr>
+        <TableLabelCell>진공게이지압</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.vacuumGaugePressure}
+            onChange={(value) =>
+              onChange(index, "vacuumGaugePressure", value)
+            }
+            unit={<i>°C</i>}
+          />
+        ))}
+      </tr>
+      <tr>
+        <TableLabelCell>최종임핀저 출구온도</TableLabelCell>
+        {measurementPoints.map((mp, index) => (
+          <TableInputCell
+            key={index}
+            type="number"
+            value={mp.finalImpingerTemperature}
+            onChange={(value) =>
+              onChange(index, "finalImpingerTemperature", value)
+            }
+            unit={<i>°C</i>}
+          />
+        ))}
       </tr>
 
       {showAddModal && createPortal(

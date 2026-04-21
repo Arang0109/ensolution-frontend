@@ -28,7 +28,7 @@ const findPitotTubeCoefficient = (
 const calcQuantity = (
   area: number,
   velocity: number
-) => 60 * area * velocity;
+) => 60 * 60 * area * velocity;
 
 const calcStandardQuantity = (
   quantity: number,
@@ -37,11 +37,7 @@ const calcStandardQuantity = (
   Xw: number
 ) => {
 
-  return quantity *
-    (273 / Tg) *
-    (Pg / 760) *
-    (1 - Xw / 100) *
-    60;;
+  return quantity * (273 / Tg) * (Pg / 760) * (1 - (Xw/100));
 };
 
 export const flowCalculator = (
@@ -80,17 +76,15 @@ export const flowCalculator = (
   const quantity = safeCalc([area, gasVelocity], () =>
     round(calcQuantity(area!, gasVelocity!), 1)
   );
-
   const validPg = validValues(PgRecord);
-  const Pg = validPg.length ? validPg.reduce((acc, cur) => acc + cur, 0) / validPg.length : null;
+  const Pg = validPg.length ? round(validPg.reduce((acc, cur) => acc + cur, 0) / validPg.length, 2) : null;
 
   const validTg = validValues(gasTemperatureRecord);
-  const Tg = validTg.length ? calcAverage(validTg) : null;
+  const Tg = validTg.length ? calcAverage(validTg) + 273 : null;
 
-  const standardQuantity = safeCalc([gasVelocity, Tg, Pg, Xw], () =>
-    round(calcStandardQuantity(gasVelocity!, Tg!, Pg!, Xw!), 1)
+  const standardQuantity = safeCalc([quantity, Tg, Pg, Xw], () =>
+    round(calcStandardQuantity(quantity!, Tg!, Pg!, Xw!), 1)
   );
-
 
   return {
     Cp,

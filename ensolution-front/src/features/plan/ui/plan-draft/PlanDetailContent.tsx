@@ -21,7 +21,6 @@ export const PlanDetailContent = ({
     goBack,
     handleSaveDraft,
     handleDeleteDraft,
-    isParticle
   } = viewModel;
 
   const {
@@ -119,7 +118,6 @@ export const PlanDetailContent = ({
             selectedGS={selectedGS}
             selectedPT={selectedPT}
             selectedNZ={selectedNZ}
-            isParticle={isParticle}
             addSheet={addSheet}
             removeSheet={removeSheet}
           />

@@ -8,3 +8,6 @@ export { TableInputCell } from "./TableInputCell";
 export { TableResultCell } from "./TableResultCell";
 export { TableResultWithLabelCell } from "./TableResultWithLabelCell";
 export { TableActionCell } from "./TableActionCell";
+
+export { ReportLabelCell } from "./ReportLabelCell"
+export { ReportValueCell } from "./ReportValueCell"

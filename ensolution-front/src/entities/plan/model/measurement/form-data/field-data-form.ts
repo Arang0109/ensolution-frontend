@@ -31,8 +31,8 @@ export const getDefaultMeasurementSheetsEditForm = (
     category: sheet.category ?? "OTHER",
     referenceNumber: sheet.referenceNumber ?? "",
 
-    primaryItemId: null,
-    concurrentItemIds: [],
+    primaryItemId: sheet.primaryItemId ?? null,
+    concurrentItemIds: sheet.concurrentItemIds ?? [],
 
     weather: getDefaultWeatherEditForm(sheet),
     moisture: getDefaultMoistureEditForm(sheet),
@@ -253,6 +253,9 @@ export interface ParticleSampleEditForm {
 
   samplingStartTime: string; // 입자상 물질 채취시작 시간
   samplingEndTime: string; // 입자상 물질 채취종료 시간
+
+  thimbleFilter: string;
+  bgThimbleFilter: string;
 }
 
 export const getDefaultParticleSampleEditForm = (
@@ -271,5 +274,8 @@ export const getDefaultParticleSampleEditForm = (
     isokineticRatio: particleSample?.isokineticRatio ?? "",
     samplingStartTime: particleSample?.samplingStartTime ?? "",
     samplingEndTime: particleSample?.samplingEndTime ?? "",
+
+    thimbleFilter: particleSample?.thimbleFilter ?? "",
+    bgThimbleFilter: particleSample?.bgThimbleFilter ?? "",
   }
 }
