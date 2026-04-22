@@ -1,6 +1,6 @@
 export type FieldType = "text" | "number" | "date";
 
-export type ComponentSize = "sm" | "md" | "lg" | "xl" | "full";
+export type ComponentSize = "sm" | "md" | "lg" | "xl" | "xxl" | "full";
 
 export type Team = 1 | 2 | 3 | 4;
 

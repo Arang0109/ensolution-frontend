@@ -9,8 +9,8 @@ export const mapDraftFormToRequest = (
   measureDate: form.planInfo.measureDate,
   receivedDate: form.planInfo.receivedDate,
   analysisDate: form.planInfo.analysisDate,
-  measurementField: form.planInfo.measurementField,
-  measurementType: form.planInfo.measurementType,
+  measurementField: form.planInfo.measurementField || null,
+  measurementType: form.planInfo.measurementType || null,
   teamName: form.planInfo.teamName,
   vehicleNumber: form.planInfo.vehicleNumber,
   mentor: form.planInfo.mentor,
@@ -100,7 +100,10 @@ export const mapDraftFormToRequest = (
       co2Concentration: sheet.exhaustGas.co2Concentration,
       coConcentration: sheet.exhaustGas.coConcentration,
       noxConcentration: sheet.exhaustGas.noxConcentration,
-      soxConcentration: sheet.exhaustGas.soxConcentration
+      soxConcentration: sheet.exhaustGas.soxConcentration,
+
+      gasAnalyzerStartTime: sheet.exhaustGas.gasAnalyzerStartTime,
+      thcAnalyzerStartTime: sheet.exhaustGas.thcAnalyzerStartTime
     },
 
     measurementPoints: sheet.measurementPoints.map((mp) => ({
@@ -121,6 +124,8 @@ export const mapDraftFormToRequest = (
       samplingTime: mp.samplingTime,
       vacuumGaugePressure: mp.vacuumGaugePressure,
       finalImpingerTemperature: mp.finalImpingerTemperature,
+      kFactor: mp.kFactor,
+      orificeDp: mp.orificeDp,
     })),
 
     samples: sheet.samples.map((sheet) => ({
@@ -146,7 +151,10 @@ export const mapDraftFormToRequest = (
       orificeDp: sheet.particleSample.orificeDp,
       isokineticRatio: sheet.particleSample.isokineticRatio,
       samplingStartTime: sheet.particleSample.samplingStartTime,
-      samplingEndTime: sheet.particleSample.samplingEndTime
+      samplingEndTime: sheet.particleSample.samplingEndTime,
+
+      thimbleFilter: sheet.particleSample.thimbleFilter,
+      bgThimbleFilter: sheet.particleSample.bgThimbleFilter,
     },
 
     quantity: sheet.quantity

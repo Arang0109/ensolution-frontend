@@ -9,7 +9,7 @@ export interface WeatherDocResponse {
   windDirection: WindDirection;
   windSpeed: string;
 
-  convertedPressure: string;
+  pa: string;
 }
 
 export interface WeatherPressureSnapshot {

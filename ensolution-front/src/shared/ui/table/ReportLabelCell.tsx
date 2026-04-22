@@ -1,11 +1,11 @@
-export const TableLabelCell = ({
+export const ReportLabelCell = ({
   children,
   colSpan,
   rowSpan,
 }: {
   children?: React.ReactNode,
-  colSpan?: number,
-  rowSpan?: number,
+  colSpan?: number
+  rowSpan?: number
  }) => (
   <th
     scope="row"

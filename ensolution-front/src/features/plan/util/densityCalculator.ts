@@ -5,7 +5,7 @@ const convertFromSTP = (value: number, temperature: number, pressure: number): n
   return value * (273/temperature) * (pressure/760);
 }
 
-const calcGasDensity = (
+const calcStandardGasDensity = (
   o2Avg: number,
   co2Avg: number,
   coAvg: number,
@@ -43,7 +43,7 @@ export const densityCalculator = (
   } = calculator;
 
   const standardGasDensity = safeCalc([Xw], () =>
-    round(calcGasDensity(o2, co2, co, n2, Xw!), 2)
+    round(calcStandardGasDensity(o2, co2, co, n2, Xw!), 2)
   );
 
   const gasDensity = safeCalc([standardGasDensity, AvgTg, Pg], () =>

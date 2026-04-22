@@ -7,7 +7,7 @@ export const TableActionCell = ({
   children: React.ReactNode;
   colSpan?: number;
 }) => (
-  <td colSpan={colSpan} className="border border-slate-200 bg-white">
+  <td colSpan={colSpan} className="border border-black">
     <div className="flex items-center px-2 py-2 sm:px-3 sm:py-2.5">
       {children}
     </div>

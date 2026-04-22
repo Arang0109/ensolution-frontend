@@ -7,4 +7,7 @@ export interface ExhaustGasDocResponse {
 
   gasDensity: string;
   o2CorrectionFactor: string;
+
+  gasAnalyzerStartTime: string;
+  thcAnalyzerStartTime: string;
 }

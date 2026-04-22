@@ -18,8 +18,8 @@ interface EquipmentTabProps {
   selectedNZ: TypedEquipmentResponse | undefined;
 }
 
-const mobileSectionWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden";
-const desktopSectionWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
+const mobileSectionWrap = "sm:hidden border border-gray-200 overflow-hidden";
+const desktopSectionWrap = "hidden sm:block border border-gray-200 overflow-hidden";
 
 export const EquipmentTab = ({
   equipment, onChange,

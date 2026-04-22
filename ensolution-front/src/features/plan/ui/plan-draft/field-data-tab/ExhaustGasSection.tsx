@@ -1,4 +1,6 @@
-import type { ExhaustGasEditForm } from "@/entities/plan/model";
+import { Fragment } from "react";
+
+import type { ExhaustGasEditForm, MeasurementItemEditForm } from "@/entities/plan/model";
 
 import {
   TableLabelCell, TableInputCell, TableResultCell, TableResultWithLabelCell, SectionAccordion
@@ -9,8 +11,10 @@ interface ExhaustGasSectionProps {
   mobileWrap: string;
   desktopWrap: string;
 
+  measurementItems: MeasurementItemEditForm[];
+
   exhaustGas: ExhaustGasEditForm;
-  onChange: (name: keyof ExhaustGasEditForm, value: string, index: number) => void;
+  onChange: (name: keyof ExhaustGasEditForm, value: string, index?: number) => void;
 
   standardOxygen: string;
 
@@ -118,6 +122,8 @@ export const ExhaustGasSection = ({
   mobileWrap,
   desktopWrap,
 
+  measurementItems,
+
   exhaustGas,
   onChange,
 
@@ -132,6 +138,10 @@ export const ExhaustGasSection = ({
   oxygenCorrectionFactor,
   standardGasDensity,
 }: ExhaustGasSectionProps) => {
+
+  const fieldMeasurementItems = measurementItems.filter(
+    (item) => item.method === "FIELD_MEASUREMENT"
+  );
 
   return (
     <SectionAccordion title="Part 3. 배출가스정보">
@@ -168,24 +178,6 @@ export const ExhaustGasSection = ({
               <TableResultWithLabelCell label={<>CO <i>avg</i></>} value={display(coConcentrationAvg)} unit="%" />
               <TableResultWithLabelCell label={<>N<sub>2</sub> <i>avg</i></>} value={display(n2ConcentrationAvg)} unit="%" />
             </tr>
-            {/* <tr>
-              <TableLabelCell colSpan={4}>NO<sub>X</sub> (<i>ppm</i>)</TableLabelCell>
-            </tr>
-            <tr>
-              <TableInputCell value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("noxConcentration", value, 0)} unit="ppm" />
-              <TableInputCell value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("noxConcentration", value, 1)} unit="ppm" />
-              <TableInputCell value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("noxConcentration", value, 2)} unit="ppm" />
-              <TableResultCell value={display(noxConcentrationAvg)} unit="ppm" />
-            </tr>
-            <tr>
-              <TableLabelCell colSpan={4}>SO<sub>X</sub> (<i>ppm</i>)</TableLabelCell>
-            </tr>
-            <tr>
-              <TableInputCell value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("soxConcentration", value, 0)} unit="ppm" />
-              <TableInputCell value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("soxConcentration", value, 1)} unit="ppm" />
-              <TableInputCell value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("soxConcentration", value, 2)} unit="ppm" />
-              <TableResultCell value={display(soxConcentrationAvg)} unit="ppm" />
-            </tr> */}
             <tr>
               <TableLabelCell>기준산소농도</TableLabelCell>
               <TableLabelCell>산소보정계수</TableLabelCell>
@@ -194,8 +186,63 @@ export const ExhaustGasSection = ({
             <tr>
               <TableResultCell value={standardOxygen} unit="%" />
               <TableResultCell value={display(oxygenCorrectionFactor)} unit="" />
-              <TableResultCell colSpan={2} value={display(standardGasDensity)} unit="kg/m³" />
+              <TableResultCell colSpan={2} value={display(standardGasDensity)} unit="kg/Sm³" />
             </tr>
+            <tr>
+              <TableLabelCell colSpan={2}>가스분석기 측정 시작시간</TableLabelCell>
+              <TableInputCell
+                colSpan={2}
+                type="time"
+                value={exhaustGas.gasAnalyzerStartTime}
+                onChange={(value) => onChange("gasAnalyzerStartTime", value)}
+              />
+            </tr>
+            {fieldMeasurementItems.map((item) => {
+              if (item.pollutantNameKr === "탄화수소") {
+                return (<>
+                <Fragment key={item.pollutantId}>
+                  <tr>
+                    <TableLabelCell colSpan={2}>THC 측정 시작시간</TableLabelCell>
+                    <TableInputCell
+                      colSpan={2}
+                      type="time"
+                      value={exhaustGas.thcAnalyzerStartTime}
+                      onChange={(value) => onChange("thcAnalyzerStartTime", value)}
+                    />
+                  </tr>
+                </Fragment></>);
+              }
+
+              return null;
+            })}
+            {fieldMeasurementItems.map((item) => {
+              const name = item.pollutantNameEn.toLowerCase().replace(/[\s_]/g, "");
+
+              let fieldKey: keyof ExhaustGasEditForm | null = null;
+
+              if (name.includes("nox")) {
+                fieldKey = "noxConcentration";
+              } else if (name.includes("sox")) {
+                fieldKey = "soxConcentration";
+              } else if (name === "co") {
+                fieldKey = "coConcentration";
+              }
+
+              if (!fieldKey) return null;
+
+              const f = fieldKey;
+
+              return (
+                <Fragment key={item.pollutantId}>
+                  <tr>
+                    <TableLabelCell>{item.pollutantNameEn} (<i>ppm</i>)</TableLabelCell>
+                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" />
+                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" />
+                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" />
+                  </tr>
+                </Fragment>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -238,8 +285,36 @@ export const ExhaustGasSection = ({
             <tr>
               <TableResultWithLabelCell colSpan={5} label="기준산소농도" value={standardOxygen} unit="%" />
               <TableResultWithLabelCell colSpan={5} label="산소보정계수" value={display(oxygenCorrectionFactor)} />
-              <TableResultWithLabelCell colSpan={5} label={<>표준상태 배출가스밀도 (<i>ρ</i>)</>} value={display(standardGasDensity)} unit="kg/Nm³" />
+              <TableResultWithLabelCell colSpan={5} label={<>표준상태 배출가스밀도 (<i>ρ</i>)</>} value={display(standardGasDensity)} unit="kg/Sm³" />
             </tr>
+            {fieldMeasurementItems.map((item) => {
+              const name = item.pollutantNameEn.toLowerCase().replace(/[\s_]/g, "");
+
+              let fieldKey: keyof ExhaustGasEditForm | null = null;
+
+              if (name.includes("nox")) {
+                fieldKey = "noxConcentration";
+              } else if (name.includes("sox")) {
+                fieldKey = "soxConcentration";
+              } else if (name === "co") {
+                fieldKey = "coConcentration";
+              }
+
+              if (!fieldKey) return null;
+
+              const f = fieldKey;
+
+              return (
+                <Fragment key={item.pollutantId}>
+                  <tr>
+                    <TableLabelCell>{item.pollutantNameEn} (<i>ppm</i>)</TableLabelCell>
+                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" />
+                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" />
+                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" />
+                  </tr>
+                </Fragment>
+              );
+            })}
           </tbody>
         </table>
       </div>

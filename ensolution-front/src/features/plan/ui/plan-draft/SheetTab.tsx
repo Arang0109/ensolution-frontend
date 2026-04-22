@@ -1,3 +1,6 @@
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import type {
   PlanInfoEditForm, MeasurementSheetEditForm,
@@ -9,13 +12,14 @@ import { useFieldDataCalculation } from "@plan/hooks";
 import {
   WeatherSection, MoistureSection, ExhaustGasSection, MeasurementPointSection,
   ReportInfoSection,
-  SampleInfoSection
+  // SampleInfoSection
 } from "@/features/plan/ui";
+import { Button } from "@shared/ui";
+import { ReportPreviewModal } from "../modal/ReportPreviewModal";
 
 export interface SheetTabProps {
   planInfo: PlanInfoEditForm;
   sheet: MeasurementSheetEditForm;
-  allSheets: MeasurementSheetEditForm[];
   measurementItems: MeasurementItemEditForm[];
 
   onPlanInfoChange: (name: keyof PlanInfoEditForm, value: string) => void;
@@ -33,35 +37,51 @@ export interface SheetTabProps {
   selectedPT?: TypedEquipmentResponse;
   selectedNZ?: TypedEquipmentResponse;
 
-  isParticle: boolean;
+  sheetIndex: number;
 }
 
 // ─── 모바일 카드 스타일 상수 ────────────────────────────────────────
-const mobileWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden";
-const desktopWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
+const mobileWrap = "sm:hidden border border-gray-200 overflow-hidden";
+const desktopWrap = "hidden sm:block border border-gray-200 overflow-hidden";
 
 export const SheetTab = ({
   planInfo,
   sheet,
-  allSheets,
   measurementItems,
   onSheetInfoChange,
   onWeatherChange,
   onMoistureChange,
   onExhaustGasChange,
   onMeasurementPointChange,
-  onSampleItemsChange,
-  onSampleChange,
   onParticleSampleChange,
   selectedPS,
   selectedPT,
   selectedNZ,
 
-  isParticle,
+  sheetIndex,
 }: SheetTabProps) => {
+  const { planId } = useParams();
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  const isParticle = sheet.category != "GAS";
+  const prevIsParticle = useRef(isParticle);
+
+  useEffect(() => {
+    if (prevIsParticle.current && !isParticle) {
+      const particlePointFields = ["inTm", "outTm", "samplingTime", "beforeVm", "afterVm", "vacuumGaugePressure", "finalImpingerTemperature"] as const;
+      sheet.measurementPoints.forEach((_, idx) => {
+        particlePointFields.forEach((field) => onMeasurementPointChange(idx, field, ""));
+      });
+
+      const particleSampleFields = ["Vr", "Cp", "nozzleSize", "Vm", "samplingTime", "kFactor", "orificeDp", "isokineticRatio", "samplingStartTime", "samplingEndTime"] as const;
+      particleSampleFields.forEach((key) => onParticleSampleChange(key, null));
+    }
+    prevIsParticle.current = isParticle;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isParticle]);
 
   const {
-    // area, // 측정시설 면적 (m²)
+    area, // 측정시설 면적 (m²)
     // measurementPointCnt,
 
     Pa, // 측정공에서 위치에서의 대기압 (mmHg)
@@ -105,8 +125,34 @@ export const SheetTab = ({
     recommendList,
   } = useFieldDataCalculation(planInfo, sheet, selectedPS, selectedPT, selectedNZ);
 
+  const orificeDpRecordStr = JSON.stringify(orificeDpRecord);
+  useEffect(() => {
+    Object.entries(orificeDpRecord).forEach(([key, entry]) => {
+      const idx = Number(key);
+      const mp = sheet.measurementPoints[idx];
+      if (!mp) return;
+
+      const calcOrificeDp = entry.orificeDp !== null ? String(entry.orificeDp) : "";
+      const calcKFactor = entry.kFactor !== null ? String(entry.kFactor) : "";
+
+      if (mp.orificeDp !== calcOrificeDp) {
+        onMeasurementPointChange(idx, "orificeDp", calcOrificeDp);
+      }
+      if (mp.kFactor !== calcKFactor) {
+        onMeasurementPointChange(idx, "kFactor", calcKFactor);
+      }
+    });
+
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orificeDpRecordStr]);
+
   return (
     <div className="space-y-6 mt-4">
+      <div className="flex justify-end">
+        <Button label="기록지 미리보기" onClick={() => setShowAddModal(true)} variant="secondary" size="sm" />
+      </div>
+
       {/* ── 분류 ──────────────────────────────────────── */}
       <ReportInfoSection
         mobileWrap={mobileWrap}
@@ -114,15 +160,6 @@ export const SheetTab = ({
 
         sheet={sheet}
         onChange={onSheetInfoChange}
-      />
-
-      {/* ── 시료 정보 ──────────────────────────────────────── */}
-      <SampleInfoSection
-        sheet={sheet}
-        allSheets={allSheets}
-        measurementItems={measurementItems}
-        onSampleItemsChange={onSampleItemsChange}
-        onSampleChange={onSampleChange}
       />
 
       {/* ── 기상정보 ─────────────────────────────────── */}
@@ -157,6 +194,8 @@ export const SheetTab = ({
       <ExhaustGasSection
         mobileWrap={mobileWrap}
         desktopWrap={desktopWrap}
+
+        measurementItems={measurementItems}
 
         exhaustGas={sheet.exhaustGas}
         onChange={onExhaustGasChange}
@@ -199,6 +238,32 @@ export const SheetTab = ({
 
         isParticle={isParticle}
       />
+
+      {showAddModal && (
+        <ReportPreviewModal
+          onClose={() => setShowAddModal(false)}
+          planId={Number(planId ?? 0)}
+          sheetIndex={sheetIndex}
+          sheet={sheet}
+          planInfo={planInfo}
+
+          area={area}
+          Pa={Pa}
+          Xw={Xw}
+          Cp={Cp}
+
+          Tg={AvgTg}
+          Pv={AvgPv}
+          Ps={AvgPs}
+          inTm={avgInTm}
+          outTm={avgOutTm}
+
+          o2={o2ConcentrationAvg}
+          co2={co2ConcentrationAvg}
+
+          orificeDpRecord={orificeDpRecord}
+        />
+      )}
     </div>
   );
 };

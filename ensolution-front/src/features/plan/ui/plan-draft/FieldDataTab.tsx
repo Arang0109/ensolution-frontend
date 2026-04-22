@@ -10,7 +10,7 @@ import type {
 import { SheetTab } from "@plan/ui";
 import { CATEGORY_LABELS } from "@/entities/plan/model";
 
-import { EditableTabs } from "@/shared/ui";
+import { EditableTabs, TableLabelCell, TableInputCell } from "@/shared/ui";
 
 export interface FieldDataTabProps {
   planInfo: PlanInfoEditForm;
@@ -21,7 +21,7 @@ export interface FieldDataTabProps {
   updateSheetField: (sheetIndex: number, name: keyof MeasurementSheetEditForm, value: string) => void;
   updateWeatherField: (sheetIndex: number, name: keyof WeatherEditForm, value: string | null) => void;
   updateMoistureField: (sheetIndex: number, name: keyof MoistureEditForm, value: string | null) => void;
-  updateExhaustGasField: (sheetIndex: number, name: keyof ExhaustGasEditForm, value: string | null, index: number) => void;
+  updateExhaustGasField: (sheetIndex: number, name: keyof ExhaustGasEditForm, value: string | null, index?: number) => void;
   updateMeasurementPointField: (sheetIndex: number, pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
   updateSheetSampleItems: (sheetIndex: number, primaryItemId: number | null, concurrentItemIds: number[]) => void;
   updateSampleField: (sheetIndex: number, sampleIndex: number, name: keyof SampleEditForm, value: string) => void;
@@ -31,8 +31,6 @@ export interface FieldDataTabProps {
   selectedGS?: TypedEquipmentResponse;
   selectedPT?: TypedEquipmentResponse;
   selectedNZ?: TypedEquipmentResponse;
-
-  isParticle: boolean;
 
   addSheet: () => void;
   removeSheet: (index: number) => void;
@@ -56,8 +54,6 @@ export const FieldDataTab = ({
   selectedPT,
   selectedNZ,
 
-  isParticle,
-
   addSheet,
   removeSheet,
 }: FieldDataTabProps) => {
@@ -79,25 +75,26 @@ export const FieldDataTab = ({
     <div className="space-y-6">
       <section className="rounded-lg border border-gray-200 p-4">
         <div className="flex items-center gap-3">
-          <div className="flex flex-col gap-1 flex-1">
-            <label className="text-xs text-gray-500">측정시작시간</label>
-            <input
-              type="time"
-              value={planInfo.measureStartTime}
-              onChange={(e) => updatePlanInfoField("measureStartTime", e.target.value)}
-              className="w-full px-3 py-2 text-sm text-gray-800 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
-            />
-          </div>
-          <span className="text-gray-400 text-sm mt-5">~</span>
-          <div className="flex flex-col gap-1 flex-1">
-            <label className="text-xs text-gray-500">측정종료시간</label>
-            <input
-              type="time"
-              value={planInfo.measureEndTime}
-              onChange={(e) => updatePlanInfoField("measureEndTime", e.target.value)}
-              className="w-full px-3 py-2 text-sm text-gray-800 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
-            />
-          </div>
+          <table className="w-full table-fixed border-collapse text-sm">
+            <tbody>
+              <tr>
+                <TableLabelCell>시료채취 시작시간</TableLabelCell>
+                <TableLabelCell>시료채취 종료시간</TableLabelCell>
+              </tr>
+              <tr>
+                <TableInputCell
+                  type="time"
+                  value={planInfo.measureStartTime}
+                  onChange={(value) => updatePlanInfoField("measureStartTime", value)}
+                />
+                <TableInputCell
+                  type="time"
+                  value={planInfo.measureEndTime}
+                  onChange={(value) => updatePlanInfoField("measureEndTime", value)}
+                />
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -120,8 +117,8 @@ export const FieldDataTab = ({
         ) : (
           <SheetTab
             key={activeSheetIndex}
+            sheetIndex={activeSheetIndex}
             sheet={allSheets[activeSheetIndex]}
-            allSheets={allSheets}
             measurementItems={measurementItems}
             planInfo={planInfo}
             onPlanInfoChange={updatePlanInfoField}
@@ -137,7 +134,6 @@ export const FieldDataTab = ({
             selectedGS={selectedGS}
             selectedPT={selectedPT}
             selectedNZ={selectedNZ}
-            isParticle={isParticle}
           />
         )}
       </div>

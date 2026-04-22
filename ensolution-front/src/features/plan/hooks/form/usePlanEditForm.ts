@@ -154,15 +154,18 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
     sheetIndex: number,
     name: keyof ExhaustGasEditForm,
     value: string | null,
-    index: number
+    index?: number
   ) => {
     setEditForm(prev => {
       const updatedSheets = prev.sheets.map((sheet, i) => {
         if (i !== sheetIndex) return sheet;
-        const currentArr = sheet.exhaustGas[name] as string[];
-        const newArr = [...currentArr];
-        newArr[index] = value ?? "";
-        return { ...sheet, exhaustGas: { ...sheet.exhaustGas, [name]: newArr } };
+        const current = sheet.exhaustGas[name];
+        if (Array.isArray(current)) {
+          const newArr = [...current];
+          newArr[index!] = value ?? "";
+          return { ...sheet, exhaustGas: { ...sheet.exhaustGas, [name]: newArr } };
+        }
+        return { ...sheet, exhaustGas: { ...sheet.exhaustGas, [name]: value ?? "" } };
       });
       return { ...prev, sheets: updatedSheets };
     });

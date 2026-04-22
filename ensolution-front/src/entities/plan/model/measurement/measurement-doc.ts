@@ -47,8 +47,8 @@ export interface DraftUpdateRequest {
   measureDate: string;
   receivedDate: string;
   analysisDate: string;
-  measurementField: MeasurementField;
-  measurementType: MeasurementType;
+  measurementField: MeasurementField | null;
+  measurementType: MeasurementType | null;
   teamName: string;
   vehicleNumber: string;
   mentor: string;
@@ -170,6 +170,9 @@ export interface ExhaustGasUpdateRequest {
   coConcentration: string[];
   noxConcentration: string[];
   soxConcentration: string[];
+
+  gasAnalyzerStartTime: string;
+  thcAnalyzerStartTime: string;
 }
 
 export interface MeasurementPointUpdateRequest {
@@ -222,4 +225,7 @@ export interface ParticleSampleUpdateRequest {
 
   samplingStartTime: string; // 입자상 물질 채취시작 시간
   samplingEndTime: string; // 입자상 물질 채취종료 시간
+
+  thimbleFilter: string;
+  bgThimbleFilter: string;
 }

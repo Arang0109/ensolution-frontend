@@ -1,21 +1,21 @@
-export const TableLabelCell = ({
+export const ReportValueCell = ({
   children,
   colSpan,
   rowSpan,
 }: {
   children?: React.ReactNode,
-  colSpan?: number,
-  rowSpan?: number,
- }) => (
+  colSpan?: number
+  rowSpan?: number
+}) => (
   <th
     scope="row"
     colSpan={colSpan}
     rowSpan={rowSpan}
     className={`
-      bg-gray-300 border border-black
+      border border-black
       p-1 md:p-2
       text-center text-[9px] sm:text-xs
-      font-semibold text-black whitespace-nowrap
+      text-black whitespace-nowrap
     `}
   >
     {children}
