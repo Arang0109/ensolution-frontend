@@ -15,7 +15,7 @@ export const ReportValueCell = ({
       border border-black
       p-1 md:p-2
       text-center text-[9px] sm:text-xs
-      text-gray-800 whitespace-nowrap
+      text-black whitespace-nowrap
     `}
   >
     {children}

@@ -100,7 +100,10 @@ export const mapDraftFormToRequest = (
       co2Concentration: sheet.exhaustGas.co2Concentration,
       coConcentration: sheet.exhaustGas.coConcentration,
       noxConcentration: sheet.exhaustGas.noxConcentration,
-      soxConcentration: sheet.exhaustGas.soxConcentration
+      soxConcentration: sheet.exhaustGas.soxConcentration,
+
+      gasAnalyzerStartTime: sheet.exhaustGas.gasAnalyzerStartTime,
+      thcAnalyzerStartTime: sheet.exhaustGas.thcAnalyzerStartTime
     },
 
     measurementPoints: sheet.measurementPoints.map((mp) => ({

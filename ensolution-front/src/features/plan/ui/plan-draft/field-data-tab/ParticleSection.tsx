@@ -132,16 +132,15 @@ export const ParticleSection = ({
       <tr>
         <TableLabelCell>노즐 추천</TableLabelCell>
         <TableActionCell
-          colSpan={measurementPoints.length}
+          colSpan={measurementPoints.length + 1}
         >
           <button
             onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-md border border-blue-400 px-3 py-1.5 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-50 active:bg-blue-100">
-            <Sparkles size={13} strokeWidth={2} />
-            auto
+            className="flex w-full items-center gap-1.5 rounded-md border border-primary-400 px-3 py-0.5 text-xs font-medium text-primary-600 transition-colors hover:bg-primary-50 active:bg-primary-100">
+            <Sparkles size={10} strokeWidth={2} />
+            auto calc
           </button>
         </TableActionCell>
-        <TableResultCell value="" />
       </tr>
       <tr>
         <TableLabelCell>노즐 사이즈</TableLabelCell>
@@ -158,7 +157,6 @@ export const ParticleSection = ({
         <TableResultCell
           value={display(pitotTubeCoefficient)}
           colSpan={measurementPoints.length + 1}
-          unit="Sm³/hr"
         />
       </tr>
       <tr>
@@ -208,11 +206,11 @@ export const ParticleSection = ({
       <tr>
         <TableLabelCell>입자상물질 채취시작시간</TableLabelCell>
         <TableInputCell
+          colSpan={2}
           type="time"
           value={sheet.particleSample.samplingStartTime}
           onChange={handleStartTimeChange}
         />
-        <TableResultCell colSpan={measurementPoints.length} value="" />
       </tr>
       <tr>
         <TableLabelCell>채취시간</TableLabelCell>

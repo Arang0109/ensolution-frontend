@@ -12,10 +12,10 @@ export const ReportLabelCell = ({
     colSpan={colSpan}
     rowSpan={rowSpan}
     className={`
-      bg-slate-100 border border-black
+      bg-gray-300 border border-black
       p-1 md:p-2
       text-center text-[9px] sm:text-xs
-      font-semibold text-slate-700 whitespace-nowrap
+      font-semibold text-black whitespace-nowrap
     `}
   >
     {children}

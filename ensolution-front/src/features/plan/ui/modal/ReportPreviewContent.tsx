@@ -5,7 +5,7 @@ import type { OrificeDpRecord } from "../../util";
 import { calculator } from "@/shared/lib";
 
 import { formatTime } from "@/shared/lib";
-import { IconButton, ReportLabelCell, ReportValueCell } from "@shared/ui";
+import { IconButton, TableLabelCell, ReportValueCell } from "@shared/ui";
 import { X } from "lucide-react";
 
 const cell = "border border-gray-800 p-1 text-center align-middle";
@@ -197,15 +197,15 @@ export const ReportPreviewContent = ({
 
             {/* ── 접수번호 행 ───────────────────────────── */}
             <tr>
-              <ReportLabelCell colSpan={15}> </ReportLabelCell>
-              <ReportLabelCell colSpan={3}>접수번호</ReportLabelCell>
+              <TableLabelCell colSpan={15}> </TableLabelCell>
+              <TableLabelCell colSpan={3}>접수번호</TableLabelCell>
               <ReportValueCell colSpan={3}>KGAR-26-01-{planInfo.referenceNumber}-{sheet.referenceNumber}</ReportValueCell>
               <ReportValueCell colSpan={2}>{categoryLabel}</ReportValueCell>
             </tr>
 
             {/* ── 업체명 / 굴뚝단면 / 기상 (5행 묶음) ─── */}
             <tr>
-              <ReportLabelCell colSpan={4}>업 체 명</ReportLabelCell>
+              <TableLabelCell colSpan={4}>업 체 명</TableLabelCell>
               <ReportValueCell colSpan={5}>{planInfo?.companyName ?? ""}</ReportValueCell>
 
               {/* 굴뚝단면도 — 5행 rowspan */}
@@ -217,118 +217,118 @@ export const ReportPreviewContent = ({
                 </div>
               </ReportValueCell>
 
-              <ReportLabelCell colSpan={3}>대기온도</ReportLabelCell>
+              <TableLabelCell colSpan={3}>대기온도</TableLabelCell>
               <ReportValueCell colSpan={2}>{sheet.weather.temperature} {unit(<>°C</>)}</ReportValueCell>
-              <ReportLabelCell colSpan={2}>습 도</ReportLabelCell>
+              <TableLabelCell colSpan={2}>습 도</TableLabelCell>
               <ReportValueCell colSpan={1}>{sheet.weather.humidity} {unit(<>%</>)}</ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell colSpan={4}>배 출 시 설</ReportLabelCell>
+              <TableLabelCell colSpan={4}>배 출 시 설</TableLabelCell>
               <ReportValueCell colSpan={5}>
                 {planInfo?.semsNumber ?? ""}{planInfo?.stackName ? `(${planInfo.stackName})` : ""}
               </ReportValueCell>
 
-              <ReportLabelCell colSpan={3}>풍 향</ReportLabelCell>
+              <TableLabelCell colSpan={3}>풍 향</TableLabelCell>
               <ReportValueCell colSpan={2}>{windDirectionLabel}</ReportValueCell>
-              <ReportLabelCell colSpan={2}>날 씨</ReportLabelCell>
+              <TableLabelCell colSpan={2}>날 씨</TableLabelCell>
               <ReportValueCell colSpan={1}>{weatherLabel}</ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell colSpan={4}>방지시설명</ReportLabelCell>
+              <TableLabelCell colSpan={4}>방지시설명</TableLabelCell>
               <ReportValueCell colSpan={5}>{preventionName}</ReportValueCell>
 
-              <ReportLabelCell colSpan={3}>풍 속</ReportLabelCell>
+              <TableLabelCell colSpan={3}>풍 속</TableLabelCell>
               <ReportValueCell colSpan={2}>{sheet.weather.windSpeed || "-"} {unit(<>m/s</>)}</ReportValueCell>
-              <ReportLabelCell colSpan={2}>피토관계수</ReportLabelCell>
+              <TableLabelCell colSpan={2}>피토관계수</TableLabelCell>
               <ReportValueCell colSpan={1}>{Cp?? "-"}</ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell colSpan={4}>측 정 일</ReportLabelCell>
+              <TableLabelCell colSpan={4}>측 정 일</TableLabelCell>
               <ReportValueCell colSpan={5}>{formattedMeasureDate}</ReportValueCell>
 
-              <ReportLabelCell colSpan={5}>측정공 위치의 기압</ReportLabelCell>
+              <TableLabelCell colSpan={5}>측정공 위치의 기압</TableLabelCell>
               <ReportValueCell colSpan={3}>
                 {Pa?.toFixed(1)?? "-"} {unit(<>mmHg</>)}
               </ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell colSpan={4}>채 취 시 간</ReportLabelCell>
+              <TableLabelCell colSpan={4}>채 취 시 간</TableLabelCell>
               <ReportValueCell colSpan={5}>
                 {formatTime(planInfo.measureStartTime)} ~ {formatTime(planInfo.measureEndTime)}
               </ReportValueCell>
 
-              <ReportLabelCell colSpan={3}>ΔH</ReportLabelCell>
+              <TableLabelCell colSpan={3}>ΔH</TableLabelCell>
               <ReportValueCell colSpan={2}>{Number(equipment?.particleSampler.deltaH).toFixed(1) || "-"}</ReportValueCell>
-              <ReportLabelCell colSpan={2}>YD</ReportLabelCell>
+              <TableLabelCell colSpan={2}>YD</TableLabelCell>
               <ReportValueCell colSpan={1}>{Number(equipment?.particleSampler.yd).toFixed(4) || "-"}</ReportValueCell>
             </tr>
 
             {/* ── 연도 직경 / 벽면거리 / 가스흡입량 ────── */}
             <tr>
-              <ReportLabelCell colSpan={4}>연도 직경(m)</ReportLabelCell>
+              <TableLabelCell colSpan={4}>연도 직경(m)</TableLabelCell>
               <ReportValueCell colSpan={5}>{stackLength || "-"}</ReportValueCell>
-              <ReportLabelCell colSpan={6}>연도 벽면으로부터 (cm)</ReportLabelCell>
-              <ReportLabelCell colSpan={3}>가스흡입량</ReportLabelCell>
+              <TableLabelCell colSpan={6}>연도 벽면으로부터 (cm)</TableLabelCell>
+              <TableLabelCell colSpan={3}>가스흡입량</TableLabelCell>
               <ReportValueCell colSpan={5}>{suctionVolume || "-"} {unit(<>Sm<sup>3</sup></>)}</ReportValueCell>
             </tr>
 
             {/* ── 연도 면적 / 1지점 / O2, CO2 ─────────── */}
             <tr>
-              <ReportLabelCell colSpan={4}>연도 면적(m²)</ReportLabelCell>
+              <TableLabelCell colSpan={4}>연도 면적(m²)</TableLabelCell>
               <ReportValueCell colSpan={5}>{area?.toFixed(3)?? "-"}</ReportValueCell>
 
-              <ReportLabelCell colSpan={2}>1지점</ReportLabelCell>
+              <TableLabelCell colSpan={2}>1지점</TableLabelCell>
               <ReportValueCell colSpan={4}>{list[0]?? ''}</ReportValueCell>
 
-              <ReportLabelCell colSpan={3}>O<sub>2</sub> (%)</ReportLabelCell>
+              <TableLabelCell colSpan={3}>O<sub>2</sub> (%)</TableLabelCell>
               <ReportValueCell colSpan={2}>{o2.toFixed(1)}</ReportValueCell>
-              <ReportLabelCell colSpan={2}>CO<sub>2</sub> (%)</ReportLabelCell>
+              <TableLabelCell colSpan={2}>CO<sub>2</sub> (%)</TableLabelCell>
               <ReportValueCell>{co2.toFixed(1)}</ReportValueCell>
             </tr>
 
             {/* ── 측정여지번호 / 2지점 / 누출검사 / 배출가스정압 */}
             <tr>
-              <ReportLabelCell colSpan={4}>측정여지 번호</ReportLabelCell>
+              <TableLabelCell colSpan={4}>측정여지 번호</TableLabelCell>
               <ReportValueCell colSpan={5}>{`측정 ${particleSample.thimbleFilter}, 바탕 ${particleSample.bgThimbleFilter}`}</ReportValueCell>
 
-              <ReportLabelCell colSpan={2}>2지점</ReportLabelCell>
+              <TableLabelCell colSpan={2}>2지점</TableLabelCell>
               <ReportValueCell colSpan={4}>{list[1]?? ''}</ReportValueCell>
 
-              <ReportLabelCell colSpan={3}>누출검사 확인 (mmHg)</ReportLabelCell>
+              <TableLabelCell colSpan={3}>누출검사 확인 (mmHg)</TableLabelCell>
               <ReportValueCell colSpan={2}>{sheet.category == "GAS" ? "-" : 381}</ReportValueCell>
-              <ReportLabelCell colSpan={2}>배출가스 정압 (mmHg)</ReportLabelCell>
+              <TableLabelCell colSpan={2}>배출가스 정압 (mmHg)</TableLabelCell>
               <ReportValueCell>{round(calcPsMmHg(Number(AvgPs)), 2)?? "-"}</ReportValueCell>
             </tr>
 
             {/* ── 기술책임자 / 3지점 / 흡인노즐 ──────── */}
             <tr>
-              <ReportLabelCell colSpan={4}>기술책임자 확인</ReportLabelCell>
+              <TableLabelCell colSpan={4}>기술책임자 확인</TableLabelCell>
               <ReportValueCell colSpan={5}>이나영 (서명)</ReportValueCell>
 
-              <ReportLabelCell colSpan={2}>3지점</ReportLabelCell>
+              <TableLabelCell colSpan={2}>3지점</TableLabelCell>
               <ReportValueCell colSpan={4}>{list[2]?? ''}</ReportValueCell>
 
-              <ReportLabelCell colSpan={5}>흡인노즐 (mm)</ReportLabelCell>
+              <TableLabelCell colSpan={5}>흡인노즐 (mm)</TableLabelCell>
               <ReportValueCell colSpan={3}>{nozzleSize}</ReportValueCell>
             </tr>
 
             {/* ── 시료채취자 / 4지점 / 노즐단면적 ─────── */}
             <tr>
-              <ReportLabelCell colSpan={4}>시료채취자 확인</ReportLabelCell>
+              <TableLabelCell colSpan={4}>시료채취자 확인</TableLabelCell>
               <ReportValueCell colSpan={5}>{planInfo.mentor || "-"} (서명)<br/>{planInfo.mentee || "-"} (서명)</ReportValueCell>
-              <ReportLabelCell colSpan={2}>4지점</ReportLabelCell>
+              <TableLabelCell colSpan={2}>4지점</TableLabelCell>
               <ReportValueCell colSpan={4}>{list[3]?? ''}</ReportValueCell>
-              <ReportLabelCell colSpan={5}>노즐단면적 (cm<sup>2</sup>)</ReportLabelCell>
+              <TableLabelCell colSpan={5}>노즐단면적 (cm<sup>2</sup>)</TableLabelCell>
               <ReportValueCell colSpan={3}>{nozzleArea}</ReportValueCell>
             </tr>
 
             {/* ── 환경기술인 / 5지점 / 등속흡인계수 ──── */}
             <tr>
-              <ReportLabelCell colSpan={4}>환경기술인</ReportLabelCell>
+              <TableLabelCell colSpan={4}>환경기술인</TableLabelCell>
               <ReportValueCell colSpan={5}>이상직 (서명)</ReportValueCell>
-              <ReportLabelCell colSpan={2}>5지점</ReportLabelCell>
+              <TableLabelCell colSpan={2}>5지점</TableLabelCell>
               <ReportValueCell colSpan={4}>{list[4]?? ''}</ReportValueCell>
-              <ReportLabelCell colSpan={5}>등속흡인계수 (%)</ReportLabelCell>
+              <TableLabelCell colSpan={5}>등속흡인계수 (%)</TableLabelCell>
               <ReportValueCell colSpan={3}>{AvgIsoKinetic != null && !isNaN(AvgIsoKinetic) ? AvgIsoKinetic.toFixed(1) : ""}</ReportValueCell>
             </tr>
 
@@ -336,36 +336,36 @@ export const ReportPreviewContent = ({
                 [입자상 물질] 섹션
                 ═══════════════════════════════════════════ */}
             <tr>
-              <ReportLabelCell colSpan={23}>
+              <TableLabelCell colSpan={23}>
                 [입자상 물질] &nbsp;&nbsp; 측정시간 (&nbsp;&nbsp;
                   {formatTime(particleSample.samplingStartTime) || "  "} ~ {formatTime(particleSample.samplingEndTime) || "  "}
                 &nbsp;&nbsp;)
-              </ReportLabelCell>
+              </TableLabelCell>
             </tr>
 
             {/* 컬럼 헤더 (2행) */}
             <tr>
-              <ReportLabelCell rowSpan={2} colSpan={2}>채취점<br />번호</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>채취<br />시간<br />(분)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>진공압<br />(mmHg)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>정압<br />(mmH₂O)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>동압<br />(mmH₂O)</ReportLabelCell>
-              <ReportLabelCell colSpan={3}>온 도(°C)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>K-Factor</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>오리피스<br />압차<br />(mmH₂O)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>여과지홀더 온도</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>임핀저<br />출구온도</ReportLabelCell>
-              <ReportLabelCell>채취 전</ReportLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>채취점<br />번호</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>채취<br />시간<br />(분)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>진공압<br />(mmHg)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>정압<br />(mmH₂O)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>동압<br />(mmH₂O)</TableLabelCell>
+              <TableLabelCell colSpan={3}>온 도(°C)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>K-Factor</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>오리피스<br />압차<br />(mmH₂O)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>여과지홀더 온도</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>임핀저<br />출구온도</TableLabelCell>
+              <TableLabelCell>채취 전</TableLabelCell>
               <ReportValueCell>{
                 safeCalc([startVolume], () => startVolume! * 1000)?.toFixed(2) || "0.00"
               }</ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell>Ts</ReportLabelCell>
-              <ReportLabelCell>Tm(in)</ReportLabelCell>
-              <ReportLabelCell>Tm(out)</ReportLabelCell>
-              <ReportLabelCell>채취 후</ReportLabelCell>
-              <ReportLabelCell>채취량(L)</ReportLabelCell>
+              <TableLabelCell>Ts</TableLabelCell>
+              <TableLabelCell>Tm(in)</TableLabelCell>
+              <TableLabelCell>Tm(out)</TableLabelCell>
+              <TableLabelCell>채취 후</TableLabelCell>
+              <TableLabelCell>채취량(L)</TableLabelCell>
             </tr>
 
             {/* 측정점 데이터 행 (최소 5행 표시) */}
@@ -373,7 +373,7 @@ export const ReportPreviewContent = ({
               const mp = measurementPoints[i];
               return (
                 <tr key={i}>
-                  <ReportLabelCell colSpan={2}>{i + 1}번</ReportLabelCell>
+                  <TableLabelCell colSpan={2}>{i + 1}번</TableLabelCell>
                   <ReportValueCell colSpan={2}>{mp?.samplingTime ?? ""}</ReportValueCell>
                   <ReportValueCell colSpan={2}>{mp?.vacuumGaugePressure != null && !isNaN(Number(mp.vacuumGaugePressure)) ? mp.vacuumGaugePressure : ""}</ReportValueCell>
                   <ReportValueCell colSpan={2}>{mp?.Ps ?? ""}</ReportValueCell>
@@ -396,7 +396,7 @@ export const ReportPreviewContent = ({
 
             {/* 합계 행 */}
             <tr>
-              <ReportLabelCell colSpan={2}>합 계</ReportLabelCell>
+              <TableLabelCell colSpan={2}>합 계</TableLabelCell>
               <ReportValueCell colSpan={2}>{totalTime}</ReportValueCell>
               <td colSpan={18} className={`${cell} bg-amber-100`}></td>
               <ReportValueCell>{found ? formatResult(Number(found?.afterVm) * 1000, 2) : ""}</ReportValueCell>
@@ -404,7 +404,7 @@ export const ReportPreviewContent = ({
 
             {/* 평균 행 */}
             <tr>
-              <ReportLabelCell colSpan={2}>평 균</ReportLabelCell>
+              <TableLabelCell colSpan={2}>평 균</TableLabelCell>
               <td colSpan={2} className={`${cell} bg-amber-100`}></td>
               <ReportValueCell colSpan={2}>{formatResult(AvgVaccum, 1)}</ReportValueCell>
               <ReportValueCell colSpan={2}>{formatResult(AvgPs, 1)}</ReportValueCell>
@@ -422,31 +422,31 @@ export const ReportPreviewContent = ({
                 [수분] 섹션
                 ═══════════════════════════════════════════ */}
             <tr>
-              <ReportLabelCell colSpan={4}>[ 수 분 ]</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>수분량(%)</ReportLabelCell>
+              <TableLabelCell colSpan={4}>[ 수 분 ]</TableLabelCell>
+              <TableLabelCell colSpan={2}>수분량(%)</TableLabelCell>
               <ReportValueCell colSpan={3}>{Xw ?? ""}</ReportValueCell>
-              <ReportLabelCell colSpan={4}>배출가스온도(°C)</ReportLabelCell>
+              <TableLabelCell colSpan={4}>배출가스온도(°C)</TableLabelCell>
               <ReportValueCell colSpan={4}></ReportValueCell>
-              <ReportLabelCell colSpan={4}>포화수증기압</ReportLabelCell>
+              <TableLabelCell colSpan={4}>포화수증기압</TableLabelCell>
               <ReportValueCell colSpan={2}></ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell rowSpan={2} colSpan={3}>흡인유량<br />(L/min)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={3}>가스미터압<br />(mmHg)</ReportLabelCell>
-              <ReportLabelCell colSpan={4}>온 도(°C)</ReportLabelCell>
-              <ReportLabelCell colSpan={4}>무수염화칼슘(g)</ReportLabelCell>
-              <ReportLabelCell colSpan={5}>채 취 시 간</ReportLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={3}>흡인유량<br />(L/min)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={3}>가스미터압<br />(mmHg)</TableLabelCell>
+              <TableLabelCell colSpan={4}>온 도(°C)</TableLabelCell>
+              <TableLabelCell colSpan={4}>무수염화칼슘(g)</TableLabelCell>
+              <TableLabelCell colSpan={5}>채 취 시 간</TableLabelCell>
               <ReportValueCell colSpan={3}>{moistureSamplingTime}</ReportValueCell>
-              <ReportLabelCell>분</ReportLabelCell>
+              <TableLabelCell>분</TableLabelCell>
             </tr>
             <tr>
-              <ReportLabelCell colSpan={2}>Tm(in)</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>Tm(out)</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>전 무게</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>후 무게</ReportLabelCell>
-              <ReportLabelCell colSpan={3}>채취 전</ReportLabelCell>
-              <ReportLabelCell colSpan={3}>채취 후</ReportLabelCell>
-              <ReportLabelCell colSpan={3}>채취량(L)</ReportLabelCell>
+              <TableLabelCell colSpan={2}>Tm(in)</TableLabelCell>
+              <TableLabelCell colSpan={2}>Tm(out)</TableLabelCell>
+              <TableLabelCell colSpan={2}>전 무게</TableLabelCell>
+              <TableLabelCell colSpan={2}>후 무게</TableLabelCell>
+              <TableLabelCell colSpan={3}>채취 전</TableLabelCell>
+              <TableLabelCell colSpan={3}>채취 후</TableLabelCell>
+              <TableLabelCell colSpan={3}>채취량(L)</TableLabelCell>
             </tr>
             <tr>
               <ReportValueCell colSpan={3}>{Number(moisture.suctionVelocity).toFixed(1) || "-"}</ReportValueCell>
@@ -464,9 +464,9 @@ export const ReportPreviewContent = ({
                 [가스상 및 VOCs 물질] 섹션
                 ═══════════════════════════════════════════ */}
             <tr>
-              <ReportLabelCell colSpan={5}>
+              <TableLabelCell colSpan={5}>
                 [ 가스상 및 VOCs 물질 ]
-              </ReportLabelCell>
+              </TableLabelCell>
               <ReportValueCell colSpan={12}>
                 가스분석기 측정시간 ( &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; )
               </ReportValueCell>
@@ -475,22 +475,22 @@ export const ReportPreviewContent = ({
               </ReportValueCell>
             </tr>
             <tr>
-              <ReportLabelCell rowSpan={2} colSpan={3}>항 목</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={4}>측정시간</ReportLabelCell>
-              <ReportLabelCell rowSpan={2}>흡인유량<br />(L/min)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2}>가스미터압<br />(mmHg)</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>온 도(°C)</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>채취전</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>채취후</ReportLabelCell>
-              <ReportLabelCell colSpan={4}>Tube No.</ReportLabelCell>
-              <ReportLabelCell rowSpan={2} colSpan={2}>채취량(L)</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>매 연</ReportLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={3}>항 목</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={4}>측정시간</TableLabelCell>
+              <TableLabelCell rowSpan={2}>흡인유량<br />(L/min)</TableLabelCell>
+              <TableLabelCell rowSpan={2}>가스미터압<br />(mmHg)</TableLabelCell>
+              <TableLabelCell colSpan={2}>온 도(°C)</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>채취전</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>채취후</TableLabelCell>
+              <TableLabelCell colSpan={4}>Tube No.</TableLabelCell>
+              <TableLabelCell rowSpan={2} colSpan={2}>채취량(L)</TableLabelCell>
+              <TableLabelCell colSpan={2}>매 연</TableLabelCell>
             </tr>
             <tr>
-              <ReportLabelCell>Tm(in)</ReportLabelCell>
-              <ReportLabelCell>Tm(out)</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>현장바탕시료</ReportLabelCell>
-              <ReportLabelCell colSpan={2}>시료</ReportLabelCell>
+              <TableLabelCell>Tm(in)</TableLabelCell>
+              <TableLabelCell>Tm(out)</TableLabelCell>
+              <TableLabelCell colSpan={2}>현장바탕시료</TableLabelCell>
+              <TableLabelCell colSpan={2}>시료</TableLabelCell>
               <ReportValueCell colSpan={2}>( &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; )</ReportValueCell>
             </tr>
 

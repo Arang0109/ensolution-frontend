@@ -41,20 +41,18 @@ export interface SheetTabProps {
 }
 
 // ─── 모바일 카드 스타일 상수 ────────────────────────────────────────
-const mobileWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden";
-const desktopWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
+const mobileWrap = "sm:hidden border border-gray-200 overflow-hidden";
+const desktopWrap = "hidden sm:block border border-gray-200 overflow-hidden";
 
 export const SheetTab = ({
   planInfo,
   sheet,
-  // measurementItems,
+  measurementItems,
   onSheetInfoChange,
   onWeatherChange,
   onMoistureChange,
   onExhaustGasChange,
   onMeasurementPointChange,
-  // onSampleItemsChange,
-  // onSampleChange,
   onParticleSampleChange,
   selectedPS,
   selectedPT,
@@ -164,15 +162,6 @@ export const SheetTab = ({
         onChange={onSheetInfoChange}
       />
 
-      {/* ── 시료 정보 ──────────────────────────────────────── */}
-      {/* <SampleInfoSection
-        sheet={sheet}
-        allSheets={allSheets}
-        measurementItems={measurementItems}
-        onSampleItemsChange={onSampleItemsChange}
-        onSampleChange={onSampleChange}
-      /> */}
-
       {/* ── 기상정보 ─────────────────────────────────── */}
       <WeatherSection
         mobileWrap={mobileWrap}
@@ -205,6 +194,8 @@ export const SheetTab = ({
       <ExhaustGasSection
         mobileWrap={mobileWrap}
         desktopWrap={desktopWrap}
+
+        measurementItems={measurementItems}
 
         exhaustGas={sheet.exhaustGas}
         onChange={onExhaustGasChange}

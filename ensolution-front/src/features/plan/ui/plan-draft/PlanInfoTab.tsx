@@ -6,7 +6,7 @@ import type { PlanInfoEditForm, MeasurementItemEditForm } from "@/entities/plan/
 
 import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS, CYCLE_LABELS, type StackDetailResponse, type StackMeasurementResponse } from "@/entities/stack/model";
 import { GRADE_LABELS_OPTIONS } from "@shared/model";
-import { TableEditableCell, TableSelectableCell, TableLabelCell, SectionAccordion, TableInputCell } from "@shared/ui";
+import { TableInputCell, TableSelectableCell, TableLabelCell, SectionAccordion } from "@shared/ui";
 
 interface PlanInfoTabProps {
   planInfo: PlanInfoEditForm;
@@ -16,8 +16,8 @@ interface PlanInfoTabProps {
   onMeasurementItemsChange: (items: StackMeasurementResponse[]) => void;
 }
 
-const mobileSectionWrap = "sm:hidden rounded-lg border border-gray-200 overflow-hidden";
-const desktopSectionWrap = "hidden sm:block rounded-lg border border-gray-200 overflow-hidden";
+const mobileSectionWrap = "sm:hidden overflow-hidden";
+const desktopSectionWrap = "hidden sm:block overflow-hidden";
 
 export const PlanInfoTab = ({
   planInfo,
@@ -157,19 +157,19 @@ export const PlanInfoTab = ({
             <tbody>
               <tr>
                 <TableLabelCell>의뢰기관</TableLabelCell>
-                <TableEditableCell colSpan={3} value={planInfo.companyName} onChange={(value) => onChange("companyName", value)} />
+                <TableInputCell colSpan={3} value={planInfo.companyName} onChange={(value) => onChange("companyName", value)} />
               </tr>
               <tr>
                 <TableLabelCell>사업장</TableLabelCell>
-                <TableEditableCell colSpan={3} value={planInfo.workplaceName} onChange={(value) => onChange("workplaceName", value)} />
+                <TableInputCell colSpan={3} value={planInfo.workplaceName} onChange={(value) => onChange("workplaceName", value)} />
               </tr>
               <tr>
                 <TableLabelCell>주소</TableLabelCell>
-                <TableEditableCell colSpan={3} value={planInfo.address} onChange={(value) => onChange("address", value)} />
+                <TableInputCell colSpan={3} value={planInfo.address} onChange={(value) => onChange("address", value)} />
               </tr>
               <tr>
                 <TableLabelCell>사업자번호</TableLabelCell>
-                <TableEditableCell colSpan={3} value={planInfo.bizNumber} onChange={(value) => onChange("bizNumber", value)} />
+                <TableInputCell colSpan={3} value={planInfo.bizNumber} onChange={(value) => onChange("bizNumber", value)} />
               </tr>
               <tr>
                 <TableLabelCell>대표자</TableLabelCell>
@@ -178,9 +178,9 @@ export const PlanInfoTab = ({
                 <TableLabelCell>사업장 종별</TableLabelCell>
               </tr>
               <tr>
-                <TableEditableCell value={planInfo.ceoName} onChange={(value) => onChange("ceoName", value)} />
-                <TableEditableCell value={planInfo.manager} onChange={(value) => onChange("manager", value)} />
-                <TableEditableCell value={planInfo.businessCategory} onChange={(value) => onChange("businessCategory", value)} />
+                <TableInputCell value={planInfo.ceoName} onChange={(value) => onChange("ceoName", value)} />
+                <TableInputCell value={planInfo.manager} onChange={(value) => onChange("manager", value)} />
+                <TableInputCell value={planInfo.businessCategory} onChange={(value) => onChange("businessCategory", value)} />
                 <TableSelectableCell value={planInfo.workplaceGrade} onChange={(value) => onChange("workplaceGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
             </tbody>
@@ -193,25 +193,25 @@ export const PlanInfoTab = ({
             <tbody>
               <tr>
                 <TableLabelCell>의뢰기관</TableLabelCell>
-                <TableEditableCell value={planInfo.companyName} onChange={(value) => onChange("companyName", value)} />
+                <TableInputCell value={planInfo.companyName} onChange={(value) => onChange("companyName", value)} />
                 <TableLabelCell>사업장</TableLabelCell>
-                <TableEditableCell value={planInfo.workplaceName} onChange={(value) => onChange("workplaceName", value)} />
+                <TableInputCell value={planInfo.workplaceName} onChange={(value) => onChange("workplaceName", value)} />
               </tr>
               <tr>
                 <TableLabelCell>주소</TableLabelCell>
-                <TableEditableCell value={planInfo.address} onChange={(value) => onChange("address", value)} />
+                <TableInputCell value={planInfo.address} onChange={(value) => onChange("address", value)} />
                 <TableLabelCell>사업자번호</TableLabelCell>
-                <TableEditableCell value={planInfo.bizNumber} onChange={(value) => onChange("bizNumber", value)} />
+                <TableInputCell value={planInfo.bizNumber} onChange={(value) => onChange("bizNumber", value)} />
               </tr>
               <tr>
                 <TableLabelCell>대표자</TableLabelCell>
-                <TableEditableCell value={planInfo.ceoName} onChange={(value) => onChange("ceoName", value)} />
+                <TableInputCell value={planInfo.ceoName} onChange={(value) => onChange("ceoName", value)} />
                 <TableLabelCell>담당자</TableLabelCell>
-                <TableEditableCell value={planInfo.manager} onChange={(value) => onChange("manager", value)} />
+                <TableInputCell value={planInfo.manager} onChange={(value) => onChange("manager", value)} />
               </tr>
               <tr>
                 <TableLabelCell>업종</TableLabelCell>
-                <TableEditableCell value={planInfo.businessCategory} onChange={(value) => onChange("businessCategory", value)} />
+                <TableInputCell value={planInfo.businessCategory} onChange={(value) => onChange("businessCategory", value)} />
                 <TableLabelCell>사업장 종별</TableLabelCell>
                 <TableSelectableCell value={planInfo.workplaceGrade} onChange={(value) => onChange("workplaceGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
@@ -228,7 +228,7 @@ export const PlanInfoTab = ({
             <tbody>
               <tr>
                 <TableLabelCell>측정시설</TableLabelCell>
-                <TableEditableCell colSpan={3} value={planInfo.stackName} onChange={(value) => onChange("stackName", value)} />
+                <TableInputCell colSpan={3} value={planInfo.stackName} onChange={(value) => onChange("stackName", value)} />
               </tr>
               <tr>
                 <TableLabelCell>SEMS 번호</TableLabelCell>
@@ -237,21 +237,40 @@ export const PlanInfoTab = ({
                 <TableLabelCell>사업장 종별</TableLabelCell>
               </tr>
               <tr>
-                <TableEditableCell value={planInfo.semsNumber} onChange={(value) => onChange("semsNumber", value)} />
-                <TableEditableCell value={planInfo.height} onChange={(value) => onChange("height", value)} />
-                <TableEditableCell value={planInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
+                <TableInputCell value={planInfo.semsNumber} onChange={(value) => onChange("semsNumber", value)} />
+                <TableInputCell value={planInfo.height} onChange={(value) => onChange("height", value)} />
+                <TableInputCell value={planInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
                 <TableSelectableCell value={planInfo.stackGrade} onChange={(value) => onChange("stackGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
               <tr>
                 <TableLabelCell>측정시설 방향</TableLabelCell>
                 <TableLabelCell>측정시설 형태</TableLabelCell>
-                <TableLabelCell colSpan={2}>가로 x 세로</TableLabelCell>
+                {planInfo.shape === "CIRCULAR" ?
+                  <>
+                    <TableLabelCell>지름 (m)</TableLabelCell>
+                    <TableLabelCell> </TableLabelCell>
+                  </>
+                :
+                  <>
+                    <TableLabelCell>가로 (m)</TableLabelCell>
+                    <TableLabelCell>세로 (m)</TableLabelCell>
+                  </>
+                }
               </tr>
               <tr>
                 <TableSelectableCell value={planInfo.orientation} onChange={(value) => onChange("orientation", value)} options={ORIENTATION_LABELS_OPTIONS} />
                 <TableSelectableCell value={planInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
-                <TableEditableCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
-                <TableEditableCell value={planInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
+                {planInfo.shape === "CIRCULAR" ?
+                  <>
+                    <TableInputCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
+                    <TableLabelCell> </TableLabelCell>
+                  </>
+                :
+                  <>
+                    <TableInputCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
+                    <TableInputCell value={planInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
+                  </>
+                }
               </tr>
             </tbody>
           </table>
@@ -263,13 +282,13 @@ export const PlanInfoTab = ({
             <tbody>
               <tr>
                 <TableLabelCell>굴뚝명</TableLabelCell>
-                <TableEditableCell value={planInfo.stackName} onChange={(value) => onChange("stackName", value)} />
+                <TableInputCell value={planInfo.stackName} onChange={(value) => onChange("stackName", value)} />
                 <TableLabelCell>SEMS 번호</TableLabelCell>
-                <TableEditableCell value={planInfo.semsNumber} onChange={(value) => onChange("semsNumber", value)} />
+                <TableInputCell value={planInfo.semsNumber} onChange={(value) => onChange("semsNumber", value)} />
               </tr>
               <tr>
                 <TableLabelCell>측정공 높이 (m)</TableLabelCell>
-                <TableEditableCell value={planInfo.height} onChange={(value) => onChange("height", value)} />
+                <TableInputCell value={planInfo.height} onChange={(value) => onChange("height", value)} />
                 <TableLabelCell>측정시설 방향</TableLabelCell>
                 <TableSelectableCell value={planInfo.orientation} onChange={(value) => onChange("orientation", value)} options={ORIENTATION_LABELS_OPTIONS} />
               </tr>
@@ -277,13 +296,22 @@ export const PlanInfoTab = ({
                 <TableLabelCell>측정시설 형태</TableLabelCell>
                 <TableSelectableCell value={planInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
                 <TableLabelCell>기준산소농도 (%)</TableLabelCell>
-                <TableEditableCell value={planInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
+                <TableInputCell value={planInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
               </tr>
               <tr>
-                <TableLabelCell>가로 (m)</TableLabelCell>
-                <TableEditableCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
-                <TableLabelCell>세로 (m)</TableLabelCell>
-                <TableEditableCell value={planInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
+                {planInfo.shape === "CIRCULAR" ?
+                  <>
+                    <TableLabelCell>직경 (m)</TableLabelCell>
+                    <TableInputCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
+                  </>
+                :
+                  <>
+                    <TableLabelCell>가로 (m)</TableLabelCell>
+                    <TableInputCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
+                    <TableLabelCell>세로 (m)</TableLabelCell>
+                    <TableInputCell value={planInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
+                  </>
+                }
               </tr>
               <tr>
                 <TableLabelCell>사업장 종별</TableLabelCell>

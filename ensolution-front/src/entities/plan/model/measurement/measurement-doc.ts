@@ -170,6 +170,9 @@ export interface ExhaustGasUpdateRequest {
   coConcentration: string[];
   noxConcentration: string[];
   soxConcentration: string[];
+
+  gasAnalyzerStartTime: string;
+  thcAnalyzerStartTime: string;
 }
 
 export interface MeasurementPointUpdateRequest {

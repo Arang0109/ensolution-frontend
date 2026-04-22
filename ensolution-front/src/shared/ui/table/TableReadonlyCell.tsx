@@ -5,7 +5,7 @@ export const TableReadonlyCell = ({ label, value, colSpan }: { label: string; va
     <TableLabelCell>
       {label}
     </TableLabelCell>
-    <td colSpan={colSpan} className="border border-slate-200 bg-white">
+    <td colSpan={colSpan} className="border border-black">
       <input
         value={value}
         readOnly

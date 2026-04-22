@@ -108,6 +108,9 @@ export interface ExhaustGasEditForm {
   coConcentration: string[];
   noxConcentration: string[];
   soxConcentration: string[];
+
+  gasAnalyzerStartTime: string;
+  thcAnalyzerStartTime: string;
 }
 
 export const getDefaultExhaustGasEditForm = (
@@ -121,6 +124,9 @@ export const getDefaultExhaustGasEditForm = (
     coConcentration: exhaustGas?.coConcentration ?? ["0", "0", "0"],
     noxConcentration: exhaustGas?.noxConcentration ?? ["0", "0", "0"],
     soxConcentration: exhaustGas?.soxConcentration ?? ["0", "0", "0"],
+
+    gasAnalyzerStartTime: exhaustGas?.gasAnalyzerStartTime ?? "",
+    thcAnalyzerStartTime: exhaustGas?.thcAnalyzerStartTime ?? "",
   }
 }
 

@@ -74,23 +74,20 @@ export const MeasurementPointSection = ({
             <table className="min-w-[540px] w-full table-fixed border-collapse text-sm">
               <colgroup>
                 <col style={{ width: "120px" }} />
-                <col style={{ width: "110px" }} />
-                <col style={{ width: "110px" }} />
-                <col style={{ width: "110px" }} />
-                <col style={{ width: "110px" }} />
-                <col style={{ width: "110px" }} />
-                <col style={{ width: "110px" }} />
+                <col style={{ width: "70px" }} />
+                <col style={{ width: "70px" }} />
+                <col style={{ width: "70px" }} />
+                <col style={{ width: "70px" }} />
+                <col style={{ width: "70px" }} />
+                <col style={{ width: "70px" }} />
               </colgroup>
               <tbody>
                 <tr>
                   <TableLabelCell>측정점</TableLabelCell>
                   {measurementPoints.map((_, index) => (
-                    <TableResultCell
-                      key={index}
-                      value={`${index + 1} 지점`}
-                    />
+                    <TableLabelCell key={index}>{`${index + 1} 지점`}</TableLabelCell>
                   ))}
-                  <TableResultCell value="평균" />
+                  <TableLabelCell>평균</TableLabelCell>
                 </tr>
 
                 <tr>
@@ -106,7 +103,7 @@ export const MeasurementPointSection = ({
                       unit="°C"
                     />
                   ))}
-                  <TableResultCell value={display(AvgGasTemp! - 273, 1)} unit="°K" />
+                  <TableResultCell value={display(AvgGasTemp! - 273, 1)} unit="°C" />
                 </tr>
 
                 <tr>
@@ -177,51 +174,49 @@ export const MeasurementPointSection = ({
 
       {isParticle?
         <SectionAccordion title="Part 5. 원통여지">
-          <div className="rounded-b-lg border border-t-0 border-gray-200 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full table-fixed border-collapse text-sm">
-                <tbody>
-                  <tr>
-                    <TableLabelCell>측정여지번호</TableLabelCell>
-                    <TableLabelCell>포집 전</TableLabelCell>
-                    <TableLabelCell>포집 후</TableLabelCell>
-                  </tr>
-                  <tr>
-                    <TableInputCell
-                      value={sheet.particleSample.thimbleFilter}
-                      onChange={(value) => onParticleSampleChange("thimbleFilter", value)}
-                    />
-                    <TableInputCell
-                      value={""}
-                      onChange={() => null}
-                    />
-                    <TableInputCell
-                      value={""}
-                      onChange={() => null}
-                    />
-                  </tr>
-                  <tr>
-                    <TableLabelCell>바탕여지번호</TableLabelCell>
-                    <TableLabelCell>포집 전</TableLabelCell>
-                    <TableLabelCell>포집 후</TableLabelCell>
-                  </tr>
-                  <tr>
-                    <TableInputCell
-                      value={sheet.particleSample.bgThimbleFilter}
-                      onChange={(value) => onParticleSampleChange("bgThimbleFilter", value)}
-                    />
-                    <TableInputCell
-                      value={""}
-                      onChange={() => null}
-                    />
-                    <TableInputCell
-                      value={""}
-                      onChange={() => null}
-                    />
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="overflow-hidden overflow-x-auto">
+            <table className="w-full table-fixed border-collapse text-sm">
+              <tbody>
+                <tr>
+                  <TableLabelCell>측정여지번호</TableLabelCell>
+                  <TableLabelCell>포집 전</TableLabelCell>
+                  <TableLabelCell>포집 후</TableLabelCell>
+                </tr>
+                <tr>
+                  <TableInputCell
+                    value={sheet.particleSample.thimbleFilter}
+                    onChange={(value) => onParticleSampleChange("thimbleFilter", value)}
+                  />
+                  <TableInputCell
+                    value={""}
+                    onChange={() => null}
+                  />
+                  <TableInputCell
+                    value={""}
+                    onChange={() => null}
+                  />
+                </tr>
+                <tr>
+                  <TableLabelCell>바탕여지번호</TableLabelCell>
+                  <TableLabelCell>포집 전</TableLabelCell>
+                  <TableLabelCell>포집 후</TableLabelCell>
+                </tr>
+                <tr>
+                  <TableInputCell
+                    value={sheet.particleSample.bgThimbleFilter}
+                    onChange={(value) => onParticleSampleChange("bgThimbleFilter", value)}
+                  />
+                  <TableInputCell
+                    value={""}
+                    onChange={() => null}
+                  />
+                  <TableInputCell
+                    value={""}
+                    onChange={() => null}
+                  />
+                </tr>
+              </tbody>
+            </table>
           </div>
         </SectionAccordion> : null
       }

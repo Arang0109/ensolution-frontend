@@ -19,12 +19,17 @@ export const TableSelectableCell = ({
   placeholder?: string;
 }) => (
   <>
-    <td colSpan={colSpan} className={`border border-slate-200 bg-white${colSpan ? ` ${colSpanClass[colSpan] ?? ''}` : ''}`}>
+    <td colSpan={colSpan} className={`border border-black bg-white${colSpan ? ` ${colSpanClass[colSpan] ?? ''}` : ''}`}>
       <div className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full pl-2 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-2.5 text-xs sm:text-sm text-gray-800 bg-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 cursor-pointer"
+          className="
+            w-full pl-2 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-2.5
+            text-[10px] sm:text-sm
+            bg-transparent appearance-none
+            focus:outline-none focus:ring-2 focus:ring-inset
+            focus:ring-gray-400 cursor-pointer"
         >
           <option value="" disabled>
             {placeholder ?? "선택"}
