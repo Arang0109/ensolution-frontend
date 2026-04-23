@@ -95,7 +95,7 @@ export const MeasurementPointSection = ({
                   {measurementPoints.map((mp, index) => (
                     <TableInputCell
                       key={index}
-                      type="number"
+                      type="text"
                       value={mp.Ts}
                       onChange={(value) =>
                         onChange(index, "Ts", value)
@@ -111,7 +111,7 @@ export const MeasurementPointSection = ({
                   {measurementPoints.map((mp, index) => (
                     <TableInputCell
                       key={index}
-                      type="number"
+                      type="text"
                       value={mp.Pv}
                       onChange={(value) =>
                         onChange(index, "Pv", value)
@@ -127,7 +127,7 @@ export const MeasurementPointSection = ({
                   {measurementPoints.map((mp, index) => (
                     <TableInputCell
                       key={index}
-                      type="number"
+                      type="text"
                       value={mp.Ps}
                       onChange={(value) =>
                         onChange(index, "Ps", value)

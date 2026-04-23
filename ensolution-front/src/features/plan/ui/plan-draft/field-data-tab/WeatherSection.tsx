@@ -43,6 +43,8 @@ export const WeatherSection = ({
                 value={weather.pressure}
                 onChange={(value) => onChange("pressure", value)}
                 unit="Hpa"
+                min={0.1}
+                step={0.1}
               />
               <TableResultCell value={display(atmosphericPressure)} unit="mmHg" />
               <TableSelectableCell
@@ -58,7 +60,7 @@ export const WeatherSection = ({
             </tr>
             <tr>
               <TableInputCell
-                type="number"
+                type="text"
                 value={weather.temperature}
                 onChange={(value) => onChange("temperature", value)}
                 unit="°C"/>
@@ -67,6 +69,9 @@ export const WeatherSection = ({
                 value={weather.humidity}
                 onChange={(value) => onChange("humidity", value)}
                 unit="%"/>
+                min={0.0}
+                max={100.0}
+                step={0.1}
               <TableSelectableCell
                 value={weather.windDirection}
                 options={WIND_DIRECTION_LABELS_OPTIONS}
@@ -76,6 +81,9 @@ export const WeatherSection = ({
                 value={weather.windSpeed}
                 onChange={(value) => onChange("windSpeed", value)}
                 unit="m/s"
+                min={0.0}
+                max={50.0}
+                step={0.1}
               />
             </tr>
           </tbody>
@@ -100,10 +108,12 @@ export const WeatherSection = ({
                 value={weather.pressure}
                 onChange={(value) => onChange("pressure", value)}
                 unit="Hpa"
+                min={0.1}
+                step={0.1}
               />
               <TableResultCell value={display(atmosphericPressure)} unit="mmHg" />
               <TableInputCell
-                type="number"
+                type="text"
                 value={weather.temperature}
                 onChange={(value) => onChange("temperature", value)}
                 unit="°C"
@@ -113,6 +123,9 @@ export const WeatherSection = ({
                 value={weather.humidity}
                 onChange={(value) => onChange("humidity", value)}
                 unit="%"
+                min={0.0}
+                max={100.0}
+                step={0.1}
               />
               <TableSelectableCell
                 value={weather.weatherCondition}
@@ -128,6 +141,9 @@ export const WeatherSection = ({
                 value={weather.windSpeed}
                 onChange={(value) => onChange("windSpeed", value)}
                 unit="m/s"
+                min={0.0}
+                max={50.0}
+                step={0.1}
               />
             </tr>
           </tbody>

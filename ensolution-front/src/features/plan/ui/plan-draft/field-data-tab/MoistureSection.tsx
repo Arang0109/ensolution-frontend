@@ -62,12 +62,16 @@ export const MoistureSection = ({
                 type="number"
                 value={moisture.beforeWeight}
                 onChange={(value) => onChange("beforeWeight", value)}
-                unit="g"/>
+                unit="g"
+                min={0.00}
+                step={0.01}/>
               <TableInputCell
                 type="number"
                 value={moisture.afterWeight}
                 onChange={(value) => onChange("afterWeight", value)}
-                unit="g" />
+                unit="g"
+                min={0.00}
+                step={0.01}/>
               <TableResultCell value={display(weightDiff)} unit="g" />
             </tr>
             <tr>
@@ -75,12 +79,12 @@ export const MoistureSection = ({
             </tr>
             <tr>
               <TableInputCell
-                type="number"
+                type="text"
                 value={moisture.inTemperature}
                 onChange={(value) => onChange("inTemperature", value)}
                 unit="°C" />
               <TableInputCell
-                type="number"
+                type="text"
                 value={moisture.outTemperature}
                 onChange={(value) => onChange("outTemperature", value)}
                 unit="°C" />
@@ -94,12 +98,18 @@ export const MoistureSection = ({
                 type="number"
                 value={moisture.beforeDryVolume}
                 onChange={(value) => onChange("beforeDryVolume", value)}
-                unit="L" />
+                unit="L"
+                min={0.000}
+                step={0.001}
+                />
               <TableInputCell
                 type="number"
                 value={moisture.afterDryVolume}
                 onChange={(value) => onChange("afterDryVolume", value)}
-                unit="L" />
+                unit="L"
+                min={0.000}
+                step={0.001}
+                />
               <TableResultCell value={display(dryVolumeDiff)} unit="L" />
             </tr>
             <tr>
@@ -109,7 +119,10 @@ export const MoistureSection = ({
                 type="number"
                 value={moisture.suctionVelocity}
                 onChange={(value) => onChange("suctionVelocity", value)}
-                unit="m/s" />
+                unit="m/s"
+                min={0.0}
+                step={0.1}
+                />
             </tr>
             <tr>
               <TableLabelCell>수분량 (<i>%</i>)</TableLabelCell>
@@ -139,12 +152,16 @@ export const MoistureSection = ({
                 type="number"
                 value={moisture.beforeWeight}
                 onChange={(value) => onChange("beforeWeight", value)}
-                unit="g"/>
+                unit="g"
+                min={0.00}
+                step={0.01}/>
               <TableInputCell
                 type="number"
                 value={moisture.afterWeight}
                 onChange={(value) => onChange("afterWeight", value)}
-                unit="g" />
+                unit="g"
+                min={0.00}
+                step={0.01}/>
               <TableResultCell value={display(weightDiff)} unit="g" />
               <TableLabelCell>게이지압 (<i>mmH<sub>2</sub>O</i>)</TableLabelCell>
               <TableInputCell
@@ -157,16 +174,22 @@ export const MoistureSection = ({
             </tr>
             <tr>
               <TableLabelCell>온도 (<i>°C</i>)</TableLabelCell>
-              <TableInputCell type="number" value={moisture.inTemperature} onChange={(value) => onChange("inTemperature", value)} unit="°C" />
-              <TableInputCell type="number" value={moisture.outTemperature} onChange={(value) => onChange("outTemperature", value)} unit="°C" />
+              <TableInputCell type="text" value={moisture.inTemperature} onChange={(value) => onChange("inTemperature", value)} unit="°C" />
+              <TableInputCell type="text" value={moisture.outTemperature} onChange={(value) => onChange("outTemperature", value)} unit="°C" />
               <TableResultCell value={display(tempAvg)} unit="°C" />
               <TableLabelCell>흡인유속 (<i>m/s</i>)</TableLabelCell>
-              <TableInputCell type="number" colSpan={3} value={moisture.suctionVelocity} onChange={(value) => onChange("suctionVelocity", value)} unit="m/s" />
+              <TableInputCell
+                type="number" colSpan={3} value={moisture.suctionVelocity} onChange={(value) => onChange("suctionVelocity", value)} unit="m/s" />
+                min={0.0} step={0.1}
             </tr>
             <tr>
               <TableLabelCell>흡인량 (<i>L</i>)</TableLabelCell>
-              <TableInputCell type="number" value={moisture.beforeDryVolume} onChange={(value) => onChange("beforeDryVolume", value)} unit="L" />
-              <TableInputCell type="number" value={moisture.afterDryVolume} onChange={(value) => onChange("afterDryVolume", value)} unit="L" />
+              <TableInputCell
+                type="number" value={moisture.beforeDryVolume} onChange={(value) => onChange("beforeDryVolume", value)} unit="L" />
+                min={0.000} step={0.001}
+              <TableInputCell
+                type="number" value={moisture.afterDryVolume} onChange={(value) => onChange("afterDryVolume", value)} unit="L" />
+                min={0.000} step={0.001}
               <TableResultCell value={display(dryVolumeDiff)} unit="L" />
               <TableLabelCell>수분량 (<i>%</i>)</TableLabelCell>
               <TableResultCell colSpan={3} value={display(moistureRatio)} unit="%" />

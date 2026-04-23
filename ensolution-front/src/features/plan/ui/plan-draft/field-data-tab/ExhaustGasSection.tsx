@@ -39,9 +39,9 @@ const O2Row = ({
 }) => (
   <>
     <TableLabelCell>O<sub>2</sub> (%)</TableLabelCell>
-    <TableInputCell type="number" value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} />
-    <TableInputCell type="number" value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} />
-    <TableInputCell type="number" value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} min={0.0} max={100.0} step={0.1} />
     <TableResultCell value={display(o2ConcentrationAvg)} unit="%" />
   </>
 );
@@ -57,9 +57,9 @@ const CO2Row = ({
 }) => (
   <>
     <TableLabelCell>CO<sub>2</sub> (%)</TableLabelCell>
-    <TableInputCell type="number" value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} />
-    <TableInputCell type="number" value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} />
-    <TableInputCell type="number" value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} min={0.0} max={100.0} step={0.1} />
     <TableResultCell value={display(co2ConcentrationAvg)} unit="%" />
   </>
 );
@@ -75,9 +75,9 @@ const CORow = ({
 }) => (
   <>
     <TableLabelCell>CO (%)</TableLabelCell>
-    <TableInputCell type="number" value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} />
-    <TableInputCell type="number" value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} />
-    <TableInputCell type="number" value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} min={0.0} max={100.0} step={0.1} />
     <TableResultCell value={display((coConcentrationAvg))} unit="%" />
   </>
 );
@@ -93,9 +93,9 @@ const NoxRow = ({
 }) => (
   <>
     <TableLabelCell>NO<sub>X</sub> (ppm)</TableLabelCell>
-    <TableInputCell type="number" value={exhaustGas.noxConcentration[0]} onChange={(value) => onChange("noxConcentration", value, 0)} />
-    <TableInputCell type="number" value={exhaustGas.noxConcentration[1]} onChange={(value) => onChange("noxConcentration", value, 1)} />
-    <TableInputCell type="number" value={exhaustGas.noxConcentration[2]} onChange={(value) => onChange("noxConcentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.noxConcentration[0]} onChange={(value) => onChange("noxConcentration", value, 0)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.noxConcentration[1]} onChange={(value) => onChange("noxConcentration", value, 1)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.noxConcentration[2]} onChange={(value) => onChange("noxConcentration", value, 2)} min={0.0} max={100.0} step={0.1} />
     <TableResultCell value={display(noxConcentrationAvg)} unit="ppm" />
   </>
 );
@@ -111,9 +111,9 @@ const SoxRow = ({
 }) => (
   <>
     <TableLabelCell>SO<sub>X</sub> (ppm)</TableLabelCell>
-    <TableInputCell type="number" value={exhaustGas.soxConcentration[0]} onChange={(value) => onChange("soxConcentration", value, 0)} />
-    <TableInputCell type="number" value={exhaustGas.soxConcentration[1]} onChange={(value) => onChange("soxConcentration", value, 1)} />
-    <TableInputCell type="number" value={exhaustGas.soxConcentration[2]} onChange={(value) => onChange("soxConcentration", value, 2)} />
+    <TableInputCell type="number" value={exhaustGas.soxConcentration[0]} onChange={(value) => onChange("soxConcentration", value, 0)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.soxConcentration[1]} onChange={(value) => onChange("soxConcentration", value, 1)} min={0.0} max={100.0} step={0.1} />
+    <TableInputCell type="number" value={exhaustGas.soxConcentration[2]} onChange={(value) => onChange("soxConcentration", value, 2)} min={0.0} max={100.0} step={0.1} />
     <TableResultCell value={display(soxConcentrationAvg)} unit="ppm" />
   </>
 );
@@ -153,21 +153,21 @@ export const ExhaustGasSection = ({
             </tr>
             <tr>
               <TableLabelCell >O<sub>2</sub> (<i>%</i>)</TableLabelCell>
-              <TableInputCell type="number" value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} unit="%" />
-              <TableInputCell type="number" value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} unit="%" />
-              <TableInputCell type="number" value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.o2Concentration[0]} onChange={(value) => onChange("o2Concentration", value, 0)} unit="%" min={0.0} max={100.0} step={0.1} />
+              <TableInputCell type="number" value={exhaustGas.o2Concentration[1]} onChange={(value) => onChange("o2Concentration", value, 1)} unit="%" min={0.0} max={100.0} step={0.1} />
+              <TableInputCell type="number" value={exhaustGas.o2Concentration[2]} onChange={(value) => onChange("o2Concentration", value, 2)} unit="%" min={0.0} max={100.0} step={0.1} />
             </tr>
             <tr>
               <TableLabelCell>CO<sub>2</sub> (<i>%</i>)</TableLabelCell>
-              <TableInputCell type="number" value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} unit="%" />
-              <TableInputCell type="number" value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} unit="%" />
-              <TableInputCell type="number" value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.co2Concentration[0]} onChange={(value) => onChange("co2Concentration", value, 0)} unit="%" min={0.0} max={100.0} step={0.1} />
+              <TableInputCell type="number" value={exhaustGas.co2Concentration[1]} onChange={(value) => onChange("co2Concentration", value, 1)} unit="%" min={0.0} max={100.0} step={0.1} />
+              <TableInputCell type="number" value={exhaustGas.co2Concentration[2]} onChange={(value) => onChange("co2Concentration", value, 2)} unit="%" min={0.0} max={100.0} step={0.1} />
             </tr>
             <tr>
               <TableLabelCell>CO (<i>%</i>)</TableLabelCell>
-              <TableInputCell type="number" value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} unit="%" />
-              <TableInputCell type="number" value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} unit="%" />
-              <TableInputCell type="number" value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} unit="%" />
+              <TableInputCell type="number" value={exhaustGas.coConcentration[0]} onChange={(value) => onChange("coConcentration", value, 0)} unit="%" min={0.0} max={100.0} step={0.1} />
+              <TableInputCell type="number" value={exhaustGas.coConcentration[1]} onChange={(value) => onChange("coConcentration", value, 1)} unit="%" min={0.0} max={100.0} step={0.1} />
+              <TableInputCell type="number" value={exhaustGas.coConcentration[2]} onChange={(value) => onChange("coConcentration", value, 2)} unit="%" min={0.0} max={100.0} step={0.1} />
             </tr>
             <tr>
 
@@ -236,9 +236,9 @@ export const ExhaustGasSection = ({
                 <Fragment key={item.pollutantId}>
                   <tr>
                     <TableLabelCell>{item.pollutantNameEn} (<i>ppm</i>)</TableLabelCell>
-                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" />
-                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" />
-                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" />
+                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" min={0.0} max={100.0} step={0.1} />
                   </tr>
                 </Fragment>
               );
@@ -308,9 +308,9 @@ export const ExhaustGasSection = ({
                 <Fragment key={item.pollutantId}>
                   <tr>
                     <TableLabelCell>{item.pollutantNameEn} (<i>ppm</i>)</TableLabelCell>
-                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" />
-                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" />
-                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" />
+                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" min={0.0} max={100.0} step={0.1} />
                   </tr>
                 </Fragment>
               );

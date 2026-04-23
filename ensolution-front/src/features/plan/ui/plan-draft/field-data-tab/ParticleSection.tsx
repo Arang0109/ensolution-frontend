@@ -104,7 +104,7 @@ export const ParticleSection = ({
         {measurementPoints.map((mp, index) => (
           <TableInputCell
             key={index}
-            type="number"
+            type="text"
             value={mp.inTm}
             onChange={(value) =>
               onChange(index, "inTm", value)
@@ -119,7 +119,7 @@ export const ParticleSection = ({
         {measurementPoints.map((mp, index) => (
           <TableInputCell
             key={index}
-            type="number"
+            type="text"
             value={mp.outTm}
             onChange={(value) =>
               onChange(index, "outTm", value)
@@ -221,6 +221,7 @@ export const ParticleSection = ({
             value={mp.samplingTime}
             onChange={(value) => handleSamplingTimeChange(index, value)}
             unit={<i>min</i>}
+             min={0} step={1}
           />
         ))}
       </tr>
@@ -235,6 +236,7 @@ export const ParticleSection = ({
               onChange(index, "beforeVm", value)
             }
             unit={<i>°C</i>}
+            min={0.00000} step={0.00001}
           />
         ))}
       </tr>
@@ -249,6 +251,7 @@ export const ParticleSection = ({
               onChange(index, "afterVm", value)
             }
             unit={<i>°C</i>}
+            min={0.00000} step={0.00001}
           />
         ))}
       </tr>
@@ -274,6 +277,7 @@ export const ParticleSection = ({
               onChange(index, "vacuumGaugePressure", value)
             }
             unit={<i>°C</i>}
+            min={0.00} step={0.01}
           />
         ))}
       </tr>
@@ -288,6 +292,7 @@ export const ParticleSection = ({
               onChange(index, "finalImpingerTemperature", value)
             }
             unit={<i>°C</i>}
+            min={0.0} step={0.1}
           />
         ))}
       </tr>

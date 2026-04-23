@@ -86,7 +86,7 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableLabelCell>접수번호</TableLabelCell>
-                <TableInputCell value={planInfo.referenceNumber} onChange={(value) => onChange("referenceNumber", value)} />
+                <TableInputCell type="number" value={planInfo.referenceNumber} onChange={(value) => onChange("referenceNumber", value)} min={0} step={1} />
               </tr>
               <tr>
                 <TableLabelCell>측정분야</TableLabelCell>
@@ -237,9 +237,27 @@ export const PlanInfoTab = ({
                 <TableLabelCell>사업장 종별</TableLabelCell>
               </tr>
               <tr>
-                <TableInputCell value={planInfo.semsNumber} onChange={(value) => onChange("semsNumber", value)} />
-                <TableInputCell value={planInfo.height} onChange={(value) => onChange("height", value)} />
-                <TableInputCell value={planInfo.standardOxygen} onChange={(value) => onChange("standardOxygen", value)} />
+                <TableInputCell
+                  type="number"
+                  value={planInfo.semsNumber}
+                  onChange={(value) => onChange("semsNumber", value)}
+                  min={0}
+                  step={1}
+                  />
+                <TableInputCell
+                  type="number"
+                  value={planInfo.height}
+                  onChange={(value) => onChange("height", value)}
+                  min={0.1}
+                  step={0.1}
+                  />
+                <TableInputCell
+                  type="number"
+                  value={planInfo.standardOxygen}
+                  onChange={(value) => onChange("standardOxygen", value)}
+                  min={0}
+                  step={1}
+                  />
                 <TableSelectableCell value={planInfo.stackGrade} onChange={(value) => onChange("stackGrade", value)} options={GRADE_LABELS_OPTIONS} />
               </tr>
               <tr>
@@ -262,13 +280,31 @@ export const PlanInfoTab = ({
                 <TableSelectableCell value={planInfo.shape} onChange={(value) => onChange("shape", value)} options={SHAPE_LABELS_OPTIONS} />
                 {planInfo.shape === "CIRCULAR" ?
                   <>
-                    <TableInputCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
+                    <TableInputCell
+                      type="number"
+                      value={planInfo.horizontalLength}
+                      onChange={(value) => onChange("horizontalLength", value)}
+                      min={0.1}
+                      step={0.1}
+                    />
                     <TableLabelCell> </TableLabelCell>
                   </>
                 :
                   <>
-                    <TableInputCell value={planInfo.horizontalLength} onChange={(value) => onChange("horizontalLength", value)} />
-                    <TableInputCell value={planInfo.verticalLength} onChange={(value) => onChange("verticalLength", value)} />
+                    <TableInputCell
+                      type="number"
+                      value={planInfo.horizontalLength}
+                      onChange={(value) => onChange("horizontalLength", value)}
+                      min={0.1}
+                      step={0.1}
+                    />
+                    <TableInputCell
+                      type="number"
+                      value={planInfo.verticalLength}
+                      onChange={(value) => onChange("verticalLength", value)}
+                      min={0.1}
+                      step={0.1}
+                    />
                   </>
                 }
               </tr>

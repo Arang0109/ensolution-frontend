@@ -43,8 +43,10 @@ export const NozzleRecommendContent = ({ onClose, recommendList, sheet, onPartic
       <div>
         <InputField
           label="채취하고자 하는 흡입량 (m³)"
+          type="number"
           value={sheet.particleSample.Vr}
           onChange={(value) => onParticleSampleChange("Vr", value)}
+          min={0.00000} step={0.00001}
         />
       </div>
 
