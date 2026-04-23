@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
-import { registerPollutant, patchPollutant, deletePollutant } from "@pollutant/api/pollutantApi";
-import type { PollutantRegisterRequest, PollutantUpdateRequest } from "@pollutant/model";
+import { registerPollutant, patchPollutant, deletePollutant } from "@/features/pollutant/api/pollutantApi";
+import type { PollutantRegisterRequest, PollutantUpdateRequest } from "@/features/pollutant/model";
 
 import type { ActionResult } from "@shared/model";
 

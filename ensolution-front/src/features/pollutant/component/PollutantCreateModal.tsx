@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { PollutantCreateContent } from "@pollutant/component";
+import { PollutantCreateContent } from "@/features/pollutant/component";
 
 interface PollutantFormModalProps {
   onClose: () => void;

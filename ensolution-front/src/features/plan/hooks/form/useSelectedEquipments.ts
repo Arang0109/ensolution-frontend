@@ -1,4 +1,4 @@
-import { useEquipments } from "@equipment/hooks";
+import { useEquipments } from "@/features/equipment/hooks";
 import { EquipType } from "@/entities/agency/equipment/model";
 
 import type { EquipmentEditForm } from "@/entities/plan/model";

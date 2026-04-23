@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { MeasurementCreateContent } from "@stack/component";
+import { MeasurementCreateContent } from "@/features/stack/component";
 
 interface StackMeasurementCreateModalProps {
   stackId: number;

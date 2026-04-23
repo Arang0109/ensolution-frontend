@@ -1,6 +1,6 @@
 import { useToast } from "@app/providers/toast";
 
-import { useWorkplaceActions, useWorkplaceCreate } from "@workplace/hooks";
+import { useWorkplaceActions, useWorkplaceCreate } from "@/features/workplace/hooks";
 import { mapCreateFormToRequest } from "@entities/workplace/model";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";

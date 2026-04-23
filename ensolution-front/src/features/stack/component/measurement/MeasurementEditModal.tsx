@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { MeasurementEditContent } from "@stack/component";
+import { MeasurementEditContent } from "@/features/stack/component";
 import type { StackMeasurementResponse } from "@/entities/stack/model";
 
 interface StackMeasurementEditModalProps {

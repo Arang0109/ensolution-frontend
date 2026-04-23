@@ -3,7 +3,7 @@ import { TableInputCell, TableLabelCell, TableResultCell, SectionAccordion } fro
 import { ParticleSection } from "@/features/plan/ui";
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 import type { PointRecord } from "@shared/lib";
-import type { OrificeDpRecord } from "@plan/util";
+import type { OrificeDpRecord } from "@/features/plan/util";
 import { display } from "@shared/lib";
 
 interface MeasurementPointSection {

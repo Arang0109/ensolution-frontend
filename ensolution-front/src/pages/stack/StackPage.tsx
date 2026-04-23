@@ -1,6 +1,6 @@
-import { useStackListQuery } from '@stack/hooks';
+import { useStackListQuery } from '@/features/stack/hooks';
 
-import { StackTable } from '@stack/ui';
+import { StackTable } from '@/features/stack/ui';
 
 import { EmptyState, FullPageLoader, Breadcrumbs } from "@shared/ui";
 

@@ -11,7 +11,7 @@ import {
   flowCalculator,
   nozzleCalculator,
   isokineticRatioCalculator,
-} from "@plan/util";
+} from "@/features/plan/util";
 
 import type { PointRecord } from "@shared/lib";
 import { calculator } from "@shared/lib";

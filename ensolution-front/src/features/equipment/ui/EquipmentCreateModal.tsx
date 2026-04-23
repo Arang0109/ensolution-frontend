@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { EquipmentCreateForm } from "@equipment/ui";
+import { EquipmentCreateForm } from "@/features/equipment/ui";
 
 interface EquipmentCreateModalProps {
   onClose: () => void;

@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 
 import type { StackMeasurementResponse } from '@/entities/stack/model';
 import { CYCLE_LABELS } from '@/entities/stack/model';
-import { MeasurementEditModal, StackMeasurementItemCard } from '@stack/component';
-import { groupMeasurementsByCycle } from '@stack/lib';
+import { MeasurementEditModal, StackMeasurementItemCard } from '@/features/stack/component';
+import { groupMeasurementsByCycle } from '@/features/stack/lib';
 
 import { Button, EmptyState } from '@shared/ui';
 

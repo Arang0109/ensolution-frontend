@@ -16,7 +16,7 @@ import {
   getDefaultExhaustGasEditForm,
   getDefaultParticleSampleEditForm,
 } from "@/entities/plan/model";
-import { calcMeasurementPointCnt } from "@plan/util";
+import { calcMeasurementPointCnt } from "@/features/plan/util";
 import type { StackMeasurementResponse } from "@/entities/stack/model";
 
 import { calculator } from "@shared/lib";

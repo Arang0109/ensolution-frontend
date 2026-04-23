@@ -13,7 +13,7 @@ import { CompanyPage, CompanyDetailPage } from '@pages/company';
 import { WorkplacePage, WorkplaceDetailPage } from '@pages/workplace';
 
 import { StackPage, StackDetailPage } from '@pages/stack';
-import { PollutantListPage } from '@pollutant/pages/index';
+import { PollutantListPage } from '@/features/pollutant/pages/index';
 
 import { PlanPage, PlanRegisterPage, PlanDetailPage } from "@pages/plan";
 

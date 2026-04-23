@@ -1,4 +1,4 @@
-import { usePlanRegisterViewModel } from "@plan/hooks";
+import { usePlanRegisterViewModel } from "@/features/plan/hooks";
 import { PlanCreateContent } from "@/features/plan/ui";
 
 import { Button, Breadcrumbs } from "@shared/ui";

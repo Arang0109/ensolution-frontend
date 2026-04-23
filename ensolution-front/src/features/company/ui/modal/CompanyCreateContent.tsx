@@ -1,6 +1,6 @@
 import { useToast } from "@app/providers/toast";
 
-import { useCompanyCreate, useCompanyActions } from "@company/hooks";
+import { useCompanyCreate, useCompanyActions } from "@/features/company/hooks";
 import { mapCreateFormToRequest } from "@entities/company/model";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";

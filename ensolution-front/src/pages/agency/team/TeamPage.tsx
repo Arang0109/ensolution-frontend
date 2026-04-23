@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { useTeams } from '@agency/hooks/useTeams';
-import { TeamCreateModal, TeamEditModal } from '@agency/ui';
+import { useTeams } from '@/features/agency/hooks/useTeams';
+import { TeamCreateModal, TeamEditModal } from '@/features/agency/ui';
 import { deleteTeam } from '@entities/agency/team/api/AgencyApi';
 import { useToast } from '@app/providers/toast';
-import { TeamTable } from '@agency/ui';
+import { TeamTable } from '@/features/agency/ui';
 
 import type { TeamResponse } from '@entities/agency/team/model';
 

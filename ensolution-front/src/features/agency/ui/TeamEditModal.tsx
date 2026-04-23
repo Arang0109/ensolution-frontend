@@ -1,5 +1,5 @@
 import { Modal } from '@shared/ui';
-import { TeamEditForm } from '@agency/ui';
+import { TeamEditForm } from '@/features/agency/ui';
 
 import type { TeamResponse } from '@entities/agency/team/model';
 

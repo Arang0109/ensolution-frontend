@@ -1,4 +1,4 @@
-import { useStackDetailQuery } from "@stack/hooks";
+import { useStackDetailQuery } from "@/features/stack/hooks";
 
 export const usePlanDraftData = () => {
   const { stack, fetchStack, loading: stackLoading } = useStackDetailQuery();

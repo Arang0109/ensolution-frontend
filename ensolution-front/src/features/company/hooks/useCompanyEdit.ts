@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { getDefaultCompanyUpdateForm } from "@entities/company/model";
 import type { CompanyDetailResponse, CompanyUpdateForm } from "@entities/company/model";
-import { validateCompany } from "@company/lib";
+import { validateCompany } from "@/features/company/lib";
 
 import type { ValidationErrors } from "@shared/model";
 import { formatBizNumber } from "@shared/lib";

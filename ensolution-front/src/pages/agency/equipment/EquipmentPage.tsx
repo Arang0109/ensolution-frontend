@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 
-import { useEquipments } from '@equipment/hooks/useEquipments';
-import { EquipmentCreateModal, EquipmentEditModal, EquipmentTable } from '@equipment/ui';
+import { useEquipments } from '@/features/equipment/hooks/useEquipments';
+import { EquipmentCreateModal, EquipmentEditModal, EquipmentTable } from '@/features/equipment/ui';
 import { EquipType, EQUIP_TYPE_TABS, EQUIP_TYPE_LABELS } from '@entities/agency/equipment/model';
 import type {
   EquipmentResponse,

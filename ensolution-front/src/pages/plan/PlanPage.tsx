@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import { usePlanListQuery } from "@plan/hooks";
-import { PlanTable, PlanTableMobile } from "@plan/ui";
+import { usePlanListQuery } from "@/features/plan/hooks";
+import { PlanTable, PlanTableMobile } from "@/features/plan/ui";
 
 import { Button, FullPageLoader, EmptyState, Breadcrumbs } from "@shared/ui";
 

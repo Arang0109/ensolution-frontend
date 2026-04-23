@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToast } from "@app/providers/toast";
 
-import { useWorkplaceDetail, useWorkplaceActions, useWorkplaceEdit } from '@workplace/hooks';
+import { useWorkplaceDetail, useWorkplaceActions, useWorkplaceEdit } from '@/features/workplace/hooks';
 import { mapUpdateFormToRequest } from '@entities/workplace/model';
 
-import { useStackActions } from '@stack/hooks';
+import { useStackActions } from '@/features/stack/hooks';
 
 import { useSearch } from '@shared/lib';
 

@@ -1,14 +1,14 @@
 import { useToast } from "@app/providers/toast";
 
 import { EquipType, EQUIP_TYPE_OPTIONS } from '@/entities/agency/equipment/model';
-import { useEquipmentForm } from "@equipment/hooks";
+import { useEquipmentForm } from "@/features/equipment/hooks";
 import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec } from '@/entities/agency/equipment/model';
 import {
   ParticleSamplerSpecForm,
   GasSamplerSpecForm,
   PitotTubeSpecForm,
   NozzleSpecForm
-} from '@equipment/ui';
+} from '@/features/equipment/ui';
 
 import { Button, IconButton, InputField, SelectField, TextAreaField } from "@shared/ui";
 import { X } from "lucide-react";

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { WorkplaceProfileForm } from '@workplace/ui';
-import { useWorkplaceDetailViewModel } from '@workplace/hooks';
+import { WorkplaceProfileForm } from '@/features/workplace/ui';
+import { useWorkplaceDetailViewModel } from '@/features/workplace/hooks';
 
-import { StackCreateModal } from '@stack/component';
-import { StackTable } from '@stack/ui';
+import { StackCreateModal } from '@/features/stack/component';
+import { StackTable } from '@/features/stack/ui';
 
 import { EditButtonGroup } from "@widgets/buttonGroup";
 import { FullPageLoader, EmptyState, Breadcrumbs, Accordion, Button } from "@shared/ui";

@@ -7,7 +7,7 @@ import type {
   MeasurementItemEditForm, SampleEditForm,
   ParticleSampleEditForm,
 } from "@/entities/plan/model";
-import { SheetTab } from "@plan/ui";
+import { SheetTab } from "@/features/plan/ui";
 import { CATEGORY_LABELS } from "@/entities/plan/model";
 
 import { EditableTabs, TableLabelCell, TableInputCell } from "@/shared/ui";

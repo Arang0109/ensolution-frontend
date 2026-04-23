@@ -4,11 +4,11 @@ import {
   PreventionCreateModal,
   PreventionEditModal,
   MeasurementCreateModal,
-} from '@stack/component';
+} from '@/features/stack/component';
 
-import { StackProfileForm, StackMeasurementCard, StackPreventionCard } from '@stack/ui';
+import { StackProfileForm, StackMeasurementCard, StackPreventionCard } from '@/features/stack/ui';
 
-import { useStackDetailViewModel, useStackDetailHandlers } from '@stack/hooks';
+import { useStackDetailViewModel, useStackDetailHandlers } from '@/features/stack/hooks';
 
 import { EditButtonGroup } from "@widgets/buttonGroup";
 

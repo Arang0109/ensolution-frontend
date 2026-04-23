@@ -1,6 +1,6 @@
 import { useToast } from "@app/providers/toast";
 
-import { useMeasurementActions, useMeasurementEditForm } from "@stack/hooks";
+import { useMeasurementActions, useMeasurementEditForm } from "@/features/stack/hooks";
 import type { StackMeasurementResponse } from "@/entities/stack/model";
 import { CYCLE_LABELS_OPTIONS, mapStackMeasurementUpdateFormToRequest } from "@/entities/stack/model";
 

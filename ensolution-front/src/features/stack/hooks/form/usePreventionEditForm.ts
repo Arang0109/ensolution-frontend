@@ -11,7 +11,7 @@ import type {
   TargetUpdateForm,
   PreventionBundleUpdateForm,
 } from "@/entities/stack/model";
-import { validatePrevention } from "@stack/lib";
+import { validatePrevention } from "@/features/stack/lib";
 
 import type { ValidationErrors } from "@shared/model";
 

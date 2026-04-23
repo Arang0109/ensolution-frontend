@@ -1,4 +1,4 @@
-import type { PollutantCreateForm, PollutantEditForm } from "@pollutant/model";
+import type { PollutantCreateForm, PollutantEditForm } from "@/features/pollutant/model";
 
 import type { ValidationErrors } from "@shared/model";
 

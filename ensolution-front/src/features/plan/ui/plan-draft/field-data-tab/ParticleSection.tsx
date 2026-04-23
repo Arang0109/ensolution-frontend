@@ -9,7 +9,7 @@ import {
 } from "@shared/ui";
 
 import type { PointRecord } from "@shared/lib";
-import type { OrificeDpRecord } from "@plan/util";
+import type { OrificeDpRecord } from "@/features/plan/util";
 import { display } from "@shared/lib";
 import { Sparkles } from "lucide-react";
 import { NozzleRecommendModal } from "./nozzle-modal";

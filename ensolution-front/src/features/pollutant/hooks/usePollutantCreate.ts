@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { getDefaultPollutantCreateForm } from "@pollutant/model";
-import type { PollutantCreateForm } from "@pollutant/model";
-import { validatePollutant } from "@pollutant/lib";
+import { getDefaultPollutantCreateForm } from "@/features/pollutant/model";
+import type { PollutantCreateForm } from "@/features/pollutant/model";
+import { validatePollutant } from "@/features/pollutant/lib";
 
 import type { ValidationErrors } from "@shared/model";
 

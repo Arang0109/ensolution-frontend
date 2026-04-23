@@ -4,7 +4,7 @@ import { X, Plus, Trash2 } from "lucide-react";
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 
 import { mapPreventionUpdateBundleFormToRequest } from "@/entities/stack/model";
-import { usePreventionEditForm, usePreventionActions } from "@stack/hooks";
+import { usePreventionEditForm, usePreventionActions } from "@/features/stack/hooks";
 
 import { IconButton, Button, InputField, TextAreaField } from "@shared/ui";
 

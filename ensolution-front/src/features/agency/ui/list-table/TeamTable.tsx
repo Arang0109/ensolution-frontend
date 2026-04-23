@@ -1,10 +1,10 @@
 import { Fragment, useState } from "react";
 
-import { useEquipments } from '@equipment/hooks';
+import { useEquipments } from '@/features/equipment/hooks';
 import type { TeamResponse } from "@entities/agency/team/model";
-import { TeamDetailCard } from "@agency/ui";
+import { TeamDetailCard } from "@/features/agency/ui";
 import type { EquipmentResponse } from "@/entities/agency/equipment/model";
-import { TeamDetailInfoModal } from "@agency/ui";
+import { TeamDetailInfoModal } from "@/features/agency/ui";
 
 import { TableContainer } from "@shared/ui";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";

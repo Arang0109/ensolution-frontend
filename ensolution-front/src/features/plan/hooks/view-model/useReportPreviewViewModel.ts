@@ -4,7 +4,7 @@ import {
   CATEGORY_LABELS,
   type MeasurementItemDocResponse,
 } from '@/entities/plan/model';
-import { usePlanDetailQuery } from '@plan/hooks';
+import { usePlanDetailQuery } from '@/features/plan/hooks';
 
 export const useReportPreviewViewModel = (planId: number, sheetIdx: number) => {
 

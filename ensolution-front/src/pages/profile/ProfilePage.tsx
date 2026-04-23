@@ -1,9 +1,9 @@
 import { FullPageLoader, FullPageError } from "@shared/ui";
 
-import { useUserProfileForm } from "@user/hooks";
-import { useTeams } from "@agency/hooks";
+import { useUserProfileForm } from "@/features/user/hooks";
+import { useTeams } from "@/features/agency/hooks";
 
-import { ProfileForm } from "@user/ui";
+import { ProfileForm } from "@/features/user/ui";
 
 export const ProfilePage = () => {
   const { form, loading: profileLoading, isSubmitting, onChange, onSubmit, onTeamChange, refetch } = useUserProfileForm();

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button, FullPageLoader, EmptyState } from "@shared/ui";
 
-import { usePollutants } from "@pollutant/hooks";
-import { PollutantTableSection, PollutantCreateModal } from "@pollutant/component";
+import { usePollutants } from "@/features/pollutant/hooks";
+import { PollutantTableSection, PollutantCreateModal } from "@/features/pollutant/component";
 
 export const PollutantListPage = () => {
   const { pollutants, error, loading, reload } = usePollutants();

@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { PreventionEditContent } from "@stack/component";
+import { PreventionEditContent } from "@/features/stack/component";
 
 import type { PreventionDetailResponse } from "@/entities/stack/model";
 

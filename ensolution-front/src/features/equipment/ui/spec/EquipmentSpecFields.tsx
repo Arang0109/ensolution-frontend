@@ -5,7 +5,7 @@ import {
   GasSamplerSpecForm,
   NozzleSpecForm,
   PitotTubeSpecForm
-} from "@equipment/ui";
+} from "@/features/equipment/ui";
 
 import type { FieldType } from "@shared/model";
 

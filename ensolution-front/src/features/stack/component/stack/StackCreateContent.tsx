@@ -1,6 +1,6 @@
 import { useToast } from "@app/providers/toast";
 
-import { useStackActions, useStackCreateForm } from "@stack/hooks";
+import { useStackActions, useStackCreateForm } from "@/features/stack/hooks";
 import { SHAPE_LABELS_OPTIONS, ORIENTATION_LABELS_OPTIONS } from "@/entities/stack/model";
 import { mapStackCreateFormToRequest } from "@/entities/stack/model";
 

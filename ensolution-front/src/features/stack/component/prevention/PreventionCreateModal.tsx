@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { PreventionCreateContent } from "@stack/component";
+import { PreventionCreateContent } from "@/features/stack/component";
 
 interface AddPreventionModalProps {
   stackId: number,

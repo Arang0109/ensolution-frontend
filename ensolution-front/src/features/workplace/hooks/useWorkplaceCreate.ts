@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { getDefaultWorkplaceCreateForm } from "@entities/workplace/model";
 import type { WorkplaceCreateForm } from "@entities/workplace/model";
-import { validateWorkplace } from "@workplace/lib";
+import { validateWorkplace } from "@/features/workplace/lib";
 
 import type { ValidationErrors } from "@shared/model";
 import { formatBizNumber } from "@shared/lib";

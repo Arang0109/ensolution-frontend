@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { getDefaultStackCreateForm } from "@/entities/stack/model";
 import type { StackCreateForm } from "@/entities/stack/model";
-import { validateStack } from "@stack/lib";
+import { validateStack } from "@/features/stack/lib";
 
 import type { ValidationErrors } from "@shared/model";
 

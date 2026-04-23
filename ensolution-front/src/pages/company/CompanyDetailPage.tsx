@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { CompanyProfileForm } from "@company/ui";
-import { useCompanyDetailViewModel } from "@company/hooks";
-import { WorkplaceTable, WorkplaceCreateModal } from "@workplace/ui";
+import { CompanyProfileForm } from "@/features/company/ui";
+import { useCompanyDetailViewModel } from "@/features/company/hooks";
+import { WorkplaceTable, WorkplaceCreateModal } from "@/features/workplace/ui";
 
 import { FullPageLoader, EmptyState, Breadcrumbs, Button, Accordion } from "@shared/ui";
 

@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 
+import { downloadReportRequest } from "@/entities/plan/api/reportApi";
 import { measurementDraftUpdateRequest } from "@/entities/plan/api/measurementApi";
 import { registerPlan, deletePlan, patchPlanStatus } from "@/entities/plan/api/planApi";
 import type { DraftUpdateRequest, PlanRegisterRequest, PlanStatusUpdateRequest } from "@/entities/plan/model";
@@ -7,6 +8,7 @@ import type { DraftUpdateRequest, PlanRegisterRequest, PlanStatusUpdateRequest }
 export const usePlanActions = () => {
   const [creating, setCreating] = useState(false);
   const [savingDraft, setSavingDraft] = useState(false);
+  const [downloadingReport, setDownloadingReport] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
 
@@ -24,6 +26,14 @@ export const usePlanActions = () => {
       setCreating(false);
     }
   };
+
+  const downloadReport = useCallback(
+    async (planId: number) => {
+      setDownloadingReport(true);
+      try {
+        await downloadReportRequest(planId);
+      } finally { setDownloadingReport(false) }
+    }, []);
 
   const saveDraft = useCallback(
     async (
@@ -77,10 +87,12 @@ export const usePlanActions = () => {
     savingDraft,
     updatingId,
     deletingId,
+    downloadingReport,
 
     createPlan,
     saveDraft,
     updateDraftStatus,
     deleteDraft,
+    downloadReport,
   };
 };

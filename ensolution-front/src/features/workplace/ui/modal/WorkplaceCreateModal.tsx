@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { WorkplaceCreateContent } from "@workplace/ui";
+import { WorkplaceCreateContent } from "@/features/workplace/ui";
 
 interface AddWorkplaceModalProps {
   companyId: number,

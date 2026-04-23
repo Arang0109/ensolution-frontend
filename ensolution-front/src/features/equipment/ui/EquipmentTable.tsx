@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 import type { EquipmentResponse } from "@/entities/agency/equipment/model";
-import { EquipmentDetailSpec } from "@equipment/ui";
+import { EquipmentDetailSpec } from "@/features/equipment/ui";
 
 import { TableContainer } from "@shared/ui";
 

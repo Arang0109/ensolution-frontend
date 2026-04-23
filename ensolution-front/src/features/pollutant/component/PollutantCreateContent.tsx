@@ -1,7 +1,7 @@
 import { useToast } from "@app/providers/toast";
 
-import { PHASE_LABELS_OPTIONS, METHOD_LABELS_OPTIONS } from "@pollutant/model";
-import { usePollutantCreate, usePollutantActions } from "@pollutant/hooks";
+import { PHASE_LABELS_OPTIONS, METHOD_LABELS_OPTIONS } from "@/features/pollutant/model";
+import { usePollutantCreate, usePollutantActions } from "@/features/pollutant/hooks";
 
 import { usePreventSubmitOnEnter } from "@shared/hooks";
 import { IconButton, Button, InputField, SelectField } from "@shared/ui";

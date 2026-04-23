@@ -1,6 +1,6 @@
 import type { PollutantResponse } from "@/features/pollutant/model/pollutant-dto";
 
-import { METHOD_LABELS } from "@pollutant/model";
+import { METHOD_LABELS } from "@/features/pollutant/model";
 
 import { formatPollutantName } from "@shared/lib";
 import { TableContainer } from "@shared/ui";

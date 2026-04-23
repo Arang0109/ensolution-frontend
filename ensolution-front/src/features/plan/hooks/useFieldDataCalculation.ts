@@ -1,7 +1,7 @@
 import type { PlanInfoEditForm, MeasurementSheetEditForm } from "@/entities/plan/model";
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
 
-import { fieldDataCalculator } from "@plan/util";
+import { fieldDataCalculator } from "@/features/plan/util";
 
 export const useFieldDataCalculation = (
   planInfo: PlanInfoEditForm,

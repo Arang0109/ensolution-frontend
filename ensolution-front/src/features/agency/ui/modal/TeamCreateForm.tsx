@@ -1,6 +1,6 @@
-import { useTeamForm } from '@agency/hooks';
+import { useTeamForm } from '@/features/agency/hooks';
 
-import { useEquipments } from '@equipment/hooks';
+import { useEquipments } from '@/features/equipment/hooks';
 import { EquipType } from '@entities/agency/equipment/model';
 
 import { useToast } from "@app/providers/toast";

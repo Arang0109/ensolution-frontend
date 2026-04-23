@@ -1,8 +1,8 @@
-import { useTeamEditForm } from '@agency/hooks';
+import { useTeamEditForm } from '@/features/agency/hooks';
 import type { TeamResponse } from '@entities/agency/team/model';
 
 import { EquipType } from '@/entities/agency/equipment/model';
-import { useEquipments } from '@equipment/hooks';
+import { useEquipments } from '@/features/equipment/hooks';
 
 import { useToast } from "@app/providers/toast";
 

@@ -1,4 +1,4 @@
-import type { Phase, Method } from "@pollutant/model";
+import type { Phase, Method } from "@/features/pollutant/model";
 
 export const DEFAULT_PHASE: Phase = 'PARTICLE';
 export const DEFAULT_METHOD: Method = 'FIELD_MEASUREMENT';

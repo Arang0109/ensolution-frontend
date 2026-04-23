@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToast } from "@app/providers/toast";
 
-import { useStackDetailQuery, useStackActions, useStackEditForm } from '@stack/hooks';
+import { useStackDetailQuery, useStackActions, useStackEditForm } from '@/features/stack/hooks';
 import { mapStackUpdateFormToRequest } from '@/entities/stack/model';
 
 export const useStackDetailViewModel = () => {

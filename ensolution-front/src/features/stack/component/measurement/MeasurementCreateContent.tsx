@@ -1,8 +1,8 @@
 import { useToast } from "@app/providers/toast";
 
 import { mapStackMeasurementCreateFormToRequest } from "@/entities/stack/model";
-import { useMeasurementCreateForm, useMeasurementActions } from "@stack/hooks";
-import { usePollutants } from "@pollutant/hooks";
+import { useMeasurementCreateForm, useMeasurementActions } from "@/features/stack/hooks";
+import { usePollutants } from "@/features/pollutant/hooks";
 
 import { CYCLE_LABELS_OPTIONS } from "@/entities/stack/model";
 

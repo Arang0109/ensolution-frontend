@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { mapPlanCreateFormToRequest } from '@/entities/plan/model';
-import { usePlanCreateForm, usePlanActions, usePlanRegisterData } from '@plan/hooks';
+import { usePlanCreateForm, usePlanActions, usePlanRegisterData } from '@/features/plan/hooks';
 
 import { EquipType } from '@/entities/agency/equipment/model';
 

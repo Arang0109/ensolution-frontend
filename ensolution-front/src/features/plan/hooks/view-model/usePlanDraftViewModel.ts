@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from "@app/providers/toast";
 
 import { mapDraftFormToRequest, type PlanDraftEditForm } from '@/entities/plan/model';
-import { usePlanDetailQuery, usePlanActions, usePlanDraftData } from '@plan/hooks';
+import { usePlanDetailQuery, usePlanActions, usePlanDraftData } from '@/features/plan/hooks';
 
 export const usePlanDraftViewModel = () => {
   const navigate = useNavigate();
@@ -15,13 +15,17 @@ export const usePlanDraftViewModel = () => {
   const { plan, isLoading } = usePlanDetailQuery(Number(planId));
 
   const { stack, fetchStack, stackLoading } = usePlanDraftData();
-  const { saveDraft, deleteDraft, deletingId } = usePlanActions();
+  const { saveDraft, deleteDraft, deletingId, downloadReport} = usePlanActions();
 
   useEffect(() => {
     if (plan?.plan.stackId) {
       fetchStack(plan.plan.stackId);
     }
   }, [plan?.plan.stackId, fetchStack]);
+
+  const handleReportDownload = async (planId: number) => {
+    await downloadReport(Number(planId));
+  }
 
   const handleSaveDraft = async (editForm: PlanDraftEditForm) => {
     console.log("editForm: ", editForm)
@@ -56,5 +60,6 @@ export const usePlanDraftViewModel = () => {
 
     handleSaveDraft,
     handleDeleteDraft,
+    handleReportDownload,
   }
 }

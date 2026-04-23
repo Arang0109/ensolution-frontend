@@ -8,7 +8,7 @@ import type {
   MeasurementItemEditForm, SampleEditForm,
   ParticleSampleEditForm,
 } from "@/entities/plan/model";
-import { useFieldDataCalculation } from "@plan/hooks";
+import { useFieldDataCalculation } from "@/features/plan/hooks";
 import {
   WeatherSection, MoistureSection, ExhaustGasSection, MeasurementPointSection,
   ReportInfoSection,

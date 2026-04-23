@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { getPollutants } from "@pollutant/api/pollutantApi";
+import { getPollutants } from "@/features/pollutant/api/pollutantApi";
 
-import type { PollutantResponse } from "@pollutant/model";
+import type { PollutantResponse } from "@/features/pollutant/model";
 
 export const usePollutants = () => {
   const [pollutants, setPollutants] = useState<PollutantResponse[]>([]);

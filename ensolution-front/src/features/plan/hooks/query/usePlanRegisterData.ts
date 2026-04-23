@@ -1,9 +1,9 @@
-import { useCompanies } from "@company/hooks";
-import { useWorkplaces } from "@workplace/hooks";
-import { useStackListQuery, useStackDetailQuery } from "@stack/hooks";
-import { useTeams } from "@agency/hooks";
-import { useUsers } from "@user/hooks";
-import { useEquipments } from "@equipment/hooks";
+import { useCompanies } from "@/features/company/hooks";
+import { useWorkplaces } from "@/features/workplace/hooks";
+import { useStackListQuery, useStackDetailQuery } from "@/features/stack/hooks";
+import { useTeams } from "@/features/agency/hooks";
+import { useUsers } from "@/features/user/hooks";
+import { useEquipments } from "@/features/equipment/hooks";
 
 export const usePlanRegisterData = () => {
   const { companies } = useCompanies();

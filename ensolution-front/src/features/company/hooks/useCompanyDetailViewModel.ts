@@ -3,10 +3,10 @@ import { useNavigate, useParams } from "react-router";
 
 import { useToast } from "@app/providers/toast";
 
-import { useCompanyDetail, useCompanyActions, useCompanyEdit } from "@company/hooks";
+import { useCompanyDetail, useCompanyActions, useCompanyEdit } from "@/features/company/hooks";
 import { mapUpdateFormToRequest } from "@entities/company/model";
 
-import { useWorkplaceActions } from "@workplace/hooks";
+import { useWorkplaceActions } from "@/features/workplace/hooks";
 
 export const useCompanyDetailViewModel = () => {
   const navigate = useNavigate();

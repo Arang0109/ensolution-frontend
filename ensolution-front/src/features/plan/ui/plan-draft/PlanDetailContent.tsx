@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { PlanInfoTab, FieldDataTab, LabDataTab, EquipmentTab } from "@/features/plan/ui";
-import { usePlanDraftViewModel, usePlanEditForm, useSelectedEquipments } from "@plan/hooks"
+import { usePlanDraftViewModel, usePlanEditForm, useSelectedEquipments } from "@/features/plan/hooks"
 
 import { Button, Tabs, Breadcrumbs } from "@shared/ui";
 import { PLAN_DETAIL_TABS, DEFAULT_PLAN_DETAIL_TAB } from "@/shared/model";
@@ -21,6 +21,7 @@ export const PlanDetailContent = ({
     goBack,
     handleSaveDraft,
     handleDeleteDraft,
+    handleReportDownload,
   } = viewModel;
 
   const {
@@ -126,8 +127,9 @@ export const PlanDetailContent = ({
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end mt-6">
+        <div className="flex justify-end mt-6 gap-1.5">
           <Button label="임시저장" type="submit" variant="primary" onClick={() => handleSaveDraft(editForm)}/>
+          <Button label="성적서 다운로드" type="button" variant="primary" onClick={() => handleReportDownload(Number(plan?.plan.id))} />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { EquipmentEditForm } from "@equipment/ui";
+import { EquipmentEditForm } from "@/features/equipment/ui";
 
 import type { EquipmentResponse } from "@/entities/agency/equipment/model";
 

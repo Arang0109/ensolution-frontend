@@ -1,4 +1,4 @@
-import type { PollutantResponse } from "@pollutant/model";
+import type { PollutantResponse } from "@/features/pollutant/model";
 
 import type { Cycle } from "@/entities/stack/model";
 

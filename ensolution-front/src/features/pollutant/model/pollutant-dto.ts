@@ -1,4 +1,4 @@
-import type { Method, Phase } from "@pollutant/model";
+import type { Method, Phase } from "@/features/pollutant/model";
 
 export interface PollutantResponse {
   id: number;

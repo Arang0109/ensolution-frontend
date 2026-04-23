@@ -4,7 +4,7 @@ import {
   getDefaultCompanyCreateForm
 } from "@entities/company/model";
 import type { CompanyCreateForm } from "@entities/company/model";
-import { validateCompany } from "@company/lib";
+import { validateCompany } from "@/features/company/lib";
 
 import type { ValidationErrors } from "@shared/model";
 import { formatBizNumber } from "@/shared/lib";

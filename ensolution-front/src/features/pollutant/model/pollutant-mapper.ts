@@ -1,4 +1,4 @@
-import type { PollutantCreateForm, PollutantRegisterRequest } from "@pollutant/model";
+import type { PollutantCreateForm, PollutantRegisterRequest } from "@/features/pollutant/model";
 
 export const mapCreateFormToRequest = (
   form: PollutantCreateForm

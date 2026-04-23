@@ -1,5 +1,5 @@
-import { useWorkplaces } from "@workplace/hooks";
-import { WorkplaceTable } from "@workplace/ui";
+import { useWorkplaces } from "@/features/workplace/hooks";
+import { WorkplaceTable } from "@/features/workplace/ui";
 
 import { EmptyState, FullPageLoader, Breadcrumbs } from "@shared/ui";
 

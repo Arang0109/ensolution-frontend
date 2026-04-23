@@ -1,5 +1,5 @@
 import { Modal } from "@shared/ui";
-import { TeamCreateForm } from "@agency/ui";
+import { TeamCreateForm } from "@/features/agency/ui";
 
 interface TeamCreateModalProps {
   onClose: () => void;

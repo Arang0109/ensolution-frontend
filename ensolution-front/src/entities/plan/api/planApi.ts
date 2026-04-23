@@ -3,7 +3,7 @@ import type { ApiResponseMessage } from "@/shared/model";
 
 import type {
   PlanResponse, PlanRegisterRequest, PlanStatusUpdateRequest,
-  PlanTableResponse, PlanDetailResponse, MeasurementItemsUpdateRequest } from "@/entities/plan/model"
+  PlanTableResponse, PlanDetailResponse } from "@/entities/plan/model"
 
 export const registerPlan = async (
   data: PlanRegisterRequest
@@ -21,14 +21,6 @@ export const fetchPlan = async (
   planId: number
 ): Promise<ApiResponseMessage<PlanDetailResponse>> => {
   const res = await axiosPrivate.get(`/plans/${planId}`);
-  return res.data;
-}
-
-export const updateMeasurement = async (
-  planId: number,
-  data: MeasurementItemsUpdateRequest[]
-): Promise<ApiResponseMessage<void>> => {
-  const res = await axiosPrivate.post(`/plans/${planId}/measurements`, data);
   return res.data;
 }
 
