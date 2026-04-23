@@ -236,9 +236,9 @@ export const ExhaustGasSection = ({
                 <Fragment key={item.pollutantId}>
                   <tr>
                     <TableLabelCell>{item.pollutantNameEn} (<i>ppm</i>)</TableLabelCell>
-                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" min={0.0} max={100.0} step={0.1} />
-                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" min={0.0} max={100.0} step={0.1} />
-                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell type="number" value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell type="number" value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell type="number" value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" min={0.0} max={100.0} step={0.1} />
                   </tr>
                 </Fragment>
               );
@@ -308,9 +308,9 @@ export const ExhaustGasSection = ({
                 <Fragment key={item.pollutantId}>
                   <tr>
                     <TableLabelCell>{item.pollutantNameEn} (<i>ppm</i>)</TableLabelCell>
-                    <TableInputCell value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" min={0.0} max={100.0} step={0.1} />
-                    <TableInputCell value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" min={0.0} max={100.0} step={0.1} />
-                    <TableInputCell value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell type="number" value={exhaustGas[f][0]} onChange={(value) => onChange(f, value, 0)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell type="number" value={exhaustGas[f][1]} onChange={(value) => onChange(f, value, 1)} unit="ppm" min={0.0} max={100.0} step={0.1} />
+                    <TableInputCell type="number" value={exhaustGas[f][2]} onChange={(value) => onChange(f, value, 2)} unit="ppm" min={0.0} max={100.0} step={0.1} />
                   </tr>
                 </Fragment>
               );

@@ -147,10 +147,9 @@ export const ParticleSection = ({
         <TableSelectableCell
           value={sheet.particleSample.nozzleSize}
           options={nozzleSizeOptions}
-          colSpan={measurementPoints.length}
+          colSpan={measurementPoints.length + 1}
           onChange={(value) => onParticleSampleChange("nozzleSize", value)}
         />
-        <TableResultCell value="" />
       </tr>
       <tr>
         <TableLabelCell>피토우관 계수 (<i>C<sub>P</sub></i>)</TableLabelCell>
@@ -224,6 +223,7 @@ export const ParticleSection = ({
              min={0} step={1}
           />
         ))}
+        <TableResultCell value="" />
       </tr>
       <tr>
         <TableLabelCell>흡입량 (전)</TableLabelCell>
@@ -235,10 +235,11 @@ export const ParticleSection = ({
             onChange={(value) =>
               onChange(index, "beforeVm", value)
             }
-            unit={<i>°C</i>}
+            unit={<i>m<sup>3</sup></i>}
             min={0.00000} step={0.00001}
           />
         ))}
+        <TableResultCell value="" />
       </tr>
       <tr>
         <TableLabelCell>흡입량 (후)</TableLabelCell>
@@ -250,10 +251,11 @@ export const ParticleSection = ({
             onChange={(value) =>
               onChange(index, "afterVm", value)
             }
-            unit={<i>°C</i>}
+            unit={<i>m<sup>3</sup></i>}
             min={0.00000} step={0.00001}
           />
         ))}
+        <TableResultCell value="" />
       </tr>
       <tr>
         <TableLabelCell>등속흡입계수 (<i>I</i>)</TableLabelCell>
@@ -271,15 +273,15 @@ export const ParticleSection = ({
         {measurementPoints.map((mp, index) => (
           <TableInputCell
             key={index}
-            type="number"
+            type="text"
             value={mp.vacuumGaugePressure}
             onChange={(value) =>
               onChange(index, "vacuumGaugePressure", value)
             }
-            unit={<i>°C</i>}
-            min={0.00} step={0.01}
+            unit={<i>mmHg</i>}
           />
         ))}
+        <TableResultCell value="" />
       </tr>
       <tr>
         <TableLabelCell>최종임핀저 출구온도</TableLabelCell>
@@ -295,6 +297,7 @@ export const ParticleSection = ({
             min={0.0} step={0.1}
           />
         ))}
+        <TableResultCell value="" />
       </tr>
 
       {showAddModal && createPortal(

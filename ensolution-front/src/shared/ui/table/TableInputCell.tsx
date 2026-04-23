@@ -34,7 +34,6 @@ export const TableInputCell = ({
           w-full p-2 sm:px-3 sm:py-2.5
           text-[10px] sm:text-sm bg-transparent
           focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400"
-        inputMode={type === "number" ? "numeric" : undefined}
         min={min}
         max={max}
         step={step}
