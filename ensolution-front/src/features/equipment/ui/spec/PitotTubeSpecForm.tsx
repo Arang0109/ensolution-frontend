@@ -68,6 +68,8 @@ export const PitotTubeSpecForm = ({
                   value={coef.velocity}
                   onChange={(value) => updateCoefficient(idx, 'velocity', value)}
                   disabled={isSubmitting}
+                  min={0.00}
+                  step={0.01}
                 />
                 <InputField
                   label="피토우관 계수"

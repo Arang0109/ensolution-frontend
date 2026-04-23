@@ -40,6 +40,8 @@ export const ParticleSamplerSpecForm = ({
           value={spec.orificeDp}
           onChange={(value) => onSpecChange("orificeDp", String(value), "number")}
           disabled={isSubmitting}
+          min={0.0000}
+          step={0.0001}
         />
         <InputField
           label="가스미터 보정계수 (Yd)"
@@ -48,6 +50,8 @@ export const ParticleSamplerSpecForm = ({
           value={spec.yd}
           onChange={(value) => onSpecChange("yd", String(value), "number")}
           disabled={isSubmitting}
+          min={0.0000}
+          step={0.0001}
         />
       </div>
     </div>
