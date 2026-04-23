@@ -71,7 +71,9 @@ export const useEquipmentEditForm = (equipment: EquipmentResponse | null) => {
 
   const parseFieldValue = (value: string, type: FieldType) => {
     if (type === "number") {
-      return value === "" ? "" : Number(value);
+      if (value === "") return "";
+      if (/\.$/.test(value) || /\.\d*0$/.test(value)) return value;
+      return Number(value);
     }
     return value;
   };

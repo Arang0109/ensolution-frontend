@@ -67,7 +67,10 @@ export const useEquipmentForm = () => {
 
   const parseFieldValue = (value: string, type: FieldType) => {
     if (type === "number") {
-      return value === "" ? "" : Number(value);
+      if (value === "") return "";
+      // 소수점 입력 중간 상태 ("1.", "1.0", "1.00" 등)는 string 유지
+      if (/\.$/.test(value) || /\.\d*0$/.test(value)) return value;
+      return Number(value);
     }
     return value;
   };
