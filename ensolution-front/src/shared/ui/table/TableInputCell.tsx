@@ -14,13 +14,29 @@ export const TableInputCell = ({
   placeholder?: string;
   colSpan?: number;
   unit?: React.ReactNode;
-}) => (
+}) => {
+  const isNumber = type === "number";
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    if (isNumber) {
+      // 숫자, 소수점, 음수 부호만 허용
+      if (raw === "" || raw === "-" || /^-?\d*\.?\d*$/.test(raw)) {
+        onChange(raw);
+      }
+    } else {
+      onChange(raw);
+    }
+  };
+
+  return (
   <td colSpan={colSpan} className="border border-black">
     <div className="flex items-center">
       <input
         value={value}
-        type={type}
-        onChange={(e) => onChange(e.target.value)}
+        type={isNumber ? "text" : type}
+        inputMode={isNumber ? "decimal" : undefined}
+        onChange={handleChange}
         placeholder={placeholder ?? ""}
         className="
           w-full p-2 sm:px-3 sm:py-2.5
@@ -30,4 +46,5 @@ export const TableInputCell = ({
       {unit && <span className="pr-1 text-[6px] text-gray-700 shrink-0"><i>{unit}</i></span>}
     </div>
   </td>
-);
+  );
+};
