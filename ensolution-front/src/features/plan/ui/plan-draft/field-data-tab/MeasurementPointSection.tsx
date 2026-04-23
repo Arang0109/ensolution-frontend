@@ -69,7 +69,7 @@ export const MeasurementPointSection = ({
   return (
     <>
       <SectionAccordion title="Part 4. 측정점정보">
-        <div className="rounded-b-lg border border-t-0 border-gray-200 overflow-hidden">
+        <div className="border border-t-0 border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-[540px] w-full table-fixed border-collapse text-sm">
               <colgroup>

@@ -8,6 +8,16 @@ import { formatTime } from "@/shared/lib";
 import { IconButton, TableLabelCell, ReportValueCell } from "@shared/ui";
 import { X } from "lucide-react";
 
+const addMinutes = (time: string | null | undefined, minutes: number): string => {
+  if (!time) return '--:--';
+  const [h, m] = time.split(':').map(Number);
+  if (isNaN(h) || isNaN(m)) return '--:--';
+  const total = h * 60 + m + minutes;
+  const hh = String(Math.floor(total / 60) % 24).padStart(2, '0');
+  const mm = String(total % 60).padStart(2, '0');
+  return `${hh}:${mm}`;
+};
+
 const cell = "border border-gray-800 p-1 text-center align-middle";
 
 interface ReportPreviewContentProps {
@@ -468,10 +478,10 @@ export const ReportPreviewContent = ({
                 [ 가스상 및 VOCs 물질 ]
               </TableLabelCell>
               <ReportValueCell colSpan={12}>
-                가스분석기 측정시간 ( &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; )
+                가스분석기 측정시간 ( {formatTime(sheet.exhaustGas.gasAnalyzerStartTime)} ~ {addMinutes(sheet.exhaustGas.gasAnalyzerStartTime, 15)} )
               </ReportValueCell>
               <ReportValueCell colSpan={6}>
-                THC 측정시간 ( &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp; )
+                THC 측정시간 ( {formatTime(sheet.exhaustGas.thcAnalyzerStartTime)} ~ {addMinutes(sheet.exhaustGas.thcAnalyzerStartTime, 30)} )
               </ReportValueCell>
             </tr>
             <tr>

@@ -186,7 +186,7 @@ export const ParticleSection = ({
           <TableResultCell
             key={key}
             value={display(entry.orificeDp)}
-            unit={<i>m/s</i>}
+            unit={<i>mmH<sub>2</sub>O</i>}
           />
         ))}
         <TableResultCell value="" />
@@ -197,7 +197,6 @@ export const ParticleSection = ({
           <TableResultCell
             key={key}
             value={display(entry.kFactor)}
-            unit={<i>m/s</i>}
           />
         ))}
         <TableResultCell value="" />
