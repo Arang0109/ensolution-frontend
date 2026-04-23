@@ -1,7 +1,7 @@
 import { axiosPrivate } from "@/shared/api";
 import type { ApiResponseMessage } from "@/shared/model";
 import type { UserResponse, UserUpdateRequest } from "@/entities/user/model";
-import type { TeamResponse } from "@/entities/agency/model";
+import type { TeamResponse } from "@/entities/agency/team/model";
 
 export const getProfile = async (): Promise<ApiResponseMessage<UserResponse>> => {
   const res = await axiosPrivate.get("/users/me");

@@ -16,11 +16,11 @@ interface EquipmentSpecFieldsProps {
 
   onSpecChange: (name: string, value: string, type: FieldType) => void;
   addCoefficient: () => void;
-  updateCoefficient: (idx: number, key: 'velocity' | 'coefficient', value: number) => void;
+  updateCoefficient: (idx: number, key: 'velocity' | 'coefficient', value: string) => void;
   removeCoefficient: (idx: number) => void;
 
   addNozzleDiameter: () => void;
-  updateNozzleDiameter: (idx: number, value: number) => void;
+  updateNozzleDiameter: (idx: number, value: string) => void;
   removeNozzleDiameter: (idx: number) => void;
 }
 

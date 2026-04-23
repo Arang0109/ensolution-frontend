@@ -1,7 +1,7 @@
 import type {
   CompanyCreateForm, CompanyRegisterRequest,
   CompanyUpdateForm, CompanyUpdateRequest
-} from "@company/model";
+} from "@entities/company/model";
 import { stripBizNumber } from "@shared/lib";
 
 export const mapCreateFormToRequest = (

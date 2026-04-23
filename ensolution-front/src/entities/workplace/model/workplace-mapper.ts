@@ -1,7 +1,7 @@
 import type {
   WorkplaceCreateForm, WorkplaceRegisterRequest,
   WorkplaceUpdateForm, WorkplaceUpdateRequest
-} from "@workplace/model";
+} from "@entities/workplace/model";
 import { stripBizNumber } from '@shared/lib';
 
 export const mapCreateFormToRequest = (

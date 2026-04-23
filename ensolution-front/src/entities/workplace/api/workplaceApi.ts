@@ -1,6 +1,6 @@
 import { axiosPrivate } from "@/shared/api";
 import type { ApiResponseMessage } from "@/shared/model";
-import type { WorkplaceResponse, WorkplaceDetailResponse, WorkplaceRegisterRequest, WorkplaceUpdateRequest } from "@workplace/model";
+import type { WorkplaceResponse, WorkplaceDetailResponse, WorkplaceRegisterRequest, WorkplaceUpdateRequest } from "@entities/workplace/model";
 
 export const registerWorkplace = async (
   data: WorkplaceRegisterRequest

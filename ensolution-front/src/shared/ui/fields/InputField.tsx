@@ -14,6 +14,7 @@ interface InputFieldProps<T = string> {
 
   disabled?: boolean;
   readOnly?: boolean;
+  required?: boolean;
 
   min?: number;
   max?: number;

@@ -26,7 +26,7 @@ export interface SheetTabProps {
   onSheetInfoChange: (name: keyof MeasurementSheetEditForm, value: string) => void;
   onWeatherChange: (name: keyof WeatherEditForm, value: string | null) => void;
   onMoistureChange: (name: keyof MoistureEditForm, value: string | null) => void;
-  onExhaustGasChange: (name: keyof ExhaustGasEditForm, value: string | null, index: number) => void;
+  onExhaustGasChange: (name: keyof ExhaustGasEditForm, value: string | null, index?: number) => void;
   onMeasurementPointChange: (pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
   onSampleItemsChange: (primaryItemId: number | null, concurrentItemIds: number[]) => void;
   onSampleChange: (sampleIndex: number, name: keyof SampleEditForm, value: string) => void;

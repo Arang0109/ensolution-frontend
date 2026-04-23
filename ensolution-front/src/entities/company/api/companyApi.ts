@@ -1,7 +1,7 @@
 import { axiosPrivate } from "@shared/api";
 
 import type { ApiResponseMessage } from "@shared/model";
-import type { CompanyResponse, CompanyDetailResponse, CompanyRegisterRequest, CompanyUpdateRequest } from "@company/model";
+import type { CompanyResponse, CompanyDetailResponse, CompanyRegisterRequest, CompanyUpdateRequest } from "@entities/company/model";
 
 export const registerCompany = async (
   data: CompanyRegisterRequest

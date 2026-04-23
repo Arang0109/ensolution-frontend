@@ -25,7 +25,6 @@
     "noUncheckedSideEffectImports": true,
 
     /* Path Aliases */
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
@@ -34,16 +33,16 @@
       "@pages/*": ["./src/pages/*"],
       "@shared/*": ["./src/shared/*"],
       "@widgets/*": ["./src/widgets/*"],
-      "@home/*": ["src/features/home/*"],
-      "@auth/*": ["src/features/auth/*"],
-      "@user/*": ["src/features/user/*"],
-      "@agency/*": ["src/features/agency/*"],
-      "@company/*": ["src/features/company/*"],
-      "@workplace/*": ["src/features/workplace/*"],
-      "@stack/*": ["src/features/stack/*"],
-      "@pollutant/*": ["src/features/pollutant/*"],
-      "@plan/*": ["src/features/plan/*"],
-      "@equipment/*": ["src/features/equipment/*"],
+      "@home/*": ["./src/features/home/*"],
+      "@auth/*": ["./src/features/auth/*"],
+      "@user/*": ["./src/features/user/*"],
+      "@agency/*": ["./src/features/agency/*"],
+      "@company/*": ["./src/features/company/*"],
+      "@workplace/*": ["./src/features/workplace/*"],
+      "@stack/*": ["./src/features/stack/*"],
+      "@pollutant/*": ["./src/features/pollutant/*"],
+      "@plan/*": ["./src/features/plan/*"],
+      "@equipment/*": ["./src/features/equipment/*"],
     }
   },
   "include": ["src"]

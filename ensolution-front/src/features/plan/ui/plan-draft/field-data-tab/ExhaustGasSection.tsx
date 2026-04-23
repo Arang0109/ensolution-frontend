@@ -14,7 +14,7 @@ interface ExhaustGasSectionProps {
   measurementItems: MeasurementItemEditForm[];
 
   exhaustGas: ExhaustGasEditForm;
-  onChange: (name: keyof ExhaustGasEditForm, value: string, index?: number) => void;
+  onChange: (name: keyof ExhaustGasEditForm, value: string | null, index?: number) => void;
 
   standardOxygen: string;
 

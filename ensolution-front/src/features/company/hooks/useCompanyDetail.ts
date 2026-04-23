@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 import { getCompany } from "@/entities/company/api/companyApi";
 
-import type { CompanyDetailResponse } from "@company/model";
+import type { CompanyDetailResponse } from "@entities/company/model";
 
 export const useCompanyDetail = () => {
   const [company, setCompany] = useState<CompanyDetailResponse | null>(null);

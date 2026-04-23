@@ -1,4 +1,4 @@
-import type { WorkplaceCreateForm, WorkplaceUpdateForm } from "@workplace/model";
+import type { WorkplaceCreateForm, WorkplaceUpdateForm } from "@entities/workplace/model";
 
 import { stripBizNumber } from "@/shared/lib";
 
