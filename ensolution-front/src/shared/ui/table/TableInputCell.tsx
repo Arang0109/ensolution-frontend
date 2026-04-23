@@ -35,7 +35,7 @@ export const TableInputCell = ({
       <input
         value={value}
         type={isNumber ? "text" : type}
-        inputMode={isNumber ? "decimal" : undefined}
+        inputMode={isNumber ? "numeric" : undefined}
         onChange={handleChange}
         placeholder={placeholder ?? ""}
         className="
