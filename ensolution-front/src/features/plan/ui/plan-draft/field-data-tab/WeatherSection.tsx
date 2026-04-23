@@ -68,10 +68,10 @@ export const WeatherSection = ({
                 type="number"
                 value={weather.humidity}
                 onChange={(value) => onChange("humidity", value)}
-                unit="%"/>
+                unit="%"
                 min={0.0}
                 max={100.0}
-                step={0.1}
+                step={0.1}/>
               <TableSelectableCell
                 value={weather.windDirection}
                 options={WIND_DIRECTION_LABELS_OPTIONS}
