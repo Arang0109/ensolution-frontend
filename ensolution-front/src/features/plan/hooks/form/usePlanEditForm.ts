@@ -80,7 +80,7 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
         calcMeasurementPointCnt(nextPlanInfo.shape, diameters!)
       );
       const pointCount = safeCalc([measurePointCnt], () =>
-        Math.ceil(measurePointCnt! / 4)
+        Math.ceil(measurePointCnt!)
       );
       const syncedSheets = prev.sheets.map(sheet => ({
         ...sheet,

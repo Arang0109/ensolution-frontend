@@ -86,7 +86,7 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableLabelCell>접수번호</TableLabelCell>
-                <TableInputCell type="number" value={planInfo.referenceNumber} onChange={(value) => onChange("referenceNumber", value)} min={0} step={1} />
+                <TableInputCell value={planInfo.referenceNumber} onChange={(value) => onChange("referenceNumber", value)}/>
               </tr>
               <tr>
                 <TableLabelCell>측정분야</TableLabelCell>

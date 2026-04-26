@@ -37,7 +37,7 @@ export const PreInfoSection = ({
   onWorkplaceChange,
 }: PreInfoSectionProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-6 border border-black">
       <h2 className="text-sm md:text-xl font-semibold mb-4 text-gray-900">시료채취정보</h2>
       <div className="space-y-4">
         {/* 측정분야 */}

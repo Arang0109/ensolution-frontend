@@ -5,7 +5,6 @@ import type {
 
 export interface MeasurementSheetDocResponse {
   category: Category;
-  referenceNumber: string;
 
   primaryItemId: number | null;
   concurrentItemIds: number[];

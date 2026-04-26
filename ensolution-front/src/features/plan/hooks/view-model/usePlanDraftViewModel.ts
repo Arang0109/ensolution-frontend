@@ -41,6 +41,7 @@ export const usePlanDraftViewModel = () => {
   }
 
   const handleDeleteDraft = async () => {
+    confirm("삭제하시겠습니까? 삭제된 데이터는 복구가 불가능합니다.")
     const result = await deleteDraft(Number(planId));
     if (result.success) {
       showToast("측정계획이 삭제되었습니다.");

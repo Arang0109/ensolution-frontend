@@ -37,7 +37,7 @@ export const TeamSection = ({
 }: TeamSectionProps) => {
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-6 border border-black">
       <h2 className="text-sm md:text-xl font-semibold mb-4 text-gray-900">출장인력 및 장비</h2>
       <div className="space-y-4">
         {/* 현장팀 선택 */}

@@ -26,29 +26,29 @@ export const calcMeasurementPointCnt = (shape: Shape, diameters: number[]) => {
     } else if ( d <= 4.5 ) {
       return 4;
     } else { return 5; }
+  } else {
+    return 1;
   }
 
-  if (shape == 'RECTANGULAR') {
-    // const horizontal = diameters[0];
-    // const vertical = diameters[1];
+  // if (shape == 'RECTANGULAR') {
+  //   const horizontal = diameters[0];
+  //   const vertical = diameters[1];
 
-    // const area = horizontal * vertical
+  //   const area = horizontal * vertical
     
-    // if (!area) return 1;
+  //   if (!area) return 1;
 
-    // if ( area <= 0.25 ) return 1;
+  //   if ( area <= 0.25 ) return 1;
 
-    // if ( area <= 1 ) {
-    //   return Math.ceil(horizontal / 0.5) * Math.ceil(vertical / 0.5);
-    // } else if ( area <= 4 ) {
-    //   return Math.ceil(horizontal / 0.667) * Math.ceil(vertical / 0.667);
-    // } else if ( area <= 20) {
-    //   return Math.ceil(horizontal) * Math.ceil(vertical);
-    // } else { return 20; }
-    return 1; // 임시
-  }
-
-  return 1;
+  //   if ( area <= 1 ) {
+  //     return Math.ceil(horizontal / 0.5) * Math.ceil(vertical / 0.5);
+  //   } else if ( area <= 4 ) {
+  //     return Math.ceil(horizontal / 0.667) * Math.ceil(vertical / 0.667);
+  //   } else if ( area <= 20) {
+  //     return Math.ceil(horizontal) * Math.ceil(vertical);
+  //   } else { return 20; }
+  //   return 1; // 임시
+  // }
 }
 
 export const stackCalculator = (

@@ -60,7 +60,7 @@ export const PlanRegisterPage = () => {
         
 
         {/* Form Card */}
-        <div className="bg-white rounded-lg shadow-md md:p-8">
+        <div className="bg-white md:p-8">
           <PlanCreateContent
             form={form}
             errors={errors}

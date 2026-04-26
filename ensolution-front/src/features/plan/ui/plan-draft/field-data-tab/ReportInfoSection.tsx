@@ -2,7 +2,7 @@ import type { MeasurementSheetEditForm } from "@/entities/plan/model";
 import { CATEGORY_OPTIONS } from "@/entities/plan/model";
 
 import {
-  TableLabelCell, TableInputCell, TableSelectableCell, SectionAccordion
+  TableLabelCell, TableSelectableCell, SectionAccordion
 } from "@shared/ui";
 
 interface ReportInfoSectionProps {
@@ -21,20 +21,15 @@ export const ReportInfoSection = ({
   onChange
 }: ReportInfoSectionProps) => {
   return (
-    <SectionAccordion title="Part 0. 시료채취기록지 기본정보">
+    <SectionAccordion title="Part 0. 시료채취기록지 기본정보" defaultOpen={true}>
       {/* Mobile */}
       <div className={mobileWrap}>
         <table className="w-full table-fixed border-collapse text-sm">
           <tbody>
             <tr>
-              <TableLabelCell>문서번호</TableLabelCell>
               <TableLabelCell>분류</TableLabelCell>
             </tr>
             <tr>
-              <TableInputCell
-                value={sheet.referenceNumber}
-                onChange={(value) => onChange("referenceNumber", value)}
-              />
               <TableSelectableCell
                 value={sheet.category}
                 options={CATEGORY_OPTIONS}
@@ -50,11 +45,6 @@ export const ReportInfoSection = ({
         <table className="w-full table-fixed border-collapse text-sm">
           <tbody>
             <tr>
-              <TableLabelCell>문서번호</TableLabelCell>
-              <TableInputCell
-                value={sheet.referenceNumber}
-                onChange={(value) => onChange("referenceNumber", value)}
-              />
               <TableLabelCell>분류</TableLabelCell>
               <TableSelectableCell
                 value={sheet.category}

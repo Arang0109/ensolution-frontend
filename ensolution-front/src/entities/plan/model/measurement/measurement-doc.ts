@@ -113,7 +113,6 @@ export interface MeasurementItemUpdateRequest {
 
 export interface MeasurementSheetUpdateRequest {
   category: string;
-  referenceNumber: string;
 
   weather: WeatherUpdateRequest;
   moisture: MoistureUpdateRequest;

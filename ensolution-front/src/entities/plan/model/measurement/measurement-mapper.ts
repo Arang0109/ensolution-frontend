@@ -63,7 +63,6 @@ export const mapDraftFormToRequest = (
 
   sheets: form.sheets.map((sheet) => ({
     category: sheet.category,
-    referenceNumber: sheet.referenceNumber,
 
     weather: {
       pressure: {

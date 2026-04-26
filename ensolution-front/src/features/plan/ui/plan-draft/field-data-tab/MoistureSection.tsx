@@ -185,11 +185,9 @@ export const MoistureSection = ({
             <tr>
               <TableLabelCell>흡인량 (<i>L</i>)</TableLabelCell>
               <TableInputCell
-                type="number" value={moisture.beforeDryVolume} onChange={(value) => onChange("beforeDryVolume", value)} unit="L" />
-                min={0.000} step={0.001}
+                type="number" value={moisture.beforeDryVolume} onChange={(value) => onChange("beforeDryVolume", value)} unit="L" min={0.000} step={0.001} />
               <TableInputCell
-                type="number" value={moisture.afterDryVolume} onChange={(value) => onChange("afterDryVolume", value)} unit="L" />
-                min={0.000} step={0.001}
+                type="number" value={moisture.afterDryVolume} onChange={(value) => onChange("afterDryVolume", value)} unit="L" min={0.000} step={0.001} />
               <TableResultCell value={display(dryVolumeDiff)} unit="L" />
               <TableLabelCell>수분량 (<i>%</i>)</TableLabelCell>
               <TableResultCell colSpan={3} value={display(moistureRatio)} unit="%" />

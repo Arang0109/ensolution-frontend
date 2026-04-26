@@ -47,7 +47,7 @@ export const StackSection = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 space-y-3">
+    <div className="bg-white rounded-lg shadow-md p-6 space-y-3 border border-black">
       <h2 className="text-sm md:text-xl font-semibold mb-4 text-gray-900">측정시설정보</h2>
 
       <SelectField

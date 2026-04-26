@@ -128,7 +128,7 @@ export const PlanDetailContent = ({
 
         {/* Actions */}
         <div className="flex justify-end mt-6 gap-1.5">
-          <Button label="임시저장" type="submit" variant="primary" onClick={() => handleSaveDraft(editForm)}/>
+          <Button label="저장" type="submit" variant="primary" onClick={() => handleSaveDraft(editForm)}/>
           <Button label="성적서 다운로드" type="button" variant="primary" onClick={() => handleReportDownload(Number(plan?.plan.id))} />
         </div>
       </div>

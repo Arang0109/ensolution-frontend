@@ -2,7 +2,6 @@ import type { WeatherCondition, WindDirection, PlanDetailResponse, MeasurementSh
 
 export interface MeasurementSheetEditForm {
   category: Category;
-  referenceNumber: string;
 
   primaryItemId: number | null;
   concurrentItemIds: number[];
@@ -29,7 +28,6 @@ export const getDefaultMeasurementSheetsEditForm = (
 
   return measurementSheets.map((sheet) => ({
     category: sheet.category ?? "OTHER",
-    referenceNumber: sheet.referenceNumber ?? "",
 
     primaryItemId: sheet.primaryItemId ?? null,
     concurrentItemIds: sheet.concurrentItemIds ?? [],

@@ -209,7 +209,7 @@ export const ReportPreviewContent = ({
             <tr>
               <TableLabelCell colSpan={15}> </TableLabelCell>
               <TableLabelCell colSpan={3}>접수번호</TableLabelCell>
-              <ReportValueCell colSpan={3}>KGAR-26-01-{planInfo.referenceNumber}-{sheet.referenceNumber}</ReportValueCell>
+              <ReportValueCell colSpan={3}>KGAR-26-01-{planInfo.referenceNumber}</ReportValueCell>
               <ReportValueCell colSpan={2}>{categoryLabel}</ReportValueCell>
             </tr>
 
@@ -299,7 +299,9 @@ export const ReportPreviewContent = ({
             {/* ── 측정여지번호 / 2지점 / 누출검사 / 배출가스정압 */}
             <tr>
               <TableLabelCell colSpan={4}>측정여지 번호</TableLabelCell>
-              <ReportValueCell colSpan={5}>{`측정 ${particleSample.thimbleFilter}, 바탕 ${particleSample.bgThimbleFilter}`}</ReportValueCell>
+              <ReportValueCell colSpan={5}>{isParticle?
+              `측정 ${particleSample.thimbleFilter}, 바탕 ${particleSample.bgThimbleFilter}`
+              : null}</ReportValueCell>
 
               <TableLabelCell colSpan={2}>2지점</TableLabelCell>
               <ReportValueCell colSpan={4}>{list[1]?? ''}</ReportValueCell>
