@@ -294,7 +294,6 @@ export const usePlanEditForm = (plan: PlanDetailResponse | undefined) => {
       ) ?? 1;
       const newSheet: MeasurementSheetEditForm = {
         category: "GAS",
-        referenceNumber: "",
         primaryItemId: null,
         concurrentItemIds: [],
         weather: getDefaultWeatherEditForm(undefined),
