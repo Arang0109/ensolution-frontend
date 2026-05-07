@@ -16,7 +16,13 @@
       "Bash(npx tsc:*)",
       "Bash(node -e \"const r = require\\(''./node_modules/react/package.json''\\); console.log\\(''react:'', r.version\\)\")",
       "Bash(node -e \"const r = require\\(''./node_modules/@types/react/package.json''\\); console.log\\(''@types/react:'', r.version\\)\")",
-      "Bash(node -e \"const pkg = require\\(''./node_modules/@material-tailwind/react/package.json''\\); console.log\\(pkg.version\\)\")"
+      "Bash(node -e \"const pkg = require\\(''./node_modules/@material-tailwind/react/package.json''\\); console.log\\(pkg.version\\)\")",
+      "Bash(git -C /c/dev/projects/ensolution-front status --short)",
+      "Bash(rm -rf /c/dev/projects/ensolution-front/node_modules)",
+      "Bash(rm /c/dev/projects/ensolution-front/package.json)",
+      "Bash(rm /c/dev/projects/ensolution-front/CALUDE.md)",
+      "Bash(mv public *)",
+      "Bash(mv src *)"
     ],
     "deny": [],
     "ask": []

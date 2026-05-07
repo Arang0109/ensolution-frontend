@@ -711,7 +711,7 @@ export const useSearch = <T extends Record<string, any>>(
 ### 🟡 Phase 2: Workplace Feature 리팩토링 (1-2일)
 
 #### 현재 문제
-[WorkplaceDetailPage.tsx](ensolution-front/src/features/workplace/pages/WorkplaceDetailPage.tsx)가 모든 로직을 직접 처리:
+[WorkplaceDetailPage.tsx](src/features/workplace/pages/WorkplaceDetailPage.tsx)가 모든 로직을 직접 처리:
 - 직접 API 호출
 - 직접 상태 관리
 - 직접 필터링 로직
@@ -804,14 +804,14 @@ export const WorkplaceDetailPage = () => {
 };
 ```
 
-**참고 사례:** [CompanyDetailPage.tsx](ensolution-front/src/features/company/pages/CompanyDetailPage.tsx)
+**참고 사례:** [CompanyDetailPage.tsx](src/features/company/pages/CompanyDetailPage.tsx)
 
 ---
 
 ### 🟢 Phase 3: Stack Feature 리팩토링 (3-5일)
 
 #### 현재 문제
-- [StackDetailPage.tsx](ensolution-front/src/features/stack/pages/StackDetailPage.tsx) 300+ 줄
+- [StackDetailPage.tsx](src/features/stack/pages/StackDetailPage.tsx) 300+ 줄
 - 상수 중복 (gradeLabel, shapeLabel, orientationLabel)
 - 방지시설, 배출시설 렌더링 로직이 Page에 집중
 
@@ -874,7 +874,7 @@ ui/         - Presentational Components (props만, 재사용 가능)
 ### ⭐ Company Feature (완벽한 관심사 분리)
 
 #### Page 구조
-[CompanyDetailPage.tsx](ensolution-front/src/features/company/pages/CompanyDetailPage.tsx)
+[CompanyDetailPage.tsx](src/features/company/pages/CompanyDetailPage.tsx)
 ```tsx
 // ✅ Page는 조립만 (약 80줄)
 export const CompanyDetailPage = () => {
@@ -997,10 +997,10 @@ export const stripBizNumber = (value: string): string => {
 ## 도움이 필요하면
 
 ### 참고할 파일들
-1. **모범 Page 구조:** [CompanyDetailPage.tsx](ensolution-front/src/features/company/pages/CompanyDetailPage.tsx)
-2. **Hooks 패턴:** [useCompanyDetail.ts](ensolution-front/src/features/company/hooks/useCompanyDetail.ts)
-3. **Component 분리:** [CompanyInfoCard.tsx](ensolution-front/src/features/company/components/CompanyInfoCard.tsx)
-4. **ui 패턴:** [LoginForm.tsx](ensolution-front/src/features/auth/ui/LoginForm.tsx)
+1. **모범 Page 구조:** [CompanyDetailPage.tsx](src/features/company/pages/CompanyDetailPage.tsx)
+2. **Hooks 패턴:** [useCompanyDetail.ts](src/features/company/hooks/useCompanyDetail.ts)
+3. **Component 분리:** [CompanyInfoCard.tsx](src/features/company/components/CompanyInfoCard.tsx)
+4. **ui 패턴:** [LoginForm.tsx](src/features/auth/ui/LoginForm.tsx)
 
 ### Claude Code에게 요청하기
 ```
