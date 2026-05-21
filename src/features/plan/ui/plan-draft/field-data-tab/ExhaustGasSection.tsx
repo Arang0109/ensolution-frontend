@@ -199,7 +199,7 @@ export const ExhaustGasSection = ({
             </tr>
             {fieldMeasurementItems.map((item) => {
               if (item.pollutantNameKr === "탄화수소") {
-                return (<>
+                return (
                 <Fragment key={item.pollutantId}>
                   <tr>
                     <TableLabelCell colSpan={2}>THC 측정 시작시간</TableLabelCell>
@@ -210,7 +210,7 @@ export const ExhaustGasSection = ({
                       onChange={(value) => onChange("thcAnalyzerStartTime", value)}
                     />
                   </tr>
-                </Fragment></>);
+                </Fragment>);
               }
 
               return null;

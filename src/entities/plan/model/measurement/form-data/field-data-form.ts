@@ -24,7 +24,7 @@ export const getDefaultMeasurementSheetsEditForm = (
 ): MeasurementSheetEditForm[] => {
 
   const measurementSheets = plan?.measurementInfo?.sheets ?? [];
-  const measurementPointCnt = Number(plan?.measurementInfo?.measurementPointCnt ?? 1);
+  const measurementPointCnt = Number(plan?.measurementInfo?.basicInfo.measurementPointCnt ?? 1);
 
   return measurementSheets.map((sheet) => ({
     category: sheet.category ?? "OTHER",

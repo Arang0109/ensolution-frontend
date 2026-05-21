@@ -179,8 +179,8 @@ export const MoistureSection = ({
               <TableResultCell value={display(tempAvg)} unit="°C" />
               <TableLabelCell>흡인유속 (<i>m/s</i>)</TableLabelCell>
               <TableInputCell
-                type="number" colSpan={3} value={moisture.suctionVelocity} onChange={(value) => onChange("suctionVelocity", value)} unit="m/s" />
-                min={0.0} step={0.1}
+                type="number" colSpan={3} value={moisture.suctionVelocity} onChange={(value) => onChange("suctionVelocity", value)} unit="m/s"
+                min={0.0} step={0.1} />
             </tr>
             <tr>
               <TableLabelCell>흡인량 (<i>L</i>)</TableLabelCell>

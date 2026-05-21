@@ -28,8 +28,8 @@ export const useReportPreviewViewModel = (planId: number, sheetIdx: number) => {
     : '';
   const categoryLabel = sheet ? (CATEGORY_LABELS[sheet.category] ?? sheet.category) : '';
 
-  const formattedMeasureDate = info?.measureDate
-    ? info.measureDate.replace(/-/g, '.')
+  const formattedMeasureDate = info?.basicInfo.measureDate
+    ? info.basicInfo.measureDate.replace(/-/g, '.')
     : '';
 
   // 시트의 측정항목 순서 매핑 (primaryItem → concurrentItems 순)

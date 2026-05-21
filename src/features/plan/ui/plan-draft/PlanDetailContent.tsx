@@ -53,7 +53,7 @@ export const PlanDetailContent = ({
   const breadcrumbsContents = [
     {title: "대시보드", path: "/dashboard"},
     {title: "측정계획", path: "/plan"},
-  ]
+  ];
 
   return (
     <div className="px-3 sm:px-6 max-w-7xl mx-auto">

@@ -106,7 +106,7 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableLabelCell>채취팀</TableLabelCell>
-                <TableSelectableCell value={planInfo.teamName} onChange={(value) => onChange("teamName", value)} options={TEAM_TYPE_OPTIONS} />
+                <TableSelectableCell value={String(TEAM_TYPE_OPTIONS.find(o => o.label === planInfo.teamName)?.value ?? planInfo.teamName)} onChange={(value) => onChange("teamName", TEAM_TYPE_OPTIONS.find(o => String(o.value) === value)?.label ?? value)} options={TEAM_TYPE_OPTIONS} />
               </tr>
               <tr>
                 <TableLabelCell>차량번호</TableLabelCell>
@@ -140,7 +140,7 @@ export const PlanInfoTab = ({
               </tr>
               <tr>
                 <TableLabelCell>측정팀</TableLabelCell>
-                <TableSelectableCell value={planInfo.teamName} onChange={(value) => onChange("teamName", value)} options={TEAM_TYPE_OPTIONS} />
+                <TableSelectableCell value={String(TEAM_TYPE_OPTIONS.find(o => o.label === planInfo.teamName)?.value ?? planInfo.teamName)} onChange={(value) => onChange("teamName", TEAM_TYPE_OPTIONS.find(o => String(o.value) === value)?.label ?? value)} options={TEAM_TYPE_OPTIONS} />
                 <TableLabelCell>차량번호</TableLabelCell>
                 <TableInputCell value={planInfo.vehicleNumber} onChange={(value) => onChange("vehicleNumber", value)} colSpan={3} />
               </tr>
