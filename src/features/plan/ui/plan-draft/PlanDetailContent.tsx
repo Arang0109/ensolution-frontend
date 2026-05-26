@@ -24,26 +24,7 @@ export const PlanDetailContent = ({
     handleReportDownload,
   } = viewModel;
 
-  const {
-    editForm,
-
-    updatePlanInfoField,
-    updateEquipmentField,
-    updateSheetField,
-
-    updateWeatherField,
-    updateMoistureField,
-    updateExhaustGasField,
-
-    updateMeasurementPointField,
-    updateMeasurementItems,
-    updateSheetSampleItems,
-    updateSampleField,
-    updateParticleField,
-    
-    addSheet,
-    removeSheet,
-  } = usePlanEditForm(plan);
+  const { editForm } = usePlanEditForm(plan);
 
   const {
     particleSamplers, gasSamplers, pitotTubes, nozzles,
@@ -82,16 +63,11 @@ export const PlanDetailContent = ({
         <div className="mt-6">
           {activeTab === "PREINFO" &&
           <PlanInfoTab
-            planInfo={editForm.planInfo}
-            measurementItems={editForm.measurementItems}
             stack={stack}
-            onChange={updatePlanInfoField}
-            onMeasurementItemsChange={updateMeasurementItems}
           />}
           {activeTab === "EQUIPMENT" &&
           <EquipmentTab
             equipment={editForm.equipment}
-            onChange={updateEquipmentField}
             particleSamplers={particleSamplers}
             gasSamplers={gasSamplers}
             pitotTubes={pitotTubes}
@@ -106,21 +82,10 @@ export const PlanDetailContent = ({
             planInfo={editForm.planInfo}
             allSheets={editForm.sheets}
             measurementItems={editForm.measurementItems}
-            updatePlanInfoField={updatePlanInfoField}
-            updateSheetField={updateSheetField}
-            updateWeatherField={updateWeatherField}
-            updateMoistureField={updateMoistureField}
-            updateExhaustGasField={updateExhaustGasField}
-            updateMeasurementPointField={updateMeasurementPointField}
-            updateSheetSampleItems={updateSheetSampleItems}
-            updateSampleField={updateSampleField}
-            updateParticleField={updateParticleField}
             selectedPS={selectedPS}
             selectedGS={selectedGS}
             selectedPT={selectedPT}
             selectedNZ={selectedNZ}
-            addSheet={addSheet}
-            removeSheet={removeSheet}
           />
           )}
           {activeTab === "LAB" && <LabDataTab />}

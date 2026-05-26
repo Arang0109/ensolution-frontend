@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCompanies } from '@/features/company/hooks';
-import { CompanyTable, CompanyCreateModal } from '@/features/company/ui';
+import { CompanyTable, CompanyCreateModal } from '@/features/company/components';
 
 import { Button, EmptyState, FullPageLoader, Breadcrumbs } from '@shared/ui';
 

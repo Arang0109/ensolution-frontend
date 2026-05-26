@@ -5,35 +5,48 @@ import { useAuth } from "@app/providers/auth";
 
 import axios, { AxiosError } from "axios";
 import { loginApi } from "@/entities/auth/api/authApi";
+import type { LoginForm } from "@entities/auth/model";
+import { mapLoginFormToRequest } from "@entities/auth/model";
 
 import type { ApiResponseMessage } from "@/shared/model";
 import { useToast } from "@app/providers/toast";
 
-import type { LoginRequest } from "@entities/auth/model";
+const REMEMBER_ID_KEY = "rememberedUsername";
+
+const getRememberedUsername = () => localStorage.getItem(REMEMBER_ID_KEY);
 
 export function useLoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const { showToast } = useToast();
   const { login } = useAuth();
 
-  const [form, setForm] = useState<LoginRequest>({
-    username: "",
+  const [form, setForm] = useState<LoginForm>({
+    username: getRememberedUsername() ?? "",
     password: "",
+    rememberedUsername: getRememberedUsername() !== null,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
+    if (form.rememberedUsername) {
+      localStorage.setItem(REMEMBER_ID_KEY, form.username);
+    } else {
+      localStorage.removeItem(REMEMBER_ID_KEY);
+    }
+
+    const payload = mapLoginFormToRequest(form);
+
     try {
-      const res = await loginApi(form);
+      const res = await loginApi(payload);
 
       if (res.status) {
         login(res.data.accessToken);
@@ -61,8 +74,10 @@ export function useLoginForm() {
 
   return {
     form,
-    isLoading,
-    onChange,
     onSubmit,
+
+    handleChange,
+
+    isLoading,
   };
 }

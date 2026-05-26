@@ -1,11 +1,13 @@
 import { PITOT_TUBE_OPTIONS } from '@/entities/agency/equipment/model';
 import type { ParticleSamplerSpec, GasSamplerSpec, PitotTubeSpec, NozzleSpec, TypedEquipmentResponse } from '@/entities/agency/equipment/model';
 import type { EquipmentEditForm } from '@/entities/plan/model';
+
+import { usePlanEditStore } from "@/features/plan/store";
+
 import { TableLabelCell, TableReadonlyCell, TableSelectableCell, SectionAccordion } from '@shared/ui';
 
 interface EquipmentTabProps {
   equipment: EquipmentEditForm;
-  onChange: (name: keyof EquipmentEditForm, value: string) => void;
 
   particleSamplers: TypedEquipmentResponse[];
   gasSamplers: TypedEquipmentResponse[];
@@ -22,7 +24,7 @@ const mobileSectionWrap = "sm:hidden border border-gray-200 overflow-hidden";
 const desktopSectionWrap = "hidden sm:block border border-gray-200 overflow-hidden";
 
 export const EquipmentTab = ({
-  equipment, onChange,
+  equipment,
   particleSamplers, gasSamplers, pitotTubes, nozzles,
   selectedPS, selectedGS, selectedPT, selectedNZ,
 }: EquipmentTabProps) => {
@@ -34,6 +36,8 @@ export const EquipmentTab = ({
 
   const getPitotTubeLabel = (type: string) =>
     PITOT_TUBE_OPTIONS.find(o => o.value === type)?.label ?? type;
+
+  const onChange = usePlanEditStore((s) => s.updateEquipmentField);
 
   return (
     <div className="space-y-6">

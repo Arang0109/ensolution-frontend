@@ -1,13 +1,9 @@
 import { useState } from "react";
 
 import type { TypedEquipmentResponse } from "@/entities/agency/equipment/model";
-import type {
-  PlanInfoEditForm, MeasurementSheetEditForm,
-  WeatherEditForm, MoistureEditForm, ExhaustGasEditForm, MeasurementpointEditForm,
-  MeasurementItemEditForm, SampleEditForm,
-  ParticleSampleEditForm,
-} from "@/entities/plan/model";
+import type { PlanInfoEditForm, MeasurementSheetEditForm, MeasurementItemEditForm } from "@/entities/plan/model";
 import { SheetTab } from "@/features/plan/ui";
+import { usePlanEditStore } from "@/features/plan/store";
 import { CATEGORY_LABELS } from "@/entities/plan/model";
 
 import { EditableTabs, TableLabelCell, TableInputCell } from "@/shared/ui";
@@ -17,47 +13,25 @@ export interface FieldDataTabProps {
   allSheets: MeasurementSheetEditForm[];
   measurementItems: MeasurementItemEditForm[];
 
-  updatePlanInfoField: (name: keyof PlanInfoEditForm, value: string) => void;
-  updateSheetField: (sheetIndex: number, name: keyof MeasurementSheetEditForm, value: string) => void;
-  updateWeatherField: (sheetIndex: number, name: keyof WeatherEditForm, value: string | null) => void;
-  updateMoistureField: (sheetIndex: number, name: keyof MoistureEditForm, value: string | null) => void;
-  updateExhaustGasField: (sheetIndex: number, name: keyof ExhaustGasEditForm, value: string | null, index?: number) => void;
-  updateMeasurementPointField: (sheetIndex: number, pointIndex: number, name: keyof MeasurementpointEditForm, value: string) => void;
-  updateSheetSampleItems: (sheetIndex: number, primaryItemId: number | null, concurrentItemIds: number[]) => void;
-  updateSampleField: (sheetIndex: number, sampleIndex: number, name: keyof SampleEditForm, value: string) => void;
-  updateParticleField: (sheetIndex: number, name: keyof ParticleSampleEditForm, value: string | null) => void;
-
   selectedPS?: TypedEquipmentResponse;
   selectedGS?: TypedEquipmentResponse;
   selectedPT?: TypedEquipmentResponse;
   selectedNZ?: TypedEquipmentResponse;
-
-  addSheet: () => void;
-  removeSheet: (index: number) => void;
 }
 
 export const FieldDataTab = ({
   planInfo,
   allSheets,
   measurementItems,
-  updatePlanInfoField,
-  updateSheetField,
-  updateWeatherField,
-  updateMoistureField,
-  updateExhaustGasField,
-  updateMeasurementPointField,
-  updateSheetSampleItems,
-  updateSampleField,
-  updateParticleField,
   selectedPS,
   selectedGS,
   selectedPT,
   selectedNZ,
-
-  addSheet,
-  removeSheet,
 }: FieldDataTabProps) => {
   const [activeSheetIndex, setActiveSheetIndex] = useState(0);
+
+  const removeSheet = usePlanEditStore((s) => s.removeSheet);
+  const addSheet = usePlanEditStore((s) => s.addSheet);
   
   const handleRemoveSheet = (index: number) => {
     removeSheet(index);
@@ -70,6 +44,16 @@ export const FieldDataTab = ({
     addSheet();
     setActiveSheetIndex(allSheets.length);
   };
+
+  const updatePlanInfoField = usePlanEditStore((s) => s.updatePlanInfoField);
+  const updateSheetField = usePlanEditStore((s) => s.updateSheetField);
+  const updateWeatherField = usePlanEditStore((s) => s.updateWeatherField);
+  const updateMoistureField = usePlanEditStore((s) => s.updateMoistureField);
+  const updateExhaustGasField = usePlanEditStore((s) => s.updateExhaustGasField);
+  const updateMeasurementPointField = usePlanEditStore((s) => s.updateMeasurementPointField);
+  const updateSheetSampleItems = usePlanEditStore((s) => s.updateSheetSampleItems);
+  const updateSampleField = usePlanEditStore((s) => s.updateSampleField);
+  const updateParticleField = usePlanEditStore((s) => s.updateParticleField);
 
   return (
     <div className="space-y-6">

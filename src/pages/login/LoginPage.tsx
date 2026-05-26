@@ -1,9 +1,7 @@
-import { LoginForm, SignupHint, SocialLoginButton } from "@/features/auth/ui";
-import { useLoginForm } from "@/features/auth/hooks/useLoginForm";
+import { LoginForm, SignupHint, SocialLoginButton } from "@/features/auth/components";
 import { Footer } from "@widgets/index";
 
 export const LoginPage = () => {
-  const { form, isLoading, onChange, onSubmit } = useLoginForm();
   return (
     <>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100 p-4">
@@ -18,12 +16,7 @@ export const LoginPage = () => {
           </header>
 
           {/* 로그인 폼 */}
-          <LoginForm
-            form={form}
-            isLoading={isLoading}
-            onChange={onChange}
-            onSubmit={onSubmit}
-          />
+          <LoginForm />
 
           {/* 구분선 */}
           <div className="relative my-5">

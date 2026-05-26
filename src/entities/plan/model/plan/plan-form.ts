@@ -63,7 +63,7 @@ export interface PlanDraftEditForm {
 }
 
 export const getDefaultPlanDraftEditForm = (
-  plan: PlanDetailResponse | undefined
+  plan?: PlanDetailResponse
 ): PlanDraftEditForm => {
   const planInfo = getDefaultPreInfoEditForm(plan);
   const equipment = getDefaultEquipmentEditForm(plan);

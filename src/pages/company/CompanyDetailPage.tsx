@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { CompanyProfileForm } from "@/features/company/ui";
+import { CompanyProfileForm } from "@/features/company/components";
 import { useCompanyDetailViewModel } from "@/features/company/hooks";
 import { WorkplaceTable, WorkplaceCreateModal } from "@/features/workplace/ui";
 
